@@ -1,0 +1,1761 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,680&family=Manrope:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap');
+
+/* ==========================================================================
+   HOME ORDER — EXTRA COMPACT PREMIUM VERSION
+   ========================================================================== */
+
+.home-order {
+  --ho-char: #0b1612;
+  --ho-char-soft: #12241d;
+  --ho-cream: #f9f6ee;
+  --ho-cream-dim: rgba(249, 246, 238, 0.7);
+  --ho-gold: #fdb813;
+  --ho-gold-soft: #ffd56b;
+  --ho-orange: #f5820a;
+  --ho-emerald: #0a291f;
+  --ho-leaf: #185a3f;
+  --ho-leaf-bright: #3fae63;
+  --ho-wine: #5c1822;
+  --ho-ochre: #8c5815;
+
+  --ho-radius-lg: 18px;
+  --ho-radius-md: 15px;
+  --ho-radius-sm: 12px;
+
+  --ho-serif: 'Fraunces', 'Iowan Old Style', ui-serif, Georgia, serif;
+  --ho-sans: 'Manrope', 'Segoe UI', system-ui, sans-serif;
+  --ho-script: 'Caveat', 'Segoe Script', cursive;
+
+  position: relative;
+  isolation: isolate;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      120% 140% at 15% 0%,
+      #152d24 0%,
+      var(--ho-char) 50%,
+      #060c09 100%
+    );
+
+  /* VERY SMALL SECTION PADDING */
+  padding: 1.25rem 1rem;
+
+  font-family: var(--ho-sans);
+  color: var(--ho-cream);
+
+  overflow: hidden;
+}
+
+
+/* ==========================================================================
+   AMBIENT BACKGROUND
+   ========================================================================== */
+
+.home-order::before {
+  content: '';
+
+  position: absolute;
+  inset: -20% -10% auto -10%;
+
+  height: 55%;
+
+  background:
+    radial-gradient(
+      closest-side,
+      rgba(253, 184, 19, 0.12),
+      transparent 70%
+    );
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+.home-order__bg {
+  position: absolute;
+  inset: 0;
+
+  z-index: 0;
+
+  pointer-events: none;
+  overflow: hidden;
+}
+
+
+.home-order__bloom {
+  position: absolute;
+
+  border-radius: 50%;
+
+  filter: blur(55px);
+
+  opacity: 0.4;
+
+  animation: ho-drift 26s ease-in-out infinite;
+}
+
+
+.home-order__bloom--one {
+  width: 25vw;
+  height: 25vw;
+
+  min-width: 200px;
+  min-height: 200px;
+
+  left: -5%;
+  top: 5%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(63, 174, 99, 0.45),
+      transparent 70%
+    );
+
+  animation-duration: 30s;
+}
+
+
+.home-order__bloom--two {
+  width: 20vw;
+  height: 20vw;
+
+  min-width: 180px;
+  min-height: 180px;
+
+  right: -4%;
+  top: 30%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(253, 184, 19, 0.25),
+      transparent 70%
+    );
+
+  animation-duration: 24s;
+  animation-delay: -6s;
+}
+
+
+.home-order__bloom--three {
+  width: 18vw;
+  height: 18vw;
+
+  min-width: 160px;
+  min-height: 160px;
+
+  left: 25%;
+  bottom: -5%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(245, 130, 10, 0.18),
+      transparent 72%
+    );
+
+  animation-duration: 34s;
+  animation-delay: -14s;
+}
+
+
+@keyframes ho-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(3%, -4%) scale(1.06);
+  }
+
+  66% {
+    transform: translate(-2%, 3%) scale(0.97);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+
+/* ==========================================================================
+   FLOATING LEAVES
+   ========================================================================== */
+
+.home-order__leaf {
+  position: absolute;
+
+  width: 22px;
+  height: 22px;
+
+  opacity: 0.35;
+
+  color: var(--ho-leaf-bright);
+
+  animation: ho-leaf-drift linear infinite;
+}
+
+
+.home-order__leaf svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+
+.home-order__leaf--a {
+  left: 6%;
+  top: 18%;
+
+  width: 18px;
+  height: 18px;
+
+  animation-duration: 17s;
+  animation-delay: -2s;
+
+  color: var(--ho-gold-soft);
+}
+
+
+.home-order__leaf--b {
+  left: 92%;
+  top: 12%;
+
+  width: 20px;
+  height: 20px;
+
+  animation-duration: 21s;
+  animation-delay: -9s;
+}
+
+
+.home-order__leaf--c {
+  left: 48%;
+  top: 4%;
+
+  width: 15px;
+  height: 15px;
+
+  animation-duration: 15s;
+  animation-delay: -5s;
+
+  color: var(--ho-orange);
+}
+
+
+.home-order__leaf--d {
+  left: 10%;
+  top: 82%;
+
+  width: 19px;
+  height: 19px;
+
+  animation-duration: 23s;
+  animation-delay: -12s;
+}
+
+
+.home-order__leaf--e {
+  left: 88%;
+  top: 78%;
+
+  width: 16px;
+  height: 16px;
+
+  animation-duration: 19s;
+  animation-delay: -4s;
+
+  color: var(--ho-gold-soft);
+}
+
+
+@keyframes ho-leaf-drift {
+  0% {
+    transform: translateY(0) rotate(-6deg);
+    opacity: 0.1;
+  }
+
+  15% {
+    opacity: 0.45;
+  }
+
+  50% {
+    transform: translateY(-18px) rotate(8deg);
+  }
+
+  85% {
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: translateY(0) rotate(-6deg);
+    opacity: 0.1;
+  }
+}
+
+
+/* ==========================================================================
+   INNER
+   ========================================================================== */
+
+.home-order__inner {
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  max-width: 1180px;
+
+  margin: 0 auto;
+}
+
+
+/* ==========================================================================
+   BRAND
+   ========================================================================== */
+
+.home-order__brand {
+  display: flex;
+  align-items: center;
+
+  gap: 0.6rem;
+
+  margin-bottom: 0.8rem;
+
+  opacity: 0;
+
+  animation:
+    ho-brand-in
+    0.7s
+    cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+}
+
+
+@keyframes ho-brand-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.home-order__logo-ring {
+  position: relative;
+
+  flex: none;
+
+  width: 36px;
+  height: 36px;
+
+  border-radius: 50%;
+
+  padding: 2px;
+
+  background:
+    conic-gradient(
+      from 180deg,
+      var(--ho-leaf-bright),
+      var(--ho-gold),
+      var(--ho-orange),
+      var(--ho-leaf-bright)
+    );
+
+  box-shadow:
+    0 6px 18px -8px
+    rgba(253, 184, 19, 0.45);
+}
+
+
+.home-order__logo-ring::before {
+  content: '';
+
+  position: absolute;
+
+  inset: -4px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid
+    rgba(253, 184, 19, 0.3);
+
+  animation:
+    ho-ring-pulse
+    3.6s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes ho-ring-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1.12);
+    opacity: 0;
+  }
+}
+
+
+.home-order__logo {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+
+  background: var(--ho-char-soft);
+}
+
+
+/* ==========================================================================
+   WORDMARK
+   ========================================================================== */
+
+.home-order__wordmark {
+  display: flex;
+  flex-direction: column;
+
+  line-height: 1;
+}
+
+
+.home-order__wordmark-main {
+  font-family: var(--ho-serif);
+
+  font-weight: 680;
+
+  font-size: 0.95rem;
+
+  color: var(--ho-cream);
+}
+
+
+.home-order__wordmark-main em {
+  font-style: normal;
+
+  font-family: var(--ho-script);
+
+  font-size: 1.1rem;
+
+  color: var(--ho-gold);
+
+  margin-left: 0.15em;
+}
+
+
+.home-order__wordmark-tag {
+  margin-top: 0.18rem;
+
+  font-family: var(--ho-script);
+
+  font-size: 0.68rem;
+
+  color: var(--ho-leaf-bright);
+}
+
+
+/* ==========================================================================
+   INTRO
+   ========================================================================== */
+
+.home-order__intro {
+  max-width: 46ch;
+
+  margin-bottom: 0.9rem;
+}
+
+
+.home-order__eyebrow {
+  margin: 0 0 0.3rem;
+
+  font-size: 0.58rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  color: var(--ho-gold);
+}
+
+
+.home-order__heading {
+  margin: 0 0 0.25rem;
+
+  font-family: var(--ho-serif);
+
+  font-weight: 560;
+
+  font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+
+  line-height: 1.08;
+
+  color: var(--ho-cream);
+}
+
+
+.home-order__sub {
+  margin: 0;
+
+  font-size: 0.76rem;
+
+  line-height: 1.3;
+
+  color: var(--ho-cream-dim);
+}
+
+
+/* ==========================================================================
+   GRID
+   ========================================================================== */
+
+.home-order__grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(12, 1fr);
+
+  grid-auto-rows:
+    minmax(65px, auto);
+
+  gap: 0.55rem;
+}
+
+
+.promo-card--hero {
+  grid-column: span 5;
+  grid-row: span 2;
+}
+
+
+.promo-card--compact {
+  grid-column: span 7;
+  grid-row: span 1;
+}
+
+
+.promo-card--wide {
+  grid-column: span 12;
+  grid-row: span 1;
+}
+
+
+/* ==========================================================================
+   CARD
+   ========================================================================== */
+
+.promo-card {
+  perspective: 1000px;
+
+  opacity: 0;
+
+  transform:
+    translateY(16px)
+    scale(0.99);
+
+  transition:
+    opacity 0.6s
+    cubic-bezier(0.16, 1, 0.3, 1),
+
+    transform 0.6s
+    cubic-bezier(0.16, 1, 0.3, 1);
+
+  transition-delay:
+    calc(var(--reveal-index, 0) * 90ms);
+}
+
+
+.promo-card--visible {
+  opacity: 1;
+
+  transform:
+    translateY(0)
+    scale(1);
+}
+
+
+/* ==========================================================================
+   CARD FRAME
+   ========================================================================== */
+
+.promo-card__frame {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --glow-x: 50%;
+  --glow-y: 30%;
+
+  position: relative;
+
+  height: 100%;
+
+  /* SMALL */
+  min-height: 130px;
+
+  border-radius:
+    var(--ho-radius-lg);
+
+  overflow: hidden;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: flex-end;
+
+  transform-style: preserve-3d;
+
+  transform:
+    rotateX(var(--tilt-x))
+    rotateY(var(--tilt-y));
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+
+  box-shadow:
+    0 12px 30px -18px
+    rgba(0, 0, 0, 0.75),
+
+    0 1px 0
+    rgba(255, 255, 255, 0.08)
+    inset;
+
+  cursor: pointer;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.06);
+}
+
+
+/* HERO */
+
+.promo-card--hero .promo-card__frame {
+  min-height: 220px;
+}
+
+
+/* COMPACT */
+
+.promo-card--compact .promo-card__frame {
+  min-height: 115px;
+
+  border-radius:
+    var(--ho-radius-md);
+}
+
+
+/* WIDE */
+
+.promo-card--wide .promo-card__frame {
+  min-height: 135px;
+
+  border-radius:
+    var(--ho-radius-lg);
+
+  flex-direction: row;
+
+  align-items: stretch;
+
+  justify-content: flex-start;
+}
+
+
+/* ==========================================================================
+   HOVER
+   ========================================================================== */
+
+.promo-card__frame:hover,
+.promo-card__frame:focus-within {
+  box-shadow:
+    0 20px 40px -18px
+    rgba(0, 0, 0, 0.82),
+
+    0 2px 0
+    rgba(253, 184, 19, 0.2)
+    inset;
+
+  border-color:
+    rgba(253, 184, 19, 0.32);
+}
+
+
+/* ==========================================================================
+   GLOW
+   ========================================================================== */
+
+.promo-card__frame::after {
+  content: '';
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    radial-gradient(
+      300px circle
+      at var(--glow-x) var(--glow-y),
+      rgba(253, 184, 19, 0.16),
+      transparent 60%
+    );
+
+  opacity: 0;
+
+  transition:
+    opacity 0.3s ease;
+
+  pointer-events: none;
+
+  z-index: 3;
+}
+
+
+.promo-card__frame:hover::after {
+  opacity: 1;
+}
+
+
+/* ==========================================================================
+   FOIL BORDER
+   ========================================================================== */
+
+.promo-card__frame::before {
+  content: '';
+
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 4;
+
+  border-radius: inherit;
+
+  padding: 1px;
+
+  background:
+    conic-gradient(
+      from 0deg,
+      transparent 0 70%,
+      rgba(253, 184, 19, 0.9) 85%,
+      transparent 100%
+    );
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+
+  -webkit-mask-composite: xor;
+
+  mask-composite: exclude;
+
+  opacity: 0;
+
+  transition:
+    opacity 0.35s ease;
+
+  pointer-events: none;
+
+  animation:
+    ho-foil-spin
+    6s
+    linear
+    infinite;
+}
+
+
+.promo-card__frame:hover::before {
+  opacity: 1;
+}
+
+
+@keyframes ho-foil-spin {
+  to {
+    background:
+      conic-gradient(
+        from 360deg,
+        transparent 0 70%,
+        rgba(253, 184, 19, 0.9) 85%,
+        transparent 100%
+      );
+  }
+}
+
+
+/* ==========================================================================
+   MEDIA
+   ========================================================================== */
+
+.promo-card__media {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 0;
+}
+
+
+.promo-card--wide .promo-card__media {
+  position: relative;
+
+  inset: auto;
+
+  flex:
+    0 0
+    32%;
+
+  min-width: 150px;
+}
+
+
+.promo-card__image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+
+  transform:
+    scale(1.04)
+    translateZ(0);
+
+  transition:
+    transform 0.5s
+    cubic-bezier(0.16, 1, 0.3, 1);
+
+  filter:
+    saturate(1.1)
+    contrast(1.05);
+}
+
+
+.promo-card__frame:hover .promo-card__image {
+  transform:
+    scale(1.1);
+}
+
+
+/* ==========================================================================
+   SCRIM
+   ========================================================================== */
+
+.promo-card__scrim {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 1;
+}
+
+
+.promo-card--hero .promo-card__scrim {
+  background:
+    linear-gradient(
+      0deg,
+      rgba(10, 41, 31, 0.96) 0%,
+      rgba(10, 41, 31, 0.58) 45%,
+      rgba(10, 41, 31, 0.08) 75%
+    ),
+
+    linear-gradient(
+      180deg,
+      rgba(5, 12, 9, 0.35),
+      transparent 30%
+    );
+}
+
+
+.promo-card--compact .promo-card__scrim {
+  background:
+    linear-gradient(
+      100deg,
+      rgba(24, 90, 63, 0.94) 0%,
+      rgba(24, 90, 63, 0.5) 46%,
+      rgba(24, 90, 63, 0.08) 78%
+    );
+}
+
+
+.home-order__grid
+.promo-card:nth-child(2)
+.promo-card__scrim {
+  background:
+    linear-gradient(
+      100deg,
+      rgba(92, 24, 34, 0.94) 0%,
+      rgba(92, 24, 34, 0.5) 46%,
+      rgba(92, 24, 34, 0.08) 78%
+    );
+}
+
+
+.home-order__grid
+.promo-card:nth-child(3)
+.promo-card__scrim {
+  background:
+    linear-gradient(
+      100deg,
+      rgba(24, 90, 63, 0.94) 0%,
+      rgba(24, 90, 63, 0.5) 46%,
+      rgba(24, 90, 63, 0.08) 78%
+    );
+}
+
+
+.home-order__grid
+.promo-card:nth-child(4)
+.promo-card__scrim {
+  background:
+    linear-gradient(
+      96deg,
+      rgba(140, 88, 21, 0.95) 0%,
+      rgba(140, 88, 21, 0.55) 38%,
+      rgba(140, 88, 21, 0.08) 70%
+    );
+}
+
+
+/* ==========================================================================
+   STEAM
+   ========================================================================== */
+
+.promo-card__steam {
+  position: absolute;
+
+  right: 12%;
+  bottom: 55%;
+
+  width: 32px;
+  height: 45px;
+
+  z-index: 2;
+
+  pointer-events: none;
+
+  opacity: 0.45;
+}
+
+
+.promo-card__steam i {
+  position: absolute;
+
+  bottom: 0;
+
+  width: 4px;
+  height: 25px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0),
+      rgba(253, 184, 19, 0.5)
+    );
+
+  filter: blur(2px);
+
+  animation:
+    ho-steam
+    3.6s
+    ease-in-out
+    infinite;
+}
+
+
+.promo-card__steam i:nth-child(1) {
+  left: 0;
+}
+
+
+.promo-card__steam i:nth-child(2) {
+  left: 11px;
+
+  height: 30px;
+
+  animation-delay: 0.7s;
+}
+
+
+.promo-card__steam i:nth-child(3) {
+  left: 22px;
+
+  animation-delay: 1.4s;
+}
+
+
+@keyframes ho-steam {
+  0% {
+    transform:
+      translateY(0)
+      scaleY(1);
+
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.55;
+  }
+
+  100% {
+    transform:
+      translateY(-35px)
+      scaleY(1.25);
+
+    opacity: 0;
+  }
+}
+
+
+/* ==========================================================================
+   DISCOUNT
+   ========================================================================== */
+
+.promo-card__discount {
+  position: absolute;
+
+  top: 9px;
+  right: 9px;
+
+  z-index: 3;
+
+  width: 43px;
+  height: 43px;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at 30% 25%,
+      var(--ho-gold-soft),
+      var(--ho-gold) 70%
+    );
+
+  color: var(--ho-char);
+
+  box-shadow:
+    0 8px 18px -7px
+    rgba(0, 0, 0, 0.6);
+
+  transform: rotate(-8deg);
+
+  font-weight: 800;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.3);
+}
+
+
+.promo-card__discount::after {
+  content: '';
+
+  position: absolute;
+
+  inset: -4px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid
+    rgba(253, 184, 19, 0.5);
+
+  animation:
+    ho-ring-pulse
+    3.2s
+    ease-in-out
+    infinite;
+}
+
+
+.promo-card__discount-value {
+  font-family: var(--ho-serif);
+
+  font-weight: 680;
+
+  font-size: 0.72rem;
+
+  line-height: 1;
+}
+
+
+.promo-card__discount-label {
+  font-size: 0.35rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.04em;
+
+  margin-top: 1px;
+}
+
+
+/* ==========================================================================
+   CONTENT
+   ========================================================================== */
+
+.promo-card__content {
+  position: relative;
+
+  z-index: 2;
+
+  padding: 0.65rem;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0.12rem;
+}
+
+
+.promo-card--wide .promo-card__content {
+  justify-content: center;
+
+  padding:
+    0.7rem
+    0.85rem;
+}
+
+
+/* ==========================================================================
+   KICKER
+   ========================================================================== */
+
+.promo-card__kicker {
+  margin: 0;
+
+  font-size: 0.52rem;
+
+  font-weight: 800;
+
+  letter-spacing: 0.05em;
+
+  text-transform: uppercase;
+
+  color: var(--ho-gold);
+}
+
+
+/* ==========================================================================
+   TITLE
+   ========================================================================== */
+
+.promo-card__title {
+  margin:
+    0.05rem
+    0
+    0.05rem;
+
+  font-family: var(--ho-serif);
+
+  font-weight: 560;
+
+  font-size: 0.9rem;
+
+  line-height: 1.08;
+
+  color: var(--ho-cream);
+}
+
+
+.promo-card--hero .promo-card__title {
+  font-size:
+    clamp(
+      1.15rem,
+      2vw,
+      1.6rem
+    );
+}
+
+
+/* ==========================================================================
+   NOTE
+   ========================================================================== */
+
+.promo-card__note {
+  margin:
+    0
+    0
+    0.15rem;
+
+  max-width: 30ch;
+
+  font-size: 0.65rem;
+
+  line-height: 1.25;
+
+  color: var(--ho-cream-dim);
+}
+
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.promo-card__footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 0.35rem;
+
+  margin-top: 0.1rem;
+}
+
+
+/* ==========================================================================
+   PRICE
+   ========================================================================== */
+
+.promo-card__price {
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 0.3rem;
+}
+
+
+.promo-card__price-current {
+  font-family: var(--ho-serif);
+
+  font-weight: 600;
+
+  font-size: 0.82rem;
+
+  color: var(--ho-gold-soft);
+}
+
+
+.promo-card__price-old {
+  font-size: 0.56rem;
+
+  color:
+    rgba(
+      249,
+      246,
+      238,
+      0.45
+    );
+
+  text-decoration: line-through;
+}
+
+
+/* ==========================================================================
+   CTA
+   ========================================================================== */
+
+.promo-card__cta {
+  position: relative;
+
+  appearance: none;
+
+  border: none;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 0.25rem;
+
+  padding:
+    0.36rem
+    0.62rem;
+
+  border-radius: 999px;
+
+  background:
+    var(--ho-cream);
+
+  color:
+    var(--ho-char);
+
+  font-family:
+    var(--ho-sans);
+
+  font-weight: 700;
+
+  font-size: 0.6rem;
+
+  letter-spacing: 0.01em;
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+
+.promo-card__cta-icon {
+  width: 11px;
+  height: 11px;
+}
+
+
+.promo-card__cta:hover,
+.promo-card__cta:focus-visible {
+  background:
+    var(--ho-gold);
+
+  color:
+    #1a1200;
+
+  transform:
+    translateY(-1px);
+}
+
+
+.promo-card__cta:focus-visible,
+.promo-card__frame:focus-visible {
+  outline:
+    2px solid
+    var(--ho-gold);
+
+  outline-offset: 3px;
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media (max-width: 840px) {
+
+  .home-order {
+    padding:
+      1.25rem
+      0.8rem;
+  }
+
+
+  .home-order__grid {
+    grid-template-columns: 1fr;
+
+    grid-auto-rows: auto;
+
+    gap: 0.55rem;
+  }
+
+
+  .promo-card--hero,
+  .promo-card--compact,
+  .promo-card--wide {
+    grid-column: 1 / -1;
+
+    grid-row: auto;
+  }
+
+
+  .promo-card--hero .promo-card__frame {
+    min-height: 190px;
+  }
+
+
+  .promo-card--compact .promo-card__frame {
+    min-height: 105px;
+  }
+
+
+  .promo-card--wide .promo-card__frame {
+    min-height: 115px;
+
+    flex-direction: row;
+  }
+
+
+  .promo-card--wide .promo-card__media {
+    flex:
+      0 0
+      30%;
+
+    min-width: 120px;
+  }
+}
+
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media (max-width: 600px) {
+
+  .home-order {
+    padding:
+      1rem
+      0.6rem;
+  }
+
+
+  .home-order__brand {
+    gap: 0.5rem;
+
+    margin-bottom: 0.65rem;
+  }
+
+
+  .home-order__logo-ring {
+    width: 32px;
+    height: 32px;
+  }
+
+
+  .home-order__wordmark-main {
+    font-size: 0.85rem;
+  }
+
+
+  .home-order__wordmark-main em {
+    font-size: 1rem;
+  }
+
+
+  .home-order__wordmark-tag {
+    font-size: 0.6rem;
+  }
+
+
+  .home-order__intro {
+    margin-bottom: 0.7rem;
+  }
+
+
+  .home-order__eyebrow {
+    font-size: 0.52rem;
+  }
+
+
+  .home-order__heading {
+    font-size: 1.18rem;
+
+    line-height: 1.05;
+  }
+
+
+  .home-order__sub {
+    font-size: 0.68rem;
+
+    line-height: 1.25;
+  }
+
+
+  .home-order__grid {
+    gap: 0.45rem;
+  }
+
+
+  .promo-card__frame {
+    min-height: 120px;
+
+    border-radius: 15px;
+  }
+
+
+  .promo-card--hero .promo-card__frame {
+    min-height: 170px;
+  }
+
+
+  .promo-card--compact .promo-card__frame {
+    min-height: 100px;
+  }
+
+
+  .promo-card--wide .promo-card__frame {
+    min-height: 105px;
+
+    border-radius: 15px;
+  }
+
+
+  .promo-card--wide .promo-card__media {
+    flex:
+      0 0
+      31%;
+
+    min-width: 95px;
+  }
+
+
+  .promo-card__content {
+    padding: 0.55rem;
+  }
+
+
+  .promo-card--wide .promo-card__content {
+    padding:
+      0.55rem
+      0.65rem;
+  }
+
+
+  .promo-card__kicker {
+    font-size: 0.47rem;
+  }
+
+
+  .promo-card__title {
+    font-size: 0.82rem;
+  }
+
+
+  .promo-card--hero .promo-card__title {
+    font-size: 1.08rem;
+  }
+
+
+  .promo-card__note {
+    display: none;
+  }
+
+
+  .promo-card__price-current {
+    font-size: 0.74rem;
+  }
+
+
+  .promo-card__price-old {
+    font-size: 0.5rem;
+  }
+
+
+  .promo-card__cta {
+    padding:
+      0.3rem
+      0.5rem;
+
+    font-size: 0.54rem;
+  }
+
+
+  .promo-card__cta-icon {
+    width: 10px;
+    height: 10px;
+  }
+
+
+  .promo-card__discount {
+    width: 38px;
+    height: 38px;
+
+    top: 7px;
+    right: 7px;
+  }
+
+
+  .promo-card__discount-value {
+    font-size: 0.65rem;
+  }
+
+
+  .promo-card__discount-label {
+    font-size: 0.31rem;
+  }
+
+
+  .home-order__leaf--c,
+  .home-order__leaf--e {
+    display: none;
+  }
+}
+
+
+/* ==========================================================================
+   SMALL MOBILE
+   ========================================================================== */
+
+@media (max-width: 400px) {
+
+  .home-order {
+    padding:
+      0.85rem
+      0.5rem;
+  }
+
+
+  .home-order__wordmark-tag {
+    display: none;
+  }
+
+
+  .home-order__heading {
+    font-size: 1.08rem;
+  }
+
+
+  .home-order__sub {
+    font-size: 0.64rem;
+  }
+
+
+  .promo-card__frame {
+    min-height: 108px;
+  }
+
+
+  .promo-card--hero .promo-card__frame {
+    min-height: 150px;
+  }
+
+
+  .promo-card--compact .promo-card__frame {
+    min-height: 92px;
+  }
+
+
+  .promo-card--wide .promo-card__frame {
+    min-height: 96px;
+  }
+
+
+  .promo-card__content {
+    padding: 0.48rem;
+  }
+
+
+  .promo-card__title {
+    font-size: 0.76rem;
+  }
+
+
+  .promo-card--hero .promo-card__title {
+    font-size: 1rem;
+  }
+
+
+  .promo-card__cta {
+    padding:
+      0.27rem
+      0.45rem;
+
+    font-size: 0.5rem;
+  }
+
+
+  .promo-card__discount {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+
+/* ==========================================================================
+   VERY SMALL MOBILE
+   ========================================================================== */
+
+@media (max-width: 340px) {
+
+  .home-order {
+    padding:
+      0.7rem
+      0.4rem;
+  }
+
+
+  .home-order__brand {
+    margin-bottom: 0.5rem;
+  }
+
+
+  .home-order__intro {
+    margin-bottom: 0.55rem;
+  }
+
+
+  .promo-card__price-old {
+    display: none;
+  }
+
+
+  .promo-card__cta {
+    padding:
+      0.25rem
+      0.4rem;
+  }
+
+
+  .promo-card__discount {
+    width: 31px;
+    height: 31px;
+  }
+
+
+  .promo-card__discount-value {
+    font-size: 0.58rem;
+  }
+
+
+  .promo-card__discount-label {
+    font-size: 0.28rem;
+  }
+}
+
+
+/* ==========================================================================
+   ACCESSIBILITY
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .home-order__bloom,
+  .home-order__leaf {
+    animation: none;
+  }
+
+
+  .promo-card {
+    transition: none;
+
+    opacity: 1;
+
+    transform: none;
+  }
+
+
+  .home-order__brand {
+    animation: none;
+
+    opacity: 1;
+  }
+
+
+  .home-order__logo-ring::before,
+  .promo-card__discount::after,
+  .promo-card__frame::before {
+    animation: none;
+  }
+}
