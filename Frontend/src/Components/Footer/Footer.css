@@ -1,0 +1,1135 @@
+/* ============================================================
+   FOOTER MAIN
+============================================================ */
+
+.FooterMain {
+  --FooterGreen: #82c438;
+  --FooterGreenLight: #a1db5c;
+  --FooterGreenDark: #6fa82f;
+
+  --FooterBackground: #202020;
+
+  --FooterWhite: #ffffff;
+
+  --FooterText: #bdbdbd;
+  --FooterMuted: #8f8f8f;
+
+  --FooterBorder: rgba(255, 255, 255, 0.09);
+
+  position: relative;
+
+  width: 100%;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(130, 196, 56, 0.045),
+      transparent 28%
+    ),
+    linear-gradient(
+      180deg,
+      #242424 0%,
+      #1d1d1d 100%
+    );
+
+  color: var(--FooterWhite);
+
+  overflow: hidden;
+
+  isolation: isolate;
+
+  font-family:
+    "Poppins",
+    "Inter",
+    Arial,
+    sans-serif;
+}
+
+
+/* ============================================================
+   SUBTLE TOP GLOW
+============================================================ */
+
+.FooterMain::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  left: 8%;
+
+  width: 84%;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(130, 196, 56, 0.55),
+      transparent
+    );
+
+  opacity: 0.7;
+
+  pointer-events: none;
+}
+
+
+/* ============================================================
+   CONTAINER
+============================================================ */
+
+.FooterContainer {
+  position: relative;
+
+  width:
+    min(
+      1200px,
+      calc(100% - 70px)
+    );
+
+  margin: 0 auto;
+
+  z-index: 5;
+}
+
+
+/* ============================================================
+   TOP SECTION
+============================================================ */
+
+.FooterTop {
+  display: grid;
+
+  grid-template-columns:
+    1.25fr
+    0.85fr
+    1fr
+    0.9fr;
+
+  gap: 50px;
+
+  padding:
+    52px
+    0
+    48px;
+}
+
+
+/* ============================================================
+   COLUMN
+============================================================ */
+
+.FooterColumn {
+  position: relative;
+
+  min-width: 0;
+
+  z-index: 5;
+}
+
+.FooterContactColumn {
+  max-width: 330px;
+}
+
+
+/* ============================================================
+   LOGO
+============================================================ */
+
+.FooterLogoWrapper {
+  display: flex;
+
+  align-items: center;
+
+  height: 62px;
+
+  margin-bottom: 17px;
+}
+
+.FooterLogoLink {
+  display: inline-flex;
+
+  align-items: center;
+
+  text-decoration: none;
+}
+
+.FooterLogo {
+  display: block;
+
+  width: auto;
+
+  max-width: 160px;
+
+  max-height: 75px;
+
+  object-fit: contain;
+
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
+}
+
+.FooterLogoLink:hover .FooterLogo {
+  transform:
+    translateY(-2px)
+    scale(1.03);
+
+  filter:
+    drop-shadow(
+      0 8px 18px
+      rgba(130, 196, 56, 0.2)
+    );
+}
+
+
+/* ============================================================
+   TITLES
+============================================================ */
+
+.FooterTitle {
+  position: relative;
+
+  margin:
+    0
+    0
+    28px;
+
+  color:
+    var(--FooterWhite);
+
+  font-size: 25px;
+
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  letter-spacing: -0.4px;
+}
+
+
+/* GREEN UNDERLINE */
+
+.FooterTitle::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  bottom: -10px;
+
+  width: 40px;
+
+  height: 2px;
+
+  border-radius: 50px;
+
+  background:
+    var(--FooterGreen);
+
+  transition:
+    width 0.35s ease;
+}
+
+.FooterColumn:hover .FooterTitle::after {
+  width: 62px;
+}
+
+
+/* ============================================================
+   CONTACT ITEMS
+============================================================ */
+
+.FooterContactItem {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 13px;
+
+  margin-bottom: 19px;
+
+  color:
+    var(--FooterText);
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  font-weight: 400;
+
+  line-height: 1.65;
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.FooterContactItem:hover {
+  color:
+    var(--FooterWhite);
+
+  transform:
+    translateX(3px);
+}
+
+
+/* ============================================================
+   CONTACT ICON
+============================================================ */
+
+.FooterContactIcon {
+  flex:
+    0
+    0
+    31px;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: flex-start;
+
+  padding-top: 1px;
+
+  color:
+    var(--FooterGreen);
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.FooterContactItem:hover
+.FooterContactIcon {
+  color:
+    var(--FooterGreenLight);
+
+  transform:
+    scale(1.08);
+}
+
+
+/* ============================================================
+   CONTACT TEXT
+============================================================ */
+
+.FooterContactText {
+  min-width: 0;
+}
+
+.FooterContactText a {
+  display: block;
+
+  color: inherit;
+
+  text-decoration: none;
+
+  transition:
+    color 0.25s ease;
+}
+
+.FooterContactText a:hover {
+  color:
+    var(--FooterGreen);
+}
+
+.FooterPhoneText,
+.FooterEmailText {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 1px;
+}
+
+
+/* ============================================================
+   LINK LIST
+============================================================ */
+
+.FooterLinkList {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 13px;
+
+  margin: 0;
+
+  padding: 0;
+
+  list-style: none;
+}
+
+.FooterLinkItem {
+  margin: 0;
+
+  padding: 0;
+}
+
+
+/* ============================================================
+   LINKS
+============================================================ */
+
+.FooterLink {
+  display: inline-flex;
+
+  align-items: center;
+
+  width: fit-content;
+
+  color:
+    var(--FooterText);
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  font-weight: 400;
+
+  line-height: 1.5;
+
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.FooterLink:hover {
+  color:
+    var(--FooterGreen);
+
+  transform:
+    translateX(4px);
+}
+
+
+/* ============================================================
+   LINK ARROW
+============================================================ */
+
+.FooterLinkArrow {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 0;
+
+  overflow: hidden;
+
+  opacity: 0;
+
+  color:
+    var(--FooterGreen);
+
+  transition:
+    width 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.FooterLink:hover .FooterLinkArrow {
+  width: 17px;
+
+  opacity: 1;
+}
+
+
+/* ============================================================
+   ALMOND
+   TOP RIGHT
+============================================================ */
+
+.FooterAlmondDecoration {
+  position: absolute;
+
+  top: 28px;
+
+  right: 28px;
+
+  width: 135px;
+
+  opacity: 0.32;
+
+  pointer-events: none;
+
+  z-index: 1;
+
+  animation:
+    FooterAlmondFloat
+    9s
+    ease-in-out
+    infinite;
+}
+
+.FooterAlmondDecoration img {
+  display: block;
+
+  width: 100%;
+
+  height: auto;
+
+  object-fit: contain;
+
+  filter:
+    grayscale(100%)
+    brightness(0.9);
+}
+
+
+/* ============================================================
+   ALMOND ANIMATION
+============================================================ */
+
+@keyframes FooterAlmondFloat {
+
+  0% {
+    transform:
+      translate3d(0, 0, 0)
+      rotate(-4deg);
+  }
+
+  25% {
+    transform:
+      translate3d(-8px, 5px, 0)
+      rotate(-1deg);
+  }
+
+  50% {
+    transform:
+      translate3d(8px, 10px, 0)
+      rotate(3deg);
+  }
+
+  75% {
+    transform:
+      translate3d(15px, 4px, 0)
+      rotate(1deg);
+  }
+
+  100% {
+    transform:
+      translate3d(0, 0, 0)
+      rotate(-4deg);
+  }
+}
+
+
+/* ============================================================
+   TOMATO
+   SMALL BOTTOM LEFT
+============================================================ */
+
+.FooterTomatoDecoration {
+  position: absolute;
+
+  left: -18px;
+
+  bottom: -8px;
+
+  width: 145px;
+
+  opacity: 0.82;
+
+  pointer-events: none;
+
+  z-index: 1;
+
+  animation:
+    FooterTomatoFloat
+    10s
+    ease-in-out
+    infinite;
+}
+
+.FooterTomatoDecoration img {
+  display: block;
+
+  width: 100%;
+
+  height: auto;
+
+  object-fit: contain;
+}
+
+
+/* ============================================================
+   TOMATO ANIMATION
+============================================================ */
+
+@keyframes FooterTomatoFloat {
+
+  0% {
+    transform:
+      translate3d(0, 0, 0)
+      rotate(-3deg);
+  }
+
+  25% {
+    transform:
+      translate3d(10px, -5px, 0)
+      rotate(-1deg);
+  }
+
+  50% {
+    transform:
+      translate3d(22px, -9px, 0)
+      rotate(2deg);
+  }
+
+  75% {
+    transform:
+      translate3d(12px, -4px, 0)
+      rotate(1deg);
+  }
+
+  100% {
+    transform:
+      translate3d(0, 0, 0)
+      rotate(-3deg);
+  }
+}
+
+
+/* ============================================================
+   BOTTOM
+============================================================ */
+
+.FooterBottom {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  min-height: 68px;
+
+  padding:
+    16px
+    0;
+
+  border-top:
+    1px solid
+    var(--FooterBorder);
+
+  z-index: 8;
+}
+
+
+/* ============================================================
+   COPYRIGHT
+============================================================ */
+
+.FooterCopyright {
+  margin: 0;
+
+  color:
+    var(--FooterMuted);
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+
+/* ============================================================
+   CREATED
+============================================================ */
+
+.FooterCreated {
+  display: flex;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  justify-content: flex-end;
+
+  gap: 6px;
+
+  margin: 0;
+
+  color:
+    var(--FooterMuted);
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+
+/* ============================================================
+   HEART
+============================================================ */
+
+.FooterHeart {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color:
+    #ffffff;
+
+  animation:
+    FooterHeartBeat
+    2.4s
+    ease-in-out
+    infinite;
+}
+
+@keyframes FooterHeartBeat {
+
+  0%,
+  100% {
+    transform:
+      scale(1);
+  }
+
+  50% {
+    transform:
+      scale(1.16);
+  }
+}
+
+
+/* ============================================================
+   PR WEBSTOCK
+============================================================ */
+
+.FooterBrand {
+  color:
+    var(--FooterGreen);
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  transition:
+    color 0.25s ease,
+    text-shadow 0.25s ease;
+}
+
+.FooterBrand:hover {
+  color:
+    var(--FooterGreenLight);
+
+  text-shadow:
+    0 0 14px
+    rgba(130, 196, 56, 0.35);
+}
+
+
+/* ============================================================
+   SCROLL TO TOP
+============================================================ */
+
+.FooterScrollTop {
+  position: absolute;
+
+  right: 28px;
+
+  bottom: 13px;
+
+  width: 56px;
+
+  height: 56px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border:
+    2px solid
+    var(--FooterGreen);
+
+  border-radius: 50%;
+
+  background:
+    rgba(29, 29, 29, 0.92);
+
+  color:
+    var(--FooterGreen);
+
+  cursor: pointer;
+
+  z-index: 30;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.FooterScrollTop:hover {
+  background:
+    var(--FooterGreen);
+
+  color:
+    #171717;
+
+  transform:
+    translateY(-5px);
+
+  box-shadow:
+    0 12px 30px
+    rgba(130, 196, 56, 0.3);
+}
+
+.FooterScrollTop:active {
+  transform:
+    translateY(-2px)
+    scale(0.96);
+}
+
+
+/* ============================================================
+   TABLET
+============================================================ */
+
+@media (max-width: 1100px) {
+
+  .FooterContainer {
+    width:
+      min(
+        920px,
+        calc(100% - 50px)
+      );
+  }
+
+  .FooterTop {
+    grid-template-columns:
+      repeat(2, 1fr);
+
+    gap:
+      42px
+      50px;
+
+    padding:
+      48px
+      0
+      42px;
+  }
+
+  .FooterContactColumn {
+    max-width: 100%;
+  }
+
+  .FooterAlmondDecoration {
+    width: 110px;
+
+    right: 15px;
+  }
+
+  .FooterTomatoDecoration {
+    width: 125px;
+
+    left: -18px;
+  }
+}
+
+
+/* ============================================================
+   TABLET / MOBILE
+============================================================ */
+
+@media (max-width: 768px) {
+
+  .FooterContainer {
+    width:
+      calc(100% - 40px);
+  }
+
+  .FooterTop {
+    gap:
+      38px
+      32px;
+
+    padding:
+      44px
+      0
+      38px;
+  }
+
+  .FooterTitle {
+    font-size: 22px;
+  }
+
+  .FooterContactItem,
+  .FooterLink {
+    font-size: 14px;
+  }
+
+  .FooterAlmondDecoration {
+    width: 90px;
+
+    top: 12px;
+
+    right: 4px;
+
+    opacity: 0.25;
+  }
+
+  .FooterTomatoDecoration {
+    width: 105px;
+
+    left: -15px;
+
+    bottom: -4px;
+
+    opacity: 0.68;
+  }
+
+  .FooterScrollTop {
+    width: 50px;
+
+    height: 50px;
+
+    right: 15px;
+
+    bottom: 10px;
+  }
+
+  .FooterBottom {
+    padding-right: 70px;
+  }
+}
+
+
+/* ============================================================
+   MOBILE
+============================================================ */
+
+@media (max-width: 600px) {
+
+  .FooterContainer {
+    width:
+      calc(100% - 30px);
+  }
+
+  .FooterTop {
+    grid-template-columns: 1fr;
+
+    gap: 32px;
+
+    padding:
+      38px
+      0
+      34px;
+  }
+
+  .FooterLogoWrapper {
+    height: 55px;
+
+    margin-bottom: 14px;
+  }
+
+  .FooterLogo {
+    max-width: 135px;
+
+    max-height: 53px;
+  }
+
+  .FooterTitle {
+    font-size: 20px;
+
+    margin-bottom: 26px;
+  }
+
+  .FooterLinkList {
+    gap: 12px;
+  }
+
+  .FooterContactItem {
+    margin-bottom: 16px;
+
+    font-size: 13px;
+  }
+
+  .FooterLink {
+    font-size: 13px;
+  }
+
+  .FooterContactIcon {
+    flex-basis: 29px;
+  }
+
+
+  /* ------------------------------------------
+     DECORATIONS
+  ------------------------------------------ */
+
+  .FooterAlmondDecoration {
+    width: 70px;
+
+    right: -8px;
+
+    top: 8px;
+
+    opacity: 0.22;
+  }
+
+  .FooterTomatoDecoration {
+    width: 82px;
+
+    left: -14px;
+
+    bottom: -2px;
+
+    opacity: 0.62;
+  }
+
+
+  /* ------------------------------------------
+     BOTTOM
+  ------------------------------------------ */
+
+  .FooterBottom {
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 8px;
+
+    min-height: auto;
+
+    padding:
+      17px
+      65px
+      20px
+      10px;
+
+    text-align: center;
+  }
+
+  .FooterCopyright,
+  .FooterCreated {
+    font-size: 11px;
+  }
+
+
+  /* ------------------------------------------
+     SCROLL TOP
+  ------------------------------------------ */
+
+  .FooterScrollTop {
+    width: 46px;
+
+    height: 46px;
+
+    right: 10px;
+
+    bottom: 12px;
+  }
+
+  .FooterScrollTop svg {
+    width: 20px;
+
+    height: 20px;
+  }
+}
+
+
+/* ============================================================
+   VERY SMALL DEVICES
+============================================================ */
+
+@media (max-width: 380px) {
+
+  .FooterContainer {
+    width:
+      calc(100% - 24px);
+  }
+
+  .FooterTop {
+    gap: 29px;
+
+    padding:
+      34px
+      0
+      30px;
+  }
+
+  .FooterTitle {
+    font-size: 19px;
+  }
+
+  .FooterContactItem,
+  .FooterLink {
+    font-size: 12.5px;
+  }
+
+  .FooterAlmondDecoration {
+    width: 58px;
+
+    right: -8px;
+  }
+
+  .FooterTomatoDecoration {
+    width: 70px;
+
+    left: -12px;
+  }
+
+  .FooterScrollTop {
+    width: 43px;
+
+    height: 43px;
+
+    right: 8px;
+
+    bottom: 10px;
+  }
+}
+
+
+/* ============================================================
+   ACCESSIBILITY
+============================================================ */
+
+.FooterLink:focus-visible,
+.FooterBrand:focus-visible,
+.FooterScrollTop:focus-visible {
+  outline:
+    2px solid
+    var(--FooterGreen);
+
+  outline-offset: 4px;
+}
+
+
+/* ============================================================
+   REDUCED MOTION
+============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .FooterMain *,
+  .FooterMain *::before,
+  .FooterMain *::after {
+    animation-duration:
+      0.01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      0.01ms !important;
+  }
+}
