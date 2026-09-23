@@ -1,0 +1,1145 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
+
+/* =========================================================
+   HEALTHY HEAVEN SIDEBAR
+========================================================= */
+
+.HealthySidebar {
+  --green-950: #003d2d;
+  --green-900: #004b36;
+  --green-850: #00563d;
+  --green-800: #006644;
+  --green-700: #08794c;
+  --green-600: #0b914e;
+  --green-500: #22b65d;
+  --green-400: #55cf70;
+
+  --white: #ffffff;
+  --white-90: rgba(255, 255, 255, 0.9);
+  --white-75: rgba(255, 255, 255, 0.75);
+  --white-55: rgba(255, 255, 255, 0.55);
+  --white-35: rgba(255, 255, 255, 0.35);
+  --white-15: rgba(255, 255, 255, 0.15);
+  --white-08: rgba(255, 255, 255, 0.08);
+
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  width: 270px;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  color: var(--white);
+
+  background:
+    radial-gradient(
+      circle at 15% 0%,
+      rgba(69, 196, 103, 0.22),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 100% 80%,
+      rgba(0, 176, 108, 0.16),
+      transparent 30%
+    ),
+    linear-gradient(
+      160deg,
+      #005b3e 0%,
+      #004b36 28%,
+      #003c2d 60%,
+      #002d23 100%
+    );
+
+  font-family:
+    "DM Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  overflow: hidden;
+
+  z-index: 1200;
+
+  box-shadow:
+    10px 0 35px rgba(0, 47, 35, 0.18),
+    inset -1px 0 rgba(255, 255, 255, 0.07);
+
+  transition:
+    width 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* =========================================================
+   COLLAPSED
+========================================================= */
+
+.HealthySidebar.is-collapsed {
+  width: 82px;
+}
+
+/* =========================================================
+   BACKGROUND GLOWS
+========================================================= */
+
+.HealthySidebar-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(2px);
+}
+
+.HealthySidebar-glow-one {
+  width: 180px;
+  height: 180px;
+
+  top: -80px;
+  right: -80px;
+
+  background: rgba(87, 216, 105, 0.14);
+}
+
+.HealthySidebar-glow-two {
+  width: 240px;
+  height: 240px;
+
+  bottom: -130px;
+  left: -90px;
+
+  background: rgba(35, 180, 100, 0.12);
+}
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.HealthySidebar-brand {
+  height: 84px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 10px 14px;
+
+  flex-shrink: 0;
+
+  position: relative;
+  z-index: 3;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.06);
+}
+
+.HealthySidebar.is-collapsed
+  .HealthySidebar-brand {
+  justify-content: center;
+  padding: 10px;
+}
+
+/* LOGO */
+
+.HealthySidebar-brand-logo {
+  width: 52px;
+  height: 52px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border:
+    2px solid rgba(255, 255, 255, 0.75);
+
+  box-shadow:
+    0 5px 18px rgba(0, 0, 0, 0.2);
+}
+
+.HealthySidebar-brand-logo img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+/* BRAND TEXT */
+
+.HealthySidebar-brand-content {
+  min-width: 0;
+
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.HealthySidebar-brand-content h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-family:
+    "Plus Jakarta Sans",
+    sans-serif;
+
+  font-size: 17px;
+  font-weight: 800;
+
+  letter-spacing: -0.45px;
+
+  white-space: nowrap;
+}
+
+.HealthySidebar-brand-content span {
+  color: rgba(255, 255, 255, 0.68);
+
+  font-size: 11px;
+  font-weight: 500;
+
+  white-space: nowrap;
+}
+
+/* COLLAPSE BUTTON */
+
+.HealthySidebar-collapse {
+  width: 31px;
+  height: 31px;
+
+  border: 0;
+  border-radius: 9px;
+
+  background:
+    rgba(255, 255, 255, 0.12);
+
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.HealthySidebar-collapse:hover {
+  background:
+    rgba(255, 255, 255, 0.2);
+
+  transform: scale(1.05);
+}
+
+.HealthySidebar.is-collapsed
+  .HealthySidebar-collapse {
+  display: none;
+}
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.HealthySidebar-profile {
+  width: calc(100% - 24px);
+
+  margin: 12px;
+
+  padding: 10px;
+
+  border-radius: 15px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.1);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.045)
+    );
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+  text-align: left;
+
+  flex-shrink: 0;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.HealthySidebar-profile:hover {
+  background:
+    rgba(255, 255, 255, 0.13);
+
+  border-color:
+    rgba(255, 255, 255, 0.18);
+}
+
+.HealthySidebar-avatar {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: visible;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #d7f4df
+    );
+
+  color: #007044;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  border:
+    2px solid rgba(255, 255, 255, 0.65);
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+.HealthySidebar-avatar img {
+  width: 100%;
+  height: 100%;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+}
+
+.HealthySidebar-status {
+  position: absolute;
+
+  right: -1px;
+  bottom: 1px;
+
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  background: #45dc83;
+
+  border:
+    2px solid #07583e;
+
+  box-shadow:
+    0 0 7px rgba(69, 220, 131, 0.8);
+}
+
+.HealthySidebar-profile-info {
+  min-width: 0;
+
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 1px;
+}
+
+.HealthySidebar-profile-info strong {
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.HealthySidebar-profile-info span {
+  color:
+    rgba(255, 255, 255, 0.6);
+
+  font-size: 10.5px;
+  font-weight: 500;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.HealthySidebar-profile-info small {
+  margin-top: 2px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  color: #5ee88d;
+
+  font-size: 9.5px;
+  font-weight: 700;
+}
+
+.HealthySidebar-profile-info small i {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: #5ee88d;
+}
+
+.HealthySidebar-profile-arrow {
+  color:
+    rgba(255, 255, 255, 0.45);
+
+  flex-shrink: 0;
+}
+
+/* COLLAPSED PROFILE */
+
+.HealthySidebar.is-collapsed
+  .HealthySidebar-profile {
+  width: calc(100% - 20px);
+
+  margin: 10px;
+
+  padding: 8px;
+
+  justify-content: center;
+}
+
+.HealthySidebar.is-collapsed
+  .HealthySidebar-avatar {
+  width: 43px;
+  height: 43px;
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.HealthySidebar-nav {
+  flex: 1;
+
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding:
+    4px 11px 15px;
+
+  position: relative;
+  z-index: 2;
+}
+
+.HealthySidebar-nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+.HealthySidebar-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.HealthySidebar-nav::-webkit-scrollbar-thumb {
+  background:
+    rgba(255, 255, 255, 0.18);
+
+  border-radius: 20px;
+}
+
+.HealthySidebar-nav {
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    rgba(255, 255, 255, 0.18)
+    transparent;
+}
+
+/* =========================================================
+   SECTION TITLES
+========================================================= */
+
+.HealthySidebar-section {
+  height: 30px;
+
+  display: flex;
+  align-items: flex-end;
+
+  padding:
+    0 12px 5px;
+
+  margin-top: 7px;
+}
+
+.HealthySidebar-section p {
+  margin: 0;
+
+  color:
+    rgba(255, 255, 255, 0.48);
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.12em;
+}
+
+.HealthySidebar-section span {
+  display: none;
+}
+
+/* =========================================================
+   NORMAL LINKS
+========================================================= */
+
+.HealthySidebar-link {
+  width: 100%;
+
+  min-height: 44px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding:
+    10px 12px;
+
+  margin: 2px 0;
+
+  border-radius: 11px;
+
+  border: 0;
+
+  background: transparent;
+
+  color:
+    rgba(255, 255, 255, 0.78);
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+  font-size: 12.5px;
+
+  font-weight: 600;
+
+  text-align: left;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.HealthySidebar-link:hover {
+  color: #ffffff;
+
+  background:
+    rgba(255, 255, 255, 0.075);
+
+  transform: translateX(2px);
+}
+
+.HealthySidebar-icon {
+  width: 22px;
+  min-width: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color:
+    rgba(255, 255, 255, 0.72);
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.HealthySidebar-link:hover
+  .HealthySidebar-icon {
+  color: #ffffff;
+
+  transform: scale(1.05);
+}
+
+.HealthySidebar-text {
+  flex: 1;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+.HealthySidebar-dashboard {
+  min-height: 46px;
+
+  margin-top: 2px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #42c963 0%,
+      #20ad54 55%,
+      #159b49 100%
+    );
+
+  border:
+    1px solid rgba(255, 255, 255, 0.12);
+
+  box-shadow:
+    0 8px 20px rgba(16, 142, 69, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+
+  font-weight: 700;
+}
+
+.HealthySidebar-dashboard:hover {
+  background:
+    linear-gradient(
+      135deg,
+      #4bd36b,
+      #1ba84f
+    );
+
+  transform: translateY(-1px);
+}
+
+.HealthySidebar-dashboard.HealthySidebar-active {
+  color: #ffffff;
+}
+
+/* =========================================================
+   ACTIVE LINK
+========================================================= */
+
+.HealthySidebar-link.HealthySidebar-active:not(
+    .HealthySidebar-dashboard
+  ) {
+  color: #ffffff;
+
+  background:
+    rgba(66, 201, 99, 0.14);
+
+  box-shadow:
+    inset 3px 0 0 #58d878;
+}
+
+.HealthySidebar-link.HealthySidebar-active
+  .HealthySidebar-icon {
+  color: #64dd80;
+}
+
+/* =========================================================
+   ARROWS
+========================================================= */
+
+.HealthySidebar-arrow {
+  margin-left: auto;
+
+  color:
+    rgba(255, 255, 255, 0.4);
+
+  flex-shrink: 0;
+}
+
+.HealthySidebar-dropdown-arrow {
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease;
+}
+
+.HealthySidebar-dropdown-open
+  .HealthySidebar-dropdown-arrow {
+  transform: rotate(180deg);
+
+  color: #73e58d;
+}
+
+/* =========================================================
+   DROPDOWN
+========================================================= */
+
+.HealthySidebar-dropdown {
+  width: 100%;
+}
+
+.HealthySidebar-dropdown-button {
+  appearance: none;
+}
+
+.HealthySidebar-dropdown-open
+  > .HealthySidebar-dropdown-button {
+  background:
+    rgba(255, 255, 255, 0.075);
+
+  color: #ffffff;
+}
+
+/* =========================================================
+   SUB MENU
+========================================================= */
+
+.HealthySidebar-submenu {
+  max-height: 0;
+
+  opacity: 0;
+
+  overflow: hidden;
+
+  margin:
+    0 8px 0 28px;
+
+  padding-left: 8px;
+
+  border-left:
+    1px solid rgba(255, 255, 255, 0.12);
+
+  transition:
+    max-height 0.3s ease,
+    opacity 0.25s ease,
+    padding 0.3s ease;
+}
+
+.HealthySidebar-dropdown-open
+  .HealthySidebar-submenu {
+  max-height: 300px;
+
+  opacity: 1;
+
+  padding-top: 3px;
+  padding-bottom: 4px;
+}
+
+.HealthySidebar-submenu-link {
+  min-height: 34px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  padding:
+    7px 9px;
+
+  margin: 2px 0;
+
+  border-radius: 8px;
+
+  color:
+    rgba(255, 255, 255, 0.62);
+
+  text-decoration: none;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    padding-left 0.2s ease;
+}
+
+.HealthySidebar-submenu-link:hover {
+  color: #ffffff;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+
+  padding-left: 13px;
+}
+
+.HealthySidebar-submenu-active {
+  color: #0c7446 !important;
+
+  background:
+    #eaffee;
+
+  font-weight: 700;
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.HealthySidebar-submenu-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 17px;
+
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   BOTTOM AREA
+========================================================= */
+
+.HealthySidebar-bottom {
+  position: relative;
+
+  z-index: 4;
+
+  flex-shrink: 0;
+
+  padding:
+    8px 11px 10px;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(0, 38, 28, 0.5),
+      transparent
+    );
+}
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+.HealthySidebar-logout {
+  width: 100%;
+
+  min-height: 43px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding:
+    10px 13px;
+
+  border-radius: 11px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.05);
+
+  color:
+    rgba(255, 255, 255, 0.84);
+
+  background:
+    rgba(255, 255, 255, 0.055);
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.HealthySidebar-logout:hover {
+  color: #ffffff;
+
+  background:
+    rgba(255, 89, 89, 0.16);
+
+  border-color:
+    rgba(255, 110, 110, 0.2);
+}
+
+.HealthySidebar.is-collapsed
+  .HealthySidebar-logout {
+  justify-content: center;
+
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.HealthySidebar-footer {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  padding:
+    8px 4px 0;
+
+  color:
+    rgba(255, 255, 255, 0.35);
+
+  font-size: 8.5px;
+
+  font-weight: 500;
+}
+
+/* =========================================================
+   LEAF DECORATION
+========================================================= */
+
+.HealthySidebar-leaves {
+  position: absolute;
+
+  right: -7px;
+  bottom: -6px;
+
+  width: 110px;
+  height: 95px;
+
+  pointer-events: none;
+
+  opacity: 0.65;
+
+  z-index: 1;
+}
+
+.leaf {
+  position: absolute;
+
+  display: block;
+
+  width: 31px;
+  height: 55px;
+
+  border-radius:
+    100% 0 100% 0;
+
+  background:
+    linear-gradient(
+      145deg,
+      #3bc965,
+      #087b48
+    );
+
+  transform-origin: bottom center;
+
+  box-shadow:
+    inset 3px 2px 5px
+      rgba(255, 255, 255, 0.13);
+}
+
+.leaf-one {
+  right: 7px;
+  bottom: 3px;
+
+  transform:
+    rotate(35deg);
+}
+
+.leaf-two {
+  right: 32px;
+  bottom: 0;
+
+  transform:
+    rotate(-27deg)
+    scale(0.82);
+}
+
+.leaf-three {
+  right: 53px;
+  bottom: -1px;
+
+  transform:
+    rotate(-52deg)
+    scale(0.62);
+}
+
+.leaf-four {
+  right: 5px;
+  bottom: 39px;
+
+  transform:
+    rotate(58deg)
+    scale(0.55);
+}
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.HealthySidebar-overlay {
+  display: none;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+  .HealthySidebar {
+    width: 250px;
+  }
+
+  .HealthySidebar.is-collapsed {
+    width: 78px;
+  }
+
+  .HealthySidebar-brand-content h2 {
+    font-size: 15px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+  .HealthySidebar {
+    width: 270px;
+
+    transform:
+      translateX(-105%);
+
+    box-shadow:
+      12px 0 40px
+      rgba(0, 43, 31, 0.35);
+  }
+
+  .HealthySidebar.is-mobile-open {
+    transform:
+      translateX(0);
+  }
+
+  .HealthySidebar.is-collapsed {
+    width: 270px;
+
+    transform:
+      translateX(-105%);
+  }
+
+  .HealthySidebar.is-collapsed.is-mobile-open {
+    width: 270px;
+
+    transform:
+      translateX(0);
+  }
+
+  .HealthySidebar-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    display: block;
+
+    background:
+      rgba(0, 30, 21, 0.46);
+
+    backdrop-filter:
+      blur(2px);
+
+    z-index: 1190;
+  }
+
+  .HealthySidebar-collapse {
+    display: flex;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+  .HealthySidebar {
+    width: 285px;
+  }
+
+  .HealthySidebar.is-collapsed {
+    width: 285px;
+  }
+
+  .HealthySidebar-brand {
+    height: 80px;
+  }
+
+  .HealthySidebar-brand-logo {
+    width: 48px;
+    height: 48px;
+  }
+
+  .HealthySidebar-brand-content h2 {
+    font-size: 16px;
+  }
+
+  .HealthySidebar-link {
+    min-height: 45px;
+
+    font-size: 12.5px;
+  }
+
+  .HealthySidebar-section {
+    margin-top: 8px;
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.HealthySidebar button:focus-visible,
+.HealthySidebar a:focus-visible {
+  outline:
+    2px solid #72e88b;
+
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .HealthySidebar,
+  .HealthySidebar *,
+  .HealthySidebar *::before,
+  .HealthySidebar *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
