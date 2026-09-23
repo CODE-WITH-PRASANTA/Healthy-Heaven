@@ -1,0 +1,1125 @@
+/* =========================================================
+   FAQ MAIN
+========================================================= */
+
+.FaqMain {
+  width: 100%;
+  overflow: hidden;
+
+  background: #ffffff;
+
+  color: #151515;
+
+  font-family:
+    "Poppins",
+    "Segoe UI",
+    Arial,
+    sans-serif;
+}
+
+
+/* =========================================================
+   FAQ CONTAINER
+========================================================= */
+
+.FaqMain__container {
+  width: min(100% - 48px, 1025px);
+
+  margin: 0 auto;
+
+  padding: 90px 0 80px;
+}
+
+
+/* =========================================================
+   FAQ HEADING
+========================================================= */
+
+.FaqMain__heading {
+  max-width: 720px;
+
+  margin: 0 auto 58px;
+
+  text-align: center;
+}
+
+
+.FaqMain__eyebrow {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-bottom: 14px;
+
+  color: #82b440;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: 2.8px;
+
+  text-transform: uppercase;
+}
+
+
+.FaqMain__eyebrow::before,
+.FaqMain__eyebrow::after {
+  content: "";
+
+  width: 24px;
+
+  height: 1px;
+
+  background: #82b440;
+}
+
+
+.FaqMain__title {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: clamp(34px, 4vw, 52px);
+
+  line-height: 1.08;
+
+  font-weight: 700;
+
+  letter-spacing: -1.8px;
+}
+
+
+.FaqMain__title span {
+  color: #82b440;
+}
+
+
+.FaqMain__subtitle {
+  max-width: 610px;
+
+  margin: 20px auto 0;
+
+  color: #6b7280;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   FAQ ACCORDION
+========================================================= */
+
+.FaqMain__accordion {
+  width: 100%;
+
+  border-top: 1px solid #d7d7d7;
+}
+
+
+.FaqMain__item {
+  border-bottom: 1px solid #d7d7d7;
+
+  background: #ffffff;
+
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease;
+}
+
+
+.FaqMain__item--active {
+  background: #fbfdf8;
+}
+
+
+/* =========================================================
+   QUESTION
+========================================================= */
+
+.FaqMain__question {
+  width: 100%;
+
+  min-height: 100px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 25px;
+
+  padding: 0;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  text-align: left;
+}
+
+
+.FaqMain__questionText {
+  display: flex;
+
+  align-items: center;
+
+  gap: 22px;
+
+  min-width: 0;
+
+  color: #111827;
+
+  font-size: 18px;
+
+  line-height: 1.5;
+
+  font-weight: 500;
+
+  transition: color 0.3s ease;
+}
+
+
+.FaqMain__item:hover .FaqMain__questionText {
+  color: #82b440;
+}
+
+
+.FaqMain__item--active .FaqMain__questionText {
+  color: #82b440;
+}
+
+
+.FaqMain__questionLabel {
+  display: block;
+}
+
+
+/* =========================================================
+   FAQ NUMBER
+========================================================= */
+
+.FaqMain__number {
+  min-width: 35px;
+
+  color: #a4a7aa;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  transition: color 0.3s ease;
+}
+
+
+.FaqMain__item--active .FaqMain__number {
+  color: #82b440;
+}
+
+
+/* =========================================================
+   PLUS / MINUS BUTTON
+========================================================= */
+
+.FaqMain__icon {
+  position: relative;
+
+  width: 37px;
+
+  height: 37px;
+
+  flex: 0 0 37px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border: 1.5px solid #171717;
+
+  border-radius: 50%;
+
+  color: #171717;
+
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    color 0.35s ease,
+    transform 0.35s ease;
+}
+
+
+.FaqMain__item:hover .FaqMain__icon {
+  border-color: #82b440;
+
+  color: #82b440;
+
+  transform: scale(1.06);
+}
+
+
+.FaqMain__icon--active {
+  border-color: #82b440 !important;
+
+  background: #82b440;
+
+  color: #ffffff !important;
+
+  transform: rotate(0deg) !important;
+}
+
+
+/* =========================================================
+   PLUS / MINUS LINES
+========================================================= */
+
+.FaqMain__iconHorizontal,
+.FaqMain__iconVertical {
+  position: absolute;
+
+  width: 13px;
+
+  height: 1.5px;
+
+  border-radius: 2px;
+
+  background: currentColor;
+
+  transition:
+    transform 0.3s ease,
+    opacity 0.25s ease;
+}
+
+
+.FaqMain__iconVertical {
+  transform: rotate(90deg);
+}
+
+
+.FaqMain__iconVertical--hidden {
+  opacity: 0;
+
+  transform: rotate(90deg) scale(0);
+}
+
+
+/* =========================================================
+   ANSWER ANIMATION
+========================================================= */
+
+.FaqMain__answerWrapper {
+  display: grid;
+
+  grid-template-rows: 0fr;
+
+  opacity: 0;
+
+  transition:
+    grid-template-rows 0.45s
+      cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.35s ease;
+}
+
+
+.FaqMain__answerWrapper--open {
+  grid-template-rows: 1fr;
+
+  opacity: 1;
+}
+
+
+.FaqMain__answer {
+  overflow: hidden;
+}
+
+
+.FaqMain__answer p {
+  max-width: 760px;
+
+  margin: 0;
+
+  padding:
+    0
+    65px
+    32px
+    57px;
+
+  color: #667085;
+
+  font-size: 15px;
+
+  line-height: 1.85;
+
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   NEWSLETTER
+========================================================= */
+
+.FaqMain__newsletter {
+  width: 100%;
+
+  padding: 65px 24px 100px;
+
+  background:
+    radial-gradient(
+      circle at 15% 50%,
+      rgba(130, 180, 64, 0.09),
+      transparent 32%
+    ),
+    #ffffff;
+}
+
+
+.FaqMain__newsletterContainer {
+  position: relative;
+
+  width: min(100%, 1025px);
+
+  min-height: 390px;
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    390px
+    minmax(0, 1fr);
+
+  align-items: center;
+
+  gap: 55px;
+
+  padding: 50px 60px;
+
+  border-radius: 25px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 25px 70px rgba(31, 41, 55, 0.08),
+    0 3px 15px rgba(31, 41, 55, 0.04);
+}
+
+
+/* =========================================================
+   NEWSLETTER IMAGE
+========================================================= */
+
+.FaqMain__newsletterImageBox {
+  position: relative;
+
+  width: 100%;
+
+  height: 300px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+
+.FaqMain__newsletterGlow {
+  position: absolute;
+
+  width: 230px;
+
+  height: 230px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(130, 180, 64, 0.08);
+
+  filter: blur(15px);
+}
+
+
+/*
+  IMPORTANT:
+  Smooth floating animation.
+  Only a tiny tilt.
+  No complete 360 degree rotation.
+*/
+
+.FaqMain__newsletterImage {
+  position: relative;
+
+  z-index: 2;
+
+  width: 100%;
+
+  max-width: 360px;
+
+  height: auto;
+
+  object-fit: contain;
+
+  transform-origin: center center;
+
+  animation:
+    FaqMainNewsletterFloat
+    5.5s
+    ease-in-out
+    infinite;
+
+  filter:
+    drop-shadow(
+      0 18px 22px
+      rgba(25, 45, 25, 0.10)
+    );
+}
+
+
+@keyframes FaqMainNewsletterFloat {
+
+  0% {
+    transform:
+      translate3d(0, 0, 0)
+      rotate(-1deg);
+  }
+
+  25% {
+    transform:
+      translate3d(0, -9px, 0)
+      rotate(1.2deg);
+  }
+
+  50% {
+    transform:
+      translate3d(0, -15px, 0)
+      rotate(-0.8deg);
+  }
+
+  75% {
+    transform:
+      translate3d(0, -7px, 0)
+      rotate(1deg);
+  }
+
+  100% {
+    transform:
+      translate3d(0, 0, 0)
+      rotate(-1deg);
+  }
+}
+
+
+/* =========================================================
+   NEWSLETTER CONTENT
+========================================================= */
+
+.FaqMain__newsletterContent {
+  position: relative;
+
+  z-index: 3;
+}
+
+
+.FaqMain__newsletterLabel {
+  display: inline-block;
+
+  margin-bottom: 11px;
+
+  color: #82b440;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 2.5px;
+
+  text-transform: uppercase;
+}
+
+
+.FaqMain__newsletterTitle {
+  margin: 0 0 15px;
+
+  color: #161616;
+
+  font-size: clamp(40px, 4vw, 58px);
+
+  line-height: 1;
+
+  font-weight: 700;
+
+  letter-spacing: -2px;
+}
+
+
+.FaqMain__newsletterText {
+  max-width: 550px;
+
+  margin: 0 0 26px;
+
+  color: #667085;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   NEWSLETTER FORM
+========================================================= */
+
+.FaqMain__newsletterForm {
+  width: 100%;
+
+  max-width: 570px;
+
+  height: px;
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 6px;
+
+  border: 1px solid #d5d8dc;
+
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 8px 25px
+    rgba(20, 30, 20, 0.04);
+
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+.FaqMain__newsletterForm:focus-within {
+  border-color: #82b440;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(130, 180, 64, 0.10);
+}
+
+
+/* =========================================================
+   EMAIL INPUT
+========================================================= */
+
+.FaqMain__newsletterInput {
+  min-width: 0;
+
+  flex: 1;
+
+  height: 100%;
+
+  padding: 0 20px;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  color: #1f2937;
+
+  font-family: inherit;
+
+  font-size: 14px;
+}
+
+
+.FaqMain__newsletterInput::placeholder {
+  color: #7c8795;
+}
+
+
+/* =========================================================
+   PREMIUM SUBMIT BUTTON
+========================================================= */
+
+.FaqMain__newsletterButton {
+  position: relative;
+
+  overflow: hidden;
+
+  width: 122px;
+
+  height: 56px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border: 1px solid #82b440;
+
+  border-radius: 7px;
+
+  outline: none;
+
+  background: #82b440;
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    color 0.4s ease,
+    border-color 0.4s ease,
+    transform 0.2s ease;
+}
+
+
+/*
+  White fill starts from TOP
+  and smoothly travels to BOTTOM.
+*/
+
+.FaqMain__newsletterButton::before {
+  content: "";
+
+  position: absolute;
+
+  z-index: 0;
+
+  left: 0;
+
+  top: 0;
+
+  width: 100%;
+
+  height: 0%;
+
+  background: #ffffff;
+
+  transition:
+    height 0.45s
+    cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+
+.FaqMain__newsletterButton span {
+  position: relative;
+
+  z-index: 2;
+}
+
+
+.FaqMain__newsletterButton:hover {
+  color: #82b440;
+
+  border-color: #82b440;
+}
+
+
+.FaqMain__newsletterButton:hover::before {
+  height: 100%;
+}
+
+
+.FaqMain__newsletterButton:active {
+  transform: scale(0.97);
+}
+
+
+/* =========================================================
+   NEWSLETTER NOTE
+========================================================= */
+
+.FaqMain__newsletterNote {
+  margin: 12px 0 0;
+
+  color: #9aa1aa;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .FaqMain__container {
+    width: min(100% - 32px, 600px);
+
+    padding:
+      65px
+      0
+      60px;
+  }
+
+
+  .FaqMain__heading {
+    margin-bottom: 40px;
+  }
+
+
+  .FaqMain__title {
+    letter-spacing: -1.2px;
+  }
+
+
+  .FaqMain__subtitle {
+    font-size: 14px;
+  }
+
+
+  .FaqMain__question {
+    min-height: 86px;
+  }
+
+
+  .FaqMain__questionText {
+    gap: 14px;
+
+    font-size: 16px;
+  }
+
+
+  .FaqMain__number {
+    min-width: 29px;
+
+    font-size: 10px;
+  }
+
+
+  .FaqMain__icon {
+    width: 34px;
+
+    height: 34px;
+
+    flex-basis: 34px;
+  }
+
+
+  .FaqMain__answer p {
+    padding:
+      0
+      45px
+      28px
+      43px;
+
+    font-size: 14px;
+  }
+
+
+  /* Newsletter */
+
+  .FaqMain__newsletter {
+    padding:
+      40px
+      16px
+      70px;
+  }
+
+
+  .FaqMain__newsletterContainer {
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+
+    padding:
+      40px
+      25px
+      45px;
+
+    border-radius: 22px;
+  }
+
+
+  .FaqMain__newsletterImageBox {
+    height: 240px;
+  }
+
+
+  .FaqMain__newsletterImage {
+    max-width: 290px;
+  }
+
+
+  .FaqMain__newsletterContent {
+    text-align: center;
+  }
+
+
+  .FaqMain__newsletterText {
+    margin-left: auto;
+
+    margin-right: auto;
+  }
+
+
+  .FaqMain__newsletterForm {
+    margin: 0 auto;
+  }
+
+
+  .FaqMain__newsletterNote {
+    text-align: center;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .FaqMain__container {
+    width: calc(100% - 28px);
+
+    padding:
+      50px
+      0;
+  }
+
+
+  .FaqMain__heading {
+    margin-bottom: 32px;
+  }
+
+
+  .FaqMain__eyebrow {
+    font-size: 10px;
+
+    letter-spacing: 2px;
+  }
+
+
+  .FaqMain__eyebrow::before,
+  .FaqMain__eyebrow::after {
+    width: 17px;
+  }
+
+
+  .FaqMain__title {
+    font-size: 34px;
+
+    letter-spacing: -1px;
+  }
+
+
+  .FaqMain__subtitle {
+    margin-top: 15px;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+  }
+
+
+  .FaqMain__question {
+    min-height: 78px;
+
+    gap: 12px;
+  }
+
+
+  .FaqMain__questionText {
+    gap: 9px;
+
+    padding-right: 5px;
+
+    font-size: 14px;
+
+    line-height: 1.45;
+  }
+
+
+  .FaqMain__number {
+    display: none;
+  }
+
+
+  .FaqMain__icon {
+    width: 31px;
+
+    height: 31px;
+
+    flex-basis: 31px;
+  }
+
+
+  .FaqMain__iconHorizontal,
+  .FaqMain__iconVertical {
+    width: 12px;
+  }
+
+
+  .FaqMain__answer p {
+    padding:
+      0
+      38px
+      25px
+      0;
+
+    font-size: 13px;
+
+    line-height: 1.75;
+  }
+
+
+  /* Newsletter */
+
+  .FaqMain__newsletter {
+    padding:
+      20px
+      14px
+      55px;
+  }
+
+
+  .FaqMain__newsletterContainer {
+    padding:
+      30px
+      18px
+      35px;
+
+    border-radius: 18px;
+  }
+
+
+  .FaqMain__newsletterImageBox {
+    height: 200px;
+  }
+
+
+  .FaqMain__newsletterImage {
+    max-width: 235px;
+  }
+
+
+  .FaqMain__newsletterTitle {
+    font-size: 40px;
+
+    letter-spacing: -1.5px;
+  }
+
+
+  .FaqMain__newsletterText {
+    font-size: 13px;
+
+    line-height: 1.75;
+  }
+
+
+  .FaqMain__newsletterForm {
+    height: auto;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 7px;
+
+    padding: 7px;
+
+    border-radius: 10px;
+  }
+
+
+  .FaqMain__newsletterInput {
+    width: 100%;
+
+    height: 50px;
+
+    padding:
+      0
+      15px;
+  }
+
+
+  .FaqMain__newsletterButton {
+    width: 100%;
+
+    height: 52px;
+  }
+
+
+  .FaqMain__newsletterNote {
+    font-size: 10px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .FaqMain__title {
+    font-size: 30px;
+  }
+
+
+  .FaqMain__questionText {
+    font-size: 13px;
+  }
+
+
+  .FaqMain__icon {
+    width: 28px;
+
+    height: 28px;
+
+    flex-basis: 28px;
+  }
+
+
+  .FaqMain__newsletterTitle {
+    font-size: 35px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .FaqMain__newsletterImage,
+  .FaqMain__icon,
+  .FaqMain__answerWrapper,
+  .FaqMain__newsletterButton,
+  .FaqMain__newsletterButton::before {
+    animation: none;
+
+    transition: none;
+  }
+}

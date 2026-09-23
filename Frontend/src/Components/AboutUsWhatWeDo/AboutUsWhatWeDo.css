@@ -1,0 +1,469 @@
+/* =========================================
+   ABOUT US - WHAT WE DO
+========================================= */
+
+.AboutUsWhatWeDo {
+  width: 100%;
+  padding: 85px 20px 95px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.AboutUsWhatWeDo__container {
+  width: 100%;
+  max-width: 1260px;
+  margin: 0 auto;
+}
+
+
+/* =========================================
+   HEADING
+========================================= */
+
+.AboutUsWhatWeDo__heading {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 58px;
+}
+
+.AboutUsWhatWeDo__title {
+  margin: 0;
+  color: #202020;
+  font-family: "Brush Script MT", "Segoe Script", cursive;
+  font-size: clamp(52px, 5vw, 76px);
+  font-weight: 450;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+
+/* =========================================
+   GRID
+========================================= */
+
+.AboutUsWhatWeDo__grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 36px;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.AboutUsWhatWeDo__card {
+  position: relative;
+  min-height: 318px;
+  padding: 38px 25px 32px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  text-align: center;
+
+  background: #f6f6f6;
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    background-color 0.35s ease,
+    box-shadow 0.4s ease;
+}
+
+
+/* Premium hover */
+.AboutUsWhatWeDo__card:hover {
+  transform: translateY(-8px);
+
+  background: #ffffff;
+
+  border-color: #7dac39;
+
+  box-shadow:
+    0 22px 45px rgba(50, 50, 50, 0.10),
+    0 5px 15px rgba(125, 172, 57, 0.08);
+}
+
+
+/* =========================================
+   ICON AREA
+========================================= */
+
+.AboutUsWhatWeDo__iconWrapper {
+  position: relative;
+
+  width: 120px;
+  height: 120px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 26px;
+}
+
+
+/* Green circle */
+.AboutUsWhatWeDo__icon {
+  width: 118px;
+  height: 118px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+
+  background: #7daa3b;
+
+  border-radius: 50%;
+
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease,
+    background-color 0.35s ease;
+}
+
+
+/* SVG */
+.AboutUsWhatWeDo__icon svg {
+  width: 67px;
+  height: 67px;
+
+  display: block;
+
+  transition:
+    transform 0.4s ease;
+}
+
+
+/* Icon hover */
+.AboutUsWhatWeDo__card:hover
+.AboutUsWhatWeDo__icon {
+  transform: scale(1.05);
+
+  background: #79a938;
+
+  box-shadow:
+    0 10px 25px rgba(125, 172, 57, 0.24);
+}
+
+.AboutUsWhatWeDo__card:hover
+.AboutUsWhatWeDo__icon svg {
+  transform: scale(1.06);
+}
+
+
+
+/* Left -> Right -> Up -> Down */
+@keyframes AboutUsWhatWeDoDotMove {
+
+  0% {
+    transform: translate(0, 0);
+  }
+
+  20% {
+    transform: translate(-7px, 0);
+  }
+
+  40% {
+    transform: translate(7px, 0);
+  }
+
+  60% {
+    transform: translate(7px, -7px);
+  }
+
+  80% {
+    transform: translate(-5px, 6px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+
+@keyframes AboutUsWhatWeDoDotPulse {
+
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.18);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+/* =========================================
+   CARD CONTENT
+========================================= */
+
+.AboutUsWhatWeDo__cardTitle {
+  margin: 0 0 12px;
+
+  color: #111111;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 25px;
+  font-weight: 700;
+
+  line-height: 1.25;
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+
+.AboutUsWhatWeDo__card:hover
+.AboutUsWhatWeDo__cardTitle {
+  color: #6f9f32;
+  transform: translateY(-2px);
+}
+
+
+.AboutUsWhatWeDo__description {
+  max-width: 270px;
+
+  margin: 0;
+
+  color: #5d6873;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 18px;
+  font-weight: 400;
+
+  line-height: 1.55;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1100px) {
+
+  .AboutUsWhatWeDo {
+    padding: 75px 25px 85px;
+  }
+
+  .AboutUsWhatWeDo__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .AboutUsWhatWeDo__card {
+    min-height: 315px;
+  }
+
+  .AboutUsWhatWeDo__title {
+    font-size: 65px;
+  }
+}
+
+
+/* =========================================
+   TABLET SMALL
+========================================= */
+
+@media (max-width: 700px) {
+
+  .AboutUsWhatWeDo {
+    padding: 65px 18px 70px;
+  }
+
+  .AboutUsWhatWeDo__heading {
+    margin-bottom: 40px;
+  }
+
+  .AboutUsWhatWeDo__title {
+    font-size: 55px;
+    letter-spacing: -1px;
+  }
+
+  .AboutUsWhatWeDo__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .AboutUsWhatWeDo__card {
+    min-height: 300px;
+    padding: 30px 18px 28px;
+  }
+
+  .AboutUsWhatWeDo__iconWrapper {
+    width: 105px;
+    height: 105px;
+    margin-bottom: 22px;
+  }
+
+  .AboutUsWhatWeDo__icon {
+    width: 103px;
+    height: 103px;
+  }
+
+  .AboutUsWhatWeDo__icon svg {
+    width: 60px;
+    height: 60px;
+  }
+
+  .AboutUsWhatWeDo__floatingDot {
+    width: 38px;
+    height: 38px;
+    right: -3px;
+    bottom: 1px;
+  }
+
+  .AboutUsWhatWeDo__floatingDot span {
+    width: 12px;
+    height: 12px;
+  }
+
+  .AboutUsWhatWeDo__cardTitle {
+    font-size: 21px;
+  }
+
+  .AboutUsWhatWeDo__description {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 520px) {
+
+  .AboutUsWhatWeDo {
+    padding: 55px 15px 60px;
+  }
+
+  .AboutUsWhatWeDo__heading {
+    margin-bottom: 35px;
+  }
+
+  .AboutUsWhatWeDo__title {
+    font-size: 48px;
+  }
+
+  .AboutUsWhatWeDo__grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+
+    max-width: 380px;
+  }
+
+  .AboutUsWhatWeDo__card {
+    min-height: auto;
+
+    padding:
+      34px
+      25px
+      35px;
+  }
+
+  .AboutUsWhatWeDo__iconWrapper {
+    width: 112px;
+    height: 112px;
+
+    margin-bottom: 23px;
+  }
+
+  .AboutUsWhatWeDo__icon {
+    width: 110px;
+    height: 110px;
+  }
+
+  .AboutUsWhatWeDo__icon svg {
+    width: 63px;
+    height: 63px;
+  }
+
+  .AboutUsWhatWeDo__floatingDot {
+    width: 40px;
+    height: 40px;
+  }
+
+  .AboutUsWhatWeDo__cardTitle {
+    font-size: 23px;
+    margin-bottom: 10px;
+  }
+
+  .AboutUsWhatWeDo__description {
+    max-width: 290px;
+    font-size: 16px;
+  }
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 360px) {
+
+  .AboutUsWhatWeDo {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .AboutUsWhatWeDo__title {
+    font-size: 42px;
+  }
+
+  .AboutUsWhatWeDo__card {
+    padding: 30px 18px;
+  }
+
+  .AboutUsWhatWeDo__cardTitle {
+    font-size: 21px;
+  }
+
+  .AboutUsWhatWeDo__description {
+    font-size: 15px;
+  }
+}
+
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .AboutUsWhatWeDo__card,
+  .AboutUsWhatWeDo__icon,
+  .AboutUsWhatWeDo__icon svg,
+  .AboutUsWhatWeDo__floatingDot,
+  .AboutUsWhatWeDo__floatingDot span,
+  .AboutUsWhatWeDo__cardTitle {
+    transition: none;
+    animation: none !important;
+  }
+}
