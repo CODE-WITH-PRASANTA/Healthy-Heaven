@@ -1,0 +1,1451 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,680&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+/* ==========================================================================
+   TOTAL ORDER — MEDIUM PREMIUM AUTO ROTATING
+   ========================================================================== */
+
+.total-order {
+  --to-green-dark: #123820;
+  --to-green-base: #1f5e31;
+  --to-green-light: #29773f;
+  --to-green-accent: #3ba458;
+
+  --to-gold: #fdb813;
+  --to-gold-light: #ffd66b;
+
+  --to-text-main: #123820;
+  --to-text-muted: #526e5b;
+
+  position: relative;
+  isolation: isolate;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  padding:
+    clamp(1.4rem, 2.5vw, 2.2rem)
+    clamp(0.8rem, 2vw, 1.5rem);
+
+  background:
+    radial-gradient(
+      circle at 8% 0%,
+      rgba(63, 174, 99, 0.22),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 95% 100%,
+      rgba(253, 184, 19, 0.11),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #102f1c 0%,
+      #1f5e31 55%,
+      #154523 100%
+    );
+
+  font-family: 'Manrope', sans-serif;
+  color: #ffffff;
+
+  overflow: hidden;
+}
+
+
+/* ==========================================================================
+   BACKGROUND
+   ========================================================================== */
+
+.total-order::before {
+  content: '';
+
+  position: absolute;
+  inset: 0;
+
+  z-index: -1;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      120deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.035) 48%,
+      transparent 72%
+    );
+
+  animation:
+    to-bg-shine
+    9s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes to-bg-shine {
+  0% {
+    transform: translateX(-15%);
+    opacity: 0.35;
+  }
+
+  50% {
+    transform: translateX(15%);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(-15%);
+    opacity: 0.35;
+  }
+}
+
+
+/* ==========================================================================
+   BACKGROUND BLOOMS
+   ========================================================================== */
+
+.total-order__bg {
+  position: absolute;
+  inset: 0;
+
+  z-index: 0;
+  pointer-events: none;
+
+  overflow: hidden;
+}
+
+
+.total-order__bloom {
+  position: absolute;
+
+  border-radius: 50%;
+
+  filter: blur(65px);
+
+  pointer-events: none;
+}
+
+
+.total-order__bloom--1 {
+  width: 26vw;
+  height: 26vw;
+
+  min-width: 170px;
+  min-height: 170px;
+
+  top: -15%;
+  left: -7%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(63, 174, 99, 0.48),
+      transparent 70%
+    );
+
+  animation:
+    to-bloom-one
+    14s
+    ease-in-out
+    infinite;
+}
+
+
+.total-order__bloom--2 {
+  width: 24vw;
+  height: 24vw;
+
+  min-width: 160px;
+  min-height: 160px;
+
+  right: -7%;
+  bottom: -15%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(253, 184, 19, 0.2),
+      transparent 70%
+    );
+
+  animation:
+    to-bloom-two
+    17s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes to-bloom-one {
+  0%,
+  100% {
+    transform:
+      translate(0, 0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate(25px, 18px)
+      scale(1.1);
+  }
+}
+
+
+@keyframes to-bloom-two {
+  0%,
+  100% {
+    transform:
+      translate(0, 0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate(-20px, -18px)
+      scale(1.08);
+  }
+}
+
+
+/* ==========================================================================
+   INNER
+   ========================================================================== */
+
+.total-order__inner {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 1120px;
+
+  margin: 0 auto;
+}
+
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+
+.total-order__header {
+  text-align: center;
+
+  margin-bottom:
+    clamp(0.85rem, 1.8vw, 1.2rem);
+}
+
+
+.total-order__brand-badge {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.35rem;
+
+  padding:
+    0.25rem
+    0.68rem;
+
+  margin-bottom: 0.35rem;
+
+  border:
+    1px solid
+    rgba(253, 184, 19, 0.28);
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+
+  backdrop-filter:
+    blur(10px);
+
+  -webkit-backdrop-filter:
+    blur(10px);
+
+  color:
+    var(--to-gold-light);
+
+  font-size:
+    0.58rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.08em;
+
+  text-transform:
+    uppercase;
+}
+
+
+.total-order__dot {
+  width: 6px;
+  height: 6px;
+
+  flex: none;
+
+  border-radius: 50%;
+
+  background:
+    var(--to-gold);
+
+  box-shadow:
+    0 0 8px
+    rgba(253, 184, 19, 0.8);
+
+  animation:
+    to-dot-pulse
+    2s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes to-dot-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.3);
+  }
+}
+
+
+.total-order__title {
+  margin:
+    0 0 0.15rem;
+
+  font-family:
+    'Fraunces',
+    serif;
+
+  font-size:
+    clamp(
+      1.3rem,
+      2.7vw,
+      1.9rem
+    );
+
+  font-weight:
+    680;
+
+  line-height:
+    1.05;
+
+  letter-spacing:
+    -0.025em;
+
+  color:
+    #ffffff;
+}
+
+
+.total-order__subtitle {
+  margin: 0;
+
+  font-size:
+    clamp(
+      0.65rem,
+      1.1vw,
+      0.78rem
+    );
+
+  line-height:
+    1.3;
+
+  color:
+    rgba(255, 255, 255, 0.7);
+}
+
+
+/* ==========================================================================
+   CAROUSEL
+   ========================================================================== */
+
+.total-order__carousel {
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap:
+    clamp(
+      0.65rem,
+      1.25vw,
+      0.95rem
+    );
+
+  perspective:
+    1200px;
+}
+
+
+/* ==========================================================================
+   MEDIUM CARD
+   ========================================================================== */
+
+.total-order__card {
+  position: relative;
+
+  min-width: 0;
+
+  background:
+    #ffffff;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.25);
+
+  border-radius:
+    16px;
+
+  overflow:
+    hidden;
+
+  cursor:
+    pointer;
+
+  opacity:
+    0.82;
+
+  transform:
+    translateY(4px)
+    scale(0.975);
+
+  box-shadow:
+    0 9px 25px
+    rgba(0, 0, 0, 0.18);
+
+  transition:
+    transform
+    0.55s
+    cubic-bezier(0.16, 1, 0.3, 1),
+
+    opacity
+    0.45s ease,
+
+    box-shadow
+    0.55s ease,
+
+    border-color
+    0.45s ease;
+
+  will-change:
+    transform,
+    opacity;
+}
+
+
+/* ==========================================================================
+   HOVER
+   ========================================================================== */
+
+.total-order__card:hover {
+  opacity:
+    0.95;
+
+  transform:
+    translateY(-3px)
+    scale(0.99);
+
+  box-shadow:
+    0 16px 34px
+    rgba(0, 0, 0, 0.24);
+}
+
+
+/* ==========================================================================
+   ACTIVE CARD
+   ========================================================================== */
+
+.total-order__card--active {
+  opacity:
+    1;
+
+  transform:
+    translateY(-4px)
+    scale(1.025);
+
+  border-color:
+    rgba(59, 164, 88, 0.8);
+
+  box-shadow:
+    0 18px 38px
+    rgba(0, 0, 0, 0.27),
+
+    0 0 0 2px
+    rgba(59, 164, 88, 0.75),
+
+    0 0 25px
+    rgba(59, 164, 88, 0.18);
+
+  z-index:
+    5;
+}
+
+
+/* ==========================================================================
+   ACTIVE SHINE
+   ========================================================================== */
+
+.total-order__card--active::before {
+  content: '';
+
+  position: absolute;
+  inset: 0;
+
+  z-index: 20;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      115deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.2) 48%,
+      transparent 65%
+    );
+
+  transform:
+    translateX(-120%);
+
+  animation:
+    to-card-shine
+    4s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes to-card-shine {
+
+  0% {
+    transform:
+      translateX(-120%);
+  }
+
+  30%,
+  100% {
+    transform:
+      translateX(120%);
+  }
+
+}
+
+
+/* ==========================================================================
+   CARD INNER — MEDIUM HEIGHT
+   ========================================================================== */
+
+.total-order__card-inner {
+  position: relative;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  height:
+    100%;
+
+  min-height:
+    235px;
+}
+
+
+/* ==========================================================================
+   CARD TOP
+   ========================================================================== */
+
+.total-order__card-curve {
+  position: relative;
+
+  height:
+    67px;
+
+  flex:
+    none;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eef5f0,
+      #e3eee7
+    );
+
+  border-bottom-left-radius:
+    50% 16px;
+
+  border-bottom-right-radius:
+    50% 16px;
+
+  transition:
+    background
+    0.45s ease;
+}
+
+
+.total-order__card--active
+.total-order__card-curve {
+  background:
+    linear-gradient(
+      135deg,
+      #1f5e31,
+      #29773f
+    );
+}
+
+
+/* ==========================================================================
+   BADGE
+   ========================================================================== */
+
+.total-order__badge {
+  position: absolute;
+
+  top:
+    8px;
+
+  left:
+    9px;
+
+  z-index:
+    4;
+
+  padding:
+    0.14rem
+    0.42rem;
+
+  border-radius:
+    5px;
+
+  background:
+    rgba(18, 56, 32, 0.1);
+
+  color:
+    var(--to-green-dark);
+
+  font-size:
+    0.48rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.04em;
+
+  text-transform:
+    uppercase;
+}
+
+
+.total-order__card--active
+.total-order__badge {
+  background:
+    rgba(255, 255, 255, 0.17);
+
+  color:
+    #ffffff;
+}
+
+
+/* ==========================================================================
+   PRODUCT IMAGE
+   ========================================================================== */
+
+.total-order__image-wrapper {
+  position: absolute;
+
+  top:
+    23px;
+
+  left:
+    50%;
+
+  z-index:
+    5;
+
+  width:
+    68px;
+
+  height:
+    68px;
+
+  padding:
+    3px;
+
+  border-radius:
+    50%;
+
+  background:
+    #ffffff;
+
+  transform:
+    translateX(-50%);
+
+  box-shadow:
+    0 6px 16px
+    rgba(0, 0, 0, 0.12);
+
+  transition:
+    transform
+    0.55s
+    cubic-bezier(0.16, 1, 0.3, 1),
+
+    box-shadow
+    0.45s ease;
+}
+
+
+.total-order__card--active
+.total-order__image-wrapper {
+  transform:
+    translateX(-50%)
+    scale(1.07);
+
+  box-shadow:
+    0 8px 20px
+    rgba(29, 77, 46, 0.26),
+
+    0 0 0 3px
+    rgba(253, 184, 19, 0.14);
+}
+
+
+.total-order__image {
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    cover;
+
+  border-radius:
+    50%;
+}
+
+
+/* ==========================================================================
+   CONTENT
+   ========================================================================== */
+
+.total-order__content {
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  flex-grow:
+    1;
+
+  padding:
+    38px
+    0.7rem
+    0.7rem;
+
+  text-align:
+    center;
+
+  background:
+    #ffffff;
+
+  color:
+    var(--to-text-main);
+}
+
+
+/* ==========================================================================
+   KICKER
+   ========================================================================== */
+
+.total-order__kicker {
+  margin:
+    0 0 0.08rem;
+
+  color:
+    var(--to-green-light);
+
+  font-size:
+    0.5rem;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    0.05em;
+
+  text-transform:
+    uppercase;
+}
+
+
+/* ==========================================================================
+   TITLE
+   ========================================================================== */
+
+.total-order__card-title {
+  margin:
+    0 0 0.16rem;
+
+  color:
+    var(--to-green-dark);
+
+  font-family:
+    'Fraunces',
+    serif;
+
+  font-size:
+    0.88rem;
+
+  font-weight:
+    680;
+
+  line-height:
+    1.1;
+}
+
+
+/* ==========================================================================
+   DESCRIPTION
+   ========================================================================== */
+
+.total-order__desc {
+  margin:
+    0 0 0.45rem;
+
+  color:
+    var(--to-text-muted);
+
+  font-size:
+    0.61rem;
+
+  line-height:
+    1.28;
+
+  display:
+    -webkit-box;
+
+  -webkit-line-clamp:
+    2;
+
+  -webkit-box-orient:
+    vertical;
+
+  overflow:
+    hidden;
+}
+
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+.total-order__footer {
+  margin-top:
+    auto;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    0.32rem;
+}
+
+
+/* ==========================================================================
+   PRICE
+   ========================================================================== */
+
+.total-order__price-box {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    0.28rem;
+}
+
+
+.total-order__price {
+  color:
+    var(--to-green-base);
+
+  font-family:
+    'Fraunces',
+    serif;
+
+  font-size:
+    0.88rem;
+
+  font-weight:
+    680;
+}
+
+
+.total-order__old-price {
+  color:
+    #a0aaa4;
+
+  font-size:
+    0.6rem;
+
+  text-decoration:
+    line-through;
+}
+
+
+/* ==========================================================================
+   CTA
+   ========================================================================== */
+
+.total-order__cta {
+  appearance:
+    none;
+
+  width:
+    100%;
+
+  border:
+    none;
+
+  padding:
+    0.36rem
+    0.6rem;
+
+  border-radius:
+    999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--to-green-base),
+      var(--to-green-light)
+    );
+
+  color:
+    #ffffff;
+
+  font-family:
+    'Manrope',
+    sans-serif;
+
+  font-size:
+    0.61rem;
+
+  font-weight:
+    800;
+
+  cursor:
+    pointer;
+
+  box-shadow:
+    0 4px 11px
+    rgba(31, 94, 49, 0.2);
+
+  transition:
+    transform
+    0.25s ease,
+
+    box-shadow
+    0.25s ease,
+
+    background
+    0.25s ease;
+}
+
+
+.total-order__cta:hover {
+  transform:
+    translateY(-2px);
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--to-green-dark),
+      var(--to-green-base)
+    );
+
+  box-shadow:
+    0 6px 15px
+    rgba(31, 94, 49, 0.3);
+}
+
+
+/* ==========================================================================
+   NAVIGATION
+   ========================================================================== */
+
+.total-order__nav {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    0.7rem;
+
+  margin-top:
+    0.85rem;
+}
+
+
+.total-order__nav-btn {
+  width:
+    29px;
+
+  height:
+    29px;
+
+  padding:
+    0;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.2);
+
+  border-radius:
+    50%;
+
+  background:
+    rgba(255, 255, 255, 0.09);
+
+  color:
+    #ffffff;
+
+  backdrop-filter:
+    blur(8px);
+
+  cursor:
+    pointer;
+
+  transition:
+    all
+    0.25s
+    ease;
+}
+
+
+.total-order__nav-btn:hover {
+  background:
+    var(--to-gold);
+
+  border-color:
+    var(--to-gold);
+
+  color:
+    #111111;
+
+  transform:
+    scale(1.1);
+}
+
+
+/* ==========================================================================
+   DOTS
+   ========================================================================== */
+
+.total-order__dots {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    0.3rem;
+}
+
+
+.total-order__dot-btn {
+  width:
+    6px;
+
+  height:
+    6px;
+
+  padding:
+    0;
+
+  border:
+    none;
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(255, 255, 255, 0.3);
+
+  cursor:
+    pointer;
+
+  transition:
+    all
+    0.35s
+    ease;
+}
+
+
+.total-order__dot-btn.active {
+  width:
+    17px;
+
+  background:
+    var(--to-gold);
+}
+
+
+/* ==========================================================================
+   ROTATION PROGRESS
+   ========================================================================== */
+
+.total-order__progress {
+  width:
+    65px;
+
+  height:
+    2px;
+
+  margin:
+    0.3rem auto 0;
+
+  overflow:
+    hidden;
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(255, 255, 255, 0.14);
+}
+
+
+.total-order__progress-bar {
+  width:
+    100%;
+
+  height:
+    100%;
+
+  transform:
+    translateX(-100%);
+
+  border-radius:
+    inherit;
+
+  background:
+    var(--to-gold);
+
+  animation:
+    to-progress
+    4s
+    linear
+    infinite;
+}
+
+
+@keyframes to-progress {
+
+  from {
+    transform:
+      translateX(-100%);
+  }
+
+  to {
+    transform:
+      translateX(0);
+  }
+
+}
+
+
+/* ==========================================================================
+   TABLET
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+
+  .total-order {
+    padding:
+      1.25rem
+      0.75rem;
+  }
+
+  .total-order__carousel {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap:
+      0.7rem;
+  }
+
+  .total-order__card-inner {
+    min-height:
+      225px;
+  }
+
+}
+
+
+/* ==========================================================================
+   MOBILE
+   ========================================================================== */
+
+@media (max-width: 640px) {
+
+  .total-order {
+    padding:
+      1rem
+      0.55rem;
+  }
+
+  .total-order__header {
+    margin-bottom:
+      0.7rem;
+  }
+
+  .total-order__title {
+    font-size:
+      1.2rem;
+  }
+
+  .total-order__subtitle {
+    font-size:
+      0.6rem;
+  }
+
+
+  /* -----------------------------------------
+     ONE MEDIUM CARD AT A TIME
+     ----------------------------------------- */
+
+  .total-order__carousel {
+    display:
+      block;
+
+    width:
+      100%;
+
+    overflow:
+      hidden;
+  }
+
+
+  .total-order__card {
+    display:
+      none;
+
+    width:
+      100%;
+
+    opacity:
+      1;
+
+    transform:
+      none;
+
+    border-radius:
+      15px;
+  }
+
+
+  .total-order__card.total-order__card--active {
+    display:
+      block;
+
+    animation:
+      to-card-mobile
+      0.55s
+      cubic-bezier(0.16, 1, 0.3, 1)
+      forwards;
+  }
+
+
+  .total-order__card-inner {
+    min-height:
+      220px;
+  }
+
+
+  .total-order__card-curve {
+    height:
+      64px;
+  }
+
+
+  .total-order__image-wrapper {
+    width:
+      64px;
+
+    height:
+      64px;
+
+    top:
+      22px;
+  }
+
+
+  .total-order__content {
+    padding:
+      36px
+      0.7rem
+      0.7rem;
+  }
+
+
+  .total-order__card-title {
+    font-size:
+      0.9rem;
+  }
+
+
+  .total-order__desc {
+    font-size:
+      0.61rem;
+  }
+
+
+  .total-order__nav {
+    margin-top:
+      0.7rem;
+  }
+
+}
+
+
+@keyframes to-card-mobile {
+
+  from {
+    opacity:
+      0;
+
+    transform:
+      translateX(28px)
+      scale(0.975);
+  }
+
+  to {
+    opacity:
+      1;
+
+    transform:
+      translateX(0)
+      scale(1);
+  }
+
+}
+
+
+/* ==========================================================================
+   SMALL MOBILE
+   ========================================================================== */
+
+@media (max-width: 400px) {
+
+  .total-order {
+    padding:
+      0.85rem
+      0.45rem;
+  }
+
+  .total-order__title {
+    font-size:
+      1.08rem;
+  }
+
+  .total-order__subtitle {
+    font-size:
+      0.56rem;
+  }
+
+  .total-order__card-inner {
+    min-height:
+      205px;
+  }
+
+  .total-order__card-curve {
+    height:
+      59px;
+  }
+
+  .total-order__image-wrapper {
+    width:
+      60px;
+
+    height:
+      60px;
+
+    top:
+      20px;
+  }
+
+  .total-order__content {
+    padding:
+      34px
+      0.6rem
+      0.6rem;
+  }
+
+  .total-order__nav-btn {
+    width:
+      27px;
+
+    height:
+      27px;
+  }
+
+}
+
+
+/* ==========================================================================
+   ACCESSIBILITY
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .total-order::before,
+  .total-order__bloom,
+  .total-order__dot,
+  .total-order__card--active::before,
+  .total-order__progress-bar {
+    animation:
+      none !important;
+  }
+
+  .total-order__card {
+    transition:
+      none;
+  }
+
+}

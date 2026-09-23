@@ -1,0 +1,180 @@
+/* ==========================================================================
+   ChifeHome Component Styling (Clean White & Green Healthy Heaven Theme)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,680&family=Manrope:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap');
+
+.chife-home {
+  --ch-green-dark: #123820;
+  --ch-green-base: #1f5e31;
+  --ch-green-light: #29773f;
+  --ch-green-accent: #3ba458;
+  --ch-gold: #fdb813;
+  --ch-cream: #ffffff;
+  --ch-card-bg: #f8faf8;
+  --ch-text-main: #123820;
+  --ch-text-muted: #526e5b;
+
+  position: relative;
+  background: #ffffff; /* Clean white background */
+  padding: clamp(3.5rem, 6vw, 5.5rem) clamp(1.25rem, 4vw, 3rem);
+  font-family: 'Manrope', sans-serif;
+  color: var(--ch-text-main);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Background subtle botanical ambient glow */
+.chife-home__bg-pattern {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(63, 174, 99, 0.08), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.chife-home__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header */
+.chife-home__header {
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+}
+
+.chife-home__eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ch-green-light);
+  margin-bottom: 0.5rem;
+}
+
+.chife-home__title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 680;
+  margin: 0 0 0.75rem;
+  letter-spacing: -0.01em;
+  color: var(--ch-green-dark);
+}
+
+.chife-home__divider {
+  width: 60px;
+  height: 3px;
+  background: var(--ch-gold);
+  margin: 0 auto;
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(253, 184, 19, 0.4);
+}
+
+/* Grid */
+.chife-home__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+/* Card */
+.chife-home__card {
+  background: var(--ch-card-bg);
+  border-radius: 20px;
+  padding: 2rem 1.25rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 10px 30px -10px rgba(18, 56, 32, 0.08);
+  border: 1px solid rgba(41, 119, 63, 0.12);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.chife-home__card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px -12px rgba(18, 56, 32, 0.15);
+  border-color: var(--ch-green-light);
+}
+
+/* Icon Container */
+.chife-home__icon-wrapper {
+  position: relative;
+  width: 76px;
+  height: 76px;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chife-home__icon-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px dashed var(--ch-green-light);
+  opacity: 0.4;
+  animation: ch-spin 18s linear infinite;
+}
+
+@keyframes ch-spin {
+  to { transform: rotate(360deg); }
+}
+
+.chife-home__icon {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--ch-green-base), var(--ch-green-dark));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ch-gold);
+  box-shadow: 0 8px 20px rgba(18, 56, 32, 0.2);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.chife-home__card:hover .chife-home__icon {
+  transform: scale(1.1);
+}
+
+.chife-home__icon svg {
+  width: 28px;
+  height: 28px;
+  stroke: var(--ch-gold);
+}
+
+/* Typography */
+.chife-home__card-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.15rem;
+  font-weight: 680;
+  color: var(--ch-text-main);
+  margin: 0 0 0.5rem;
+  line-height: 1.3;
+}
+
+.chife-home__card-desc {
+  font-size: 0.84rem;
+  color: var(--ch-text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .chife-home__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .chife-home__grid {
+    grid-template-columns: 1fr;
+  }
+}

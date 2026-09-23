@@ -5,7 +5,7 @@ import "./Footer.css";
 // ASSETS
 // ============================================================
 
-import FooterLogo from "../../assets/Healthy heaven wapp logo.png";
+import FooterLogo from "../../assets/main-logo.png";
 import FooterAlmond from "../../assets/footeralmond.png";
 import FooterTomato from "../../assets/footertamato.png";
 
