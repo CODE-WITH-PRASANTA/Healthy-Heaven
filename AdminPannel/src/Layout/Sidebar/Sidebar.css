@@ -1,172 +1,162 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
-
 /* =========================================================
-   HEALTHY HEAVEN SIDEBAR
+   HEALTHY HEAVEN
+   PREMIUM ADMIN SIDEBAR
+   COLLAPSE BUTTON REMOVED
 ========================================================= */
 
 .HealthySidebar {
-  --green-950: #003d2d;
-  --green-900: #004b36;
-  --green-850: #00563d;
-  --green-800: #006644;
-  --green-700: #08794c;
-  --green-600: #0b914e;
-  --green-500: #22b65d;
-  --green-400: #55cf70;
+  --sidebar-width: 270px;
+  --sidebar-collapsed-width: 82px;
 
-  --white: #ffffff;
-  --white-90: rgba(255, 255, 255, 0.9);
-  --white-75: rgba(255, 255, 255, 0.75);
-  --white-55: rgba(255, 255, 255, 0.55);
-  --white-35: rgba(255, 255, 255, 0.35);
-  --white-15: rgba(255, 255, 255, 0.15);
-  --white-08: rgba(255, 255, 255, 0.08);
+  --green-dark: #063d2b;
+  --green-main: #075238;
+  --green-medium: #0b6744;
+  --green-light: #32c979;
+  --green-active: #27b968;
 
   position: fixed;
-  left: 0;
   top: 0;
+  left: 0;
 
-  width: 270px;
+  width: var(--sidebar-width);
   height: 100vh;
 
   display: flex;
   flex-direction: column;
 
-  color: var(--white);
-
-  background:
-    radial-gradient(
-      circle at 15% 0%,
-      rgba(69, 196, 103, 0.22),
-      transparent 34%
-    ),
-    radial-gradient(
-      circle at 100% 80%,
-      rgba(0, 176, 108, 0.16),
-      transparent 30%
-    ),
-    linear-gradient(
-      160deg,
-      #005b3e 0%,
-      #004b36 28%,
-      #003c2d 60%,
-      #002d23 100%
-    );
-
-  font-family:
-    "DM Sans",
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  z-index: 1200;
 
   overflow: hidden;
 
-  z-index: 1200;
+  color: #ffffff;
+
+  background:
+    radial-gradient(
+      circle at 15% 5%,
+      rgba(61, 221, 137, 0.18),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 95% 85%,
+      rgba(35, 184, 116, 0.12),
+      transparent 28%
+    ),
+    linear-gradient(
+      180deg,
+      #063b29 0%,
+      #075239 45%,
+      #06412f 100%
+    );
+
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
 
   box-shadow:
-    10px 0 35px rgba(0, 47, 35, 0.18),
-    inset -1px 0 rgba(255, 255, 255, 0.07);
+    8px 0 35px rgba(0, 36, 25, 0.16);
 
   transition:
     width 0.3s ease,
     transform 0.3s ease;
+
+  box-sizing: border-box;
 }
 
+
 /* =========================================================
-   COLLAPSED
+   COLLAPSED SIDEBAR
 ========================================================= */
 
 .HealthySidebar.is-collapsed {
-  width: 82px;
+  width: var(--sidebar-collapsed-width);
 }
 
+
 /* =========================================================
-   BACKGROUND GLOWS
+   BACKGROUND GLOW
 ========================================================= */
 
 .HealthySidebar-glow {
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
-  filter: blur(2px);
+  z-index: 0;
+  filter: blur(3px);
 }
 
 .HealthySidebar-glow-one {
-  width: 180px;
-  height: 180px;
+  width: 190px;
+  height: 190px;
 
-  top: -80px;
-  right: -80px;
+  top: -95px;
+  right: -85px;
 
-  background: rgba(87, 216, 105, 0.14);
+  background:
+    rgba(49, 211, 134, 0.14);
 }
 
 .HealthySidebar-glow-two {
   width: 240px;
   height: 240px;
 
-  bottom: -130px;
-  left: -90px;
+  bottom: -125px;
+  left: -115px;
 
-  background: rgba(35, 180, 100, 0.12);
+  background:
+    rgba(34, 175, 106, 0.12);
 }
+
 
 /* =========================================================
    BRAND
 ========================================================= */
 
 .HealthySidebar-brand {
-  height: 84px;
+  position: relative;
+
+  min-height: 84px;
 
   display: flex;
   align-items: center;
 
-  gap: 12px;
+  padding:
+    14px 16px;
 
-  padding: 10px 14px;
-
-  flex-shrink: 0;
-
-  position: relative;
-  z-index: 3;
+  box-sizing: border-box;
 
   border-bottom:
-    1px solid rgba(255, 255, 255, 0.06);
+    1px solid rgba(255, 255, 255, 0.075);
+
+  z-index: 5;
 }
 
-.HealthySidebar.is-collapsed
-  .HealthySidebar-brand {
-  justify-content: center;
-  padding: 10px;
-}
 
-/* LOGO */
+/* =========================================================
+   LOGO
+========================================================= */
 
-.HealthySidebar-brand-logo {
-  width: 52px;
-  height: 52px;
-
+.HealthySidebar-logo-wrap {
   flex-shrink: 0;
+
+  width: 53px;
+  height: 53px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   border-radius: 50%;
 
-  overflow: hidden;
-
   background: #ffffff;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
 
   border:
-    2px solid rgba(255, 255, 255, 0.75);
+    2px solid rgba(255, 255, 255, 0.7);
 
   box-shadow:
-    0 5px 18px rgba(0, 0, 0, 0.2);
+    0 8px 25px rgba(0, 0, 0, 0.18);
 }
 
-.HealthySidebar-brand-logo img {
+.HealthySidebar-logo {
   width: 100%;
   height: 100%;
 
@@ -175,268 +165,240 @@
   display: block;
 }
 
-/* BRAND TEXT */
 
-.HealthySidebar-brand-content {
+/* =========================================================
+   BRAND TEXT
+========================================================= */
+
+.HealthySidebar-brand-text {
   min-width: 0;
 
-  flex: 1;
+  margin-left: 11px;
 
   display: flex;
   flex-direction: column;
 
-  gap: 2px;
+  overflow: hidden;
+
+  transition:
+    opacity 0.2s ease,
+    width 0.25s ease,
+    margin 0.25s ease;
 }
 
-.HealthySidebar-brand-content h2 {
+.HealthySidebar-brand-text h2 {
   margin: 0;
 
   color: #ffffff;
 
-  font-family:
-    "Plus Jakarta Sans",
-    sans-serif;
+  font-size: 16px;
+  line-height: 1.25;
 
-  font-size: 17px;
   font-weight: 800;
 
-  letter-spacing: -0.45px;
+  white-space: nowrap;
+}
+
+.HealthySidebar-brand-text span {
+  margin-top: 4px;
+
+  color:
+    rgba(255, 255, 255, 0.62);
+
+  font-size: 10px;
+  line-height: 1;
+
+  font-weight: 600;
+
+  letter-spacing: 0.65px;
 
   white-space: nowrap;
 }
 
-.HealthySidebar-brand-content span {
-  color: rgba(255, 255, 255, 0.68);
 
-  font-size: 11px;
-  font-weight: 500;
+/* =========================================================
+   COLLAPSED BRAND
+========================================================= */
 
-  white-space: nowrap;
-}
-
-/* COLLAPSE BUTTON */
-
-.HealthySidebar-collapse {
-  width: 31px;
-  height: 31px;
-
-  border: 0;
-  border-radius: 9px;
-
-  background:
-    rgba(255, 255, 255, 0.12);
-
-  color: #ffffff;
-
-  display: flex;
-  align-items: center;
+.HealthySidebar.is-collapsed .HealthySidebar-brand {
   justify-content: center;
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
-.HealthySidebar-collapse:hover {
-  background:
-    rgba(255, 255, 255, 0.2);
-
-  transform: scale(1.05);
-}
-
-.HealthySidebar.is-collapsed
-  .HealthySidebar-collapse {
+.HealthySidebar.is-collapsed .HealthySidebar-brand-text {
   display: none;
 }
+
+.HealthySidebar.is-collapsed .HealthySidebar-logo-wrap {
+  width: 51px;
+  height: 51px;
+}
+
 
 /* =========================================================
    PROFILE
 ========================================================= */
 
 .HealthySidebar-profile {
-  width: calc(100% - 24px);
+  position: relative;
 
-  margin: 12px;
+  margin:
+    14px 12px 8px;
 
-  padding: 10px;
-
-  border-radius: 15px;
-
-  border:
-    1px solid rgba(255, 255, 255, 0.1);
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.1),
-      rgba(255, 255, 255, 0.045)
-    );
+  padding:
+    10px;
 
   display: flex;
   align-items: center;
 
-  gap: 10px;
+  border:
+    1px solid rgba(255, 255, 255, 0.075);
 
-  color: #ffffff;
+  border-radius: 14px;
+
+  background:
+    rgba(255, 255, 255, 0.065);
 
   cursor: pointer;
 
-  text-align: left;
-
-  flex-shrink: 0;
-
   transition:
     background 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    transform 0.2s ease;
+
+  z-index: 5;
 }
 
 .HealthySidebar-profile:hover {
   background:
-    rgba(255, 255, 255, 0.13);
+    rgba(255, 255, 255, 0.105);
 
   border-color:
-    rgba(255, 255, 255, 0.18);
+    rgba(255, 255, 255, 0.14);
+
+  transform:
+    translateY(-1px);
 }
 
-.HealthySidebar-avatar {
-  width: 42px;
-  height: 42px;
 
+/* =========================================================
+   AVATAR
+========================================================= */
+
+.HealthySidebar-avatar {
   flex-shrink: 0;
 
-  border-radius: 50%;
-
-  position: relative;
+  width: 40px;
+  height: 40px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  overflow: visible;
+  border-radius: 12px;
 
   background:
     linear-gradient(
-      145deg,
-      #ffffff,
-      #d7f4df
+      135deg,
+      #b4f5ce,
+      #54d998
     );
 
-  color: #007044;
+  color:
+    #06442f;
 
   font-size: 13px;
   font-weight: 800;
 
-  border:
-    2px solid rgba(255, 255, 255, 0.65);
+  overflow: hidden;
 
   box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.18);
+    0 5px 15px rgba(0, 0, 0, 0.12);
 }
 
 .HealthySidebar-avatar img {
   width: 100%;
   height: 100%;
 
-  border-radius: 50%;
-
   object-fit: cover;
 }
 
-.HealthySidebar-status {
-  position: absolute;
 
-  right: -1px;
-  bottom: 1px;
-
-  width: 10px;
-  height: 10px;
-
-  border-radius: 50%;
-
-  background: #45dc83;
-
-  border:
-    2px solid #07583e;
-
-  box-shadow:
-    0 0 7px rgba(69, 220, 131, 0.8);
-}
+/* =========================================================
+   PROFILE INFO
+========================================================= */
 
 .HealthySidebar-profile-info {
   min-width: 0;
 
-  flex: 1;
+  margin-left: 10px;
 
   display: flex;
   flex-direction: column;
-
-  gap: 1px;
 }
 
 .HealthySidebar-profile-info strong {
+  overflow: hidden;
+
   color: #ffffff;
 
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
 
-  white-space: nowrap;
-
-  overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .HealthySidebar-profile-info span {
-  color:
-    rgba(255, 255, 255, 0.6);
-
-  font-size: 10.5px;
-  font-weight: 500;
-
-  white-space: nowrap;
+  margin-top: 3px;
 
   overflow: hidden;
+
+  color:
+    rgba(255, 255, 255, 0.55);
+
+  font-size: 9px;
+  font-weight: 500;
+
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.HealthySidebar-profile-info small {
-  margin-top: 2px;
 
-  display: flex;
-  align-items: center;
+/* =========================================================
+   ONLINE STATUS
+========================================================= */
 
-  gap: 5px;
+.HealthySidebar-profile-status {
+  position: absolute;
 
-  color: #5ee88d;
+  right: 10px;
+  bottom: 9px;
 
-  font-size: 9.5px;
-  font-weight: 700;
-}
+  width: 7px;
+  height: 7px;
 
-.HealthySidebar-profile-info small i {
-  width: 5px;
-  height: 5px;
+  border:
+    2px solid #075238;
 
   border-radius: 50%;
 
-  background: #5ee88d;
+  background:
+    #52df94;
+
+  box-shadow:
+    0 0 0 3px rgba(82, 223, 148, 0.08);
 }
 
-.HealthySidebar-profile-arrow {
-  color:
-    rgba(255, 255, 255, 0.45);
 
-  flex-shrink: 0;
-}
+/* =========================================================
+   COLLAPSED PROFILE
+========================================================= */
 
-/* COLLAPSED PROFILE */
-
-.HealthySidebar.is-collapsed
-  .HealthySidebar-profile {
-  width: calc(100% - 20px);
-
-  margin: 10px;
+.HealthySidebar.is-collapsed .HealthySidebar-profile {
+  margin:
+    14px 10px 8px;
 
   padding: 8px;
 
@@ -444,127 +406,128 @@
 }
 
 .HealthySidebar.is-collapsed
-  .HealthySidebar-avatar {
-  width: 43px;
-  height: 43px;
+.HealthySidebar-profile-info,
+
+.HealthySidebar.is-collapsed
+.HealthySidebar-profile-status {
+  display: none;
 }
+
+.HealthySidebar.is-collapsed
+.HealthySidebar-avatar {
+  width: 42px;
+  height: 42px;
+}
+
 
 /* =========================================================
    NAVIGATION
 ========================================================= */
 
-.HealthySidebar-nav {
+.HealthySidebar-navigation {
   flex: 1;
 
   min-height: 0;
 
-  overflow-y: auto;
-  overflow-x: hidden;
-
   padding:
-    4px 11px 15px;
+    5px 10px 15px;
 
-  position: relative;
-  z-index: 2;
-}
+  overflow-x: hidden;
+  overflow-y: auto;
 
-.HealthySidebar-nav::-webkit-scrollbar {
-  width: 4px;
-}
-
-.HealthySidebar-nav::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.HealthySidebar-nav::-webkit-scrollbar-thumb {
-  background:
-    rgba(255, 255, 255, 0.18);
-
-  border-radius: 20px;
-}
-
-.HealthySidebar-nav {
   scrollbar-width: thin;
 
   scrollbar-color:
-    rgba(255, 255, 255, 0.18)
+    rgba(255, 255, 255, 0.17)
     transparent;
 }
 
+.HealthySidebar-navigation::-webkit-scrollbar {
+  width: 4px;
+}
+
+.HealthySidebar-navigation::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.HealthySidebar-navigation::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+
+  background:
+    rgba(255, 255, 255, 0.16);
+}
+
+
 /* =========================================================
-   SECTION TITLES
+   SECTION
 ========================================================= */
 
 .HealthySidebar-section {
-  height: 30px;
-
-  display: flex;
-  align-items: flex-end;
-
-  padding:
-    0 12px 5px;
-
-  margin-top: 7px;
+  margin-bottom: 8px;
 }
 
-.HealthySidebar-section p {
-  margin: 0;
+.HealthySidebar-section-title {
+  padding:
+    10px 10px 7px;
 
   color:
-    rgba(255, 255, 255, 0.48);
+    rgba(255, 255, 255, 0.39);
 
   font-size: 9px;
+  line-height: 1;
 
   font-weight: 800;
 
-  text-transform: uppercase;
-
-  letter-spacing: 0.12em;
+  letter-spacing: 1.15px;
 }
 
-.HealthySidebar-section span {
-  display: none;
-}
 
 /* =========================================================
-   NORMAL LINKS
+   MENU
 ========================================================= */
 
-.HealthySidebar-link {
-  width: 100%;
+.HealthySidebar-menu {
+  display: flex;
+  flex-direction: column;
 
-  min-height: 44px;
+  gap: 2px;
+}
+
+
+/* =========================================================
+   MENU ITEM
+========================================================= */
+
+.HealthySidebar-menu-item {
+  position: relative;
+
+  width: 100%;
+  min-height: 43px;
 
   display: flex;
   align-items: center;
 
-  gap: 12px;
-
   padding:
-    10px 12px;
+    0 11px;
 
-  margin: 2px 0;
-
-  border-radius: 11px;
+  box-sizing: border-box;
 
   border: 0;
+  border-radius: 11px;
 
   background: transparent;
 
   color:
-    rgba(255, 255, 255, 0.78);
+    rgba(255, 255, 255, 0.72);
 
   text-decoration: none;
 
-  cursor: pointer;
-
   font-family: inherit;
 
-  font-size: 12.5px;
-
+  font-size: 12px;
   font-weight: 600;
 
-  text-align: left;
+  cursor: pointer;
 
   transition:
     background 0.2s ease,
@@ -572,212 +535,174 @@
     transform 0.2s ease;
 }
 
-.HealthySidebar-link:hover {
-  color: #ffffff;
-
+.HealthySidebar-menu-item:hover {
   background:
     rgba(255, 255, 255, 0.075);
 
-  transform: translateX(2px);
+  color: #ffffff;
+
+  transform:
+    translateX(2px);
 }
 
-.HealthySidebar-icon {
-  width: 22px;
-  min-width: 22px;
+
+/* =========================================================
+   ACTIVE ITEM
+========================================================= */
+
+.HealthySidebar-menu-item.active {
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(52, 211, 137, 0.98),
+      rgba(27, 181, 103, 0.94)
+    );
+
+  box-shadow:
+    0 8px 20px rgba(12, 121, 71, 0.25);
+}
+
+.HealthySidebar-menu-item.active::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+
+  width: 3px;
+
+  border-radius:
+    0 5px 5px 0;
+
+  background:
+    #ddffeb;
+}
+
+
+/* =========================================================
+   MENU ICON
+========================================================= */
+
+.HealthySidebar-menu-icon {
+  width: 24px;
+  height: 24px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: currentColor;
+}
+
+.HealthySidebar-menu-label {
+  min-width: 0;
+
+  margin-left: 10px;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   DROPDOWN
+========================================================= */
+
+.HealthySidebar-dropdown-toggle {
+  appearance: none;
+}
+
+.HealthySidebar-dropdown-toggle.dropdown-open {
+  background:
+    rgba(255, 255, 255, 0.075);
+
+  color:
+    #ffffff;
+}
+
+.HealthySidebar-dropdown-arrow {
+  margin-left: auto;
+
+  width: 20px;
+  height: 20px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
   color:
-    rgba(255, 255, 255, 0.72);
-
-  transition:
-    color 0.2s ease,
-    transform 0.2s ease;
+    rgba(255, 255, 255, 0.48);
 }
 
-.HealthySidebar-link:hover
-  .HealthySidebar-icon {
-  color: #ffffff;
-
-  transform: scale(1.05);
-}
-
-.HealthySidebar-text {
-  flex: 1;
-
-  white-space: nowrap;
-}
 
 /* =========================================================
-   DASHBOARD
-========================================================= */
-
-.HealthySidebar-dashboard {
-  min-height: 46px;
-
-  margin-top: 2px;
-
-  color: #ffffff;
-
-  background:
-    linear-gradient(
-      135deg,
-      #42c963 0%,
-      #20ad54 55%,
-      #159b49 100%
-    );
-
-  border:
-    1px solid rgba(255, 255, 255, 0.12);
-
-  box-shadow:
-    0 8px 20px rgba(16, 142, 69, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
-
-  font-weight: 700;
-}
-
-.HealthySidebar-dashboard:hover {
-  background:
-    linear-gradient(
-      135deg,
-      #4bd36b,
-      #1ba84f
-    );
-
-  transform: translateY(-1px);
-}
-
-.HealthySidebar-dashboard.HealthySidebar-active {
-  color: #ffffff;
-}
-
-/* =========================================================
-   ACTIVE LINK
-========================================================= */
-
-.HealthySidebar-link.HealthySidebar-active:not(
-    .HealthySidebar-dashboard
-  ) {
-  color: #ffffff;
-
-  background:
-    rgba(66, 201, 99, 0.14);
-
-  box-shadow:
-    inset 3px 0 0 #58d878;
-}
-
-.HealthySidebar-link.HealthySidebar-active
-  .HealthySidebar-icon {
-  color: #64dd80;
-}
-
-/* =========================================================
-   ARROWS
-========================================================= */
-
-.HealthySidebar-arrow {
-  margin-left: auto;
-
-  color:
-    rgba(255, 255, 255, 0.4);
-
-  flex-shrink: 0;
-}
-
-.HealthySidebar-dropdown-arrow {
-  transition:
-    transform 0.25s ease,
-    color 0.25s ease;
-}
-
-.HealthySidebar-dropdown-open
-  .HealthySidebar-dropdown-arrow {
-  transform: rotate(180deg);
-
-  color: #73e58d;
-}
-
-/* =========================================================
-   DROPDOWN
-========================================================= */
-
-.HealthySidebar-dropdown {
-  width: 100%;
-}
-
-.HealthySidebar-dropdown-button {
-  appearance: none;
-}
-
-.HealthySidebar-dropdown-open
-  > .HealthySidebar-dropdown-button {
-  background:
-    rgba(255, 255, 255, 0.075);
-
-  color: #ffffff;
-}
-
-/* =========================================================
-   SUB MENU
+   SUBMENU
 ========================================================= */
 
 .HealthySidebar-submenu {
-  max-height: 0;
-
-  opacity: 0;
-
-  overflow: hidden;
+  position: relative;
 
   margin:
-    0 8px 0 28px;
+    2px 0 4px 23px;
 
-  padding-left: 8px;
+  padding:
+    3px 0 3px 15px;
 
   border-left:
-    1px solid rgba(255, 255, 255, 0.12);
+    1px solid rgba(255, 255, 255, 0.1);
 
-  transition:
-    max-height 0.3s ease,
-    opacity 0.25s ease,
-    padding 0.3s ease;
+  animation:
+    HealthySidebarSubmenu 0.2s ease;
 }
 
-.HealthySidebar-dropdown-open
-  .HealthySidebar-submenu {
-  max-height: 300px;
+@keyframes HealthySidebarSubmenu {
+  from {
+    opacity: 0;
+    transform:
+      translateY(-4px);
+  }
 
-  opacity: 1;
-
-  padding-top: 3px;
-  padding-bottom: 4px;
+  to {
+    opacity: 1;
+    transform:
+      translateY(0);
+  }
 }
 
-.HealthySidebar-submenu-link {
-  min-height: 34px;
+
+/* =========================================================
+   SUBMENU ITEM
+========================================================= */
+
+.HealthySidebar-submenu-item {
+  position: relative;
+
+  min-height: 35px;
 
   display: flex;
   align-items: center;
 
-  gap: 9px;
-
   padding:
-    7px 9px;
-
-  margin: 2px 0;
+    0 9px;
 
   border-radius: 8px;
 
   color:
-    rgba(255, 255, 255, 0.62);
+    rgba(255, 255, 255, 0.58);
+
+  font-size: 10.5px;
+  font-weight: 500;
 
   text-decoration: none;
-
-  font-size: 11px;
-  font-weight: 500;
 
   transition:
     background 0.2s ease,
@@ -785,59 +710,118 @@
     padding-left 0.2s ease;
 }
 
-.HealthySidebar-submenu-link:hover {
+.HealthySidebar-submenu-item:hover {
+  padding-left: 12px;
+
   color: #ffffff;
 
   background:
-    rgba(255, 255, 255, 0.08);
-
-  padding-left: 13px;
+    rgba(255, 255, 255, 0.06);
 }
 
-.HealthySidebar-submenu-active {
-  color: #0c7446 !important;
+.HealthySidebar-submenu-item.active {
+  color:
+    #aaf2c9;
 
   background:
-    #eaffee;
+    rgba(66, 219, 145, 0.1);
 
   font-weight: 700;
-
-  box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.HealthySidebar-submenu-icon {
-  display: flex;
 
+/* =========================================================
+   SUBMENU LINE
+========================================================= */
+
+.HealthySidebar-submenu-line {
+  position: absolute;
+
+  left: -16px;
+
+  width: 9px;
+  height: 1px;
+
+  background:
+    rgba(255, 255, 255, 0.13);
+}
+
+
+/* =========================================================
+   SUBMENU ICON
+========================================================= */
+
+.HealthySidebar-submenu-icon {
+  width: 20px;
+
+  display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 17px;
-
-  flex-shrink: 0;
+  margin-right: 6px;
 }
 
+
 /* =========================================================
-   BOTTOM AREA
+   COLLAPSED NAVIGATION
 ========================================================= */
 
-.HealthySidebar-bottom {
-  position: relative;
+.HealthySidebar.is-collapsed
+.HealthySidebar-navigation {
+  padding-left: 9px;
+  padding-right: 9px;
+}
 
-  z-index: 4;
+.HealthySidebar.is-collapsed
+.HealthySidebar-section-title {
+  display: none;
+}
 
+.HealthySidebar.is-collapsed
+.HealthySidebar-menu-item {
+  justify-content: center;
+
+  padding: 0;
+
+  min-height: 45px;
+}
+
+.HealthySidebar.is-collapsed
+.HealthySidebar-menu-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.HealthySidebar.is-collapsed
+.HealthySidebar-menu-label {
+  display: none;
+}
+
+.HealthySidebar.is-collapsed
+.HealthySidebar-dropdown-arrow {
+  display: none;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.HealthySidebar-footer {
   flex-shrink: 0;
 
   padding:
-    8px 11px 10px;
+    8px 10px 12px;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.07);
 
   background:
-    linear-gradient(
-      to top,
-      rgba(0, 38, 28, 0.5),
-      transparent
-    );
+    rgba(0, 40, 27, 0.16);
+
+  z-index: 5;
 }
+
 
 /* =========================================================
    LOGOUT
@@ -846,190 +830,149 @@
 .HealthySidebar-logout {
   width: 100%;
 
-  min-height: 43px;
+  min-height: 42px;
 
   display: flex;
   align-items: center;
 
-  gap: 12px;
-
   padding:
-    10px 13px;
-
-  border-radius: 11px;
+    0 11px;
 
   border:
-    1px solid rgba(255, 255, 255, 0.05);
+    1px solid transparent;
 
-  color:
-    rgba(255, 255, 255, 0.84);
+  border-radius: 10px;
 
   background:
-    rgba(255, 255, 255, 0.055);
+    transparent;
 
-  cursor: pointer;
+  color:
+    rgba(255, 255, 255, 0.67);
 
   font-family: inherit;
 
-  font-size: 12px;
-
+  font-size: 11px;
   font-weight: 600;
+
+  cursor: pointer;
 
   transition:
     background 0.2s ease,
-    color 0.2s ease;
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .HealthySidebar-logout:hover {
-  color: #ffffff;
-
   background:
-    rgba(255, 89, 89, 0.16);
+    rgba(239, 95, 95, 0.12);
+
+  color:
+    #ffb0b0;
 
   border-color:
-    rgba(255, 110, 110, 0.2);
+    rgba(255, 120, 120, 0.08);
+}
+
+.HealthySidebar-logout-icon {
+  width: 24px;
+  height: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
 }
 
 .HealthySidebar.is-collapsed
-  .HealthySidebar-logout {
+.HealthySidebar-logout {
   justify-content: center;
-
-  padding-left: 0;
-  padding-right: 0;
+  padding: 0;
 }
 
+.HealthySidebar.is-collapsed
+.HealthySidebar-logout
+.HealthySidebar-menu-label {
+  display: none;
+}
+
+
 /* =========================================================
-   FOOTER
+   VERSION
 ========================================================= */
 
-.HealthySidebar-footer {
-  display: flex;
+.HealthySidebar-version {
+  margin-top: 7px;
 
+  display: flex;
   align-items: center;
   justify-content: space-between;
 
   padding:
-    8px 4px 0;
+    0 4px;
 
   color:
-    rgba(255, 255, 255, 0.35);
+    rgba(255, 255, 255, 0.27);
 
-  font-size: 8.5px;
-
-  font-weight: 500;
+  font-size: 8px;
 }
 
+.HealthySidebar-version small {
+  font-size: 8px;
+
+  color:
+    rgba(255, 255, 255, 0.2);
+}
+
+
 /* =========================================================
-   LEAF DECORATION
+   DECORATIVE LEAVES
 ========================================================= */
 
-.HealthySidebar-leaves {
+.HealthySidebar-leaf {
   position: absolute;
-
-  right: -7px;
-  bottom: -6px;
-
-  width: 110px;
-  height: 95px;
 
   pointer-events: none;
 
-  opacity: 0.65;
+  opacity: 0.11;
+
+  user-select: none;
 
   z-index: 1;
 }
 
-.leaf {
-  position: absolute;
-
-  display: block;
-
-  width: 31px;
-  height: 55px;
-
-  border-radius:
-    100% 0 100% 0;
-
-  background:
-    linear-gradient(
-      145deg,
-      #3bc965,
-      #087b48
-    );
-
-  transform-origin: bottom center;
-
-  box-shadow:
-    inset 3px 2px 5px
-      rgba(255, 255, 255, 0.13);
-}
-
 .leaf-one {
-  right: 7px;
-  bottom: 3px;
+  right: -15px;
+  bottom: 105px;
+
+  font-size: 54px;
 
   transform:
-    rotate(35deg);
+    rotate(-18deg);
 }
 
 .leaf-two {
-  right: 32px;
-  bottom: 0;
+  left: -18px;
+  bottom: 20px;
+
+  font-size: 48px;
 
   transform:
-    rotate(-27deg)
-    scale(0.82);
+    rotate(20deg);
 }
 
-.leaf-three {
-  right: 53px;
-  bottom: -1px;
-
-  transform:
-    rotate(-52deg)
-    scale(0.62);
-}
-
-.leaf-four {
-  right: 5px;
-  bottom: 39px;
-
-  transform:
-    rotate(58deg)
-    scale(0.55);
-}
 
 /* =========================================================
-   OVERLAY
+   MOBILE SIDEBAR
 ========================================================= */
 
-.HealthySidebar-overlay {
+.HealthySidebar-mobile-close {
   display: none;
 }
 
-/* =========================================================
-   TABLET
-========================================================= */
-
-@media (max-width: 1100px) {
-  .HealthySidebar {
-    width: 250px;
-  }
-
-  .HealthySidebar.is-collapsed {
-    width: 78px;
-  }
-
-  .HealthySidebar-brand-content h2 {
-    font-size: 15px;
-  }
-}
-
-/* =========================================================
-   MOBILE
-========================================================= */
 
 @media (max-width: 768px) {
+
   .HealthySidebar {
     width: 270px;
 
@@ -1037,8 +980,11 @@
       translateX(-105%);
 
     box-shadow:
-      12px 0 40px
-      rgba(0, 43, 31, 0.35);
+      12px 0 40px rgba(0, 30, 21, 0.32);
+  }
+
+  .HealthySidebar.is-collapsed {
+    width: 270px;
   }
 
   .HealthySidebar.is-mobile-open {
@@ -1046,46 +992,130 @@
       translateX(0);
   }
 
-  .HealthySidebar.is-collapsed {
-    width: 270px;
 
-    transform:
-      translateX(-105%);
-  }
+  /* MOBILE CLOSE */
 
-  .HealthySidebar.is-collapsed.is-mobile-open {
-    width: 270px;
+  .HealthySidebar-mobile-close {
+    position: absolute;
 
-    transform:
-      translateX(0);
-  }
+    top: 18px;
+    right: 15px;
 
-  .HealthySidebar-overlay {
-    position: fixed;
+    width: 37px;
+    height: 37px;
 
-    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    display: block;
+    padding: 0;
+
+    border:
+      1px solid rgba(255, 255, 255, 0.14);
+
+    border-radius: 11px;
 
     background:
-      rgba(0, 30, 21, 0.46);
+      rgba(255, 255, 255, 0.1);
 
-    backdrop-filter:
-      blur(2px);
+    color: #ffffff;
 
-    z-index: 1190;
+    cursor: pointer;
+
+    z-index: 30;
+
+    transition:
+      background 0.2s ease,
+      transform 0.2s ease,
+      border-color 0.2s ease;
   }
 
-  .HealthySidebar-collapse {
+  .HealthySidebar-mobile-close:hover {
+    background:
+      rgba(255, 255, 255, 0.18);
+
+    border-color:
+      rgba(255, 255, 255, 0.25);
+
+    transform:
+      rotate(90deg);
+  }
+
+  .HealthySidebar-mobile-close:active {
+    transform:
+      scale(0.92);
+  }
+
+
+  /* MOBILE BRAND */
+
+  .HealthySidebar-brand {
+    min-height: 84px;
+
+    padding:
+      14px 65px 14px 15px;
+  }
+
+
+  /* MOBILE NAV */
+
+  .HealthySidebar-navigation {
+    padding-top: 7px;
+  }
+
+
+  /* MOBILE PROFILE */
+
+  .HealthySidebar-profile {
+    margin-top: 12px;
+  }
+
+
+  /* ALWAYS EXPANDED ON MOBILE */
+
+  .HealthySidebar .HealthySidebar-brand-text,
+  .HealthySidebar .HealthySidebar-profile-info,
+  .HealthySidebar .HealthySidebar-profile-status,
+  .HealthySidebar .HealthySidebar-section-title,
+  .HealthySidebar .HealthySidebar-menu-label {
     display: flex;
   }
+
+  .HealthySidebar .HealthySidebar-menu-label {
+    margin-left: 10px;
+  }
+
+  .HealthySidebar .HealthySidebar-section-title {
+    display: block;
+  }
+
+  .HealthySidebar .HealthySidebar-dropdown-arrow {
+    display: flex;
+  }
+
+  .HealthySidebar .HealthySidebar-menu-item {
+    justify-content: flex-start;
+    padding: 0 11px;
+    min-height: 43px;
+  }
+
+  .HealthySidebar .HealthySidebar-navigation {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .HealthySidebar .HealthySidebar-profile {
+    justify-content: flex-start;
+  }
 }
+
 
 /* =========================================================
    SMALL MOBILE
 ========================================================= */
 
 @media (max-width: 480px) {
+
   .HealthySidebar {
     width: 285px;
   }
@@ -1094,29 +1124,49 @@
     width: 285px;
   }
 
+  .HealthySidebar-mobile-close {
+    top: 17px;
+    right: 14px;
+
+    width: 37px;
+    height: 37px;
+  }
+
   .HealthySidebar-brand {
-    height: 80px;
+    padding-left: 14px;
+    padding-right: 60px;
   }
 
-  .HealthySidebar-brand-logo {
-    width: 48px;
-    height: 48px;
+  .HealthySidebar-logo-wrap {
+    width: 49px;
+    height: 49px;
   }
 
-  .HealthySidebar-brand-content h2 {
-    font-size: 16px;
+  .HealthySidebar-brand-text h2 {
+    font-size: 15px;
   }
 
-  .HealthySidebar-link {
-    min-height: 45px;
-
-    font-size: 12.5px;
+  .HealthySidebar-menu-item {
+    min-height: 44px;
   }
 
-  .HealthySidebar-section {
-    margin-top: 8px;
+  .HealthySidebar-section-title {
+    padding-left: 9px;
   }
 }
+
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media (min-width: 769px) {
+
+  .HealthySidebar-mobile-close {
+    display: none !important;
+  }
+}
+
 
 /* =========================================================
    ACCESSIBILITY
@@ -1125,21 +1175,25 @@
 .HealthySidebar button:focus-visible,
 .HealthySidebar a:focus-visible {
   outline:
-    2px solid #72e88b;
+    2px solid #68e39b;
 
-  outline-offset: 2px;
+  outline-offset:
+    2px;
 }
+
 
 /* =========================================================
    REDUCED MOTION
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+
   .HealthySidebar,
   .HealthySidebar *,
   .HealthySidebar *::before,
   .HealthySidebar *::after {
-    transition: none !important;
     animation: none !important;
+
+    transition: none !important;
   }
 }
