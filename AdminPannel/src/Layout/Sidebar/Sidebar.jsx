@@ -18,9 +18,6 @@ import {
   Mail,
   ChevronDown,
   ChevronRight,
-  ChevronsLeft,
-  PenTool,
-  FolderKanban,
   PlusCircle,
   Edit3,
   UserPlus,
@@ -28,615 +25,527 @@ import {
   Settings,
   User,
   LogOut,
+  X,
+  FolderKanban,
 } from "lucide-react";
 
-import "./Sidebar.css";
-
-// Replace this with your actual logo path if required
 import logo from "../../assets/HealthyLogo.webp";
+import "./Sidebar.css";
 
 const Sidebar = ({
   isCollapsed,
   isMobileOpen,
-  onToggleCollapse = () => {},
+  onMobileClose = () => {},
   onProfileClick = () => {},
   onLogout = () => {},
-
-  brandName = "Healthy Heaven",
+  brandName = "Healthy Haven",
   brandTagline = "Admin Panel",
-
   user = {
     name: "Admin",
     role: "Super Administrator",
     initials: "AD",
     avatarUrl: "",
   },
-
   version = "v1.0.0",
 }) => {
   const [openDropdowns, setOpenDropdowns] = useState({});
 
-  const toggleDropdown = (title) => {
+  const toggleDropdown = (menuName) => {
     setOpenDropdowns((prev) => ({
       ...prev,
-      [title]: !prev[title],
+      [menuName]: !prev[menuName],
     }));
   };
 
-  const menuItems = [
-    // =========================
-    // DASHBOARD
-    // =========================
-    {
-      type: "link",
-      icon: <Home size={19} />,
-      text: "Dashboard",
-      path: "/",
-      primary: true,
-    },
+  const handleNavClick = () => {
+    if (window.innerWidth <= 768) {
+      onMobileClose();
+    }
+  };
 
-    // =========================
-    // CONTENT MANAGEMENT
-    // =========================
+  const menuSections = [
     {
-      type: "section-heading",
-      text: "Content Management",
-    },
-
-    {
-      type: "dropdown",
-      icon: <FileText size={19} />,
-      text: "Blogs",
-      subItems: [
+      title: "MAIN",
+      items: [
         {
-          text: "Create Blog",
-          path: "/blogs/create",
-          icon: <PenTool size={16} />,
-        },
-        {
-          text: "Manage Blogs",
-          path: "/blogs/manage",
-          icon: <FolderKanban size={16} />,
+          label: "Dashboard",
+          icon: Home,
+          path: "/",
         },
       ],
     },
 
     {
-      type: "dropdown",
-      icon: <Bell size={19} />,
-      text: "Notices",
-      subItems: [
+      title: "CONTENT MANAGEMENT",
+      items: [
         {
-          text: "Add Notice",
-          path: "/notices/add",
-          icon: <PlusCircle size={16} />,
+          label: "Blogs",
+          icon: FileText,
+          dropdown: true,
+          children: [
+            {
+              label: "Create Blog",
+              icon: PlusCircle,
+              path: "/blogs/create",
+            },
+            {
+              label: "Manage Blogs",
+              icon: FolderKanban,
+              path: "/blogs/manage",
+            },
+          ],
         },
-        {
-          text: "Manage Notices",
-          path: "/notices/manage",
-          icon: <Edit3 size={16} />,
-        },
-      ],
-    },
 
-    {
-      type: "dropdown",
-      icon: <ImageIcon size={19} />,
-      text: "Gallery",
-      subItems: [
         {
-          text: "Event Gallery",
-          path: "/gallery/events",
-          icon: <ImageIcon size={16} />,
+          label: "Notices",
+          icon: Bell,
+          dropdown: true,
+          children: [
+            {
+              label: "Add Notice",
+              icon: PlusCircle,
+              path: "/notices/add",
+            },
+            {
+              label: "Manage Notices",
+              icon: FolderKanban,
+              path: "/notices/manage",
+            },
+          ],
         },
+
         {
-          text: "Home Gallery",
-          path: "/gallery/home",
-          icon: <ImageIcon size={16} />,
+          label: "Gallery",
+          icon: ImageIcon,
+          dropdown: true,
+          children: [
+            {
+              label: "Event Gallery",
+              icon: Calendar,
+              path: "/gallery/event",
+            },
+            {
+              label: "Home Gallery",
+              icon: ImageIcon,
+              path: "/gallery/home",
+            },
+          ],
         },
-      ],
-    },
 
-    {
-      type: "dropdown",
-      icon: <Video size={19} />,
-      text: "Media Manage",
-      subItems: [
         {
-          text: "YouTube Videos",
-          path: "/media/youtube",
-          icon: <Video size={16} />,
-        },
-        {
-          text: "Photos",
-          path: "/media/photos",
-          icon: <ImageIcon size={16} />,
-        },
-      ],
-    },
-
-    // =========================
-    // USER MANAGEMENT
-    // =========================
-    {
-      type: "section-heading",
-      text: "User Management",
-    },
-
-    {
-      type: "link",
-      icon: <Users size={19} />,
-      text: "Users",
-      path: "/users",
-    },
-
-    {
-      type: "link",
-      icon: <HeartHandshake size={19} />,
-      text: "Donations",
-      path: "/donations/manage",
-    },
-
-    // =========================
-    // EVENT MANAGEMENT
-    // =========================
-    {
-      type: "section-heading",
-      text: "Event Management",
-    },
-
-    {
-      type: "dropdown",
-      icon: <Calendar size={19} />,
-      text: "Events",
-      subItems: [
-        {
-          text: "Add Event",
-          path: "/events/add",
-          icon: <PlusCircle size={16} />,
-        },
-        {
-          text: "Edit Event",
-          path: "/events/edit",
-          icon: <Edit3 size={16} />,
-        },
-        {
-          text: "Manage Registered",
-          path: "/events/registered",
-          icon: <Users size={16} />,
+          label: "Media Manage",
+          icon: Video,
+          dropdown: true,
+          children: [
+            {
+              label: "YouTube",
+              icon: Video,
+              path: "/media/youtube",
+            },
+            {
+              label: "Photos",
+              icon: ImageIcon,
+              path: "/media/photos",
+            },
+          ],
         },
       ],
     },
 
     {
-      type: "dropdown",
-      icon: <Users size={19} />,
-      text: "Team",
-      subItems: [
+      title: "USER MANAGEMENT",
+      items: [
         {
-          text: "Add Member",
-          path: "/team/add",
-          icon: <UserPlus size={16} />,
+          label: "Users",
+          icon: Users,
+          path: "/users",
         },
         {
-          text: "Manage Members",
-          path: "/team/manage",
-          icon: <UserCheck size={16} />,
+          label: "Donations",
+          icon: HeartHandshake,
+          path: "/donations",
         },
       ],
     },
 
-    // =========================
-    // URU
-    // =========================
     {
-      type: "section-heading",
-      text: "URU Management",
-    },
-
-    {
-      type: "link",
-      icon: <ThumbsUp size={19} />,
-      text: "Manage URU",
-      path: "/uru/manage",
-    },
-
-    {
-      type: "link",
-      icon: <CheckSquare size={19} />,
-      text: "Approve URU",
-      path: "/uru/approve",
-    },
-
-    {
-      type: "link",
-      icon: <CheckSquare size={19} />,
-      text: "Final URU",
-      path: "/uru/final",
-    },
-
-    // =========================
-    // ACHIEVEMENTS
-    // =========================
-    {
-      type: "section-heading",
-      text: "Achievements",
-    },
-
-    {
-      type: "dropdown",
-      icon: <Award size={19} />,
-      text: "Achievements",
-      subItems: [
+      title: "EVENT MANAGEMENT",
+      items: [
         {
-          text: "Post Achievement",
+          label: "Events",
+          icon: Calendar,
+          dropdown: true,
+          children: [
+            {
+              label: "Add Event",
+              icon: PlusCircle,
+              path: "/events/add",
+            },
+            {
+              label: "Edit Events",
+              icon: Edit3,
+              path: "/events/edit",
+            },
+            {
+              label: "Registered Users",
+              icon: UserCheck,
+              path: "/events/registered",
+            },
+          ],
+        },
+
+        {
+          label: "Team",
+          icon: Users,
+          dropdown: true,
+          children: [
+            {
+              label: "Add Team Member",
+              icon: UserPlus,
+              path: "/team/add",
+            },
+            {
+              label: "Manage Team",
+              icon: FolderKanban,
+              path: "/team/manage",
+            },
+          ],
+        },
+      ],
+    },
+
+    {
+      title: "URU MANAGEMENT",
+      items: [
+        {
+          label: "Manage URU",
+          icon: Layers,
+          path: "/uru/manage",
+        },
+        {
+          label: "Approve URU",
+          icon: CheckSquare,
+          path: "/uru/approve",
+        },
+        {
+          label: "Final URU",
+          icon: ThumbsUp,
+          path: "/uru/final",
+        },
+      ],
+    },
+
+    {
+      title: "ACHIEVEMENTS",
+      items: [
+        {
+          label: "Post Achievement",
+          icon: Award,
           path: "/achievements/post",
-          icon: <PlusCircle size={16} />,
         },
         {
-          text: "Manage Achievements",
+          label: "Manage Achievements",
+          icon: FolderKanban,
           path: "/achievements/manage",
-          icon: <Edit3 size={16} />,
         },
       ],
     },
 
-    // =========================
-    // CATEGORIES
-    // =========================
     {
-      type: "section-heading",
-      text: "Categories",
-    },
-
-    {
-      type: "link",
-      icon: <Layers size={19} />,
-      text: "Manage Categories",
-      path: "/categories/manage",
-    },
-
-    // =========================
-    // COMMENTS
-    // =========================
-    {
-      type: "section-heading",
-      text: "Comments",
-    },
-
-    {
-      type: "dropdown",
-      icon: <MessageSquare size={19} />,
-      text: "Comments",
-      subItems: [
+      title: "CATEGORIES",
+      items: [
         {
-          text: "Blog Comments",
-          path: "/comments/blogs",
-          icon: <MessageSquare size={16} />,
-        },
-        {
-          text: "Achievement Comments",
-          path: "/comments/achievements",
-          icon: <MessageSquare size={16} />,
+          label: "Manage Categories",
+          icon: Layers,
+          path: "/categories",
         },
       ],
     },
 
-    // =========================
-    // USERS
-    // =========================
     {
-      type: "section-heading",
-      text: "Communication",
+      title: "COMMENTS",
+      items: [
+        {
+          label: "Blog Comments",
+          icon: MessageSquare,
+          path: "/comments/blog",
+        },
+        {
+          label: "Achievement Comments",
+          icon: MessageSquare,
+          path: "/comments/achievement",
+        },
+      ],
     },
 
     {
-      type: "link",
-      icon: <MessageSquare size={19} />,
-      text: "User Opinions",
-      path: "/users/opinions",
+      title: "COMMUNICATION",
+      items: [
+        {
+          label: "User Opinions",
+          icon: MessageSquare,
+          path: "/communication/opinions",
+        },
+        {
+          label: "Subscribed Newsletter",
+          icon: Mail,
+          path: "/communication/newsletter",
+        },
+      ],
     },
 
     {
-      type: "link",
-      icon: <Mail size={19} />,
-      text: "Subscribed Newsletter",
-      path: "/users/newsletter",
-    },
-
-    // =========================
-    // SETTINGS
-    // =========================
-    {
-      type: "section-heading",
-      text: "Settings",
-    },
-
-    {
-      type: "link",
-      icon: <User size={19} />,
-      text: "Profile",
-      path: "/profile",
-    },
-
-    {
-      type: "link",
-      icon: <Settings size={19} />,
-      text: "Settings",
-      path: "/settings",
+      title: "SETTINGS",
+      items: [
+        {
+          label: "Profile",
+          icon: User,
+          path: "/profile",
+          onClick: onProfileClick,
+        },
+        {
+          label: "Settings",
+          icon: Settings,
+          path: "/settings",
+        },
+      ],
     },
   ];
 
   return (
-    <>
-      {/* Mobile overlay */}
+    <aside
+      className={`
+        HealthySidebar
+        ${isCollapsed ? "is-collapsed" : ""}
+        ${isMobileOpen ? "is-mobile-open" : ""}
+      `}
+    >
+      {/* Mobile Close */}
       {isMobileOpen && (
-        <div
-          className="HealthySidebar-overlay"
-          onClick={onToggleCollapse}
-        />
-      )}
-
-      <aside
-        className={`HealthySidebar
-          ${isCollapsed ? "is-collapsed" : ""}
-          ${isMobileOpen ? "is-mobile-open" : ""}
-        `}
-      >
-        {/* Decorative glow */}
-        <div className="HealthySidebar-glow HealthySidebar-glow-one" />
-        <div className="HealthySidebar-glow HealthySidebar-glow-two" />
-
-        {/* ================= BRAND ================= */}
-        <div className="HealthySidebar-brand">
-          <div className="HealthySidebar-brand-logo">
-            <img
-              src={logo}
-              alt="Healthy Heaven"
-            />
-          </div>
-
-          {!isCollapsed && (
-            <div className="HealthySidebar-brand-content">
-              <h2>{brandName}</h2>
-              <span>{brandTagline}</span>
-            </div>
-          )}
-
-          <button
-            type="button"
-            className="HealthySidebar-collapse"
-            onClick={onToggleCollapse}
-            aria-label={
-              isCollapsed
-                ? "Expand sidebar"
-                : "Collapse sidebar"
-            }
-          >
-            <ChevronsLeft size={18} />
-          </button>
-        </div>
-
-        {/* ================= PROFILE ================= */}
         <button
           type="button"
-          className="HealthySidebar-profile"
-          onClick={onProfileClick}
+          className="HealthySidebar-mobile-close"
+          onClick={onMobileClose}
+          aria-label="Close sidebar"
         >
-          <div className="HealthySidebar-avatar">
-            {user.avatarUrl ? (
-              <img
-                src={user.avatarUrl}
-                alt={user.name}
-              />
-            ) : (
-              <span>{user.initials}</span>
+          <X size={21} strokeWidth={2.4} />
+        </button>
+      )}
+
+      {/* Decorative background */}
+      <div className="HealthySidebar-glow HealthySidebar-glow-one" />
+      <div className="HealthySidebar-glow HealthySidebar-glow-two" />
+
+      {/* BRAND */}
+      <div className="HealthySidebar-brand">
+        <div className="HealthySidebar-logo-wrap">
+          <img
+            src={logo}
+            alt="Healthy Heaven"
+            className="HealthySidebar-logo"
+          />
+        </div>
+
+        <div className="HealthySidebar-brand-text">
+          <h2>{brandName}</h2>
+          <span>{brandTagline}</span>
+        </div>
+      </div>
+
+      {/* PROFILE */}
+      <div
+        className="HealthySidebar-profile"
+        onClick={onProfileClick}
+        role="button"
+        tabIndex={0}
+      >
+        <div className="HealthySidebar-avatar">
+          {user.avatarUrl ? (
+            <img src={user.avatarUrl} alt={user.name} />
+          ) : (
+            <span>
+              {user.initials ||
+                user.name
+                  ?.split(" ")
+                  .map((word) => word[0])
+                  .join("")
+                  .slice(0, 2)
+                  .toUpperCase()}
+            </span>
+          )}
+        </div>
+
+        <div className="HealthySidebar-profile-info">
+          <strong>{user.name}</strong>
+          <span>{user.role}</span>
+        </div>
+
+        <div className="HealthySidebar-profile-status" />
+      </div>
+
+      {/* NAVIGATION */}
+      <div className="HealthySidebar-navigation">
+        {menuSections.map((section) => (
+          <div
+            className="HealthySidebar-section"
+            key={section.title}
+          >
+            {!isCollapsed && (
+              <div className="HealthySidebar-section-title">
+                {section.title}
+              </div>
             )}
 
-            <span className="HealthySidebar-status" />
-          </div>
+            <div className="HealthySidebar-menu">
+              {section.items.map((item) => {
+                const Icon = item.icon;
+                const isOpen = openDropdowns[item.label];
 
-          {!isCollapsed && (
-            <div className="HealthySidebar-profile-info">
-              <strong>{user.name}</strong>
-              <span>{user.role}</span>
-              <small>
-                <i />
-                Online
-              </small>
+                /* DROPDOWN MENU */
+                if (item.dropdown) {
+                  return (
+                    <div
+                      className="HealthySidebar-dropdown"
+                      key={item.label}
+                    >
+                      <button
+                        type="button"
+                        className={`
+                          HealthySidebar-menu-item
+                          HealthySidebar-dropdown-toggle
+                          ${isOpen ? "dropdown-open" : ""}
+                        `}
+                        onClick={() => toggleDropdown(item.label)}
+                        title={isCollapsed ? item.label : undefined}
+                      >
+                        <span className="HealthySidebar-menu-icon">
+                          <Icon
+                            size={19}
+                            strokeWidth={2}
+                          />
+                        </span>
+
+                        <span className="HealthySidebar-menu-label">
+                          {item.label}
+                        </span>
+
+                        {!isCollapsed && (
+                          <span className="HealthySidebar-dropdown-arrow">
+                            {isOpen ? (
+                              <ChevronDown size={16} />
+                            ) : (
+                              <ChevronRight size={16} />
+                            )}
+                          </span>
+                        )}
+                      </button>
+
+                      {!isCollapsed && isOpen && (
+                        <div className="HealthySidebar-submenu">
+                          {item.children.map((child) => {
+                            const ChildIcon = child.icon;
+
+                            return (
+                              <NavLink
+                                key={child.path}
+                                to={child.path}
+                                className={({ isActive }) =>
+                                  `HealthySidebar-submenu-item ${
+                                    isActive ? "active" : ""
+                                  }`
+                                }
+                                onClick={handleNavClick}
+                              >
+                                <span className="HealthySidebar-submenu-line" />
+
+                                <span className="HealthySidebar-submenu-icon">
+                                  <ChildIcon
+                                    size={15}
+                                    strokeWidth={2}
+                                  />
+                                </span>
+
+                                <span>{child.label}</span>
+                              </NavLink>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+
+                /* NORMAL MENU ITEM */
+                return (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    className={({ isActive }) =>
+                      `HealthySidebar-menu-item ${
+                        isActive ? "active" : ""
+                      }`
+                    }
+                    onClick={(event) => {
+                      if (item.onClick) {
+                        item.onClick(event);
+                      }
+
+                      handleNavClick();
+                    }}
+                    title={isCollapsed ? item.label : undefined}
+                  >
+                    <span className="HealthySidebar-menu-icon">
+                      <Icon
+                        size={19}
+                        strokeWidth={2}
+                      />
+                    </span>
+
+                    <span className="HealthySidebar-menu-label">
+                      {item.label}
+                    </span>
+                  </NavLink>
+                );
+              })}
             </div>
-          )}
+          </div>
+        ))}
+      </div>
 
-          {!isCollapsed && (
-            <ChevronDown
-              size={16}
-              className="HealthySidebar-profile-arrow"
-            />
-          )}
+      {/* FOOTER */}
+      <div className="HealthySidebar-footer">
+        <button
+          type="button"
+          className="HealthySidebar-logout"
+          onClick={onLogout}
+          title={isCollapsed ? "Logout" : undefined}
+        >
+          <span className="HealthySidebar-logout-icon">
+            <LogOut size={18} />
+          </span>
+
+          <span className="HealthySidebar-menu-label">
+            Logout
+          </span>
         </button>
 
-        {/* ================= NAVIGATION ================= */}
-        <nav className="HealthySidebar-nav">
-          {menuItems.map((item, index) => {
-            // SECTION TITLE
-            if (item.type === "section-heading") {
-              return (
-                <div
-                  key={index}
-                  className="HealthySidebar-section"
-                >
-                  {!isCollapsed && (
-                    <>
-                      <span />
-                      <p>{item.text}</p>
-                    </>
-                  )}
-                </div>
-              );
-            }
+        {!isCollapsed && (
+          <div className="HealthySidebar-version">
+            <span>Healthy Haven</span>
+            <small>{version}</small>
+          </div>
+        )}
+      </div>
 
-            // NORMAL LINK
-            if (item.type === "link") {
-              return (
-                <NavLink
-                  key={index}
-                  to={item.path}
-                  end={item.path === "/"}
-                  title={
-                    isCollapsed
-                      ? item.text
-                      : undefined
-                  }
-                  className={({ isActive }) =>
-                    `HealthySidebar-link ${
-                      item.primary
-                        ? "HealthySidebar-dashboard"
-                        : ""
-                    } ${
-                      isActive
-                        ? "HealthySidebar-active"
-                        : ""
-                    }`
-                  }
-                >
-                  <span className="HealthySidebar-icon">
-                    {item.icon}
-                  </span>
+      {/* Decorative leaves */}
+      <div className="HealthySidebar-leaf leaf-one">
+        🍃
+      </div>
 
-                  {!isCollapsed && (
-                    <span className="HealthySidebar-text">
-                      {item.text}
-                    </span>
-                  )}
-
-                  {!isCollapsed && !item.primary && (
-                    <ChevronRight
-                      size={15}
-                      className="HealthySidebar-arrow"
-                    />
-                  )}
-                </NavLink>
-              );
-            }
-
-            // DROPDOWN
-            const isDropdownOpen =
-              !!openDropdowns[item.text];
-
-            return (
-              <div
-                key={index}
-                className={`HealthySidebar-dropdown ${
-                  isDropdownOpen
-                    ? "HealthySidebar-dropdown-open"
-                    : ""
-                }`}
-              >
-                <button
-                  type="button"
-                  title={
-                    isCollapsed
-                      ? item.text
-                      : undefined
-                  }
-                  className="HealthySidebar-link HealthySidebar-dropdown-button"
-                  onClick={() => {
-                    if (!isCollapsed) {
-                      toggleDropdown(item.text);
-                    }
-                  }}
-                >
-                  <span className="HealthySidebar-icon">
-                    {item.icon}
-                  </span>
-
-                  {!isCollapsed && (
-                    <>
-                      <span className="HealthySidebar-text">
-                        {item.text}
-                      </span>
-
-                      <ChevronDown
-                        size={15}
-                        className="HealthySidebar-arrow HealthySidebar-dropdown-arrow"
-                      />
-                    </>
-                  )}
-                </button>
-
-                {!isCollapsed && (
-                  <div className="HealthySidebar-submenu">
-                    {item.subItems.map(
-                      (subItem, subIndex) => (
-                        <NavLink
-                          key={subIndex}
-                          to={subItem.path}
-                          className={({ isActive }) =>
-                            `HealthySidebar-submenu-link ${
-                              isActive
-                                ? "HealthySidebar-submenu-active"
-                                : ""
-                            }`
-                          }
-                        >
-                          <span className="HealthySidebar-submenu-icon">
-                            {subItem.icon}
-                          </span>
-
-                          <span>
-                            {subItem.text}
-                          </span>
-                        </NavLink>
-                      )
-                    )}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </nav>
-
-        {/* ================= LOGOUT ================= */}
-        <div className="HealthySidebar-bottom">
-          <button
-            type="button"
-            className="HealthySidebar-logout"
-            onClick={onLogout}
-            title={
-              isCollapsed
-                ? "Logout"
-                : undefined
-            }
-          >
-            <LogOut size={19} />
-
-            {!isCollapsed && (
-              <span>Logout</span>
-            )}
-          </button>
-
-          {!isCollapsed && (
-            <div className="HealthySidebar-footer">
-              <span>
-                {version}
-              </span>
-
-              <span>
-                Healthy Heaven
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* Decorative leaves */}
-        <div className="HealthySidebar-leaves">
-          <span className="leaf leaf-one" />
-          <span className="leaf leaf-two" />
-          <span className="leaf leaf-three" />
-          <span className="leaf leaf-four" />
-        </div>
-      </aside>
-    </>
+      <div className="HealthySidebar-leaf leaf-two">
+        🌿
+      </div>
+    </aside>
   );
 };
 
