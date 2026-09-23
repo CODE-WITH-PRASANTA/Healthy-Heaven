@@ -1,0 +1,1366 @@
+/* =========================================================
+   CONTACT LEAD - ROOT & RESET
+========================================================= */
+
+.ContactLead {
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: clamp(14px, 3vw, 30px);
+  background: linear-gradient(180deg, #f8fbfe 0%, #f4f8fb 100%);
+  color: #17233d;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.ContactLead *,
+.ContactLead *::before,
+.ContactLead *::after {
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.ContactLead__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: clamp(18px, 3vw, 28px);
+  flex-wrap: wrap;
+}
+
+.ContactLead__header-left {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 20px);
+}
+
+.ContactLead__header-icon {
+  width: clamp(52px, 6vw, 78px);
+  height: clamp(52px, 6vw, 78px);
+  min-width: clamp(52px, 6vw, 78px);
+  border-radius: 15px;
+  background: linear-gradient(145deg, #e1f4ff, #d3efff);
+  color: #008bd1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(0, 135, 205, 0.08);
+}
+
+.ContactLead__header-left h1 {
+  margin: 0 0 4px;
+  color: #14213d;
+  font-size: clamp(20px, 2.5vw, 34px);
+  line-height: 1.15;
+  font-weight: 750;
+  letter-spacing: -0.5px;
+}
+
+.ContactLead__header-left p {
+  margin: 0;
+  color: #617895;
+  font-size: clamp(13px, 1.2vw, 18px);
+}
+
+.ContactLead__breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #59708d;
+  font-size: clamp(12px, 1vw, 14px);
+  flex-wrap: wrap;
+}
+
+.ContactLead__breadcrumb span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ContactLead__breadcrumb strong {
+  color: #334764;
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.ContactLead__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(12px, 2vw, 20px);
+  margin-bottom: 24px;
+}
+
+.ContactLead__stat-card {
+  min-height: 110px;
+  padding: clamp(14px, 2vw, 22px);
+  border: 1px solid #e3ebf1;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.96);
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.5vw, 20px);
+  box-shadow: 0 6px 24px rgba(35, 65, 90, 0.035);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ContactLead__stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(35, 65, 90, 0.08);
+}
+
+.ContactLead__stat-icon {
+  width: clamp(54px, 5.5vw, 80px);
+  height: clamp(54px, 5.5vw, 80px);
+  min-width: clamp(54px, 5.5vw, 80px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ContactLead__stat-icon--blue {
+  color: #008bd3;
+  background: #e8f6ff;
+}
+
+.ContactLead__stat-icon--green {
+  color: #13a15d;
+  background: #e8faef;
+}
+
+.ContactLead__stat-icon--orange {
+  color: #f39a00;
+  background: #fff4df;
+}
+
+.ContactLead__stat-icon--red {
+  color: #ec4141;
+  background: #ffebeb;
+}
+
+.ContactLead__stat-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.ContactLead__stat-content > span {
+  color: #526784;
+  font-size: clamp(12px, 1vw, 14px);
+  display: block;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ContactLead__stat-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(8px, 1vw, 14px);
+  flex-wrap: wrap;
+}
+
+.ContactLead__stat-value-row strong {
+  color: #101e3a;
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: 1;
+  font-weight: 750;
+}
+
+.ContactLead__growth {
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ContactLead__growth--green {
+  color: #09a45a;
+}
+
+.ContactLead__growth--red {
+  color: #ef3f3f;
+}
+
+.ContactLead__stat-content p {
+  margin: 6px 0 0;
+  color: #8294ab;
+  font-size: 12px;
+}
+
+/* =========================================================
+   FILTER CARD
+========================================================= */
+
+.ContactLead__filter-card {
+  position: relative;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: 1.45fr 0.85fr 1fr 1fr auto;
+  gap: clamp(12px, 1.8vw, 20px);
+  align-items: end;
+  padding: clamp(16px, 2vw, 23px);
+  margin-bottom: 24px;
+  border: 1px solid #e3ebf1;
+  border-radius: 13px;
+  background: #fff;
+  box-shadow: 0 6px 24px rgba(35, 65, 90, 0.035);
+}
+
+.ContactLead__filter-field {
+  min-width: 0;
+  position: relative;
+}
+
+.ContactLead__filter-field label {
+  display: block;
+  margin-bottom: 8px;
+  color: #263a58;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ContactLead__input-wrapper,
+.ContactLead__date-input,
+.ContactLead__filter-field select {
+  width: 100%;
+  height: 46px;
+  border: 1px solid #dce5ed;
+  border-radius: 8px;
+  background: #fff;
+  color: #243653;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ContactLead__input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 14px;
+}
+
+.ContactLead__input-wrapper svg {
+  color: #68809c;
+  flex-shrink: 0;
+}
+
+.ContactLead__input-wrapper:focus-within {
+  border-color: #008fd3;
+  box-shadow: 0 0 0 3px rgba(0, 143, 211, 0.08);
+}
+
+.ContactLead__input-wrapper input {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  color: #263953;
+  background: transparent;
+  font-size: 14px;
+}
+
+.ContactLead__input-wrapper input::placeholder {
+  color: #8193aa;
+}
+
+.ContactLead__filter-field select {
+  padding: 0 13px;
+  outline: none;
+  cursor: pointer;
+}
+
+.ContactLead__filter-field select:focus {
+  border-color: #008fd3;
+  box-shadow: 0 0 0 3px rgba(0, 143, 211, 0.08);
+}
+
+.ContactLead__date-input {
+  padding: 0 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.ContactLead__date-input svg {
+  color: #314b6c;
+}
+
+.ContactLead__date-input:hover {
+  border-color: #8bc7e5;
+}
+
+/* =========================================================
+   CALENDAR POPUP
+========================================================= */
+
+.ContactLead__calendar {
+  position: absolute;
+  z-index: 100;
+  top: calc(100% + 8px);
+  left: 0;
+  width: min(310px, calc(100vw - 40px));
+  padding: 16px;
+  border: 1px solid #dfe8ef;
+  border-radius: 13px;
+  background: #fff;
+  box-shadow: 0 18px 50px rgba(28, 53, 78, 0.16);
+  animation: ContactLeadCalendarIn 0.18s ease;
+}
+
+@keyframes ContactLeadCalendarIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ContactLead__calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.ContactLead__calendar-header strong {
+  color: #1d3150;
+  font-size: 15px;
+}
+
+.ContactLead__calendar-header button {
+  width: 31px;
+  height: 31px;
+  border: 1px solid #e1e8ee;
+  border-radius: 7px;
+  background: #fff;
+  color: #49627f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ContactLead__calendar-header button:hover {
+  color: #008cd2;
+  border-color: #a9d8ed;
+  background: #f1faff;
+}
+
+.ContactLead__calendar-weekdays,
+.ContactLead__calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.ContactLead__calendar-weekdays {
+  margin-bottom: 7px;
+}
+
+.ContactLead__calendar-weekdays span {
+  text-align: center;
+  color: #8797aa;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.ContactLead__calendar-days button {
+  width: 100%;
+  height: 34px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: #344b68;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.ContactLead__calendar-days button:hover:not(:disabled) {
+  background: #eaf8ff;
+  color: #008bd0;
+}
+
+.ContactLead__calendar-days button:disabled {
+  color: #cbd3dc;
+  cursor: default;
+}
+
+.ContactLead__calendar-days button.ContactLead__calendar-day--selected {
+  color: #fff;
+  background: #008bd1;
+  box-shadow: 0 4px 10px rgba(0, 139, 209, 0.2);
+}
+
+/* =========================================================
+   FILTER BUTTONS
+========================================================= */
+
+.ContactLead__filter-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.ContactLead__filter-button,
+.ContactLead__reset-button {
+  height: 46px;
+  padding: 0 clamp(12px, 1.5vw, 18px);
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.22s ease;
+}
+
+.ContactLead__filter-button {
+  border: 1px solid #008bd0;
+  background: linear-gradient(135deg, #078fd4, #0080c2);
+  color: #fff;
+  box-shadow: 0 6px 15px rgba(0, 139, 208, 0.15);
+}
+
+.ContactLead__filter-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 20px rgba(0, 139, 208, 0.22);
+}
+
+.ContactLead__reset-button {
+  border: 1px solid #d9e3ea;
+  background: #fff;
+  color: #415675;
+}
+
+.ContactLead__reset-button:hover {
+  border-color: #a9c7dc;
+  background: #f5fbff;
+  color: #0086c9;
+}
+
+/* =========================================================
+   LIST CARD
+========================================================= */
+
+.ContactLead__list-card {
+  position: relative;
+  z-index: 1;
+  border: 1px solid #e3ebf1;
+  border-radius: 13px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(35, 65, 90, 0.035);
+}
+
+.ContactLead__list-header {
+  padding: clamp(14px, 2vw, 18px) clamp(16px, 2vw, 23px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.ContactLead__list-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ContactLead__list-title-icon {
+  color: #008bd0;
+  display: flex;
+  align-items: center;
+}
+
+.ContactLead__list-title h2 {
+  margin: 0;
+  color: #0088cc;
+  font-size: clamp(18px, 1.8vw, 21px);
+  font-weight: 700;
+}
+
+.ContactLead__list-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ContactLead__export-button,
+.ContactLead__delete-selected-button,
+.ContactLead__refresh-button {
+  height: 42px;
+  border-radius: 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 650;
+  white-space: nowrap;
+  transition: all 0.22s ease;
+}
+
+.ContactLead__export-button {
+  padding: 0 16px;
+  border: 1px solid #13a55c;
+  background: linear-gradient(135deg, #18ae63, #0b9d54);
+  color: #fff;
+}
+
+.ContactLead__export-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 16px rgba(13, 165, 89, 0.18);
+}
+
+.ContactLead__delete-selected-button {
+  padding: 0 16px;
+  border: 1px solid #f04b4b;
+  background: linear-gradient(135deg, #f34b4b, #e93636);
+  color: #fff;
+}
+
+.ContactLead__delete-selected-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 16px rgba(235, 53, 53, 0.18);
+}
+
+.ContactLead__delete-selected-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ContactLead__refresh-button {
+  width: 42px;
+  border: 1px solid #dce5ec;
+  background: #fff;
+  color: #0087cb;
+}
+
+.ContactLead__refresh-button:hover {
+  background: #effaff;
+  border-color: #a9d8ed;
+  transform: rotate(15deg);
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.ContactLead__table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 clamp(12px, 2vw, 23px);
+}
+
+.ContactLead__table {
+  width: 100%;
+  min-width: 950px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.ContactLead__table thead th {
+  height: 48px;
+  padding: 0 12px;
+  background: #f7fafc;
+  border-top: 1px solid #eef2f5;
+  border-bottom: 1px solid #e2e8ee;
+  color: #57708e;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.ContactLead__table tbody td {
+  height: 56px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #e4eaf0;
+  color: #344967;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.ContactLead__table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.ContactLead__table tbody tr:hover {
+  background: #f9fcfe;
+}
+
+.ContactLead__checkbox-column {
+  width: 45px;
+}
+
+/* =========================================================
+   CHECKBOX
+========================================================= */
+
+.ContactLead__checkbox {
+  position: relative;
+  display: inline-flex;
+  width: 19px;
+  height: 19px;
+  cursor: pointer;
+}
+
+.ContactLead__checkbox input {
+  position: absolute;
+  opacity: 0;
+}
+
+.ContactLead__checkbox span {
+  width: 19px;
+  height: 19px;
+  border: 1.4px solid #bccbd8;
+  border-radius: 4px;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+
+.ContactLead__checkbox input:checked + span {
+  background: #008bd0;
+  border-color: #008bd0;
+}
+
+.ContactLead__checkbox input:checked + span::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 3px;
+  width: 5px;
+  height: 9px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* =========================================================
+   TABLE CONTENT
+========================================================= */
+
+.ContactLead__name {
+  color: #1f304b;
+  font-weight: 600;
+}
+
+.ContactLead__email,
+.ContactLead__phone,
+.ContactLead__city,
+.ContactLead__date {
+  color: #536b89;
+}
+
+.ContactLead__message {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #536b89;
+}
+
+.ContactLead__status {
+  min-width: 85px;
+  padding: 5px 12px;
+  border-radius: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.ContactLead__status--new {
+  color: #0088cf;
+  background: #e8f6ff;
+}
+
+.ContactLead__status--replied {
+  color: #079653;
+  background: #e5f8ec;
+}
+
+.ContactLead__status--pending {
+  color: #e58b00;
+  background: #fff0cf;
+}
+
+/* =========================================================
+   ROW ACTIONS
+========================================================= */
+
+.ContactLead__row-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ContactLead__row-action {
+  width: 33px;
+  height: 33px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.ContactLead__row-action:hover {
+  transform: translateY(-2px);
+}
+
+.ContactLead__row-action--view {
+  border: 1px solid #8ed0f4;
+  background: #f1faff;
+  color: #0089d0;
+}
+
+.ContactLead__row-action--view:hover {
+  color: #fff;
+  background: #0089d0;
+}
+
+.ContactLead__row-action--edit {
+  border: 1px solid #a7e0bd;
+  background: #f2fcf6;
+  color: #079653;
+}
+
+.ContactLead__row-action--edit:hover {
+  color: #fff;
+  background: #079653;
+}
+
+.ContactLead__row-action--delete {
+  border: 1px solid #ffaaaa;
+  background: #fff5f5;
+  color: #eb3e3e;
+}
+
+.ContactLead__row-action--delete:hover {
+  color: #fff;
+  background: #eb3e3e;
+}
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.ContactLead__empty {
+  height: 220px !important;
+  text-align: center !important;
+}
+
+.ContactLead__empty-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.ContactLead__empty-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #edf8fd;
+  color: #82aac2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.ContactLead__empty-content h3 {
+  margin: 0 0 5px;
+  color: #415570;
+  font-size: 16px;
+}
+
+.ContactLead__empty-content p {
+  margin: 0;
+  color: #8798aa;
+  font-size: 13px;
+}
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+.ContactLead__pagination-wrapper {
+  padding: 14px clamp(12px, 2vw, 23px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.ContactLead__pagination-info {
+  color: #70849d;
+  font-size: 13px;
+}
+
+.ContactLead__pagination-info strong {
+  color: #354c68;
+}
+
+.ContactLead__pagination {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ContactLead__page-button {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  border: 1px solid #dbe4eb;
+  border-radius: 7px;
+  background: #fff;
+  color: #344b68;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.ContactLead__page-button:hover:not(:disabled) {
+  color: #008bd0;
+  background: #f1faff;
+  border-color: #8ccbe9;
+}
+
+.ContactLead__page-button--active {
+  border-color: #008bd0;
+  background: #008bd0;
+  color: #fff !important;
+  box-shadow: 0 5px 13px rgba(0, 139, 208, 0.2);
+}
+
+.ContactLead__page-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ContactLead__pagination-dots {
+  min-width: 20px;
+  text-align: center;
+  color: #7c8da0;
+}
+
+/* =========================================================
+   MODAL DIALOGS
+========================================================= */
+
+.ContactLead__modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  padding: clamp(12px, 3vw, 20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 28, 48, 0.6);
+  backdrop-filter: blur(4px);
+  animation: ContactLeadOverlayIn 0.2s ease;
+}
+
+@keyframes ContactLeadOverlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.ContactLead__view-modal,
+.ContactLead__edit-modal,
+.ContactLead__delete-modal {
+  position: relative;
+  width: 100%;
+  max-height: 90vh;
+  max-height: 90dvh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 25px 70px rgba(12, 31, 52, 0.25);
+  animation: ContactLeadModalIn 0.25s ease;
+}
+
+.ContactLead__view-modal {
+  max-width: min(620px, calc(100vw - 32px));
+  padding: clamp(18px, 3vw, 28px);
+}
+
+.ContactLead__edit-modal {
+  max-width: min(650px, calc(100vw - 32px));
+  padding: clamp(18px, 3vw, 28px);
+}
+
+.ContactLead__delete-modal {
+  max-width: min(430px, calc(100vw - 32px));
+  padding: clamp(24px, 4vw, 35px) clamp(16px, 3vw, 30px) 24px;
+  text-align: center;
+}
+
+@keyframes ContactLeadModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.ContactLead__modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: #f1f4f7;
+  color: #64758a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ContactLead__modal-close:hover {
+  color: #27384f;
+  background: #e6ebef;
+  transform: rotate(90deg);
+}
+
+.ContactLead__modal-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-right: 32px;
+  margin-bottom: 20px;
+}
+
+.ContactLead__modal-icon {
+  width: clamp(42px, 5vw, 51px);
+  height: clamp(42px, 5vw, 51px);
+  min-width: clamp(42px, 5vw, 51px);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ContactLead__modal-icon--blue {
+  color: #008bd0;
+  background: #eaf7ff;
+}
+
+.ContactLead__modal-icon--green {
+  color: #079653;
+  background: #eaf9f0;
+}
+
+.ContactLead__modal-heading h3 {
+  margin: 0 0 3px;
+  color: #1c2d48;
+  font-size: clamp(17px, 2vw, 21px);
+}
+
+.ContactLead__modal-heading p {
+  margin: 0;
+  color: #8292a5;
+  font-size: 13px;
+}
+
+/* Modal View */
+.ContactLead__view-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.ContactLead__view-item {
+  min-height: 64px;
+  padding: 12px 14px;
+  border: 1px solid #e6edf2;
+  border-radius: 9px;
+  background: #fafcfd;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+
+.ContactLead__view-item > span:first-child {
+  color: #8191a4;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.ContactLead__view-item strong {
+  color: #304661;
+  font-size: 13.5px;
+  overflow-wrap: anywhere;
+}
+
+.ContactLead__message-box {
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid #e6edf2;
+  border-radius: 9px;
+  background: #fafcfd;
+}
+
+.ContactLead__message-box > span {
+  color: #8191a4;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.ContactLead__message-box p {
+  margin: 6px 0 0;
+  color: #405673;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+/* Modal Edit */
+.ContactLead__edit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.ContactLead__edit-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.ContactLead__edit-field--full {
+  grid-column: 1 / -1;
+}
+
+.ContactLead__edit-field label {
+  margin-bottom: 6px;
+  color: #405672;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.ContactLead__edit-field input,
+.ContactLead__edit-field select,
+.ContactLead__edit-field textarea {
+  width: 100%;
+  border: 1px solid #dce5ec;
+  border-radius: 8px;
+  outline: none;
+  background: #fff;
+  color: #304661;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ContactLead__edit-field input,
+.ContactLead__edit-field select {
+  height: 42px;
+  padding: 0 12px;
+}
+
+.ContactLead__edit-field textarea {
+  resize: vertical;
+  min-height: 100px;
+  padding: 10px 12px;
+  font-family: inherit;
+}
+
+.ContactLead__edit-field input:focus,
+.ContactLead__edit-field select:focus,
+.ContactLead__edit-field textarea:focus {
+  border-color: #008bd0;
+  box-shadow: 0 0 0 3px rgba(0, 139, 208, 0.08);
+}
+
+.ContactLead__view-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.ContactLead__modal-secondary,
+.ContactLead__modal-primary {
+  min-width: 95px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 650;
+  transition: all 0.2s ease;
+}
+
+.ContactLead__modal-secondary {
+  border: 1px solid #d9e2e9;
+  background: #fff;
+  color: #53677e;
+}
+
+.ContactLead__modal-secondary:hover {
+  background: #f5f8fa;
+}
+
+.ContactLead__modal-primary {
+  border: 1px solid #008bd0;
+  background: #008bd0;
+  color: #fff;
+}
+
+.ContactLead__modal-primary:hover {
+  background: #007ab8;
+  transform: translateY(-1px);
+}
+
+/* Modal Delete */
+.ContactLead__delete-icon {
+  width: clamp(56px, 6vw, 70px);
+  height: clamp(56px, 6vw, 70px);
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  color: #ed3f3f;
+  background: #ffeded;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ContactLead__delete-modal h3 {
+  margin: 0 0 8px;
+  color: #1d2c43;
+  font-size: clamp(18px, 2vw, 21px);
+}
+
+.ContactLead__delete-modal p {
+  margin: 0;
+  color: #78899c;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.ContactLead__delete-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.ContactLead__cancel-delete,
+.ContactLead__confirm-delete {
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ContactLead__cancel-delete {
+  border: 1px solid #dce4eb;
+  background: #fff;
+  color: #53677e;
+}
+
+.ContactLead__confirm-delete {
+  border: 1px solid #e93b3b;
+  background: #e93b3b;
+  color: #fff;
+}
+
+.ContactLead__confirm-delete:hover {
+  background: #cb2929;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(233, 59, 59, 0.2);
+}
+
+/* =========================================================
+   RESPONSIVE BREAKPOINTS
+========================================================= */
+
+/* Tablets & Small Desktops */
+@media (max-width: 1100px) {
+  .ContactLead__stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ContactLead__filter-card {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ContactLead__filter-buttons {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+  }
+}
+
+/* Small Tablets & Large Phones */
+@media (max-width: 768px) {
+  .ContactLead__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ContactLead__breadcrumb {
+    align-self: flex-start;
+  }
+
+  .ContactLead__filter-card {
+    grid-template-columns: 1fr;
+  }
+
+  .ContactLead__filter-buttons {
+    grid-column: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+
+  .ContactLead__list-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ContactLead__list-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    width: 100%;
+  }
+
+  .ContactLead__export-button,
+  .ContactLead__delete-selected-button {
+    width: 100%;
+  }
+
+  .ContactLead__pagination-wrapper {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .ContactLead__pagination {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .ContactLead__view-grid,
+  .ContactLead__edit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ContactLead__edit-field--full {
+    grid-column: auto;
+  }
+}
+
+/* Mobile Devices */
+@media (max-width: 500px) {
+  .ContactLead__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .ContactLead__breadcrumb {
+    display: none;
+  }
+
+  .ContactLead__list-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ContactLead__refresh-button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .ContactLead__view-footer,
+  .ContactLead__delete-actions {
+    flex-direction: column-reverse;
+    width: 100%;
+  }
+
+  .ContactLead__modal-secondary,
+  .ContactLead__modal-primary,
+  .ContactLead__cancel-delete,
+  .ContactLead__confirm-delete {
+    width: 100%;
+  }
+
+  .ContactLead__calendar {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  @keyframes ContactLeadCalendarIn {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -5px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+}
+
+/* Small / Foldable Screens (<360px) */
+@media (max-width: 360px) {
+  .ContactLead__filter-buttons,
+  .ContactLead__list-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .ContactLead__page-button {
+    min-width: 30px;
+    height: 30px;
+    padding: 0 4px;
+    font-size: 12px;
+  }
+}
