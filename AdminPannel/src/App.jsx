@@ -13,6 +13,7 @@ import MainLayout from "./Layout/MainLayout/MainLayout";
 
 // Pages
 import DashBoard from "./Pages/DashBoard/DashBoard";
+import Gallery from "./Components/Gallery/Gallery";
 
 
 const App = () => {
@@ -33,6 +34,11 @@ const App = () => {
           <Route
             path="/dashboard"
             element={<DashBoard/>}
+          />
+
+          <Route
+            path="/gallery"
+            element={<Gallery/>}
           />
 
           {/* Blog Create Route */}

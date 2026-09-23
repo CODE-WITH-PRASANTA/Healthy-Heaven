@@ -124,16 +124,6 @@ const Sidebar = ({
       icon: <ImageIcon size={19} />,
       text: "Gallery",
       subItems: [
-        {
-          text: "Event Gallery",
-          path: "/gallery/events",
-          icon: <ImageIcon size={16} />,
-        },
-        {
-          text: "Home Gallery",
-          path: "/gallery/home",
-          icon: <ImageIcon size={16} />,
-        },
       ],
     },
 
