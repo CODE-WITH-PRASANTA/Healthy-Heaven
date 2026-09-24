@@ -1,322 +1,179 @@
 /* ============================================================
-   FOOTER MAIN
+   GLOBAL & THEME VARIABLES
 ============================================================ */
-
 .FooterMain {
-  --FooterGreen: #82c438;
-  --FooterGreenLight: #a1db5c;
-  --FooterGreenDark: #6fa82f;
+  --FooterGreen: #88c93a;
+  --FooterGreenLight: #a9e858;
+  --FooterGreenGlow: rgba(136, 201, 58, 0.35);
 
-  --FooterBackground: #202020;
+  --FooterBgDark: #1a1a1a;
+  --FooterBgMid: #222222;
 
   --FooterWhite: #ffffff;
-
-  --FooterText: #bdbdbd;
-  --FooterMuted: #8f8f8f;
-
-  --FooterBorder: rgba(255, 255, 255, 0.09);
+  --FooterTextPrimary: #dedede;
+  --FooterTextMuted: #a3a3a3;
+  --FooterBorder: rgba(255, 255, 255, 0.08);
 
   position: relative;
-
   width: 100%;
-
   background:
-    radial-gradient(
-      circle at 15% 20%,
-      rgba(130, 196, 56, 0.045),
-      transparent 28%
-    ),
-    linear-gradient(
-      180deg,
-      #242424 0%,
-      #1d1d1d 100%
-    );
-
+    radial-gradient(circle at 12% 28%, rgba(136, 201, 58, 0.06), transparent 36%),
+    linear-gradient(180deg, var(--FooterBgMid) 0%, var(--FooterBgDark) 100%);
   color: var(--FooterWhite);
-
   overflow: hidden;
-
   isolation: isolate;
-
-  font-family:
-    "Poppins",
-    "Inter",
-    Arial,
-    sans-serif;
+  font-family: "Poppins", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: -0.1px;
 }
 
-
-/* ============================================================
-   SUBTLE TOP GLOW
-============================================================ */
-
+/* Subtle accent line on top */
 .FooterMain::before {
   content: "";
-
   position: absolute;
-
   top: 0;
-
-  left: 8%;
-
-  width: 84%;
-
-  height: 1px;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(130, 196, 56, 0.55),
-      transparent
-    );
-
-  opacity: 0.7;
-
+  left: 6%;
+  width: 88%;
+  height: 4.5px;
+  background: linear-gradient(90deg, transparent, var(--FooterGreen), transparent);
+  opacity: 0.6;
   pointer-events: none;
 }
 
-
 /* ============================================================
-   CONTAINER
+   MAIN CONTAINER
 ============================================================ */
-
 .FooterContainer {
   position: relative;
-
-  width:
-    min(
-      1200px,
-      calc(100% - 70px)
-    );
-
+  width: min(1280px, calc(100% - 64px));
   margin: 0 auto;
-
   z-index: 5;
 }
 
-
 /* ============================================================
-   TOP SECTION
+   TOP GRID SECTION
 ============================================================ */
-
 .FooterTop {
   display: grid;
-
-  grid-template-columns:
-    1.25fr
-    0.85fr
-    1fr
-    0.9fr;
-
-  gap: 50px;
-
-  padding:
-    52px
-    0
-    48px;
+  grid-template-columns: 1.35fr 0.95fr 1.1fr 0.95fr;
+  column-gap: 52px;
+  row-gap: 36px;
+  align-items: start;
+  padding-top: 20px;
+  padding-bottom: 20px; /* Balanced height to remove empty voids */
 }
-
-
-/* ============================================================
-   COLUMN
-============================================================ */
 
 .FooterColumn {
   position: relative;
-
   min-width: 0;
-
   z-index: 5;
 }
 
-.FooterContactColumn {
-  max-width: 330px;
+/* Offsets nav headers to align horizontally with the Contact title */
+.FooterNavColumn {
+  padding-top: 86px; /* Matches Logo wrapper height + margins */
 }
 
+.FooterContactColumn {
+  max-width: 350px;
+}
 
 /* ============================================================
    LOGO
 ============================================================ */
-
 .FooterLogoWrapper {
   display: flex;
-
   align-items: center;
-
-  height: 62px;
-
-  margin-bottom: 17px;
+  height: 60px;
+  margin-bottom: 26px;
 }
 
 .FooterLogoLink {
   display: inline-flex;
-
   align-items: center;
-
   text-decoration: none;
 }
 
 .FooterLogo {
   display: block;
-
   width: auto;
-
-  max-width: 160px;
-
-  max-height: 75px;
-
+  max-width: 175px;
+  max-height: 72px;
   object-fit: contain;
-
-  transition:
-    transform 0.3s ease,
-    filter 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
 }
 
 .FooterLogoLink:hover .FooterLogo {
-  transform:
-    translateY(-2px)
-    scale(1.03);
-
-  filter:
-    drop-shadow(
-      0 8px 18px
-      rgba(130, 196, 56, 0.2)
-    );
+  transform: translateY(-2px) scale(1.03);
+  filter: drop-shadow(0 8px 20px var(--FooterGreenGlow));
 }
-
 
 /* ============================================================
-   TITLES
+   TITLES (PROMINENT & PREMIUM)
 ============================================================ */
-
 .FooterTitle {
   position: relative;
-
-  margin:
-    0
-    0
-    28px;
-
-  color:
-    var(--FooterWhite);
-
-  font-size: 25px;
-
+  margin: 0 0 28px 0;
+  color: var(--FooterWhite);
+  font-size: 22px; /* Increased font size */
   font-weight: 700;
-
-  line-height: 1.2;
-
-  letter-spacing: -0.4px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  line-height: 1.25;
 }
 
-
-/* GREEN UNDERLINE */
-
+/* Green underline indicator */
 .FooterTitle::after {
   content: "";
-
   position: absolute;
-
   left: 0;
-
   bottom: -10px;
-
-  width: 40px;
-
-  height: 2px;
-
-  border-radius: 50px;
-
-  background:
-    var(--FooterGreen);
-
-  transition:
-    width 0.35s ease;
+  width: 36px;
+  height: 2.5px;
+  border-radius: 4px;
+  background: var(--FooterGreen);
+  box-shadow: 0 2px 8px var(--FooterGreenGlow);
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .FooterColumn:hover .FooterTitle::after {
-  width: 62px;
+  width: 58px;
 }
-
 
 /* ============================================================
    CONTACT ITEMS
 ============================================================ */
-
 .FooterContactItem {
   display: flex;
-
   align-items: flex-start;
-
-  gap: 13px;
-
-  margin-bottom: 19px;
-
-  color:
-    var(--FooterText);
-
+  gap: 15px;
+  margin-bottom: 18px;
+  color: var(--FooterTextPrimary);
   text-decoration: none;
-
-  font-size: 14px;
-
+  font-size: 15.5px; /* Clean, bold & legible */
   font-weight: 400;
-
-  line-height: 1.65;
-
-  transition:
-    color 0.3s ease,
-    transform 0.3s ease;
+  line-height: 1.6;
+  transition: color 0.25s ease, transform 0.25s ease;
 }
 
 .FooterContactItem:hover {
-  color:
-    var(--FooterWhite);
-
-  transform:
-    translateX(3px);
+  color: var(--FooterWhite);
+  transform: translateX(3px);
 }
 
-
-/* ============================================================
-   CONTACT ICON
-============================================================ */
-
 .FooterContactIcon {
-  flex:
-    0
-    0
-    31px;
-
+  flex: 0 0 26px;
   display: flex;
-
-  align-items: flex-start;
-
-  justify-content: flex-start;
-
-  padding-top: 1px;
-
-  color:
-    var(--FooterGreen);
-
-  transition:
-    color 0.3s ease,
-    transform 0.3s ease;
+  align-items: center;
+  justify-content: center;
+  padding-top: 3px;
+  color: var(--FooterGreen);
+  transition: color 0.25s ease, transform 0.25s ease;
 }
 
-.FooterContactItem:hover
-.FooterContactIcon {
-  color:
-    var(--FooterGreenLight);
-
-  transform:
-    scale(1.08);
+.FooterContactItem:hover .FooterContactIcon {
+  color: var(--FooterGreenLight);
+  transform: scale(1.12);
 }
-
-
-/* ============================================================
-   CONTACT TEXT
-============================================================ */
 
 .FooterContactText {
   min-width: 0;
@@ -324,812 +181,298 @@
 
 .FooterContactText a {
   display: block;
-
   color: inherit;
-
   text-decoration: none;
-
-  transition:
-    color 0.25s ease;
+  transition: color 0.2s ease;
 }
 
 .FooterContactText a:hover {
-  color:
-    var(--FooterGreen);
+  color: var(--FooterGreenLight);
 }
 
 .FooterPhoneText,
 .FooterEmailText {
   display: flex;
-
   flex-direction: column;
-
-  gap: 1px;
+  gap: 4px;
 }
 
-
 /* ============================================================
-   LINK LIST
+   LINK LIST (BALANCED & PROMINENT)
 ============================================================ */
-
 .FooterLinkList {
   display: flex;
-
   flex-direction: column;
-
-  gap: 13px;
-
+  gap: 16px; /* Increased vertical space fills empty height seamlessly */
   margin: 0;
-
   padding: 0;
-
   list-style: none;
 }
 
 .FooterLinkItem {
   margin: 0;
-
   padding: 0;
 }
 
-
-/* ============================================================
-   LINKS
-============================================================ */
-
 .FooterLink {
   display: inline-flex;
-
   align-items: center;
-
   width: fit-content;
-
-  color:
-    var(--FooterText);
-
+  color: var(--FooterTextPrimary);
   text-decoration: none;
-
-  font-size: 14px;
-
+  font-size: 15.5px; /* Increased font size */
   font-weight: 400;
-
-  line-height: 1.5;
-
-  transition:
-    color 0.25s ease,
-    transform 0.25s ease;
+  line-height: 1.45;
+  transition: color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .FooterLink:hover {
-  color:
-    var(--FooterGreen);
-
-  transform:
-    translateX(4px);
+  color: var(--FooterWhite);
+  transform: translateX(6px);
 }
 
-
-/* ============================================================
-   LINK ARROW
-============================================================ */
-
 .FooterLinkArrow {
-  display: flex;
-
+  display: inline-flex;
   align-items: center;
-
   justify-content: center;
-
   width: 0;
-
   overflow: hidden;
-
   opacity: 0;
-
-  color:
-    var(--FooterGreen);
-
-  transition:
-    width 0.25s ease,
-    opacity 0.25s ease;
+  margin-right: 0;
+  color: var(--FooterGreen);
+  transition: width 0.25s ease, opacity 0.25s ease, margin-right 0.25s ease;
 }
 
 .FooterLink:hover .FooterLinkArrow {
-  width: 17px;
-
+  width: 16px;
+  margin-right: 6px;
   opacity: 1;
 }
 
+.FooterLinkLabel {
+  transition: color 0.25s ease;
+}
+
+.FooterLink:hover .FooterLinkLabel {
+  color: var(--FooterGreenLight);
+}
 
 /* ============================================================
-   ALMOND
-   TOP RIGHT
+   DECORATIVE ASSETS (TOMATO & ALMOND)
 ============================================================ */
-
 .FooterAlmondDecoration {
   position: absolute;
-
-  top: 28px;
-
-  right: 28px;
-
-  width: 135px;
-
-  opacity: 0.32;
-
+  top: 24px;
+  right: 24px;
+  width: 125px;
+  opacity: 0.22;
   pointer-events: none;
-
   z-index: 1;
-
-  animation:
-    FooterAlmondFloat
-    9s
-    ease-in-out
-    infinite;
+  animation: FooterAlmondFloat 9s ease-in-out infinite;
 }
 
 .FooterAlmondDecoration img {
   display: block;
-
   width: 100%;
-
   height: auto;
-
-  object-fit: contain;
-
-  filter:
-    grayscale(100%)
-    brightness(0.9);
+  filter: grayscale(100%) brightness(3.85);
 }
-
-
-/* ============================================================
-   ALMOND ANIMATION
-============================================================ */
 
 @keyframes FooterAlmondFloat {
-
-  0% {
-    transform:
-      translate3d(0, 0, 0)
-      rotate(-4deg);
-  }
-
-  25% {
-    transform:
-      translate3d(-8px, 5px, 0)
-      rotate(-1deg);
-  }
-
-  50% {
-    transform:
-      translate3d(8px, 10px, 0)
-      rotate(3deg);
-  }
-
-  75% {
-    transform:
-      translate3d(15px, 4px, 0)
-      rotate(1deg);
-  }
-
-  100% {
-    transform:
-      translate3d(0, 0, 0)
-      rotate(-4deg);
-  }
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-4deg); }
+  50% { transform: translate3d(8px, 8px, 0) rotate(3deg); }
 }
-
-
-/* ============================================================
-   TOMATO
-   SMALL BOTTOM LEFT
-============================================================ */
 
 .FooterTomatoDecoration {
   position: absolute;
-
-  left: -18px;
-
-  bottom: -8px;
-
-  width: 145px;
-
-  opacity: 0.82;
-
+  left: -8px;
+  bottom: 8px;
+  width: 130px;
+  opacity: 0.88;
   pointer-events: none;
-
   z-index: 1;
-
-  animation:
-    FooterTomatoFloat
-    10s
-    ease-in-out
-    infinite;
+  animation: FooterTomatoFloat 6s ease-in-out infinite;
 }
 
 .FooterTomatoDecoration img {
   display: block;
-
   width: 100%;
-
   height: auto;
-
-  object-fit: contain;
 }
-
-
-/* ============================================================
-   TOMATO ANIMATION
-============================================================ */
 
 @keyframes FooterTomatoFloat {
-
-  0% {
-    transform:
-      translate3d(0, 0, 0)
-      rotate(-3deg);
-  }
-
-  25% {
-    transform:
-      translate3d(10px, -5px, 0)
-      rotate(-1deg);
-  }
-
-  50% {
-    transform:
-      translate3d(22px, -9px, 0)
-      rotate(2deg);
-  }
-
-  75% {
-    transform:
-      translate3d(12px, -4px, 0)
-      rotate(1deg);
-  }
-
-  100% {
-    transform:
-      translate3d(0, 0, 0)
-      rotate(-3deg);
-  }
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-3deg); }
+  50% { transform: translate3d(12px, -6px, 0) rotate(2deg); }
 }
 
-
 /* ============================================================
-   BOTTOM
+   BOTTOM BAR
 ============================================================ */
-
 .FooterBottom {
   position: relative;
-
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
-  gap: 20px;
-
-  min-height: 68px;
-
-  padding:
-    16px
-    0;
-
-  border-top:
-    1px solid
-    var(--FooterBorder);
-
+  gap: 24px;
+  padding: 24px 0 28px 0;
+  border-top: 1px solid var(--FooterBorder);
   z-index: 8;
 }
 
-
-/* ============================================================
-   COPYRIGHT
-============================================================ */
-
-.FooterCopyright {
+.FooterCopyright,
+.FooterCreated {
   margin: 0;
-
-  color:
-    var(--FooterMuted);
-
-  font-size: 13px;
-
+  color: var(--FooterTextMuted);
+  font-size: 14px; /* Crisp legible font */
+  font-weight: 400;
   line-height: 1.5;
 }
-
-
-/* ============================================================
-   CREATED
-============================================================ */
 
 .FooterCreated {
   display: flex;
-
   align-items: center;
-
-  flex-wrap: wrap;
-
-  justify-content: flex-end;
-
-  gap: 6px;
-
-  margin: 0;
-
-  color:
-    var(--FooterMuted);
-
-  font-size: 13px;
-
-  line-height: 1.5;
+  gap: 8px;
+  padding-right: 76px; /* Offset for scroll-to-top button */
 }
-
-
-/* ============================================================
-   HEART
-============================================================ */
 
 .FooterHeart {
   display: inline-flex;
-
   align-items: center;
-
   justify-content: center;
-
-  color:
-    #ffffff;
-
-  animation:
-    FooterHeartBeat
-    2.4s
-    ease-in-out
-    infinite;
+  color: #ffffff;
+  animation: FooterHeartBeat 2.4s ease-in-out infinite;
 }
 
 @keyframes FooterHeartBeat {
-
-  0%,
-  100% {
-    transform:
-      scale(1);
-  }
-
-  50% {
-    transform:
-      scale(1.16);
-  }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.22); }
 }
 
-
-/* ============================================================
-   PR WEBSTOCK
-============================================================ */
-
 .FooterBrand {
-  color:
-    var(--FooterGreen);
-
+  color: var(--FooterGreen);
   text-decoration: none;
-
-  font-weight: 600;
-
-  transition:
-    color 0.25s ease,
-    text-shadow 0.25s ease;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
 }
 
 .FooterBrand:hover {
-  color:
-    var(--FooterGreenLight);
-
-  text-shadow:
-    0 0 14px
-    rgba(130, 196, 56, 0.35);
+  color: var(--FooterGreenLight);
+  text-shadow: 0 0 14px var(--FooterGreenGlow);
 }
 
-
 /* ============================================================
-   SCROLL TO TOP
+   SCROLL TOP BUTTON
 ============================================================ */
-
 .FooterScrollTop {
   position: absolute;
-
-  right: 28px;
-
-  bottom: 13px;
-
-  width: 56px;
-
-  height: 56px;
-
+  right: 32px;
+  bottom: 20px;
+  width: 52px;
+  height: 52px;
   display: flex;
-
   align-items: center;
-
   justify-content: center;
-
-  border:
-    2px solid
-    var(--FooterGreen);
-
+  border: 1.8px solid var(--FooterGreen);
   border-radius: 50%;
-
-  background:
-    rgba(29, 29, 29, 0.92);
-
-  color:
-    var(--FooterGreen);
-
+  background: rgba(28, 28, 28, 0.94);
+  color: var(--FooterGreen);
   cursor: pointer;
-
   z-index: 30;
-
-  transition:
-    background 0.3s ease,
-    color 0.3s ease,
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .FooterScrollTop:hover {
-  background:
-    var(--FooterGreen);
-
-  color:
-    #171717;
-
-  transform:
-    translateY(-5px);
-
-  box-shadow:
-    0 12px 30px
-    rgba(130, 196, 56, 0.3);
+  background: var(--FooterGreen);
+  color: #121212;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 24px var(--FooterGreenGlow);
 }
 
 .FooterScrollTop:active {
-  transform:
-    translateY(-2px)
-    scale(0.96);
+  transform: translateY(-2px) scale(0.96);
 }
 
-
 /* ============================================================
-   TABLET
+   RESPONSIVE BREAKPOINTS
 ============================================================ */
-
-@media (max-width: 1100px) {
-
-  .FooterContainer {
-    width:
-      min(
-        920px,
-        calc(100% - 50px)
-      );
-  }
-
+@media (max-width: 1024px) {
   .FooterTop {
-    grid-template-columns:
-      repeat(2, 1fr);
-
-    gap:
-      42px
-      50px;
-
-    padding:
-      48px
-      0
-      42px;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 40px;
+    row-gap: 44px;
+    padding-top: 48px;
   }
 
-  .FooterContactColumn {
-    max-width: 100%;
-  }
-
-  .FooterAlmondDecoration {
-    width: 110px;
-
-    right: 15px;
-  }
-
-  .FooterTomatoDecoration {
-    width: 125px;
-
-    left: -18px;
+  .FooterNavColumn {
+    padding-top: 0;
   }
 }
 
-
-/* ============================================================
-   TABLET / MOBILE
-============================================================ */
-
-@media (max-width: 768px) {
-
+@media (max-width: 640px) {
   .FooterContainer {
-    width:
-      calc(100% - 40px);
-  }
-
-  .FooterTop {
-    gap:
-      38px
-      32px;
-
-    padding:
-      44px
-      0
-      38px;
-  }
-
-  .FooterTitle {
-    font-size: 22px;
-  }
-
-  .FooterContactItem,
-  .FooterLink {
-    font-size: 14px;
-  }
-
-  .FooterAlmondDecoration {
-    width: 90px;
-
-    top: 12px;
-
-    right: 4px;
-
-    opacity: 0.25;
-  }
-
-  .FooterTomatoDecoration {
-    width: 105px;
-
-    left: -15px;
-
-    bottom: -4px;
-
-    opacity: 0.68;
-  }
-
-  .FooterScrollTop {
-    width: 50px;
-
-    height: 50px;
-
-    right: 15px;
-
-    bottom: 10px;
-  }
-
-  .FooterBottom {
-    padding-right: 70px;
-  }
-}
-
-
-/* ============================================================
-   MOBILE
-============================================================ */
-
-@media (max-width: 600px) {
-
-  .FooterContainer {
-    width:
-      calc(100% - 30px);
+    width: calc(100% - 36px);
   }
 
   .FooterTop {
     grid-template-columns: 1fr;
-
-    gap: 32px;
-
-    padding:
-      38px
-      0
-      34px;
+    gap: 34px;
+    padding-top: 40px;
+    padding-bottom: 28px;
   }
 
-  .FooterLogoWrapper {
-    height: 55px;
-
-    margin-bottom: 14px;
-  }
-
-  .FooterLogo {
-    max-width: 135px;
-
-    max-height: 53px;
+  .FooterNavColumn {
+    padding-top: 0;
   }
 
   .FooterTitle {
     font-size: 20px;
-
-    margin-bottom: 26px;
-  }
-
-  .FooterLinkList {
-    gap: 12px;
-  }
-
-  .FooterContactItem {
-    margin-bottom: 16px;
-
-    font-size: 13px;
-  }
-
-  .FooterLink {
-    font-size: 13px;
-  }
-
-  .FooterContactIcon {
-    flex-basis: 29px;
-  }
-
-
-  /* ------------------------------------------
-     DECORATIONS
-  ------------------------------------------ */
-
-  .FooterAlmondDecoration {
-    width: 70px;
-
-    right: -8px;
-
-    top: 8px;
-
-    opacity: 0.22;
-  }
-
-  .FooterTomatoDecoration {
-    width: 82px;
-
-    left: -14px;
-
-    bottom: -2px;
-
-    opacity: 0.62;
-  }
-
-
-  /* ------------------------------------------
-     BOTTOM
-  ------------------------------------------ */
-
-  .FooterBottom {
-    flex-direction: column;
-
-    justify-content: center;
-
-    align-items: center;
-
-    gap: 8px;
-
-    min-height: auto;
-
-    padding:
-      17px
-      65px
-      20px
-      10px;
-
-    text-align: center;
-  }
-
-  .FooterCopyright,
-  .FooterCreated {
-    font-size: 11px;
-  }
-
-
-  /* ------------------------------------------
-     SCROLL TOP
-  ------------------------------------------ */
-
-  .FooterScrollTop {
-    width: 46px;
-
-    height: 46px;
-
-    right: 10px;
-
-    bottom: 12px;
-  }
-
-  .FooterScrollTop svg {
-    width: 20px;
-
-    height: 20px;
-  }
-}
-
-
-/* ============================================================
-   VERY SMALL DEVICES
-============================================================ */
-
-@media (max-width: 380px) {
-
-  .FooterContainer {
-    width:
-      calc(100% - 24px);
-  }
-
-  .FooterTop {
-    gap: 29px;
-
-    padding:
-      34px
-      0
-      30px;
-  }
-
-  .FooterTitle {
-    font-size: 19px;
+    margin-bottom: 22px;
   }
 
   .FooterContactItem,
   .FooterLink {
-    font-size: 12.5px;
+    font-size: 14.5px;
   }
 
-  .FooterAlmondDecoration {
-    width: 58px;
-
-    right: -8px;
+  .FooterBottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    padding-bottom: 26px;
   }
 
-  .FooterTomatoDecoration {
-    width: 70px;
-
-    left: -12px;
+  .FooterCreated {
+    padding-right: 0;
   }
 
   .FooterScrollTop {
-    width: 43px;
-
-    height: 43px;
-
-    right: 8px;
-
-    bottom: 10px;
+    right: 16px;
+    bottom: 14px;
+    width: 46px;
+    height: 46px;
   }
 }
 
-
 /* ============================================================
-   ACCESSIBILITY
+   ACCESSIBILITY & REDUCED MOTION
 ============================================================ */
-
 .FooterLink:focus-visible,
 .FooterBrand:focus-visible,
 .FooterScrollTop:focus-visible {
-  outline:
-    2px solid
-    var(--FooterGreen);
-
-  outline-offset: 4px;
+  outline: 2px solid var(--FooterGreen);
+  outline-offset: 3px;
 }
 
-
-/* ============================================================
-   REDUCED MOTION
-============================================================ */
-
 @media (prefers-reduced-motion: reduce) {
-
   .FooterMain *,
   .FooterMain *::before,
   .FooterMain *::after {
-    animation-duration:
-      0.01ms !important;
-
-    animation-iteration-count:
-      1 !important;
-
-    transition-duration:
-      0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

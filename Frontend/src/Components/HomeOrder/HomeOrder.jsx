@@ -9,10 +9,7 @@ import paneerCurry from '../../assets/curry.webp';
 /**
  * HomeOrder
  * ---------------------------------------------------------------------------
- * "Today on the pass" — the homepage promo bento for the ordering app.
- * One hero dish, two counter specials, one wide chef's offer. Every card
- * tilts toward the cursor like a plate catching the light, and the whole
- * grid plates itself in, one dish at a time, as it enters the viewport.
+ * "Today on the pass" — High-conversion gourmet promo bento.
  */
 
 const DISHES = [
@@ -20,9 +17,9 @@ const DISHES = [
     id: 'banana-shake',
     variant: 'hero',
     image: bananaShake,
-    kicker: "Orchard's Best",
+    kicker: "Chef's Signature Blend",
     title: 'Golden Banana Shake',
-    note: 'Ripe banana, chilled cream, a whisper of cinnamon.',
+    note: 'Sun-ripened bananas, velvety chilled cream, and a warm dust of Ceylon cinnamon.',
     discount: '50%',
     discountLabel: 'OFF',
     price: '₹149',
@@ -34,7 +31,7 @@ const DISHES = [
     image: chickenWrap,
     kicker: "Today's Counter Special",
     title: 'Herbed Chicken Wrap',
-    note: 'Shredded chicken, dill yoghurt, charred flatbread.',
+    note: 'Tender pulled chicken, fresh dill yoghurt, rolled in charred artisan flatbread.',
     discount: '60%',
     discountLabel: 'OFF',
     price: '₹179',
@@ -44,10 +41,11 @@ const DISHES = [
     id: 'garden-salad',
     variant: 'compact',
     image: gardenSalad,
-    kicker: 'Light & Fresh',
+    kicker: 'Crisp & Farm-Fresh',
     title: 'Garden Harvest Bowl',
-    note: 'Soft egg, chickpea, greens, honey-mustard drizzle.',
+    note: 'Soft-boiled eggs, spiced chickpeas, baby greens, and rich honey-mustard vinaigrette.',
     discount: null,
+    discountLabel: null,
     price: '₹159',
     oldPrice: null,
   },
@@ -55,9 +53,9 @@ const DISHES = [
     id: 'paneer-curry',
     variant: 'wide',
     image: paneerCurry,
-    kicker: 'For a Limited Time',
+    kicker: 'Limited Reserve Dish',
     title: 'Slow-Spiced Paneer Curry',
-    note: 'Simmered with ginger, green chilli and fresh coriander — served with hot chapati.',
+    note: 'Slow-simmered cottage cheese in crushed ginger, green chilli, and hand-ground spices. Served alongside piping-hot chapati.',
     discount: '35%',
     discountLabel: 'OFFER',
     price: '₹219',
@@ -65,7 +63,7 @@ const DISHES = [
   },
 ];
 
-/** Simple leaf silhouette used for the ambient background drift. */
+/** Ambient leaf icon */
 function LeafGlyph() {
   return (
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -76,15 +74,15 @@ function LeafGlyph() {
       />
       <path
         d="M20 4C13.5 8 9 13 5.2 18.8"
-        stroke="rgba(11,22,18,0.35)"
-        strokeWidth="1"
+        stroke="rgba(11,22,18,0.4)"
+        strokeWidth="1.2"
         strokeLinecap="round"
       />
     </svg>
   );
 }
 
-/** Ambient, non-interactive backdrop: soft blooms + a handful of drifting leaves. */
+/** Ambient backdrop lighting */
 function AmbientBackdrop() {
   return (
     <div className="home-order__bg" aria-hidden="true">
@@ -100,7 +98,7 @@ function AmbientBackdrop() {
   );
 }
 
-/** A single bento card: 3D cursor-tilt + entrance reveal. */
+/** Interactive Promo Bento Card */
 function PromoCard({ dish, index }) {
   const frameRef = useRef(null);
   const cardRef = useRef(null);
@@ -119,7 +117,7 @@ function PromoCard({ dish, index }) {
           }
         });
       },
-      { threshold: 0.25 }
+      { threshold: 0.15 }
     );
 
     observer.observe(node);
@@ -132,8 +130,10 @@ function PromoCard({ dish, index }) {
     const bounds = frame.getBoundingClientRect();
     const px = (event.clientX - bounds.left) / bounds.width;
     const py = (event.clientY - bounds.top) / bounds.height;
-    const tiltX = (0.5 - py) * 10;
-    const tiltY = (px - 0.5) * 12;
+    
+    // Balanced tilt dynamics
+    const tiltX = (0.5 - py) * 9;
+    const tiltY = (px - 0.5) * 11;
     frame.style.setProperty('--tilt-x', `${tiltX.toFixed(2)}deg`);
     frame.style.setProperty('--tilt-y', `${tiltY.toFixed(2)}deg`);
     frame.style.setProperty('--glow-x', `${(px * 100).toFixed(1)}%`);
@@ -179,16 +179,18 @@ function PromoCard({ dish, index }) {
         </div>
 
         {dish.discount && (
-          <div className="promo-card__discount">
+          <div className="promo-card__discount" aria-label={`${dish.discount} ${dish.discountLabel}`}>
             <span className="promo-card__discount-value">{dish.discount}</span>
             <span className="promo-card__discount-label">{dish.discountLabel}</span>
           </div>
         )}
 
         <div className="promo-card__content">
-          <p className="promo-card__kicker">{dish.kicker}</p>
-          <h3 className="promo-card__title">{dish.title}</h3>
-          <p className="promo-card__note">{dish.note}</p>
+          <div className="promo-card__text-group">
+            <span className="promo-card__kicker">{dish.kicker}</span>
+            <h3 className="promo-card__title">{dish.title}</h3>
+            <p className="promo-card__note">{dish.note}</p>
+          </div>
 
           <div className="promo-card__footer">
             <div className="promo-card__price">
@@ -197,12 +199,20 @@ function PromoCard({ dish, index }) {
                 <span className="promo-card__price-old">{dish.oldPrice}</span>
               )}
             </div>
-            <button type="button" className="promo-card__cta">
+            
+            <button 
+              type="button" 
+              className="promo-card__cta"
+              onClick={(e) => {
+                e.stopPropagation();
+                // Add your cart handler logic here
+              }}
+            >
               <span>Add to cart</span>
               <svg viewBox="0 0 24 24" className="promo-card__cta-icon" aria-hidden="true">
-                <path d="M4 6h2l1.6 9.6a2 2 0 0 0 2 1.7h7.1a2 2 0 0 0 2-1.6L20 9H7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                <circle cx="10" cy="20" r="1.4" fill="currentColor" />
-                <circle cx="17" cy="20" r="1.4" fill="currentColor" />
+                <path d="M4 6h2l1.6 9.6a2 2 0 0 0 2 1.7h7.1a2 2 0 0 0 2-1.6L20 9H7" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                <circle cx="10" cy="20" r="1.6" fill="currentColor" />
+                <circle cx="17" cy="20" r="1.6" fill="currentColor" />
               </svg>
             </button>
           </div>
@@ -219,12 +229,15 @@ const HomeOrder = () => {
 
       <div className="home-order__inner">
         <header className="home-order__intro">
-          <p className="home-order__eyebrow">On the pass right now</p>
+          <div className="home-order__badge">
+            <span className="home-order__badge-dot" />
+            Live Kitchen Pass
+          </div>
           <h2 id="home-order-heading" className="home-order__heading">
-            Today's plate, priced to say yes
+            Today’s Plates, <em>Freshly Crafted</em>
           </h2>
           <p className="home-order__sub">
-            Four dishes off the kitchen line, discounted while the pans are still warm.
+            Four seasonal specials straight off the line, discounted while the pans are still hot.
           </p>
         </header>
 

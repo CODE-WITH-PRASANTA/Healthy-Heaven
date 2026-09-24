@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"; // Link for React Router navigation
 import "./AboutUsBreadcrumb.css";
 
 // Background image
@@ -17,33 +18,23 @@ const AboutUsBreadcrumb = () => {
 
       {/* Main Content */}
       <div className="AboutUsBreadcrumb__content">
-
         {/* Page Title */}
-        <h1 className="AboutUsBreadcrumb__title">
-          About Us
-        </h1>
+        <h1 className="AboutUsBreadcrumb__title">About Us</h1>
 
         {/* Breadcrumb */}
         <div className="AboutUsBreadcrumb__breadcrumb">
-
-          {/* Home */}
-          <span className="AboutUsBreadcrumb__home">
+          {/* Home Link (Navigates to home page) */}
+          <Link to="/" className="AboutUsBreadcrumb__home">
             Home
-          </span>
+          </Link>
 
           {/* Arrow */}
-          <span
-            className="AboutUsBreadcrumb__arrow"
-            aria-hidden="true"
-          >
+          <span className="AboutUsBreadcrumb__arrow" aria-hidden="true">
             ›
           </span>
 
           {/* Current Page */}
-          <span className="AboutUsBreadcrumb__current">
-            About Us
-          </span>
-
+          <span className="AboutUsBreadcrumb__current">About Us</span>
         </div>
       </div>
     </section>

@@ -4,9 +4,8 @@
 
 .FaqBreadcrumb {
   position: relative;
-
   width: 100%;
-  height: 150px;
+  min-height: 40vh;
 
   display: flex;
   align-items: center;
@@ -21,32 +20,25 @@
   isolation: isolate;
 }
 
-
 /* =========================================================
    DARK IMAGE OVERLAY
    ========================================================= */
 
 .FaqBreadcrumb__overlay {
   position: absolute;
-
   inset: 0;
-
   width: 100%;
-  height: 100%;
 
-  background:
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.62) 0%,
-      rgba(0, 0, 0, 0.68) 50%,
-      rgba(0, 0, 0, 0.74) 100%
-    );
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.62) 0%,
+    rgba(0, 0, 0, 0.68) 50%,
+    rgba(0, 0, 0, 0.74) 100%
+  );
 
   z-index: -1;
-
   pointer-events: none;
 }
-
 
 /* =========================================================
    MAIN CONTENT
@@ -54,28 +46,19 @@
 
 .FaqBreadcrumb__content {
   position: relative;
-
   z-index: 2;
 
   width: 100%;
   max-width: 1250px;
 
-  min-height: 565px;
-
-  padding:
-    80px
-    25px
-    70px;
+  padding: 30px 20px;
 
   display: flex;
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
-
   text-align: center;
 }
-
 
 /* =========================================================
    FAQ TITLE
@@ -83,37 +66,18 @@
 
 .FaqBreadcrumb__title {
   margin: 0;
-
   color: #ffffff;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size:
-    clamp(55px, 5.3vw, 82px);
-
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(34px, 4.2vw, 64px);
   font-weight: 700;
-
   font-style: italic;
-
-  line-height: 1.05;
-
-  letter-spacing: -2.5px;
-
-  text-shadow:
-    0 5px 18px rgba(0, 0, 0, 0.4);
-
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  text-shadow: 0 5px 18px rgba(0, 0, 0, 0.4);
   user-select: none;
 
-  animation:
-    FaqBreadcrumb__titleAnimation
-    0.9s
-    cubic-bezier(0.22, 1, 0.36, 1)
-    both;
+  animation: FaqBreadcrumb__titleAnimation 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
-
 
 /* =========================================================
    BREADCRUMB BOX
@@ -121,47 +85,22 @@
 
 .FaqBreadcrumb__breadcrumb {
   position: relative;
-
-  margin-top: 38px;
-
-  min-height: 65px;
-
-  padding:
-    0 35px;
+  margin-top: 20px;
+  min-height: 48px;
+  padding: 0 28px;
 
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
+  gap: 12px;
 
-  gap: 14px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #88b942 0%, #7eac39 100%);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 
-  border-radius: 13px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #88b942 0%,
-      #7eac39 100%
-    );
-
-  box-shadow:
-    0 15px 35px rgba(0, 0, 0, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
-
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease,
-    background 0.3s ease;
-
-  animation:
-    FaqBreadcrumb__breadcrumbAnimation
-    0.9s
-    0.15s
-    cubic-bezier(0.22, 1, 0.36, 1)
-    both;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  animation: FaqBreadcrumb__breadcrumbAnimation 0.9s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
-
 
 /* =========================================================
    BREADCRUMB HOVER
@@ -169,41 +108,40 @@
 
 .FaqBreadcrumb__breadcrumb:hover {
   transform: translateY(-3px);
-
-  background:
-    linear-gradient(
-      135deg,
-      #94c74b 0%,
-      #83b63d 100%
-    );
-
-  box-shadow:
-    0 19px 40px rgba(0, 0, 0, 0.34),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, #94c74b 0%, #83b63d 100%);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-
 /* =========================================================
-   HOME
+   HOME & CURRENT LABELS
    ========================================================= */
 
 .FaqBreadcrumb__home {
   color: #ffffff;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  font-size: 18px;
-
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
   font-weight: 500;
-
   line-height: 1;
-
   white-space: nowrap;
+  cursor: pointer;
+  transition: opacity 0.2s ease, text-decoration 0.2s ease;
 }
 
+.FaqBreadcrumb__home:hover {
+  opacity: 0.9;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.FaqBreadcrumb__current {
+  color: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
 
 /* =========================================================
    ARROW
@@ -211,348 +149,65 @@
 
 .FaqBreadcrumb__arrow {
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
-
-  width: 18px;
-  height: 25px;
-
+  width: 16px;
+  height: 22px;
   color: #ffffff;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  font-size: 27px;
-
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
   font-weight: 300;
-
   line-height: 1;
-
   margin-top: -2px;
-
-  transition:
-    transform 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
-
-/* =========================================================
-   CURRENT PAGE
-   ========================================================= */
-
-.FaqBreadcrumb__current {
-  color: #ffffff;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  font-size: 18px;
-
-  font-weight: 500;
-
-  line-height: 1;
-
-  white-space: nowrap;
-}
-
-
-/* =========================================================
-   ARROW HOVER
-   ========================================================= */
-
-.FaqBreadcrumb__breadcrumb:hover
-.FaqBreadcrumb__arrow {
+.FaqBreadcrumb__breadcrumb:hover .FaqBreadcrumb__arrow {
   transform: translateX(4px);
 }
 
-
 /* =========================================================
-   TITLE ANIMATION
+   ANIMATIONS
    ========================================================= */
 
 @keyframes FaqBreadcrumb__titleAnimation {
   0% {
     opacity: 0;
-
-    transform:
-      translateY(28px)
-      scale(0.96);
+    transform: translateY(20px) scale(0.96);
   }
-
   100% {
     opacity: 1;
-
-    transform:
-      translateY(0)
-      scale(1);
+    transform: translateY(0) scale(1);
   }
 }
-
-
-/* =========================================================
-   BREADCRUMB ANIMATION
-   ========================================================= */
 
 @keyframes FaqBreadcrumb__breadcrumbAnimation {
   0% {
     opacity: 0;
-
-    transform:
-      translateY(25px);
+    transform: translateY(18px);
   }
-
   100% {
     opacity: 1;
-
-    transform:
-      translateY(0);
+    transform: translateY(0);
   }
 }
 
-
 /* =========================================================
-   LARGE DESKTOP
-   ========================================================= */
-
-@media (min-width: 1440px) {
-  .FaqBreadcrumb {
-    min-height: 565px;
-  }
-
-  .FaqBreadcrumb__content {
-    min-height: 565px;
-
-    padding-top: 70px;
-  }
-
-  .FaqBreadcrumb__title {
-    font-size: 82px;
-  }
-
-  .FaqBreadcrumb__breadcrumb {
-    margin-top: 39px;
-
-    min-height: 65px;
-  }
-}
-
-
-/* =========================================================
-   LAPTOP
-   ========================================================= */
-
-@media (max-width: 1199px) {
-  .FaqBreadcrumb {
-    min-height: 510px;
-
-    background-position: center center;
-  }
-
-  .FaqBreadcrumb__content {
-    min-height: 510px;
-
-    padding:
-      75px
-      25px
-      60px;
-  }
-
-  .FaqBreadcrumb__title {
-    font-size:
-      clamp(52px, 6.5vw, 72px);
-  }
-
-  .FaqBreadcrumb__breadcrumb {
-    margin-top: 32px;
-  }
-}
-
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 991px) {
-  .FaqBreadcrumb {
-    min-height: 450px;
-
-    background-position: center center;
-  }
-
-  .FaqBreadcrumb__content {
-    min-height: 450px;
-
-    padding:
-      65px
-      20px
-      50px;
-  }
-
-  .FaqBreadcrumb__title {
-    font-size:
-      clamp(48px, 8vw, 66px);
-
-    letter-spacing: -1.5px;
-  }
-
-  .FaqBreadcrumb__breadcrumb {
-    min-height: 60px;
-
-    margin-top: 28px;
-
-    padding:
-      0 30px;
-
-    gap: 12px;
-
-    border-radius: 11px;
-  }
-
-  .FaqBreadcrumb__home,
-  .FaqBreadcrumb__current {
-    font-size: 17px;
-  }
-}
-
-
-/* =========================================================
-   MOBILE
+   RESPONSIVE ADJUSTMENTS
    ========================================================= */
 
 @media (max-width: 767px) {
-  .FaqBreadcrumb {
-    min-height: 390px;
-
-    background-position: center center;
-  }
-
-  .FaqBreadcrumb__content {
-    min-height: 390px;
-
-    padding:
-      60px
-      18px
-      45px;
-  }
-
   .FaqBreadcrumb__title {
-    font-size:
-      clamp(42px, 12vw, 58px);
-
+    font-size: clamp(28px, 7vw, 42px);
     letter-spacing: -1px;
-
-    line-height: 1.08;
   }
 
   .FaqBreadcrumb__breadcrumb {
-    min-height: 56px;
-
-    margin-top: 25px;
-
-    padding:
-      0 23px;
-
-    gap: 10px;
-
-    border-radius: 10px;
-  }
-
-  .FaqBreadcrumb__home,
-  .FaqBreadcrumb__current {
-    font-size: 16px;
-  }
-
-  .FaqBreadcrumb__arrow {
-    font-size: 24px;
-
-    width: 16px;
-  }
-}
-
-
-/* =========================================================
-   SMALL MOBILE
-   ========================================================= */
-
-@media (max-width: 480px) {
-  .FaqBreadcrumb {
-    min-height: 350px;
-
-    background-position: center center;
-  }
-
-  .FaqBreadcrumb__content {
-    min-height: 350px;
-
-    padding:
-      50px
-      15px
-      40px;
-  }
-
-  .FaqBreadcrumb__title {
-    font-size: 43px;
-
-    letter-spacing: -0.8px;
-  }
-
-  .FaqBreadcrumb__breadcrumb {
-    min-height: 53px;
-
-    margin-top: 22px;
-
-    padding:
-      0 18px;
-
+    margin-top: 16px;
+    min-height: 42px;
+    padding: 0 18px;
     gap: 8px;
-  }
-
-  .FaqBreadcrumb__home,
-  .FaqBreadcrumb__current {
-    font-size: 15px;
-  }
-
-  .FaqBreadcrumb__arrow {
-    font-size: 22px;
-
-    width: 15px;
-  }
-}
-
-
-/* =========================================================
-   VERY SMALL DEVICES
-   ========================================================= */
-
-@media (max-width: 360px) {
-  .FaqBreadcrumb {
-    min-height: 325px;
-  }
-
-  .FaqBreadcrumb__content {
-    min-height: 325px;
-
-    padding:
-      45px
-      12px
-      35px;
-  }
-
-  .FaqBreadcrumb__title {
-    font-size: 38px;
-  }
-
-  .FaqBreadcrumb__breadcrumb {
-    min-height: 50px;
-
-    padding:
-      0 15px;
-
-    gap: 7px;
+    border-radius: 10px;
   }
 
   .FaqBreadcrumb__home,
@@ -561,10 +216,31 @@
   }
 
   .FaqBreadcrumb__arrow {
-    font-size: 21px;
+    font-size: 18px;
+    width: 14px;
   }
 }
 
+@media (max-width: 480px) {
+  .FaqBreadcrumb__content {
+    padding: 20px 15px;
+  }
+
+  .FaqBreadcrumb__title {
+    font-size: 30px;
+  }
+
+  .FaqBreadcrumb__breadcrumb {
+    min-height: 38px;
+    padding: 0 14px;
+    gap: 6px;
+  }
+
+  .FaqBreadcrumb__home,
+  .FaqBreadcrumb__current {
+    font-size: 13px;
+  }
+}
 
 /* =========================================================
    REDUCED MOTION

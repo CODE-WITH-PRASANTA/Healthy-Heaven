@@ -1,0 +1,685 @@
+/* =========================================================
+   MENU MAIN
+========================================================= */
+
+.MenuMain {
+  width: 100%;
+  min-height: 100vh;
+  padding: 55px 0 90px;
+  background: #ffffff;
+  overflow: hidden;
+  font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+}
+
+.MenuMain__container {
+  width: min(1320px, calc(100% - 50px));
+  margin: 0 auto;
+}
+
+/* =========================================================
+   TOP CATEGORY BAR
+========================================================= */
+
+.MenuMain__topBar {
+  position: relative;
+  z-index: 50;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  margin-bottom: 38px;
+}
+
+.MenuMain__categories {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 15px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 3px 2px 7px;
+}
+
+.MenuMain__categories::-webkit-scrollbar {
+  display: none;
+}
+
+/* =========================================================
+   CATEGORY BUTTON
+========================================================= */
+
+.MenuMain__category {
+  position: relative;
+  flex: 0 0 auto;
+  height: 50px;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #111111;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.MenuMain__category:hover {
+  color: #78a63b;
+  background: #f5faec;
+  border-color: #eaf3db;
+  transform: translateY(-2px);
+  box-shadow: 0 7px 17px rgba(121, 166, 59, 0.08);
+}
+
+.MenuMain__category--active {
+  color: #78a63b;
+  background: #f1f9e6;
+  border-color: #e2efce;
+  box-shadow: 0 7px 18px rgba(121, 166, 59, 0.08);
+}
+
+/* =========================================================
+   CATEGORY ICON
+========================================================= */
+
+.MenuMain__categoryIcon {
+  width: 31px;
+  height: 31px;
+  flex: 0 0 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.MenuMain__categoryIcon svg {
+  width: 26px;
+  height: 26px;
+  fill: none;
+  stroke: #111111;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 0.25s ease, transform 0.25s ease;
+}
+
+.MenuMain__category:hover .MenuMain__categoryIcon svg,
+.MenuMain__category--active .MenuMain__categoryIcon svg {
+  stroke: #78a63b;
+  transform: scale(0.96);
+}
+
+.MenuMain__categoryName {
+  line-height: 1;
+}
+
+/* =========================================================
+   FILTER BUTTON & DROPDOWN
+========================================================= */
+
+.MenuMain__filterWrapper {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.MenuMain__filterButton {
+  height: 50px;
+  min-width: 130px;
+  padding: 0 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid #7da73d;
+  border-radius: 8px;
+  background: #7da73d;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.MenuMain__filterButton:hover,
+.MenuMain__filterButton--active {
+  background: #222222;
+  border-color: #222222;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.MenuMain__filterIcon {
+  width: 19px;
+  height: 19px;
+  transition: transform 0.3s ease;
+}
+
+.MenuMain__filterButton--active .MenuMain__filterIcon {
+  transform: rotate(180deg);
+}
+
+.MenuMain__filterDropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 100;
+  width: 230px;
+  padding: 10px;
+  border: 1px solid #eeeeee;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.14);
+  animation: MenuMainFilterOpen 0.22s ease both;
+}
+
+@keyframes MenuMainFilterOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-7px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.MenuMain__filterTitle {
+  padding: 10px 12px;
+  color: #8b8b8b;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+.MenuMain__filterOption {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #222222;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    padding 0.25s ease;
+}
+
+.MenuMain__filterOption:hover {
+  padding-left: 16px;
+  background: #f2f8e8;
+  color: #78a63b;
+}
+
+.MenuMain__filterOptionIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.MenuMain__filterOption svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* =========================================================
+   FOOD GRID
+========================================================= */
+
+.MenuMain__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 25px;
+}
+
+/* =========================================================
+   CARD & HOVER EFFECTS
+========================================================= */
+
+.MenuMain__card {
+  position: relative;
+  min-width: 0;
+  min-height: 196px;
+  padding: 23px 20px 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
+  isolation: isolate;
+  transition:
+    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.42s ease;
+}
+
+.MenuMain__hoverLayer {
+  position: absolute;
+  z-index: -1;
+  right: 0;
+  bottom: 0;
+  width: 65px;
+  height: 65px;
+  border-radius: 18px 0 0 0;
+  background: radial-gradient(
+    circle at 100% 100%,
+    #000000 0%,
+    #090909 15%,
+    #151515 35%,
+    #222222 60%,
+    transparent 100%
+  );
+  opacity: 0;
+  transform: scale(1);
+  transform-origin: bottom right;
+  transition:
+    width 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    height 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.5s ease;
+}
+
+.MenuMain__card:hover .MenuMain__hoverLayer {
+  width: 190%;
+  height: 190%;
+  opacity: 1;
+}
+
+.MenuMain__card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.16);
+}
+
+/* =========================================================
+   CARD CONTENT
+========================================================= */
+
+.MenuMain__cardTop {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.MenuMain__imageWrapper {
+  width: 82px;
+  height: 82px;
+  flex: 0 0 82px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 4px solid #ffffff;
+  background: #f0f0f0;
+  box-shadow: 0 5px 17px rgba(0, 0, 0, 0.12);
+  transition: transform 0.42s ease, box-shadow 0.42s ease;
+}
+
+.MenuMain__card:hover .MenuMain__imageWrapper {
+  transform: scale(1.06) rotate(-2deg);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.28);
+}
+
+.MenuMain__foodImage {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  background-color: #f4f4f4;
+}
+
+.MenuMain__foodInfo {
+  min-width: 0;
+  flex: 1;
+}
+
+.MenuMain__foodName {
+  margin: 0 0 6px;
+  overflow: hidden;
+  color: #252525;
+  font-size: 18px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.MenuMain__foodDescription {
+  margin: 0;
+  color: #777777;
+  font-size: 12px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.3s ease;
+}
+
+.MenuMain__card:hover .MenuMain__foodName {
+  color: #ffffff;
+}
+
+.MenuMain__card:hover .MenuMain__foodDescription {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* =========================================================
+   CARD FOOTER & PRICE
+========================================================= */
+
+.MenuMain__cardBottom {
+  min-height: 70px;
+  margin-top: 16px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.MenuMain__priceBox {
+  padding-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.MenuMain__priceLabel {
+  color: #777777;
+  font-size: 11px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.MenuMain__price {
+  color: #79a63a;
+  font-size: 22px;
+  line-height: 1;
+  font-weight: 800;
+  transition: color 0.3s ease;
+}
+
+.MenuMain__card:hover .MenuMain__priceLabel {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.MenuMain__card:hover .MenuMain__price {
+  color: #ffffff;
+}
+
+/* =========================================================
+   ADD / VIEW BUTTON
+========================================================= */
+
+.MenuMain__addButton {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  flex: 0 0 58px;
+  margin-right: -20px;
+  margin-bottom: -1px;
+  border: none;
+  border-radius: 16px 0 16px 0;
+  display: grid;
+  place-items: center;
+  background: #7daa3b;
+  color: #ffffff;
+  cursor: pointer;
+  z-index: 5;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.MenuMain__addButton:hover {
+  background: #91bd4b;
+  transform: scale(1.04);
+  box-shadow: 0 8px 20px rgba(125, 170, 59, 0.25);
+}
+
+.MenuMain__addButton:active {
+  transform: scale(0.96);
+}
+
+.MenuMain__plusIcon {
+  display: inline-block;
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 300;
+  animation: MenuMainPlusRotate 6.5s linear infinite;
+  transition: transform 0.25s ease;
+}
+
+.MenuMain__addButton:hover .MenuMain__plusIcon {
+  animation-play-state: paused;
+  transform: rotate(90deg) scale(1.08);
+}
+
+@keyframes MenuMainPlusRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+.MenuMain__pagination {
+  width: 100%;
+  margin-top: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.MenuMain__pageNumbers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.MenuMain__paginationArrow,
+.MenuMain__pageNumber {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: #ffffff;
+  color: #333333;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.MenuMain__paginationArrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+.MenuMain__paginationArrow:hover:not(:disabled),
+.MenuMain__pageNumber:hover {
+  color: #ffffff;
+  border-color: #7daa3b;
+  background: #7daa3b;
+  transform: translateY(-2px);
+  box-shadow: 0 9px 20px rgba(126, 173, 54, 0.2);
+}
+
+.MenuMain__pageNumber--active {
+  border-color: #7daa3b;
+  background: #7daa3b;
+  color: #ffffff;
+  box-shadow: 0 9px 20px rgba(126, 173, 54, 0.2);
+}
+
+.MenuMain__paginationArrow:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN
+========================================================= */
+
+@media (max-width: 1200px) {
+  .MenuMain__container {
+    width: min(1100px, calc(100% - 40px));
+  }
+  .MenuMain__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .MenuMain {
+    padding: 45px 0 70px;
+  }
+  .MenuMain__container {
+    width: min(760px, calc(100% - 32px));
+  }
+  .MenuMain__topBar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  .MenuMain__categories {
+    width: 100%;
+  }
+  .MenuMain__filterWrapper {
+    align-self: flex-end;
+  }
+  .MenuMain__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .MenuMain {
+    padding: 35px 0 60px;
+  }
+  .MenuMain__container {
+    width: calc(100% - 24px);
+  }
+  .MenuMain__topBar {
+    margin-bottom: 28px;
+  }
+  .MenuMain__categories {
+    gap: 8px;
+    padding: 2px 3px 8px;
+  }
+  .MenuMain__category {
+    height: 44px;
+    padding: 0 12px;
+    font-size: 12px;
+  }
+  .MenuMain__categoryIcon {
+    width: 24px;
+    height: 24px;
+    flex-basis: 24px;
+  }
+  .MenuMain__categoryIcon svg {
+    width: 22px;
+    height: 22px;
+  }
+  .MenuMain__filterWrapper {
+    width: 100%;
+  }
+  .MenuMain__filterButton {
+    width: 100%;
+    height: 48px;
+  }
+  .MenuMain__filterDropdown {
+    width: 100%;
+    left: 0;
+    right: 0;
+  }
+  .MenuMain__grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .MenuMain__card {
+    min-height: 180px;
+    padding: 20px 18px 0;
+  }
+  .MenuMain__imageWrapper {
+    width: 74px;
+    height: 74px;
+    flex-basis: 74px;
+  }
+  .MenuMain__foodName {
+    font-size: 17px;
+  }
+  .MenuMain__foodDescription {
+    font-size: 11px;
+  }
+  .MenuMain__addButton {
+    width: 55px;
+    height: 55px;
+    flex-basis: 55px;
+    margin-right: -18px;
+  }
+  .MenuMain__pagination {
+    margin-top: 35px;
+  }
+}
+
+@media (max-width: 400px) {
+  .MenuMain__category {
+    padding: 0 9px;
+    font-size: 11px;
+  }
+  .MenuMain__paginationArrow,
+  .MenuMain__pageNumber {
+    width: 38px;
+    height: 38px;
+  }
+}

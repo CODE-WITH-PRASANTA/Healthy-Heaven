@@ -1,469 +1,335 @@
-/* =========================================
-   ABOUT US - WHAT WE DO
-========================================= */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
 
+/* =========================================================
+   BASE SECTION (Horizontal Overflow Lock)
+========================================================= */
 .AboutUsWhatWeDo {
   width: 100%;
-  padding: 85px 20px 95px;
+  max-width: 100%;
+  padding: 65px 20px 85px;
   background: #ffffff;
-  overflow: hidden;
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #1e293b;
+  box-sizing: border-box;
+  overflow-x: clip; /* Eliminates horizontal scrollbar cleanly across all browsers */
+  position: relative;
+}
+
+.AboutUsWhatWeDo *,
+.AboutUsWhatWeDo *::before,
+.AboutUsWhatWeDo *::after {
+  box-sizing: border-box;
 }
 
 .AboutUsWhatWeDo__container {
   width: 100%;
-  max-width: 1260px;
+  max-width: 1240px;
   margin: 0 auto;
 }
 
-
-/* =========================================
-   HEADING
-========================================= */
-
+/* =========================================================
+   HEADER
+========================================================= */
 .AboutUsWhatWeDo__heading {
-  width: 100%;
   text-align: center;
-  margin-bottom: 58px;
+  margin: 0 auto 52px;
+  max-width: 680px;
+}
+
+.AboutUsWhatWeDo__eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2.8px;
+  text-transform: uppercase;
+  color: #72a530;
+  margin-bottom: 8px;
 }
 
 .AboutUsWhatWeDo__title {
   margin: 0;
-  color: #202020;
-  font-family: "Brush Script MT", "Segoe Script", cursive;
-  font-size: clamp(52px, 5vw, 76px);
-  font-weight: 450;
-  line-height: 1;
-  letter-spacing: -2px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(34px, 4vw, 50px);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #111827;
+  letter-spacing: -0.5px;
 }
 
+.AboutUsWhatWeDo__decorLine {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 14px auto 16px;
+  width: 80px;
+  height: 2px;
+  background: #e2e8f0;
+  position: relative;
+}
 
-/* =========================================
-   GRID
-========================================= */
+.AboutUsWhatWeDo__decorDot {
+  width: 8px;
+  height: 8px;
+  background: #72a530;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px #ffffff;
+}
 
+.AboutUsWhatWeDo__subtitle {
+  margin: 0 auto;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #64748b;
+  font-weight: 400;
+}
+
+/* =========================================================
+   SERVICES GRID
+========================================================= */
 .AboutUsWhatWeDo__grid {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 36px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
 }
 
-
-/* =========================================
-   CARD
-========================================= */
-
+/* =========================================================
+   LUXURY CARD DESIGN
+========================================================= */
 .AboutUsWhatWeDo__card {
   position: relative;
-  min-height: 318px;
-  padding: 38px 25px 32px;
-
+  background: #ffffff;
+  border: 1px solid #edf2e8;
+  border-radius: 20px;
+  padding: 38px 26px 34px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-
   text-align: center;
-
-  background: #f6f6f6;
-  border: 1.5px solid transparent;
-  border-radius: 12px;
-
-  cursor: pointer;
-
-  transition:
-    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.35s ease,
-    background-color 0.35s ease,
-    box-shadow 0.4s ease;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04),
+              0 1px 4px rgba(15, 23, 42, 0.02);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease;
+  cursor: default;
+  overflow: hidden;
 }
 
+/* Glowing Top Indicator */
+.AboutUsWhatWeDo__cardAccentBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3.5px;
+  background: #72a530;
+  opacity: 0;
+  transform: scaleX(0.2);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-/* Premium hover */
 .AboutUsWhatWeDo__card:hover {
-  transform: translateY(-8px);
-
-  background: #ffffff;
-
-  border-color: #7dac39;
-
-  box-shadow:
-    0 22px 45px rgba(50, 50, 50, 0.10),
-    0 5px 15px rgba(125, 172, 57, 0.08);
+  transform: translateY(-6px);
+  border-color: #d2e7b8;
+  box-shadow: 0 20px 40px -10px rgba(114, 165, 48, 0.14),
+              0 6px 16px -4px rgba(15, 23, 42, 0.04);
 }
 
+.AboutUsWhatWeDo__card:hover .AboutUsWhatWeDo__cardAccentBar {
+  opacity: 1;
+  transform: scaleX(1);
+}
 
-/* =========================================
-   ICON AREA
-========================================= */
-
+/* =========================================================
+   ICON POD WITH SUBTLE GLOW
+========================================================= */
 .AboutUsWhatWeDo__iconWrapper {
   position: relative;
-
-  width: 120px;
-  height: 120px;
-
+  width: 88px;
+  height: 88px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  margin-bottom: 26px;
 }
 
-
-/* Green circle */
-.AboutUsWhatWeDo__icon {
-  width: 118px;
-  height: 118px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  color: #ffffff;
-
-  background: #7daa3b;
-
+.AboutUsWhatWeDo__iconGlow {
+  position: absolute;
+  inset: -6px;
   border-radius: 50%;
-
-  transition:
-    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.35s ease,
-    background-color 0.35s ease;
+  background: radial-gradient(circle, rgba(114, 165, 48, 0.18) 0%, rgba(114, 165, 48, 0) 70%);
+  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  transform: scale(0.85);
 }
 
+.AboutUsWhatWeDo__card:hover .AboutUsWhatWeDo__iconGlow {
+  opacity: 1;
+  transform: scale(1.15);
+}
 
-/* SVG */
-.AboutUsWhatWeDo__icon svg {
-  width: 67px;
-  height: 67px;
+.AboutUsWhatWeDo__iconCircle {
+  position: relative;
+  z-index: 2;
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background: #72a530;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(114, 165, 48, 0.28);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
+.AboutUsWhatWeDo__iconCircle svg {
+  width: 40px;
+  height: 40px;
   display: block;
-
-  transition:
-    transform 0.4s ease;
+  transition: transform 0.35s ease;
 }
 
-
-/* Icon hover */
-.AboutUsWhatWeDo__card:hover
-.AboutUsWhatWeDo__icon {
-  transform: scale(1.05);
-
-  background: #79a938;
-
-  box-shadow:
-    0 10px 25px rgba(125, 172, 57, 0.24);
-}
-
-.AboutUsWhatWeDo__card:hover
-.AboutUsWhatWeDo__icon svg {
+.AboutUsWhatWeDo__card:hover .AboutUsWhatWeDo__iconCircle {
+  background: #649328;
   transform: scale(1.06);
+  box-shadow: 0 12px 26px rgba(114, 165, 48, 0.36);
 }
 
-
-
-/* Left -> Right -> Up -> Down */
-@keyframes AboutUsWhatWeDoDotMove {
-
-  0% {
-    transform: translate(0, 0);
-  }
-
-  20% {
-    transform: translate(-7px, 0);
-  }
-
-  40% {
-    transform: translate(7px, 0);
-  }
-
-  60% {
-    transform: translate(7px, -7px);
-  }
-
-  80% {
-    transform: translate(-5px, 6px);
-  }
-
-  100% {
-    transform: translate(0, 0);
-  }
+.AboutUsWhatWeDo__card:hover .AboutUsWhatWeDo__iconCircle svg {
+  transform: scale(1.08);
 }
 
-
-@keyframes AboutUsWhatWeDoDotPulse {
-
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.18);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
-
-/* =========================================
-   CARD CONTENT
-========================================= */
-
-.AboutUsWhatWeDo__cardTitle {
-  margin: 0 0 12px;
-
-  color: #111111;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  font-size: 25px;
+/* =========================================================
+   BADGE, TITLE & DESCRIPTION
+========================================================= */
+.AboutUsWhatWeDo__cardBadge {
+  display: inline-block;
+  font-size: 11px;
   font-weight: 700;
-
-  line-height: 1.25;
-
-  transition:
-    color 0.3s ease,
-    transform 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #72a530;
+  background: #f1f8e9;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
+.AboutUsWhatWeDo__card:hover .AboutUsWhatWeDo__cardBadge {
+  background: #72a530;
+  color: #ffffff;
+}
 
-.AboutUsWhatWeDo__card:hover
 .AboutUsWhatWeDo__cardTitle {
-  color: #6f9f32;
-  transform: translateY(-2px);
+  margin: 0 0 10px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 21px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.25;
+  transition: color 0.25s ease;
 }
 
+.AboutUsWhatWeDo__card:hover .AboutUsWhatWeDo__cardTitle {
+  color: #72a530;
+}
 
 .AboutUsWhatWeDo__description {
-  max-width: 270px;
-
   margin: 0;
-
-  color: #5d6873;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  font-size: 18px;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: #64748b;
   font-weight: 400;
-
-  line-height: 1.55;
 }
 
+/* =========================================================
+   RESPONSIVE BREAKPOINTS (ALL DEVICES)
+========================================================= */
 
-/* =========================================
-   TABLET
-========================================= */
-
-@media (max-width: 1100px) {
-
-  .AboutUsWhatWeDo {
-    padding: 75px 25px 85px;
-  }
-
+/* Laptops (<= 1100px) */
+@media screen and (max-width: 1100px) {
   .AboutUsWhatWeDo__grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-    max-width: 800px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    max-width: 780px;
     margin: 0 auto;
   }
-
-  .AboutUsWhatWeDo__card {
-    min-height: 315px;
-  }
-
-  .AboutUsWhatWeDo__title {
-    font-size: 65px;
-  }
 }
 
-
-/* =========================================
-   TABLET SMALL
-========================================= */
-
-@media (max-width: 700px) {
-
+/* Tablets (<= 768px) */
+@media screen and (max-width: 768px) {
   .AboutUsWhatWeDo {
-    padding: 65px 18px 70px;
+    padding: 50px 16px 65px;
   }
 
   .AboutUsWhatWeDo__heading {
-    margin-bottom: 40px;
+    margin-bottom: 38px;
   }
 
   .AboutUsWhatWeDo__title {
-    font-size: 55px;
-    letter-spacing: -1px;
-  }
-
-  .AboutUsWhatWeDo__grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
+    font-size: 32px;
   }
 
   .AboutUsWhatWeDo__card {
-    min-height: 300px;
-    padding: 30px 18px 28px;
+    padding: 30px 20px 28px;
+    border-radius: 16px;
   }
 
   .AboutUsWhatWeDo__iconWrapper {
-    width: 105px;
-    height: 105px;
-    margin-bottom: 22px;
+    width: 76px;
+    height: 76px;
+    margin-bottom: 16px;
   }
 
-  .AboutUsWhatWeDo__icon {
-    width: 103px;
-    height: 103px;
+  .AboutUsWhatWeDo__iconCircle {
+    width: 68px;
+    height: 68px;
   }
 
-  .AboutUsWhatWeDo__icon svg {
-    width: 60px;
-    height: 60px;
-  }
-
-  .AboutUsWhatWeDo__floatingDot {
-    width: 38px;
-    height: 38px;
-    right: -3px;
-    bottom: 1px;
-  }
-
-  .AboutUsWhatWeDo__floatingDot span {
-    width: 12px;
-    height: 12px;
+  .AboutUsWhatWeDo__iconCircle svg {
+    width: 34px;
+    height: 34px;
   }
 
   .AboutUsWhatWeDo__cardTitle {
-    font-size: 21px;
+    font-size: 19px;
   }
 
   .AboutUsWhatWeDo__description {
-    font-size: 16px;
-    line-height: 1.5;
+    font-size: 14px;
   }
 }
 
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media (max-width: 520px) {
-
-  .AboutUsWhatWeDo {
-    padding: 55px 15px 60px;
-  }
-
-  .AboutUsWhatWeDo__heading {
-    margin-bottom: 35px;
-  }
-
-  .AboutUsWhatWeDo__title {
-    font-size: 48px;
-  }
-
+/* Mobile Phones (<= 540px) */
+@media screen and (max-width: 540px) {
   .AboutUsWhatWeDo__grid {
     grid-template-columns: 1fr;
-    gap: 20px;
-
     max-width: 380px;
-  }
-
-  .AboutUsWhatWeDo__card {
-    min-height: auto;
-
-    padding:
-      34px
-      25px
-      35px;
-  }
-
-  .AboutUsWhatWeDo__iconWrapper {
-    width: 112px;
-    height: 112px;
-
-    margin-bottom: 23px;
-  }
-
-  .AboutUsWhatWeDo__icon {
-    width: 110px;
-    height: 110px;
-  }
-
-  .AboutUsWhatWeDo__icon svg {
-    width: 63px;
-    height: 63px;
-  }
-
-  .AboutUsWhatWeDo__floatingDot {
-    width: 40px;
-    height: 40px;
-  }
-
-  .AboutUsWhatWeDo__cardTitle {
-    font-size: 23px;
-    margin-bottom: 10px;
-  }
-
-  .AboutUsWhatWeDo__description {
-    max-width: 290px;
-    font-size: 16px;
-  }
-}
-
-
-/* =========================================
-   SMALL MOBILE
-========================================= */
-
-@media (max-width: 360px) {
-
-  .AboutUsWhatWeDo {
-    padding-left: 12px;
-    padding-right: 12px;
+    margin: 0 auto;
+    gap: 16px;
   }
 
   .AboutUsWhatWeDo__title {
-    font-size: 42px;
+    font-size: 28px;
+  }
+
+  .AboutUsWhatWeDo__subtitle {
+    font-size: 13.5px;
   }
 
   .AboutUsWhatWeDo__card {
-    padding: 30px 18px;
-  }
-
-  .AboutUsWhatWeDo__cardTitle {
-    font-size: 21px;
-  }
-
-  .AboutUsWhatWeDo__description {
-    font-size: 15px;
+    padding: 26px 18px 24px;
   }
 }
 
-
-/* =========================================
-   ACCESSIBILITY
-========================================= */
-
+/* Accessibility / Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-
-  .AboutUsWhatWeDo__card,
-  .AboutUsWhatWeDo__icon,
-  .AboutUsWhatWeDo__icon svg,
-  .AboutUsWhatWeDo__floatingDot,
-  .AboutUsWhatWeDo__floatingDot span,
-  .AboutUsWhatWeDo__cardTitle {
-    transition: none;
+  .AboutUsWhatWeDo *,
+  .AboutUsWhatWeDo *::before,
+  .AboutUsWhatWeDo *::after {
     animation: none !important;
+    transition: none !important;
   }
 }

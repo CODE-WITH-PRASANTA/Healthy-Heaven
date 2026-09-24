@@ -1,13 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
 
-@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@400;500;600;700&display=swap");
-
-/* MAIN SECTION */
-
+/* =========================================================
+   BASE SECTION
+========================================================= */
 .AboutUsVideo {
   width: 100%;
-  padding: 105px 20px 110px;
+  padding: 60px 20px 75px; /* Clean, balanced vertical padding */
   background: #ffffff;
-  font-family: "Poppins", sans-serif;
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #1e293b;
+  box-sizing: border-box;
 }
 
 .AboutUsVideo *,
@@ -16,365 +18,391 @@
   box-sizing: border-box;
 }
 
-.AboutUsVideo-container {
-  max-width: 1425px;
+/* Constrained width to keep video from looking overwhelmingly wide */
+.AboutUsVideo__container {
+  max-width: 1140px;
   width: 100%;
   margin: 0 auto;
 }
 
-/* HEADING */
-
-.AboutUsVideo-heading {
+/* =========================================================
+   HEADER SECTION
+========================================================= */
+.AboutUsVideo__heading {
   text-align: center;
-  margin: 0 auto 62px;
+  margin: 0 auto 36px;
+  max-width: 720px;
 }
 
-.AboutUsVideo-title {
-  margin: 0 0 18px;
-  font-family: "Lobster", cursive;
-  font-size: clamp(36px, 4.2vw, 72px);
-  font-weight: 400;
-  line-height: 1.25;
-  color: #242424;
+.AboutUsVideo__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  color: #72a530;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
 }
 
-.AboutUsVideo-description {
-  max-width: 1030px;
+.AboutUsVideo__eyebrow::before,
+.AboutUsVideo__eyebrow::after {
+  content: "";
+  width: 22px;
+  height: 1.5px;
+  background: #72a530;
+  border-radius: 2px;
+}
+
+.AboutUsVideo__title {
+  margin: 0 0 14px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(30px, 3.4vw, 46px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #111827;
+  letter-spacing: -0.4px;
+}
+
+.AboutUsVideo__title span {
+  color: #72a530;
+}
+
+.AboutUsVideo__description {
   margin: 0 auto;
-  font-size: 19px;
+  font-size: 15px;
   font-weight: 400;
-  line-height: 1.65;
-  color: #535765;
+  line-height: 1.75;
+  color: #64748b;
+  max-width: 640px;
 }
 
-/* RESTAURANT IMAGE */
-
-.AboutUsVideo-imageWrapper {
+/* =========================================================
+   COMPACT CINEMATIC VIDEO BANNER
+========================================================= */
+.AboutUsVideo__banner {
   position: relative;
   width: 100%;
-  height: 525px;
+  height: 420px; /* Reduced from 525px to a balanced, premium proportion */
+  max-height: 52vh;
+  border-radius: 20px;
   overflow: hidden;
-  border-radius: 12px;
-  isolation: isolate;
-  background: #242424;
+  cursor: pointer;
+  background: #0f172a;
+  box-shadow: 0 18px 45px -10px rgba(15, 23, 42, 0.16),
+              0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
 }
 
-.AboutUsVideo-image {
+.AboutUsVideo__banner:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 26px 55px -12px rgba(15, 23, 42, 0.24);
+}
+
+.AboutUsVideo__banner:focus-visible {
+  outline: 3px solid #72a530;
+  outline-offset: 4px;
+}
+
+.AboutUsVideo__bannerImg {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transition: transform 0.8s ease;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.AboutUsVideo-imageWrapper:hover .AboutUsVideo-image {
-  transform: scale(1.025);
+.AboutUsVideo__banner:hover .AboutUsVideo__bannerImg {
+  transform: scale(1.04);
 }
 
-.AboutUsVideo-imageOverlay {
+/* Subtle Vignette / Dark Ambient Film */
+.AboutUsVideo__overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.08);
+  background: radial-gradient(
+    circle at center,
+    rgba(15, 23, 42, 0.35) 0%,
+    rgba(15, 23, 42, 0.65) 100%
+  );
   pointer-events: none;
 }
 
-/* PLAY BUTTON */
-
-.AboutUsVideo-playButton {
+/* =========================================================
+   PREMIUM PLAY BUTTON & RIPPLES
+========================================================= */
+.AboutUsVideo__playCenter {
   position: absolute;
-  z-index: 2;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  z-index: 3;
+}
 
+.AboutUsVideo__playBtn {
+  position: relative;
+  width: 78px;
+  height: 78px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  width: 106px;
-  height: 106px;
-  padding: 0;
-  border: none;
-  border-radius: 50%;
-  background: #80a63c;
-  color: #ffffff;
-  cursor: pointer;
-
-  transition:
-    background 0.35s ease,
-    box-shadow 0.35s ease;
+  outline: none;
 }
 
-.AboutUsVideo-playIcon {
+.AboutUsVideo__playCircle {
   position: relative;
-  z-index: 2;
-  width: 26px;
-  height: 30px;
-  margin-left: 5px;
-  transition:
-    transform 0.35s ease,
-    color 0.35s ease;
-}
-
-.AboutUsVideo-playButton:hover {
-  background: #ffffff;
-  color: #80a63c;
-  box-shadow: 0 0 0 12px rgba(255, 255, 255, 0.16);
-}
-
-.AboutUsVideo-playButton:hover .AboutUsVideo-playIcon {
-  transform: scale(1.15);
-}
-
-.AboutUsVideo-playButton:focus-visible {
-  outline: 4px solid #ffffff;
-  outline-offset: 5px;
-}
-
-/* ANIMATED RIPPLE */
-
-.AboutUsVideo-playRipple {
-  position: absolute;
-  inset: 0;
-  border: 2px solid rgba(255, 255, 255, 0.65);
+  z-index: 3;
+  width: 74px;
+  height: 74px;
   border-radius: 50%;
-  animation: AboutUsVideo-ripple 2.4s ease-out infinite;
+  background: #ffffff;
+  color: #72a530;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.AboutUsVideo__playIcon {
+  width: 26px;
+  height: 26px;
+  margin-left: 3px;
+  transition: transform 0.25s ease;
+}
+
+.AboutUsVideo__banner:hover .AboutUsVideo__playCircle {
+  background: #72a530;
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+/* Glowing Pulsing Ripples */
+.AboutUsVideo__ripple {
+  position: absolute;
+  border-radius: 50%;
   pointer-events: none;
 }
 
-@keyframes AboutUsVideo-ripple {
-  0% {
-    transform: scale(1);
-    opacity: 0.75;
-  }
+.AboutUsVideo__ripple--inner {
+  inset: -8px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  animation: aboutUsPulse 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
 
+.AboutUsVideo__ripple--outer {
+  inset: -18px;
+  border: 1.5px solid rgba(114, 165, 48, 0.5);
+  animation: aboutUsPulse 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite 0.6s;
+}
+
+@keyframes aboutUsPulse {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.8;
+  }
   100% {
-    transform: scale(1.65);
+    transform: scale(1.45);
     opacity: 0;
   }
 }
 
-/* VIDEO POPUP */
+/* Subtle Text Tag under Play */
+.AboutUsVideo__watchText {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  transition: transform 0.25s ease, color 0.25s ease;
+}
 
-.AboutUsVideo-modal {
+.AboutUsVideo__banner:hover .AboutUsVideo__watchText {
+  color: #bbf7d0;
+  transform: translateY(2px);
+}
+
+/* =========================================================
+   CINEMATIC VIDEO MODAL
+========================================================= */
+.AboutUsVideo__modal {
   position: fixed;
   inset: 0;
-  z-index: 99999;
+  z-index: 999999;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 55px 24px;
-  background: rgba(0, 0, 0, 0.78);
-  backdrop-filter: blur(3px);
-  animation: AboutUsVideo-fadeIn 0.25s ease;
+  padding: 24px;
+  background: rgba(10, 15, 26, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  animation: aboutUsFadeIn 0.25s ease-out;
 }
 
-@keyframes AboutUsVideo-fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+@keyframes aboutUsFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.AboutUsVideo-modalContent {
+.AboutUsVideo__modalContent {
   position: relative;
-  width: min(100%, 1080px);
-  animation: AboutUsVideo-popupIn 0.35s ease;
+  width: min(100%, 940px);
+  animation: aboutUsModalZoom 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes AboutUsVideo-popupIn {
+@keyframes aboutUsModalZoom {
   from {
     opacity: 0;
-    transform: scale(0.94) translateY(15px);
+    transform: scale(0.92) translateY(12px);
   }
-
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
   }
 }
 
-/* CLOSE BUTTON */
-
-.AboutUsVideo-closeButton {
+.AboutUsVideo__modalClose {
   position: absolute;
+  top: -46px;
   right: 0;
-  bottom: calc(100% + 12px);
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 36px;
   height: 36px;
-  padding: 0;
-  border: none;
-  background: transparent;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(15, 23, 42, 0.7);
   color: #ffffff;
   cursor: pointer;
-
-  transition:
-    color 0.3s ease,
-    transform 0.3s ease;
+  transition: all 0.2s ease;
 }
 
-.AboutUsVideo-closeButton:hover {
-  color: #80a63c;
-  transform: rotate(90deg);
+.AboutUsVideo__modalClose:hover {
+  background: #72a530;
+  border-color: #72a530;
+  transform: rotate(90deg) scale(1.08);
 }
 
-.AboutUsVideo-closeButton:focus-visible {
-  outline: 2px solid #ffffff;
-  outline-offset: 3px;
-}
-
-/* VIDEO FRAME */
-
-.AboutUsVideo-videoFrame {
+.AboutUsVideo__videoFrame {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
+  border-radius: 16px;
   overflow: hidden;
   background: #000000;
-  box-shadow: 0 20px 65px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.AboutUsVideo-videoFrame iframe {
+.AboutUsVideo__videoFrame iframe {
   position: absolute;
   inset: 0;
-  display: block;
   width: 100%;
   height: 100%;
   border: none;
 }
 
-/* LARGE LAPTOP */
+/* =========================================================
+   RESPONSIVE BREAKPOINTS
+========================================================= */
 
-@media (max-width: 1440px) {
-  .AboutUsVideo-container {
-    max-width: 1200px;
+/* Tablets (<= 768px) */
+@media screen and (max-width: 768px) {
+  .AboutUsVideo {
+    padding: 50px 16px 60px;
   }
 
-  .AboutUsVideo-imageWrapper {
-    height: 480px;
+  .AboutUsVideo__heading {
+    margin-bottom: 28px;
   }
 
-  .AboutUsVideo-title {
-    font-size: 60px;
+  .AboutUsVideo__banner {
+    height: 330px;
+    border-radius: 16px;
   }
 
-  .AboutUsVideo-description {
-    font-size: 18px;
+  .AboutUsVideo__playBtn {
+    width: 66px;
+    height: 66px;
+  }
+
+  .AboutUsVideo__playCircle {
+    width: 62px;
+    height: 62px;
+  }
+
+  .AboutUsVideo__playIcon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .AboutUsVideo__watchText {
+    font-size: 12px;
   }
 }
 
-/* TABLET */
-
-@media (max-width: 1024px) {
+/* Small Mobiles (<= 480px) */
+@media screen and (max-width: 480px) {
   .AboutUsVideo {
-    padding: 80px 30px;
+    padding: 40px 14px 50px;
   }
 
-  .AboutUsVideo-heading {
-    margin-bottom: 45px;
+  .AboutUsVideo__title {
+    font-size: 28px;
   }
 
-  .AboutUsVideo-title {
-    font-size: 48px;
+  .AboutUsVideo__description {
+    font-size: 13.5px;
+    line-height: 1.65;
   }
 
-  .AboutUsVideo-description {
-    max-width: 800px;
-    font-size: 16px;
-  }
-
-  .AboutUsVideo-imageWrapper {
-    height: 420px;
-  }
-
-  .AboutUsVideo-playButton {
-    width: 90px;
-    height: 90px;
-  }
-}
-
-/* MOBILE */
-
-@media (max-width: 767px) {
-  .AboutUsVideo {
-    padding: 65px 18px;
-  }
-
-  .AboutUsVideo-heading {
-    margin-bottom: 32px;
-  }
-
-  .AboutUsVideo-title {
-    font-size: clamp(32px, 7vw, 43px);
-    line-height: 1.3;
-    margin-bottom: 16px;
-  }
-
-  .AboutUsVideo-description {
-    font-size: 14px;
-    line-height: 1.8;
-  }
-
-  .AboutUsVideo-imageWrapper {
-    height: 300px;
-    border-radius: 10px;
-  }
-
-  .AboutUsVideo-playButton {
-    width: 75px;
-    height: 75px;
-  }
-
-  .AboutUsVideo-playIcon {
-    width: 21px;
-    height: 25px;
-  }
-
-  .AboutUsVideo-modal {
-    padding: 20px 12px;
-  }
-
-  .AboutUsVideo-closeButton {
-    bottom: calc(100% + 8px);
-  }
-}
-
-/* SMALL MOBILE */
-
-@media (max-width: 480px) {
-  .AboutUsVideo {
-    padding: 55px 15px;
-  }
-
-  .AboutUsVideo-title {
-    font-size: 34px;
-  }
-
-  .AboutUsVideo-description {
-    font-size: 13px;
-  }
-
-  .AboutUsVideo-imageWrapper {
+  .AboutUsVideo__banner {
     height: 230px;
+    border-radius: 14px;
   }
 
-  .AboutUsVideo-playButton {
-    width: 65px;
-    height: 65px;
+  .AboutUsVideo__playBtn {
+    width: 56px;
+    height: 56px;
   }
 
-  .AboutUsVideo-playIcon {
-    width: 19px;
-    height: 23px;
+  .AboutUsVideo__playCircle {
+    width: 52px;
+    height: 52px;
+  }
+
+  .AboutUsVideo__playIcon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .AboutUsVideo__watchText {
+    display: none; /* Keeps center clean and unfettered on phone screens */
+  }
+
+  .AboutUsVideo__modal {
+    padding: 14px;
+  }
+
+  .AboutUsVideo__modalClose {
+    top: -40px;
+    width: 32px;
+    height: 32px;
   }
 }
 

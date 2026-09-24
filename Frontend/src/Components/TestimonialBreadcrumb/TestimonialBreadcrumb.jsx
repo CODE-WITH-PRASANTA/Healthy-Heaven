@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./TestimonialBreadcrumb.css";
 
 // Background image
@@ -17,7 +18,6 @@ const TestimonialBreadcrumb = () => {
 
       {/* Content */}
       <div className="TestimonialBreadcrumb__content">
-
         {/* Page Title */}
         <h1 className="TestimonialBreadcrumb__title">
           Testimonials
@@ -25,11 +25,10 @@ const TestimonialBreadcrumb = () => {
 
         {/* Breadcrumb */}
         <div className="TestimonialBreadcrumb__breadcrumb">
-
-          {/* Home */}
-          <span className="TestimonialBreadcrumb__home">
+          {/* Home Link (Navigates to home page) */}
+          <Link to="/" className="TestimonialBreadcrumb__home">
             Home
-          </span>
+          </Link>
 
           {/* Arrow */}
           <span
@@ -43,7 +42,6 @@ const TestimonialBreadcrumb = () => {
           <span className="TestimonialBreadcrumb__current">
             Testimonials
           </span>
-
         </div>
       </div>
     </section>

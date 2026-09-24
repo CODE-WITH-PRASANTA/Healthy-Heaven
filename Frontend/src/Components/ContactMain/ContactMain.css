@@ -1,22 +1,22 @@
 /* =========================================================
-   CONTACT MAIN
+   CONTACT MAIN DESIGN SYSTEM
    ========================================================= */
 
 .ContactMain {
   --ContactMainGreen: #7daa35;
   --ContactMainGreenDark: #6c982c;
-  --ContactMainText: #202020;
-  --ContactMainMuted: #737373;
-  --ContactMainBorder: #d9d9d9;
+  --ContactMainGreenLight: #eef6e6;
+  --ContactMainGreenBorder: #d6e8c8;
+  --ContactMainText: #182218;
+  --ContactMainMuted: #5c685c;
   --ContactMainWhite: #ffffff;
-  --ContactMainBackground: #f2f1f1;
 
   width: 100%;
   position: relative;
-  overflow: hidden;
-  background: #ffffff;
-  padding: 0 0 100px;
+  background: #fbfdfa;
+  padding: 0 0 90px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .ContactMain *,
@@ -25,158 +25,130 @@
   box-sizing: border-box;
 }
 
-
-/* =========================================================
-   MAIN WRAPPER
-   ========================================================= */
-
-.ContactMainWrapper {
-  width: min(1595px, calc(100% - 70px));
-  margin: 0 auto;
+/* Ambient glow blobs */
+.ContactMainBgGlow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 1;
 }
 
+.ContactMainBgGlow1 {
+  width: 480px;
+  height: 480px;
+  top: 15%;
+  left: -120px;
+  background: radial-gradient(circle, rgba(125, 170, 53, 0.08) 0%, transparent 70%);
+}
+
+.ContactMainBgGlow2 {
+  width: 520px;
+  height: 520px;
+  bottom: 20%;
+  right: -140px;
+  background: radial-gradient(circle, rgba(125, 170, 53, 0.09) 0%, transparent 70%);
+}
+
+/* MAIN WRAPPER */
+.ContactMainWrapper {
+  width: min(1320px, calc(100% - 48px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
 
 /* =========================================================
-   CONTACT INFORMATION
+   1. CONTACT CARDS
    ========================================================= */
 
 .ContactMainInfo {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  padding-top: 150px;
-  gap: 35px;
+  padding-top: 80px;
+  gap: 24px;
   position: relative;
   z-index: 5;
 }
 
-
-/* =========================================================
-   CONTACT CARD
-   ========================================================= */
+@keyframes contactCardDropDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.96);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(4px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
 
 .ContactMainCard {
-  min-height: 275px;
+  min-height: 205px;
   position: relative;
-
   background: #ffffff;
-
-  border-radius: 12px;
-
-  padding: 105px 25px 35px;
-
+  border-radius: 20px;
+  padding: 56px 20px 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 
   box-shadow:
-    0 15px 45px rgba(0, 0, 0, 0.08),
-    0 5px 18px rgba(0, 0, 0, 0.04);
+    0 10px 25px rgba(0, 0, 0, 0.035),
+    0 2px 6px rgba(0, 0, 0, 0.015);
 
-  transition:
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    background 0.45s ease,
-    box-shadow 0.45s ease,
-    color 0.35s ease;
-
+  animation: contactCardDropDown 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.3, 1), background 0.3s ease, box-shadow 0.3s ease;
   overflow: visible;
+  cursor: pointer;
 }
-
-
-/* =========================================================
-   HOVER CARD
-   ========================================================= */
 
 .ContactMainCard:hover {
   background: var(--ContactMainGreen);
-  transform: translateY(-12px);
-
+  transform: translateY(-6px);
   box-shadow:
-    0 25px 55px rgba(0, 0, 0, 0.14),
-    0 12px 25px rgba(125, 170, 53, 0.18);
+    0 16px 36px rgba(125, 170, 53, 0.25),
+    0 4px 10px rgba(0, 0, 0, 0.05);
 }
-
-
-/* =========================================================
-   ACTIVE CARD
-   ========================================================= */
-
-.ContactMainCardActive {
-  background: var(--ContactMainGreen);
-  color: #ffffff;
-}
-
-.ContactMainCardActive .ContactMainCardTitle,
-.ContactMainCardActive .ContactMainCardText {
-  color: #ffffff;
-}
-
-
-/* =========================================================
-   ICON CIRCLE
-   ========================================================= */
 
 .ContactMainIconWrapper {
-  width: 142px;
-  height: 142px;
-
+  width: 80px;
+  height: 80px;
   position: absolute;
-  top: -70px;
+  top: -40px;
   left: 50%;
-
   transform: translateX(-50%);
-
   border-radius: 50%;
-
   background: #ffffff;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  box-shadow:
-    0 12px 35px rgba(0, 0, 0, 0.08);
-
-  transition:
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.45s ease;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.07);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
 .ContactMainCard:hover .ContactMainIconWrapper {
-  transform: translateX(-50%) translateY(-6px) scale(1.03);
-
-  box-shadow:
-    0 16px 40px rgba(0, 0, 0, 0.13);
+  transform: translateX(-50%) translateY(-2px) scale(1.05);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 }
 
-
-/* =========================================================
-   ICON
-   ========================================================= */
-
 .ContactMainIcon {
-  width: 58px;
-  height: 58px;
-
+  width: 32px;
+  height: 32px;
   color: var(--ContactMainGreen);
-
-  transition:
-    color 0.35s ease,
-    transform 0.45s ease;
+  transition: transform 0.3s ease;
 }
 
 .ContactMainCard:hover .ContactMainIcon {
-  color: var(--ContactMainGreen);
   transform: scale(1.08);
 }
-
-
-/* =========================================================
-   CARD CONTENT
-   ========================================================= */
 
 .ContactMainCardContent {
   width: 100%;
@@ -186,852 +158,543 @@
 }
 
 .ContactMainCardTitle {
-  margin: 0 0 14px;
-
+  margin: 0 0 6px;
   color: var(--ContactMainText);
-
-  font-family:
-    "Poppins",
-    "Montserrat",
-    Arial,
-    sans-serif;
-
-  font-size: 25px;
+  font-family: "Poppins", sans-serif;
+  font-size: 17px;
   font-weight: 700;
   line-height: 1.25;
-
-  transition:
-    color 0.35s ease,
-    transform 0.35s ease;
+  transition: color 0.3s ease;
 }
 
 .ContactMainCardText {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-
+  gap: 3px;
   color: var(--ContactMainMuted);
-
-  font-family:
-    "Poppins",
-    "Montserrat",
-    Arial,
-    sans-serif;
-
-  font-size: 19px;
+  font-family: "Poppins", sans-serif;
+  font-size: 13.5px;
   font-weight: 400;
-  line-height: 1.45;
-
-  transition: color 0.35s ease;
+  line-height: 1.4;
+  transition: color 0.3s ease;
 }
 
-.ContactMainCard:hover .ContactMainCardTitle {
-  color: #ffffff;
-  transform: translateY(-3px);
-}
-
+.ContactMainCard:hover .ContactMainCardTitle,
 .ContactMainCard:hover .ContactMainCardText {
-  color: rgba(255, 255, 255, 0.92);
+  color: #ffffff;
 }
-
-
-/* =========================================================
-   CARD ARROW
-   ========================================================= */
 
 .ContactMainCardArrow {
   position: absolute;
-
-  right: 22px;
-  bottom: 20px;
-
-  width: 34px;
-  height: 34px;
-
+  right: 14px;
+  bottom: 14px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 50%;
-
   color: var(--ContactMainGreen);
-
   opacity: 0;
-  transform: translateY(8px);
-
-  transition:
-    opacity 0.35s ease,
-    transform 0.4s ease,
-    background 0.35s ease,
-    color 0.35s ease;
+  transform: translateY(4px);
+  transition: all 0.25s ease;
 }
 
 .ContactMainCard:hover .ContactMainCardArrow {
   opacity: 1;
   transform: translateY(0);
-
+  background: rgba(255, 255, 255, 0.95);
   color: var(--ContactMainGreen);
-  background: rgba(255, 255, 255, 0.9);
 }
-
 
 /* =========================================================
-   RESERVATION SECTION
+   2. 2-COLUMN SPLIT RESERVATION LAYOUT
    ========================================================= */
 
-.ContactMainReservation {
-  width: 100%;
-
-  margin-top: 95px;
-
-  padding:
-    85px
-    90px
-    95px;
-
-  border-radius: 42px;
-
-  background: var(--ContactMainBackground);
-
-  position: relative;
-  overflow: hidden;
-}
-
-
-/* subtle premium background */
-
-.ContactMainReservation::before {
-  content: "";
-
-  position: absolute;
-
-  width: 420px;
-  height: 420px;
-
-  right: -180px;
-  bottom: -220px;
-
-  border-radius: 50%;
-
-  background: rgba(125, 170, 53, 0.06);
-
-  pointer-events: none;
-}
-
-.ContactMainReservation::after {
-  content: "";
-
-  position: absolute;
-
-  width: 300px;
-  height: 300px;
-
-  left: -170px;
-  top: -150px;
-
-  border-radius: 50%;
-
-  background: rgba(125, 170, 53, 0.04);
-
-  pointer-events: none;
-}
-
-
-/* =========================================================
-   HEADING
-   ========================================================= */
-
-.ContactMainHeading {
-  position: relative;
-  z-index: 2;
-
-  text-align: center;
-
-  margin-bottom: 70px;
-}
-
-.ContactMainTitle {
-  margin: 0;
-
-  color: #202020;
-
-  font-family:
-    "Playfair Display",
-    "Georgia",
-    serif;
-
-  font-size: clamp(52px, 5vw, 78px);
-
-  font-weight: 700;
-
-  font-style: italic;
-
-  line-height: 1;
-
-  letter-spacing: -2px;
-}
-
-.ContactMainSubtitle {
-  margin: 22px auto 0;
-
-  max-width: 620px;
-
-  color: #777777;
-
-  font-family:
-    "Poppins",
-    "Montserrat",
-    Arial,
-    sans-serif;
-
-  font-size: 16px;
-  line-height: 1.7;
-
-  font-weight: 400;
-}
-
-
-/* =========================================================
-   FORM
-   ========================================================= */
-
-.ContactMainForm {
-  width: 100%;
-
+.ContactMainSplitSection {
+  margin-top: 75px;
   display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
-  column-gap: 38px;
-  row-gap: 55px;
-
-  position: relative;
-  z-index: 2;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 48px;
+  align-items: center;
 }
 
+/* LEFT PERKS COLUMN */
+.ContactMainSidePerks {
+  padding-right: 12px;
+}
 
-/* =========================================================
-   FIELD
-   ========================================================= */
+.ContactMainBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--ContactMainGreenLight);
+  color: var(--ContactMainGreen);
+  border: 1px solid var(--ContactMainGreenBorder);
+  padding: 5px 14px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 14px;
+}
+
+.ContactMainSideHeading {
+  margin: 0;
+  color: var(--ContactMainText);
+  font-family: Georgia, "Playfair Display", serif;
+  font-size: clamp(32px, 3.2vw, 46px);
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.15;
+  letter-spacing: -1px;
+}
+
+.ContactMainSideDesc {
+  margin: 14px 0 30px;
+  color: var(--ContactMainMuted);
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.ContactMainPerksList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ContactMainPerkItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.ContactMainPerkIconBox {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: var(--ContactMainGreenLight);
+  color: var(--ContactMainGreen);
+  border: 1px solid var(--ContactMainGreenBorder);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ContactMainPerkTitle {
+  margin: 0 0 3px;
+  font-family: "Poppins", sans-serif;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--ContactMainText);
+}
+
+.ContactMainPerkDesc {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ContactMainMuted);
+}
+
+.ContactMainDirectCall {
+  margin-top: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  font-size: 14px;
+  color: var(--ContactMainText);
+}
+
+.ContactMainDirectCall strong {
+  color: var(--ContactMainGreenDark);
+}
+
+/* RIGHT RESERVATION BOX */
+.ContactMainReservationBox {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 38px 36px 32px;
+  border: 1px solid rgba(125, 170, 53, 0.22);
+  box-shadow:
+    0 20px 45px rgba(125, 170, 53, 0.08),
+    0 4px 15px rgba(0, 0, 0, 0.02);
+  position: relative;
+}
+
+.ContactMainBoxHeader {
+  margin-bottom: 22px;
+}
+
+.ContactMainBoxBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--ContactMainGreenLight);
+  color: var(--ContactMainGreen);
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.ContactMainBoxTitle {
+  margin: 0;
+  color: var(--ContactMainText);
+  font-family: Georgia, "Playfair Display", serif;
+  font-size: 28px;
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: -0.5px;
+}
+
+.ContactMainBoxSubtitle {
+  margin: 6px 0 0;
+  color: var(--ContactMainMuted);
+  font-family: "Poppins", sans-serif;
+  font-size: 13.5px;
+}
+
+/* FORM FIELDS */
+.ContactMainForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ContactMainFormRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
 
 .ContactMainField {
-  width: 100%;
-  position: relative;
+  display: flex;
+  flex-direction: column;
 }
-
-.ContactMainMessageField {
-  grid-column: 1 / -1;
-}
-
-
-/* =========================================================
-   LABEL
-   ========================================================= */
 
 .ContactMainLabel {
-  display: block;
-
-  margin-bottom: 17px;
-
-  color: var(--ContactMainGreen);
-
-  font-family:
-    "Poppins",
-    "Montserrat",
-    Arial,
-    sans-serif;
-
-  font-size: 17px;
-  font-weight: 500;
-
-  line-height: 1.2;
+  margin-bottom: 6px;
+  color: #273327;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
 }
 
-
-/* =========================================================
-   INPUT
-   ========================================================= */
-
-.ContactMainInput {
+.ContactMainInput,
+.ContactMainTextarea {
   width: 100%;
-
-  height: 58px;
-
-  padding: 0 2px;
-
-  border: 0;
-  border-bottom: 1px solid #cccccc;
-
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid #d5ded4;
+  border-radius: 10px;
   outline: none;
-
-  background: transparent;
-
+  background: #fbfdfa;
   color: #171717;
-
-  font-family:
-    "Poppins",
-    "Montserrat",
-    Arial,
-    sans-serif;
-
-  font-size: 20px;
-  font-weight: 400;
-
-  border-radius: 0;
-
-  transition:
-    border-color 0.35s ease,
-    color 0.35s ease;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  transition: all 0.25s ease;
 }
 
-.ContactMainInput::placeholder {
-  color: #191919;
-  opacity: 1;
+.ContactMainInput::placeholder,
+.ContactMainTextarea::placeholder {
+  color: #98a398;
+  font-size: 13.5px;
 }
 
-.ContactMainInput:focus {
-  border-bottom-color: var(--ContactMainGreen);
+.ContactMainInput:focus,
+.ContactMainTextarea:focus {
+  background: #ffffff;
+  border-color: var(--ContactMainGreen);
+  box-shadow: 0 0 0 3px rgba(125, 170, 53, 0.16);
 }
-
-
-/* =========================================================
-   SELECT
-   ========================================================= */
 
 .ContactMainSelect {
   cursor: pointer;
-
   appearance: none;
-
-  background-image:
-    linear-gradient(45deg, transparent 50%, #777 50%),
-    linear-gradient(135deg, #777 50%, transparent 50%);
-
-  background-position:
-    calc(100% - 8px) 26px,
-    calc(100% - 2px) 26px;
-
-  background-size:
-    6px 6px,
-    6px 6px;
-
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237daa35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-position: calc(100% - 12px) center;
+  background-size: 14px;
   background-repeat: no-repeat;
-
-  padding-right: 25px;
+  padding-right: 32px;
 }
-
-
-/* =========================================================
-   TEXTAREA
-   ========================================================= */
 
 .ContactMainTextarea {
-  width: 100%;
-
-  min-height: 135px;
-
-  padding:
-    0 2px
-    15px;
-
-  border: 0;
-
-  border-bottom: 1px solid #cccccc;
-
-  outline: none;
-
+  min-height: 74px;
+  padding-top: 10px;
   resize: vertical;
-
-  background: transparent;
-
-  color: #171717;
-
-  font-family:
-    "Poppins",
-    "Montserrat",
-    Arial,
-    sans-serif;
-
-  font-size: 20px;
-  line-height: 1.6;
-
-  transition:
-    border-color 0.35s ease;
 }
-
-.ContactMainTextarea::placeholder {
-  color: #191919;
-  opacity: 1;
-}
-
-.ContactMainTextarea:focus {
-  border-bottom-color: var(--ContactMainGreen);
-}
-
-
-/* =========================================================
-   SUBMIT WRAPPER
-   ========================================================= */
 
 .ContactMainSubmitWrapper {
-  grid-column: 1 / -1;
-
-  display: flex;
-  justify-content: center;
-
-  padding-top: 5px;
+  margin-top: 4px;
 }
 
-
-/* =========================================================
-   SUBMIT BUTTON
-   ========================================================= */
-
 .ContactMainSubmitButton {
-  min-width: 185px;
-  height: 58px;
-
-  padding: 0 9px 0 27px;
-
-  display: inline-flex;
+  width: 100%;
+  height: 48px;
+  padding: 0 10px 0 22px;
+  display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
-
-  border: 1px solid var(--ContactMainGreen);
-
-  border-radius: 6px;
-
+  border: none;
+  border-radius: 50px;
   background: var(--ContactMainGreen);
-
   color: #ffffff;
-
-  font-family:
-    "Poppins",
-    "Montserrat",
-    Arial,
-    sans-serif;
-
-  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14.5px;
   font-weight: 600;
-
   cursor: pointer;
-
-  box-shadow:
-    0 10px 25px rgba(125, 170, 53, 0.22);
-
-  transition:
-    background 0.4s ease,
-    color 0.4s ease,
-    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.4s ease;
+  box-shadow: 0 8px 20px rgba(125, 170, 53, 0.28);
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
 
 .ContactMainSubmitButton:hover {
-  background: #ffffff;
-  color: var(--ContactMainGreen);
-
-  transform: translateY(-7px);
-
-  box-shadow:
-    0 18px 35px rgba(0, 0, 0, 0.12);
+  background: var(--ContactMainGreenDark);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(125, 170, 53, 0.36);
 }
 
 .ContactMainSubmitButton:active {
-  transform: translateY(-3px);
+  transform: translateY(0);
 }
 
-
-/* =========================================================
-   BUTTON ICON
-   ========================================================= */
-
 .ContactMainSubmitIcon {
-  width: 40px;
-  height: 40px;
-
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-
   border-radius: 50%;
-
-  background: rgba(255, 255, 255, 0.18);
-
-  transition:
-    transform 0.4s ease,
-    background 0.4s ease;
+  background: rgba(255, 255, 255, 0.25);
+  transition: transform 0.3s ease;
 }
 
 .ContactMainSubmitButton:hover .ContactMainSubmitIcon {
-  background: var(--ContactMainGreen);
-
-  color: #ffffff;
-
   transform: rotate(45deg);
 }
 
-
 /* =========================================================
-   LARGE DESKTOP
+   SUCCESS MESSAGE IN-BOX CARD
    ========================================================= */
 
-@media (max-width: 1500px) {
-
-  .ContactMainWrapper {
-    width: min(1400px, calc(100% - 60px));
+@keyframes successSlideIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
   }
-
-  .ContactMainInfo {
-    gap: 28px;
-  }
-
-  .ContactMainCard {
-    min-height: 265px;
-  }
-
-  .ContactMainCardTitle {
-    font-size: 22px;
-  }
-
-  .ContactMainCardText {
-    font-size: 17px;
-  }
-
-  .ContactMainReservation {
-    padding: 75px 70px 85px;
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
+.ContactMainSuccessCard {
+  background: #fbfdfa;
+  border-radius: 16px;
+  border: 1px solid var(--ContactMainGreenBorder);
+  padding: 30px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: successSlideIn 0.35s ease both;
+}
+
+.ContactMainSuccessIcon {
+  color: var(--ContactMainGreen);
+  margin-bottom: 12px;
+}
+
+.ContactMainSuccessTitle {
+  margin: 0 0 8px;
+  color: var(--ContactMainText);
+  font-family: "Poppins", sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.ContactMainSuccessText {
+  margin: 0 0 20px;
+  color: #556355;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.ContactMainSuccessText strong {
+  color: var(--ContactMainText);
+}
+
+.ContactMainResetButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  background: var(--ContactMainGreenLight);
+  color: var(--ContactMainGreenDark);
+  border: 1px solid var(--ContactMainGreenBorder);
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.ContactMainResetButton:hover {
+  background: var(--ContactMainGreen);
+  color: #ffffff;
+}
 
 /* =========================================================
-   LAPTOP
+   3. LUXURY MAP SECTION
    ========================================================= */
 
-@media (max-width: 1200px) {
+.ContactMainMapContainer {
+  margin-top: 85px;
+  width: 100%;
+}
 
-  .ContactMainWrapper {
-    width: calc(100% - 50px);
-  }
+.ContactMainMapHeader {
+  text-align: center;
+  margin-bottom: 22px;
+}
 
+.ContactMainMapHeading {
+  margin: 8px 0 6px;
+  font-family: Georgia, "Playfair Display", serif;
+  font-size: 28px;
+  font-weight: 700;
+  font-style: italic;
+  color: var(--ContactMainText);
+}
+
+.ContactMainMapSub {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ContactMainMuted);
+}
+
+.ContactMainMapFrameWrapper {
+  width: 100%;
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.ContactMainMapFrameWrapper iframe {
+  display: block;
+}
+
+/* Floating overlay pin on top of the map */
+.ContactMainMapOverlayBadge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(10px);
+  padding: 12px 18px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(125, 170, 53, 0.2);
+}
+
+.ContactMainMapBadgePin {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--ContactMainGreenLight);
+  color: var(--ContactMainGreen);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ContactMainMapOverlayBadge div {
+  display: flex;
+  flex-direction: column;
+}
+
+.ContactMainMapOverlayBadge strong {
+  font-size: 13.5px;
+  color: var(--ContactMainText);
+}
+
+.ContactMainMapOverlayBadge span {
+  font-size: 12px;
+  color: var(--ContactMainMuted);
+}
+
+/* =========================================================
+   RESPONSIVE DESIGN
+   ========================================================= */
+
+@media (max-width: 1100px) {
   .ContactMainInfo {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    row-gap: 85px;
-
-    padding-top: 60px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 55px 20px;
   }
 
-  .ContactMainCard {
-    min-height: 255px;
+  .ContactMainSplitSection {
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
 
-  .ContactMainReservation {
-    margin-top: 90px;
-
-    padding:
-      70px
-      55px
-      75px;
-  }
-
-  .ContactMainHeading {
-    margin-bottom: 60px;
+  .ContactMainSidePerks {
+    padding-right: 0;
   }
 }
 
-
-/* =========================================================
-   TABLET
-   ========================================================= */
-
-@media (max-width: 768px) {
-
-  .ContactMain {
-    padding-bottom: 70px;
-  }
-
-  .ContactMainWrapper {
-    width: calc(100% - 32px);
-  }
-
+@media (max-width: 650px) {
   .ContactMainInfo {
     grid-template-columns: 1fr;
-
-    gap: 85px;
-
-    padding:
-      65px
-      15px
-      0;
+    gap: 50px;
   }
 
-  .ContactMainCard {
-    width: 100%;
-    min-height: 245px;
-
-    padding:
-      100px
-      20px
-      35px;
-  }
-
-  .ContactMainIconWrapper {
-    width: 125px;
-    height: 125px;
-
-    top: -62px;
-  }
-
-  .ContactMainIcon {
-    width: 53px;
-    height: 53px;
-  }
-
-  .ContactMainCardTitle {
-    font-size: 22px;
-  }
-
-  .ContactMainCardText {
-    font-size: 16px;
-  }
-
-  .ContactMainReservation {
-    margin-top: 85px;
-
-    padding:
-      65px
-      28px
-      70px;
-
-    border-radius: 28px;
-  }
-
-  .ContactMainTitle {
-    font-size: 55px;
-
-    letter-spacing: -1.5px;
-  }
-
-  .ContactMainSubtitle {
-    font-size: 15px;
-
-    padding: 0 10px;
-  }
-
-  .ContactMainForm {
+  .ContactMainFormRow {
     grid-template-columns: 1fr;
-
-    row-gap: 38px;
   }
 
-  .ContactMainMessageField,
-  .ContactMainSubmitWrapper {
-    grid-column: auto;
+  .ContactMainReservationBox {
+    padding: 26px 18px;
+    border-radius: 18px;
   }
 
-  .ContactMainLabel {
-    font-size: 15px;
-  }
-
-  .ContactMainInput,
-  .ContactMainTextarea {
-    font-size: 17px;
-  }
-
-  .ContactMainSubmitWrapper {
-    padding-top: 10px;
-  }
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 480px) {
-
-  .ContactMain {
-    padding-bottom: 50px;
-  }
-
-  .ContactMainWrapper {
-    width: calc(100% - 22px);
-  }
-
-  .ContactMainInfo {
-    padding:
-      60px
-      10px
-      0;
-
-    gap: 78px;
-  }
-
-  .ContactMainCard {
-    min-height: 225px;
-
-    padding:
-      90px
-      15px
-      30px;
-
-    border-radius: 10px;
-  }
-
-  .ContactMainIconWrapper {
-    width: 110px;
-    height: 110px;
-
-    top: -55px;
-  }
-
-  .ContactMainIcon {
-    width: 46px;
-    height: 46px;
-  }
-
-  .ContactMainCardTitle {
-    font-size: 20px;
-
-    margin-bottom: 11px;
-  }
-
-  .ContactMainCardText {
-    font-size: 15px;
-  }
-
-  .ContactMainCardArrow {
+  .ContactMainMapOverlayBadge {
     display: none;
   }
 
-  .ContactMainReservation {
-    margin-top: 65px;
-
-    padding:
-      52px
-      20px
-      55px;
-
-    border-radius: 22px;
-  }
-
-  .ContactMainHeading {
-    margin-bottom: 45px;
-  }
-
-  .ContactMainTitle {
-    font-size: 43px;
-
-    letter-spacing: -1px;
-  }
-
-  .ContactMainSubtitle {
-    margin-top: 16px;
-
-    font-size: 13px;
-    line-height: 1.6;
-  }
-
-  .ContactMainForm {
-    row-gap: 32px;
-  }
-
-  .ContactMainLabel {
-    margin-bottom: 12px;
-
-    font-size: 14px;
-  }
-
-  .ContactMainInput {
-    height: 52px;
-
-    font-size: 16px;
-  }
-
-  .ContactMainTextarea {
-    min-height: 110px;
-
-    font-size: 16px;
-  }
-
-  .ContactMainSubmitButton {
-    min-width: 170px;
-    height: 54px;
-
-    font-size: 14px;
-
-    padding-left: 22px;
-  }
-
-  .ContactMainSubmitIcon {
-    width: 36px;
-    height: 36px;
+  .ContactMainMapFrameWrapper iframe {
+    height: 280px;
   }
 }
 
-
-/* =========================================================
-   VERY SMALL DEVICES
-   ========================================================= */
-
-@media (max-width: 360px) {
-
-  .ContactMainWrapper {
-    width: calc(100% - 16px);
-  }
-
-  .ContactMainInfo {
-    padding-left: 5px;
-    padding-right: 5px;
-  }
-
-  .ContactMainCard {
-    min-height: 215px;
-  }
-
-  .ContactMainReservation {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  .ContactMainTitle {
-    font-size: 38px;
-  }
-
-  .ContactMainSubmitButton {
-    width: 100%;
-    max-width: 200px;
-  }
-}
-
-
-/* =========================================================
-   ACCESSIBILITY
-   ========================================================= */
-
+/* ACCESSIBILITY & REDUCED MOTION */
 .ContactMainSubmitButton:focus-visible,
 .ContactMainInput:focus-visible,
 .ContactMainTextarea:focus-visible,
 .ContactMainSelect:focus-visible {
   outline: 2px solid var(--ContactMainGreen);
-  outline-offset: 4px;
+  outline-offset: 3px;
 }
 
-
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
-
 @media (prefers-reduced-motion: reduce) {
-
-  .ContactMain *,
-  .ContactMain *::before,
-  .ContactMain *::after {
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
+  .ContactMainCard {
+    animation: none !important;
   }
 }

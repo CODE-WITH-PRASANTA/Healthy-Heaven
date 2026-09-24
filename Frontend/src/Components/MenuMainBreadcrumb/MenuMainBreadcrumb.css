@@ -1,8 +1,8 @@
 /* =========================================================
-   ABOUT US BREADCRUMB
+   MENU MAIN BREADCRUMB
    ========================================================= */
 
-.AboutUsBreadcrumb {
+.MenuMainBreadcrumb {
   position: relative;
   width: 100%;
   min-height: 40vh;
@@ -24,7 +24,7 @@
    DARK IMAGE OVERLAY
    ========================================================= */
 
-.AboutUsBreadcrumb__overlay {
+.MenuMainBreadcrumb__overlay {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -44,7 +44,7 @@
    MAIN CONTENT
    ========================================================= */
 
-.AboutUsBreadcrumb__content {
+.MenuMainBreadcrumb__content {
   position: relative;
   z-index: 2;
 
@@ -64,7 +64,7 @@
    PAGE TITLE
    ========================================================= */
 
-.AboutUsBreadcrumb__title {
+.MenuMainBreadcrumb__title {
   margin: 0;
   color: #ffffff;
   font-family: Georgia, "Times New Roman", serif;
@@ -76,14 +76,14 @@
   text-shadow: 0 5px 18px rgba(0, 0, 0, 0.4);
   user-select: none;
 
-  animation: AboutUsBreadcrumb__titleAnimation 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: MenuMainBreadcrumb__titleAnimation 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* =========================================================
    BREADCRUMB BOX
    ========================================================= */
 
-.AboutUsBreadcrumb__breadcrumb {
+.MenuMainBreadcrumb__breadcrumb {
   position: relative;
   margin-top: 20px;
   min-height: 48px;
@@ -99,14 +99,14 @@
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-  animation: AboutUsBreadcrumb__breadcrumbAnimation 0.9s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: MenuMainBreadcrumb__breadcrumbAnimation 0.9s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* =========================================================
    BREADCRUMB HOVER
    ========================================================= */
 
-.AboutUsBreadcrumb__breadcrumb:hover {
+.MenuMainBreadcrumb__breadcrumb:hover {
   transform: translateY(-3px);
   background: linear-gradient(135deg, #94c74b 0%, #83b63d 100%);
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.2);
@@ -116,7 +116,7 @@
    HOME & CURRENT LABELS
    ========================================================= */
 
-.AboutUsBreadcrumb__home {
+.MenuMainBreadcrumb__home {
   color: #ffffff;
   text-decoration: none;
   font-family: Arial, Helvetica, sans-serif;
@@ -128,13 +128,13 @@
   transition: opacity 0.2s ease, text-decoration 0.2s ease;
 }
 
-.AboutUsBreadcrumb__home:hover {
+.MenuMainBreadcrumb__home:hover {
   opacity: 0.9;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.AboutUsBreadcrumb__current {
+.MenuMainBreadcrumb__current {
   color: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
@@ -147,7 +147,7 @@
    ARROW
    ========================================================= */
 
-.AboutUsBreadcrumb__arrow {
+.MenuMainBreadcrumb__arrow {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -162,7 +162,7 @@
   transition: transform 0.3s ease;
 }
 
-.AboutUsBreadcrumb__breadcrumb:hover .AboutUsBreadcrumb__arrow {
+.MenuMainBreadcrumb__breadcrumb:hover .MenuMainBreadcrumb__arrow {
   transform: translateX(4px);
 }
 
@@ -170,7 +170,7 @@
    ANIMATIONS
    ========================================================= */
 
-@keyframes AboutUsBreadcrumb__titleAnimation {
+@keyframes MenuMainBreadcrumb__titleAnimation {
   0% {
     opacity: 0;
     transform: translateY(20px) scale(0.96);
@@ -181,7 +181,7 @@
   }
 }
 
-@keyframes AboutUsBreadcrumb__breadcrumbAnimation {
+@keyframes MenuMainBreadcrumb__breadcrumbAnimation {
   0% {
     opacity: 0;
     transform: translateY(18px);
@@ -197,12 +197,12 @@
    ========================================================= */
 
 @media (max-width: 767px) {
-  .AboutUsBreadcrumb__title {
+  .MenuMainBreadcrumb__title {
     font-size: clamp(28px, 7vw, 42px);
     letter-spacing: -1px;
   }
 
-  .AboutUsBreadcrumb__breadcrumb {
+  .MenuMainBreadcrumb__breadcrumb {
     margin-top: 16px;
     min-height: 42px;
     padding: 0 18px;
@@ -210,34 +210,34 @@
     border-radius: 10px;
   }
 
-  .AboutUsBreadcrumb__home,
-  .AboutUsBreadcrumb__current {
+  .MenuMainBreadcrumb__home,
+  .MenuMainBreadcrumb__current {
     font-size: 14px;
   }
 
-  .AboutUsBreadcrumb__arrow {
+  .MenuMainBreadcrumb__arrow {
     font-size: 18px;
     width: 14px;
   }
 }
 
 @media (max-width: 480px) {
-  .AboutUsBreadcrumb__content {
+  .MenuMainBreadcrumb__content {
     padding: 20px 15px;
   }
 
-  .AboutUsBreadcrumb__title {
+  .MenuMainBreadcrumb__title {
     font-size: 30px;
   }
 
-  .AboutUsBreadcrumb__breadcrumb {
+  .MenuMainBreadcrumb__breadcrumb {
     min-height: 38px;
     padding: 0 14px;
     gap: 6px;
   }
 
-  .AboutUsBreadcrumb__home,
-  .AboutUsBreadcrumb__current {
+  .MenuMainBreadcrumb__home,
+  .MenuMainBreadcrumb__current {
     font-size: 13px;
   }
 }
@@ -247,13 +247,13 @@
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .AboutUsBreadcrumb__title,
-  .AboutUsBreadcrumb__breadcrumb {
+  .MenuMainBreadcrumb__title,
+  .MenuMainBreadcrumb__breadcrumb {
     animation: none;
   }
 
-  .AboutUsBreadcrumb__breadcrumb,
-  .AboutUsBreadcrumb__arrow {
+  .MenuMainBreadcrumb__breadcrumb,
+  .MenuMainBreadcrumb__arrow {
     transition: none;
   }
 }

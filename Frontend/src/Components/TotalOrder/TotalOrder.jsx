@@ -4,48 +4,50 @@ import './TotalOrder.css';
 const menuItems = [
   {
     id: 1,
-    name: 'Artisan Pizza',
+    name: 'Artisan Truffle Pizza',
     kicker: 'Wood-Fired & Fresh',
-    desc: 'Lorem ipsum dolor sit amet consectetur adipiscing elit.',
-    price: '$55.00',
-    oldPrice: '$68.00',
-    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80',
-    badge: 'HOT'
+    desc: 'Hand-stretched sourdough crust with wild forest mushrooms, buffalo mozzarella, and aromatic truffle glaze.',
+    price: '₹549',
+    oldPrice: '₹699',
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=700&q=85',
+    badge: 'HOT SPECIAL'
   },
   {
     id: 2,
-    name: 'Golden Herb Rice',
+    name: 'Golden Herb Grain Bowl',
     kicker: 'Organic & Wholesome',
-    desc: 'Lorem ipsum dolor sit amet consectetur adipiscing elit.',
-    price: '$50.00',
-    oldPrice: '$60.00',
-    image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80',
-    badge: 'NEW'
+    desc: 'Slow-simmered saffron rice tossed with garden herbs, roasted chickpeas, avocado, and toasted seeds.',
+    price: '₹399',
+    oldPrice: '₹499',
+    image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=700&q=85',
+    badge: 'NEW HARVEST'
   },
   {
     id: 3,
-    name: 'Green Salad',
-    kicker: 'Healthy Heaven Special',
-    desc: 'Lorem ipsum dolor sit amet consectetur adipiscing elit.',
-    price: '$45.00',
-    oldPrice: '$55.00',
-    image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80',
-    badge: 'BEST'
+    name: 'Heritage Green Bowl',
+    kicker: 'Chef Curated Salad',
+    desc: 'Crisp market greens, heirloom tomatoes, soft egg, shaved parmesan, and honey-dill emulsion.',
+    price: '₹349',
+    oldPrice: '₹449',
+    image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=700&q=85',
+    badge: 'BESTSELLER'
   },
   {
     id: 4,
-    name: 'Italian Pasta',
+    name: 'Handcrafted Rigatoni',
     kicker: 'Handmade Daily',
-    desc: 'Lorem ipsum dolor sit amet consectetur adipiscing elit.',
-    price: '$35.00',
-    oldPrice: '$45.00',
-    image: 'https://images.unsplash.com/photo-1621996346565-e3d5d6281298?auto=format&fit=crop&w=600&q=80',
-    badge: 'CHEF'
+    desc: 'Bronze-cut pasta tossed in slow-simmered San Marzano sugo, creamy burrata, and fragrant basil oil.',
+    price: '₹429',
+    oldPrice: '₹529',
+    image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=700&q=85',
+    badge: "CHEF'S PICK"
   }
 ];
 
+const fallbackImage = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=700&q=85';
+
 const TotalOrder = () => {
-  const [activeIndex, setActiveIndex] = useState(2);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
@@ -54,7 +56,7 @@ const TotalOrder = () => {
     if (isPaused) return;
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % menuItems.length);
-    }, 4000);
+    }, 4500);
     return () => clearInterval(interval);
   }, [isPaused]);
 
@@ -88,20 +90,25 @@ const TotalOrder = () => {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="total-order__bg">
+      <div className="total-order__bg" aria-hidden="true">
         <div className="total-order__bloom total-order__bloom--1"></div>
         <div className="total-order__bloom total-order__bloom--2"></div>
+        <div className="total-order__bloom total-order__bloom--3"></div>
       </div>
 
       <div className="total-order__inner">
-        <div className="total-order__header">
+        <header className="total-order__header">
           <div className="total-order__brand-badge">
             <span className="total-order__dot"></span>
-            <span>Healthy Heaven Selection</span>
+            <span>Gourmet Kitchen Pass</span>
           </div>
-          <h2 className="total-order__title">On The Pass Right Now</h2>
-          <p className="total-order__subtitle">Good food, good health — freshly prepared for your table.</p>
-        </div>
+          <h2 className="total-order__title">
+            On The Pass <em>Right Now</em>
+          </h2>
+          <p className="total-order__subtitle">
+            Wholesome ingredients, masterful culinary craft — plated fresh for your table.
+          </p>
+        </header>
 
         <div 
           className="total-order__carousel"
@@ -116,16 +123,32 @@ const TotalOrder = () => {
                 key={item.id}
                 className={`total-order__card ${isActive ? 'total-order__card--active' : ''}`}
                 onClick={() => setActiveIndex(index)}
+                onMouseEnter={() => setActiveIndex(index)}
               >
+                {/* Smooth top-to-bottom green color drop overlay */}
+                <div className="total-order__color-curtain" aria-hidden="true"></div>
+
                 <div className="total-order__card-inner">
+                  {/* Top curved banner */}
                   <div className="total-order__card-curve">
                     <span className="total-order__badge">{item.badge}</span>
                   </div>
 
+                  {/* Prominent circular plate image */}
                   <div className="total-order__image-wrapper">
-                    <img src={item.image} alt={item.name} className="total-order__image" />
+                    <img 
+                      src={item.image} 
+                      alt={item.name} 
+                      className="total-order__image" 
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = fallbackImage;
+                      }}
+                    />
                   </div>
 
+                  {/* Card textual content */}
                   <div className="total-order__content">
                     <span className="total-order__kicker">{item.kicker}</span>
                     <h3 className="total-order__card-title">{item.name}</h3>
@@ -134,16 +157,22 @@ const TotalOrder = () => {
                     <div className="total-order__footer">
                       <div className="total-order__price-box">
                         <span className="total-order__price">{item.price}</span>
-                        <span className="total-order__old-price">{item.oldPrice}</span>
+                        {item.oldPrice && (
+                          <span className="total-order__old-price">{item.oldPrice}</span>
+                        )}
                       </div>
                       <button 
+                        type="button"
                         className="total-order__cta"
                         onClick={(e) => {
                           e.stopPropagation();
                           alert(`Added ${item.name} to cart!`);
                         }}
                       >
-                        Add To Cart
+                        <span>Add To Cart</span>
+                        <svg viewBox="0 0 24 24" className="total-order__cta-icon" fill="none" stroke="currentColor">
+                          <path d="M5 12h14M12 5l7 7-7 7" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
                       </button>
                     </div>
                   </div>
@@ -153,15 +182,24 @@ const TotalOrder = () => {
           })}
         </div>
 
+        {/* Carousel pagination and controls */}
         <div className="total-order__nav">
-          <button className="total-order__nav-btn" onClick={handlePrev} aria-label="Previous item">
-            &#10094;
+          <button 
+            type="button" 
+            className="total-order__nav-btn" 
+            onClick={handlePrev} 
+            aria-label="Previous item"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M15 18l-6-6 6-6" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </button>
           
           <div className="total-order__dots">
             {menuItems.map((_, idx) => (
               <button
                 key={idx}
+                type="button"
                 className={`total-order__dot-btn ${idx === activeIndex ? 'active' : ''}`}
                 onClick={() => setActiveIndex(idx)}
                 aria-label={`Go to slide ${idx + 1}`}
@@ -169,8 +207,15 @@ const TotalOrder = () => {
             ))}
           </div>
 
-          <button className="total-order__nav-btn" onClick={handleNext} aria-label="Next item">
-            &#10095;
+          <button 
+            type="button" 
+            className="total-order__nav-btn" 
+            onClick={handleNext} 
+            aria-label="Next item"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M9 18l6-6-6-6" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </button>
         </div>
       </div>

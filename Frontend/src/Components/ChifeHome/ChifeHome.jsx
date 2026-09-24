@@ -5,50 +5,49 @@ const features = [
   {
     id: 1,
     title: '24/7 Free Delivery',
-    desc: 'Prompt and reliable doorstep delivery anytime you need.',
+    desc: 'Prompt and reliable doorstep delivery anytime you need, completely free of charge.',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M5 18H3c-.6 0-1-.4-1-1V9c0-.6.4-1 1-1h9l3 4h4c.6 0 1 .4 1 1v4h-2m-9 0a2 2 0 1 0 4 0 2 2 0 0 0-4 0zm9 0a2 2 0 1 0 4 0 2 2 0 0 0-4 0z" />
-        <path d="M15 12h5l2 3v3h-1" />
-        <path d="M3 10h6m-5 4h4" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M5 18H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-1" />
+        <path d="M14 9h4l3 4v4a1 1 0 0 1-1 1h-2" />
+        <circle cx="7" cy="18" r="2" />
+        <circle cx="17" cy="18" r="2" />
+        <path d="M2 11h5" />
       </svg>
     )
   },
   {
     id: 2,
-    title: 'Open Around the Clock',
-    desc: 'Our restaurant kitchen is always prepared to serve you.',
+    title: 'Open Around The Clock',
+    desc: 'Our gourmet restaurant kitchen stays open day and night to cater to your cravings.',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="9" />
-        <path d="M12 6v6l4 2" />
+        <polyline points="12 7 12 12 15.5 14" />
       </svg>
     )
   },
   {
     id: 3,
     title: 'Best Master Chefs',
-    desc: 'Crafting healthy and delicious gourmet meals with passion.',
+    desc: 'Crafting healthy and exquisitely plated culinary masterpieces with artisanal care.',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 10.18 0A4 4 0 0 1 19 13.87V21H6z" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 13.8A4 4 0 0 1 7.4 6a5.1 5.1 0 0 1 10.2 0A4 4 0 0 1 19 13.8V20a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-6.2z" />
         <line x1="6" y1="17" x2="19" y2="17" />
-        <line x1="10" y1="9" x2="10" y2="13" />
-        <line x1="14" y1="9" x2="14" y2="13" />
+        <line x1="10" y1="9.5" x2="10" y2="13" />
+        <line x1="14" y1="9.5" x2="14" y2="13" />
       </svg>
     )
   },
   {
     id: 4,
     title: 'Freshest Products',
-    desc: 'Sourced daily from organic farms for peak nutritional value.',
+    desc: 'Hand-picked organic produce sourced fresh daily from verified regional farmsteads.',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6" />
-        <path d="M2 7h20v5H2z" />
-        <path d="M12 22V7" />
-        <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
-        <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <path d="m9 12 2 2 4-4" />
       </svg>
     )
   }
@@ -57,27 +56,42 @@ const features = [
 const ChifeHome = () => {
   return (
     <section className="chife-home">
-      <div className="chife-home__bg-pattern"></div>
+      {/* Background ambient lighting */}
+      <div className="chife-home__bg-pattern" aria-hidden="true">
+        <div className="chife-home__glow-sphere chife-home__glow-sphere--1"></div>
+        <div className="chife-home__glow-sphere chife-home__glow-sphere--2"></div>
+      </div>
       
       <div className="chife-home__inner">
-        <div className="chife-home__header">
-          <span className="chife-home__eyebrow">Our Core Values</span>
-          <h2 className="chife-home__title">Why Choose Us ?</h2>
+        <header className="chife-home__header">
+          <div className="chife-home__badge">
+            <span className="chife-home__dot"></span>
+            <span>Our Core Values</span>
+          </div>
+          <h2 className="chife-home__title">
+            Why Choose <em>Us ?</em>
+          </h2>
+          <p className="chife-home__subtitle">
+            Uncompromising culinary precision, ethical sourcing, and hospitality delivered straight to you.
+          </p>
           <div className="chife-home__divider"></div>
-        </div>
+        </header>
 
         <div className="chife-home__grid">
           {features.map((item) => (
-            <div key={item.id} className="chife-home__card">
+            <article key={item.id} className="chife-home__card">
+              <div className="chife-home__card-highlight"></div>
+              
               <div className="chife-home__icon-wrapper">
                 <div className="chife-home__icon-ring"></div>
                 <div className="chife-home__icon">
                   {item.icon}
                 </div>
               </div>
+
               <h3 className="chife-home__card-title">{item.title}</h3>
               <p className="chife-home__card-desc">{item.desc}</p>
-            </div>
+            </article>
           ))}
         </div>
       </div>

@@ -4,7 +4,6 @@ import "./Footer.css";
 // ============================================================
 // ASSETS
 // ============================================================
-
 import FooterLogo from "../../assets/main-logo.png";
 import FooterAlmond from "../../assets/footeralmond.png";
 import FooterTomato from "../../assets/footertamato.png";
@@ -12,8 +11,7 @@ import FooterTomato from "../../assets/footertamato.png";
 // ============================================================
 // INLINE SVG ICONS
 // ============================================================
-
-const FooterLocationIcon = ({ size = 27 }) => (
+const FooterLocationIcon = ({ size = 22 }) => (
   <svg
     width={size}
     height={size}
@@ -24,21 +22,20 @@ const FooterLocationIcon = ({ size = 27 }) => (
     <path
       d="M20 10C20 15.5 12 21 12 21C12 21 4 15.5 4 10C4 5.58 7.58 2 12 2C16.42 2 20 5.58 20 10Z"
       stroke="currentColor"
-      strokeWidth="1.7"
+      strokeWidth="1.9"
       strokeLinejoin="round"
     />
-
     <circle
       cx="12"
       cy="10"
-      r="2.7"
+      r="2.8"
       stroke="currentColor"
-      strokeWidth="1.7"
+      strokeWidth="1.9"
     />
   </svg>
 );
 
-const FooterPhoneIcon = ({ size = 27 }) => (
+const FooterPhoneIcon = ({ size = 22 }) => (
   <svg
     width={size}
     height={size}
@@ -49,14 +46,14 @@ const FooterPhoneIcon = ({ size = 27 }) => (
     <path
       d="M6.6 3.2L9.1 2.6C9.7 2.45 10.3 2.75 10.55 3.3L11.75 6.15C11.95 6.62 11.82 7.16 11.42 7.5L9.75 8.95C10.75 11.1 12.5 12.85 14.65 13.85L16.1 12.18C16.44 11.78 16.98 11.65 17.45 11.85L20.3 13.05C20.85 13.3 21.15 13.9 21 14.5L20.4 17C20.23 17.72 19.58 18.25 18.84 18.25C10.83 18.25 5.75 13.17 5.75 5.16C5.75 4.42 6.28 3.77 7 3.6L6.6 3.2Z"
       stroke="currentColor"
-      strokeWidth="1.6"
+      strokeWidth="1.8"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
   </svg>
 );
 
-const FooterMailIcon = ({ size = 27 }) => (
+const FooterMailIcon = ({ size = 22 }) => (
   <svg
     width={size}
     height={size}
@@ -71,13 +68,12 @@ const FooterMailIcon = ({ size = 27 }) => (
       height="14"
       rx="2"
       stroke="currentColor"
-      strokeWidth="1.7"
+      strokeWidth="1.9"
     />
-
     <path
       d="M4 7L12 13L20 7"
       stroke="currentColor"
-      strokeWidth="1.7"
+      strokeWidth="1.9"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -95,14 +91,14 @@ const FooterChevronIcon = ({ size = 14 }) => (
     <path
       d="M9 5L16 12L9 19"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="2.2"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
   </svg>
 );
 
-const FooterArrowUpIcon = ({ size = 23 }) => (
+const FooterArrowUpIcon = ({ size = 24 }) => (
   <svg
     width={size}
     height={size}
@@ -113,14 +109,13 @@ const FooterArrowUpIcon = ({ size = 23 }) => (
     <path
       d="M12 19V5"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="2.2"
       strokeLinecap="round"
     />
-
     <path
       d="M6 11L12 5L18 11"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="2.2"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -140,15 +135,9 @@ const FooterHeartIcon = ({ size = 15 }) => (
 );
 
 // ============================================================
-// FOOTER
+// FOOTER COMPONENT
 // ============================================================
-
 const Footer = () => {
-
-  // ==========================================================
-  // SCROLL TO TOP
-  // ==========================================================
-
   const handleScrollTop = () => {
     window.scrollTo({
       top: 0,
@@ -156,20 +145,10 @@ const Footer = () => {
     });
   };
 
-  // ==========================================================
-  // SECTION NAVIGATION
-  // ==========================================================
-
-  const handleSectionClick = (
-    event,
-    sectionId
-  ) => {
-    const section =
-      document.getElementById(sectionId);
-
+  const handleSectionClick = (event, sectionId) => {
+    const section = document.getElementById(sectionId);
     if (section) {
       event.preventDefault();
-
       section.scrollIntoView({
         behavior: "smooth",
         block: "start",
@@ -177,128 +156,43 @@ const Footer = () => {
     }
   };
 
-  // ==========================================================
-  // OUR LINKS
-  // ==========================================================
-
   const footerLinks = [
-    {
-      label: "Home",
-      target: "home",
-      href: "/",
-    },
-    {
-      label: "About Us",
-      target: "about",
-      href: "/about",
-    },
-    {
-      label: "Services",
-      target: "services",
-      href: "/services",
-    },
-    {
-      label: "Team",
-      target: "team",
-      href: "/team",
-    },
-    {
-      label: "Blog",
-      target: "blog",
-      href: "/blog",
-    },
+    { label: "Home", target: "home", href: "/" },
+    { label: "About Us", target: "about", href: "/about" },
+    { label: "Services", target: "services", href: "/services" },
+    { label: "Team", target: "team", href: "/team" },
+    { label: "Blog", target: "blog", href: "/blog" },
   ];
-
-  // ==========================================================
-  // SERVICES
-  // ==========================================================
 
   const serviceLinks = [
-    {
-      label: "Strategy & Research",
-      target: "strategy",
-      href: "/services",
-    },
-    {
-      label: "Fast Delivery",
-      target: "delivery",
-      href: "/services",
-    },
-    {
-      label: "Seat Reservation",
-      target: "reservation",
-      href: "/reservation",
-    },
-    {
-      label: "Pickup In Store",
-      target: "pickup",
-      href: "/shop",
-    },
-    {
-      label: "Our Menu",
-      target: "menu",
-      href: "/menu",
-    },
+    { label: "Strategy & Research", target: "strategy", href: "/services" },
+    { label: "Fast Delivery", target: "delivery", href: "/services" },
+    { label: "Seat Reservation", target: "reservation", href: "/reservation" },
+    { label: "Pickup In Store", target: "pickup", href: "/shop" },
+    { label: "Our Menu", target: "menu", href: "/menu" },
   ];
-
-  // ==========================================================
-  // HELP CENTER
-  // ==========================================================
 
   const helpLinks = [
-    {
-      label: "FAQ",
-      target: "faq",
-      href: "/faq",
-    },
-    {
-      label: "Shop",
-      target: "shop",
-      href: "/shop",
-    },
-    {
-      label: "Category Filter",
-      target: "category",
-      href: "/category",
-    },
-    {
-      label: "Testimonials",
-      target: "testimonials",
-      href: "/testimonials",
-    },
-    {
-      label: "Contact Us",
-      target: "contact",
-      href: "/contact",
-    },
+    { label: "FAQ", target: "faq", href: "/faq" },
+    { label: "Shop", target: "shop", href: "/shop" },
+    { label: "Category Filter", target: "category", href: "/category" },
+    { label: "Testimonials", target: "testimonials", href: "/testimonials" },
+    { label: "Contact Us", target: "contact", href: "/contact" },
   ];
-
-  // ==========================================================
-  // LINK LIST COMPONENT
-  // ==========================================================
 
   const FooterLinks = ({ links }) => (
     <ul className="FooterLinkList">
       {links.map((item) => (
-        <li
-          key={item.label}
-          className="FooterLinkItem"
-        >
+        <li key={item.label} className="FooterLinkItem">
           <a
             href={item.href}
             className="FooterLink"
-            onClick={(event) =>
-              handleSectionClick(
-                event,
-                item.target
-              )
-            }
+            onClick={(event) => handleSectionClick(event, item.target)}
           >
             <span className="FooterLinkArrow">
-              <FooterChevronIcon size={13} />
+              <FooterChevronIcon />
             </span>
-
-            <span>{item.label}</span>
+            <span className="FooterLinkLabel">{item.label}</span>
           </a>
         </li>
       ))}
@@ -307,49 +201,19 @@ const Footer = () => {
 
   return (
     <footer className="FooterMain">
-
-      {/* ======================================================
-          DECORATIVE ALMOND
-      ======================================================= */}
-
-      <div
-        className="FooterAlmondDecoration"
-        aria-hidden="true"
-      >
-        <img
-          src={FooterAlmond}
-          alt=""
-        />
+      {/* Decorative Assets */}
+      <div className="FooterAlmondDecoration" aria-hidden="true">
+        <img src={FooterAlmond} alt="" />
       </div>
 
-      {/* ======================================================
-          DECORATIVE TOMATO
-      ======================================================= */}
-
-      <div
-        className="FooterTomatoDecoration"
-        aria-hidden="true"
-      >
-        <img
-          src={FooterTomato}
-          alt=""
-        />
+      <div className="FooterTomatoDecoration" aria-hidden="true">
+        <img src={FooterTomato} alt="" />
       </div>
-
-      {/* ======================================================
-          MAIN CONTAINER
-      ======================================================= */}
 
       <div className="FooterContainer">
-
         <div className="FooterTop">
-
-          {/* ==================================================
-              CONTACT COLUMN
-          =================================================== */}
-
+          {/* COLUMN 1: CONTACT */}
           <div className="FooterColumn FooterContactColumn">
-
             <div className="FooterLogoWrapper">
               <a
                 href="/"
@@ -364,11 +228,7 @@ const Footer = () => {
               </a>
             </div>
 
-            <h3 className="FooterTitle">
-              CONTACT
-            </h3>
-
-            {/* ADDRESS */}
+            <h3 className="FooterTitle">CONTACT</h3>
 
             <a
               href="https://www.google.com/maps"
@@ -379,7 +239,6 @@ const Footer = () => {
               <span className="FooterContactIcon">
                 <FooterLocationIcon />
               </span>
-
               <span className="FooterContactText">
                 1247/Plot No. 39, 15th Phase,
                 <br />
@@ -387,118 +246,58 @@ const Footer = () => {
               </span>
             </a>
 
-            {/* PHONE */}
-
             <div className="FooterContactItem">
-
               <span className="FooterContactIcon">
                 <FooterPhoneIcon />
               </span>
-
               <div className="FooterContactText FooterPhoneText">
-
-                <a href="tel:+919876543210">
-                  +91 987-654-3210
-                </a>
-
-                <a href="tel:+911234567890">
-                  +91 123-456-7890
-                </a>
-
+                <a href="tel:+919876543210">+91 987-654-3210</a>
+                <a href="tel:+911234567890">+91 123-456-7890</a>
               </div>
-
             </div>
 
-            {/* EMAIL */}
-
             <div className="FooterContactItem">
-
               <span className="FooterContactIcon">
                 <FooterMailIcon />
               </span>
-
               <div className="FooterContactText FooterEmailText">
-
-                <a href="mailto:info@example.com">
-                  info@example.com
-                </a>
-
-                <a href="mailto:info@example.com">
-                  info@example.com
-                </a>
-
+                <a href="mailto:info@example.com">info@example.com</a>
+                <a href="mailto:info@example.com">info@example.com</a>
               </div>
-
             </div>
-
           </div>
 
-          {/* ==================================================
-              OUR LINKS
-          =================================================== */}
-
-          <div className="FooterColumn">
-
-            <h3 className="FooterTitle">
-              OUR LINKS
-            </h3>
-
+          {/* COLUMN 2: OUR LINKS */}
+          <div className="FooterColumn FooterNavColumn">
+            <h3 className="FooterTitle">OUR LINKS</h3>
             <FooterLinks links={footerLinks} />
-
           </div>
 
-          {/* ==================================================
-              OUR SERVICES
-          =================================================== */}
-
-          <div className="FooterColumn">
-
-            <h3 className="FooterTitle">
-              OUR SERVICES
-            </h3>
-
+          {/* COLUMN 3: OUR SERVICES */}
+          <div className="FooterColumn FooterNavColumn">
+            <h3 className="FooterTitle">OUR SERVICES</h3>
             <FooterLinks links={serviceLinks} />
-
           </div>
 
-          {/* ==================================================
-              HELP CENTER
-          =================================================== */}
-
-          <div className="FooterColumn">
-
-            <h3 className="FooterTitle">
-              HELP CENTER
-            </h3>
-
+          {/* COLUMN 4: HELP CENTER */}
+          <div className="FooterColumn FooterNavColumn">
+            <h3 className="FooterTitle">HELP CENTER</h3>
             <FooterLinks links={helpLinks} />
-
           </div>
-
         </div>
 
-        {/* ====================================================
-            FOOTER BOTTOM
-        ===================================================== */}
-
+        {/* FOOTER BOTTOM */}
         <div className="FooterBottom">
-
           <p className="FooterCopyright">
-            Copyright{" "}
-            {new Date().getFullYear()}{" "}
-            All rights reserved.
+            Copyright {new Date().getFullYear()} All rights reserved.
           </p>
 
           <p className="FooterCreated">
-
             Crafted With
-
             <span className="FooterHeart">
               <FooterHeartIcon />
             </span>
-
             by
-
             <a
               href="https://prwebstock.com/"
               target="_blank"
@@ -507,17 +306,11 @@ const Footer = () => {
             >
               PR WEBSTOCK
             </a>
-
           </p>
-
         </div>
-
       </div>
 
-      {/* ======================================================
-          SCROLL TOP
-      ======================================================= */}
-
+      {/* FLOATING SCROLL TOP */}
       <button
         type="button"
         className="FooterScrollTop"
@@ -526,7 +319,6 @@ const Footer = () => {
       >
         <FooterArrowUpIcon />
       </button>
-
     </footer>
   );
 };

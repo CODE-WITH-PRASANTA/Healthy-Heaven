@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"; // Link for React Router navigation
 import "./ContactBreadcrumb.css";
 
 // Background image
@@ -17,19 +18,17 @@ const ContactBreadcrumb = () => {
 
       {/* Content */}
       <div className="ContactBreadcrumb__content">
-
         {/* Heading */}
-        <h1 className="ContactBreadcrumb__title">
-          Contact Us
-        </h1>
+        <h1 className="ContactBreadcrumb__title">Contact Us</h1>
 
         {/* Breadcrumb */}
         <div className="ContactBreadcrumb__breadcrumb">
-
-          <span className="ContactBreadcrumb__home">
+          {/* Home Link (Navigates to homepage) */}
+          <Link to="/" className="ContactBreadcrumb__home">
             Home
-          </span>
+          </Link>
 
+          {/* Arrow */}
           <span
             className="ContactBreadcrumb__arrow"
             aria-hidden="true"
@@ -37,12 +36,11 @@ const ContactBreadcrumb = () => {
             ›
           </span>
 
+          {/* Current Page */}
           <span className="ContactBreadcrumb__current">
             Contact Us
           </span>
-
         </div>
-
       </div>
     </section>
   );

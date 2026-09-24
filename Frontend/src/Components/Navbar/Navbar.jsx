@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 import "./Navbar.css";
 
 // Logo
@@ -18,8 +19,8 @@ const Navbar = () => {
         {/* =====================================================
             LOGO
         ====================================================== */}
-        <a
-          href="#home"
+        <Link
+          to="/"
           className="Navbar-logo"
           onClick={handleMenuClick}
           aria-label="Healthy Heaven Home"
@@ -29,78 +30,92 @@ const Navbar = () => {
             alt="Healthy Heaven"
             className="Navbar-logoImage"
           />
-        </a>
+        </Link>
 
         {/* =====================================================
-            NAVIGATION
+            NAVIGATION (Dynamic active routes)
         ====================================================== */}
         <nav
           className={`Navbar-navigation ${
             menuOpen ? "Navbar-navigationActive" : ""
           }`}
         >
-          <a
-            href="/home"
-            className="Navbar-link Navbar-linkActive"
+          <NavLink
+            to="/home"
+            end
+            className={({ isActive }) =>
+              `Navbar-link ${isActive ? "Navbar-linkActive" : ""}`
+            }
             onClick={handleMenuClick}
           >
             Home
-          </a>
+          </NavLink>
 
-          <a
-            href="/about"
-            className="Navbar-link"
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              `Navbar-link ${isActive ? "Navbar-linkActive" : ""}`
+            }
             onClick={handleMenuClick}
           >
             About
-          </a>
+          </NavLink>
 
-          <a
-            href="/services"
-            className="Navbar-link"
-            onClick={handleMenuClick}
-          >
-            Services
-          </a>
-
-          <a
-            href="/menu"
-            className="Navbar-link"
+          <NavLink
+            to="/menu"
+            className={({ isActive }) =>
+              `Navbar-link ${isActive ? "Navbar-linkActive" : ""}`
+            }
             onClick={handleMenuClick}
           >
             Menu
-          </a>
-          <a
-            href="/faq"
-            className="Navbar-link"
+          </NavLink>
+
+          <NavLink
+            to="/faq"
+            className={({ isActive }) =>
+              `Navbar-link ${isActive ? "Navbar-linkActive" : ""}`
+            }
             onClick={handleMenuClick}
           >
             Faq
-          </a>
+          </NavLink>
 
-          <a
-            href="/gallery"
-            className="Navbar-link"
+          <NavLink
+            to="/gallery"
+            className={({ isActive }) =>
+              `Navbar-link ${isActive ? "Navbar-linkActive" : ""}`
+            }
             onClick={handleMenuClick}
           >
             Gallery
-          </a>
+          </NavLink>
+          <NavLink
+            to="/testimonial"
+            className={({ isActive }) =>
+              `Navbar-link ${isActive ? "Navbar-linkActive" : ""}`
+            }
+            onClick={handleMenuClick}
+          >
+            Testimonial
+          </NavLink>
 
-          <a
-            href="/contact"
-            className="Navbar-link"
+          <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              `Navbar-link ${isActive ? "Navbar-linkActive" : ""}`
+            }
             onClick={handleMenuClick}
           >
             Contact Us
-          </a>
+          </NavLink>
         </nav>
 
         {/* =====================================================
             RIGHT ACTION BUTTONS
         ====================================================== */}
         <div className="Navbar-actions">
-
-          {/* User Button */}
+          {/* User Profile Button */}
           <button
             type="button"
             className="Navbar-actionButton"
@@ -118,7 +133,6 @@ const Navbar = () => {
                 strokeWidth="1.8"
                 strokeLinecap="round"
               />
-
               <circle
                 cx="12"
                 cy="7"
@@ -147,7 +161,6 @@ const Navbar = () => {
                 strokeWidth="1.8"
                 strokeLinejoin="round"
               />
-
               <path
                 d="M9 8V6C9 4.34315 10.3431 3 12 3C13.6569 3 15 4.34315 15 6V8"
                 stroke="currentColor"
@@ -155,14 +168,12 @@ const Navbar = () => {
                 strokeLinecap="round"
               />
             </svg>
-
             <span className="Navbar-cartBadge">6</span>
           </button>
-
         </div>
 
         {/* =====================================================
-            MOBILE MENU BUTTON
+            MOBILE MENU TOGGLE
         ====================================================== */}
         <button
           type="button"

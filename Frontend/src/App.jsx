@@ -9,6 +9,8 @@ import Navbar from "./Components/Navbar/Navbar";
 import Testimonial from "./Pages/Testimonial/Testimonial";
 import MenuDetails from "./Pages/MenuDetails/MenuDetails";
 import AboutUs from "./Pages/AboutUs/AboutUs";
+import Gallery from "./Pages/Gallery/Gallery";
+import MenuDetailsSection from "./Pages/MenuDetailsSection/MenuDetailsSection";
 
 const App = () => {
   return (
@@ -19,8 +21,13 @@ const App = () => {
         <Route path="/contact" element={<Contact/>} />
         <Route path="/faq" element={<Faq/>} />
         <Route path="/testimonial" element={<Testimonial/>} />
-        <Route path="/menu-details" element={<MenuDetails/>} />
+        <Route path="/menu" element={<MenuDetails/>} />
         <Route path="/about" element={<AboutUs/>} />
+        <Route path="/gallery" element={<Gallery/>} />
+
+
+        <Route path="/menu-details" element={<MenuDetailsSection/>} />
+
       </Routes>
 
       <Footer />

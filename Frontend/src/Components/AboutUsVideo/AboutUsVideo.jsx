@@ -1,12 +1,11 @@
-
 import React, { useState, useEffect } from "react";
 import "./AboutUsVideo.css";
 
-// Replace with your restaurant image
-import restaurantImage from "../../assets/AboutUsVideo.jpg";
+// Your restaurant image (includes graceful fallback)
+import restaurantImageDefault from "../../assets/AboutUsVideo.jpg";
 
-// Replace with your YouTube video ID
-const YOUTUBE_VIDEO_ID = "YOUR_VIDEO_ID";
+// YouTube Video ID
+const YOUTUBE_VIDEO_ID = "Lfl_YqWv_3o";
 
 const AboutUsVideo = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
@@ -14,6 +13,7 @@ const AboutUsVideo = () => {
   const openVideo = () => setIsVideoOpen(true);
   const closeVideo = () => setIsVideoOpen(false);
 
+  // Close with Escape key & disable background scroll
   useEffect(() => {
     if (!isVideoOpen) return;
 
@@ -21,108 +21,131 @@ const AboutUsVideo = () => {
       if (event.key === "Escape") closeVideo();
     };
 
-    const previousOverflow = document.body.style.overflow;
+    const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", handleEscape);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
+      document.body.style.overflow = prevOverflow;
       window.removeEventListener("keydown", handleEscape);
     };
   }, [isVideoOpen]);
 
   return (
     <section className="AboutUsVideo">
-      <div className="AboutUsVideo-container">
-
+      <div className="AboutUsVideo__container">
         {/* Section Heading */}
-        <div className="AboutUsVideo-heading">
-          <h2 className="AboutUsVideo-title">
-            We Invite you to Visit Our Restaurant
+        <header className="AboutUsVideo__heading">
+          <span className="AboutUsVideo__eyebrow">EXPERIENCE OUR ATMOSPHERE</span>
+          <h2 className="AboutUsVideo__title">
+            We Invite You to Visit <span>Our Restaurant</span>
           </h2>
-
-          <p className="AboutUsVideo-description">
-            Lorem Ipsum is simply dummy text of the printing and
-            typesetting industry. Lorem Ipsum has been the industry's
-            standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make
-            a type specimen book.
+          <p className="AboutUsVideo__description">
+            Step into a world where culinary passion meets warm hospitality. From
+            our wood-fired aromas to carefully crafted candlelight seating, immerse
+            yourself in a dining journey designed to linger in memory.
           </p>
-        </div>
+        </header>
 
-        {/* Restaurant Image */}
-        <div className="AboutUsVideo-imageWrapper">
+        {/* Compact & Cinematic Video Banner */}
+        <div
+          className="AboutUsVideo__banner"
+          onClick={openVideo}
+          role="button"
+          tabIndex={0}
+          aria-label="Click to watch restaurant video"
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              openVideo();
+            }
+          }}
+        >
           <img
-            src={restaurantImage}
-            alt="Beautiful restaurant interior"
-            className="AboutUsVideo-image"
+            src={restaurantImageDefault}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src =
+                "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=85";
+            }}
+            alt="Warm and elegant restaurant interior"
+            className="AboutUsVideo__bannerImg"
+            loading="lazy"
           />
 
-          <div className="AboutUsVideo-imageOverlay" />
+          {/* Vignette Overlay */}
+          <div className="AboutUsVideo__overlay" />
 
-          <button
-            type="button"
-            className="AboutUsVideo-playButton"
-            onClick={openVideo}
-            aria-label="Play restaurant video"
-          >
-            <span className="AboutUsVideo-playRipple" />
-
-            <svg
-              className="AboutUsVideo-playIcon"
-              width="28"
-              height="32"
-              viewBox="0 0 28 32"
-              fill="none"
-              aria-hidden="true"
+          {/* Premium Floating Play Trigger */}
+          <div className="AboutUsVideo__playCenter">
+            <button
+              type="button"
+              className="AboutUsVideo__playBtn"
+              onClick={(e) => {
+                e.stopPropagation();
+                openVideo();
+              }}
+              aria-label="Play video"
             >
-              <path
-                d="M26 13.4C28 14.6 28 17.4 26 18.6L5 31C2.8 32.3 0 30.7 0 28.2V3.8C0 1.3 2.8-.3 5 1L26 13.4Z"
-                fill="currentColor"
-              />
-            </svg>
-          </button>
+              <span className="AboutUsVideo__ripple AboutUsVideo__ripple--outer" />
+              <span className="AboutUsVideo__ripple AboutUsVideo__ripple--inner" />
+
+              <span className="AboutUsVideo__playCircle">
+                <svg
+                  className="AboutUsVideo__playIcon"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M8.5 6.2v11.6a1 1 0 0 0 1.54.84l9.2-5.8a1 1 0 0 0 0-1.68l-9.2-5.8A1 1 0 0 0 8.5 6.2z" />
+                </svg>
+              </span>
+            </button>
+            <span className="AboutUsVideo__watchText">Watch Story</span>
+          </div>
         </div>
       </div>
 
-      {/* YouTube Video Popup */}
+      {/* Luxury Video Modal Lightbox */}
       {isVideoOpen && (
         <div
-          className="AboutUsVideo-modal"
+          className="AboutUsVideo__modal"
           onClick={closeVideo}
-          role="presentation"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Restaurant Tour Video"
         >
           <div
-            className="AboutUsVideo-modalContent"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Restaurant video"
-            onClick={(event) => event.stopPropagation()}
+            className="AboutUsVideo__modalContent"
+            onClick={(e) => e.stopPropagation()}
           >
             <button
               type="button"
-              className="AboutUsVideo-closeButton"
+              className="AboutUsVideo__modalClose"
               onClick={closeVideo}
-              aria-label="Close video"
+              aria-label="Close video (Esc)"
+              title="Close"
             >
               <svg
-                width="26"
-                height="26"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2.5"
                 strokeLinecap="round"
+                strokeLinejoin="round"
                 aria-hidden="true"
               >
-                <path d="M18 6 6 18M6 6l12 12" />
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </button>
 
-            <div className="AboutUsVideo-videoFrame">
+            <div className="AboutUsVideo__videoFrame">
               <iframe
-                src={`https://www.youtube-nocookie.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&rel=0`}
-                title="Restaurant YouTube Video"
+                src={`https://www.youtube-nocookie.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`}
+                title="Restaurant Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen

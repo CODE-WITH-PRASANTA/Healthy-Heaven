@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"; // Link for React Router navigation
 import "./FaqBreadcrumb.css";
 
 // Background image
@@ -22,15 +23,17 @@ const FaqBreadcrumb = () => {
 
         {/* Breadcrumb */}
         <div className="FaqBreadcrumb__breadcrumb">
-          <span className="FaqBreadcrumb__home">Home</span>
+          {/* Home Link (Navigates to home page) */}
+          <Link to="/" className="FaqBreadcrumb__home">
+            Home
+          </Link>
 
-          <span
-            className="FaqBreadcrumb__arrow"
-            aria-hidden="true"
-          >
+          {/* Arrow */}
+          <span className="FaqBreadcrumb__arrow" aria-hidden="true">
             ›
           </span>
 
+          {/* Current Page */}
           <span className="FaqBreadcrumb__current">FAQ</span>
         </div>
       </div>
@@ -38,4 +41,4 @@ const FaqBreadcrumb = () => {
   );
 };
 
-export default FaqBreadcrumb;   
+export default FaqBreadcrumb;

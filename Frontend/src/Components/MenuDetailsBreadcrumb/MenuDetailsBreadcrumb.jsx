@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./MenuDetailsBreadcrumb.css";
 
-// Background image
+// Background image - update or replace the path if needed
 import MenuDetailsBreadcrumbImage from "../../assets/breadcrumbcontact.jpg";
 
-const MenuDetailsBreadcrumb = () => {
+const MenuDetailsBreadcrumb = ({ foodName = "Menu Details" }) => {
   return (
     <section
       className="MenuDetailsBreadcrumb"
@@ -13,38 +14,46 @@ const MenuDetailsBreadcrumb = () => {
       }}
     >
       {/* Dark Overlay */}
-      <div className="MenuDetailsBreadcrumb__overlay"></div>
+      <div className="MenuDetailsBreadcrumb__overlay" />
 
       {/* Main Content */}
       <div className="MenuDetailsBreadcrumb__content">
-
         {/* Page Title */}
-        <h1 className="MenuDetailsBreadcrumb__title">
-          Menu Details
-        </h1>
+        <h1 className="MenuDetailsBreadcrumb__title">{foodName}</h1>
 
-        {/* Breadcrumb */}
-        <div className="MenuDetailsBreadcrumb__breadcrumb">
-
-          {/* Home */}
-          <span className="MenuDetailsBreadcrumb__home">
+        {/* Breadcrumb Trail */}
+        <nav
+          className="MenuDetailsBreadcrumb__breadcrumb"
+          aria-label="Breadcrumb"
+        >
+          {/* Home Link */}
+          <Link to="/" className="MenuDetailsBreadcrumb__link">
             Home
+          </Link>
+
+          {/* Separator */}
+          <span className="MenuDetailsBreadcrumb__arrow" aria-hidden="true">
+            ›
           </span>
 
-          {/* Arrow */}
-          <span
-            className="MenuDetailsBreadcrumb__arrow"
-            aria-hidden="true"
-          >
+          {/* Menu Link */}
+          <Link to="/menu" className="MenuDetailsBreadcrumb__link">
+            Menu
+          </Link>
+
+          {/* Separator */}
+          <span className="MenuDetailsBreadcrumb__arrow" aria-hidden="true">
             ›
           </span>
 
           {/* Current Page */}
-          <span className="MenuDetailsBreadcrumb__current">
-            Menu Details
+          <span
+            className="MenuDetailsBreadcrumb__current"
+            aria-current="page"
+          >
+            {foodName}
           </span>
-
-        </div>
+        </nav>
       </div>
     </section>
   );
