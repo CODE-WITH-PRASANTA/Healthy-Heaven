@@ -8,17 +8,8 @@
   padding: 30px;
   box-sizing: border-box;
   color: #172642;
-  background:
-    linear-gradient(
-      180deg,
-      #f8fbfd 0%,
-      #f3f8fb 100%
-    );
-  font-family:
-    Inter,
-    "Segoe UI",
-    Arial,
-    sans-serif;
+  background: linear-gradient(180deg, #f8fbfd 0%, #f3f8fb 100%);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
 }
 
 .Testimonial *,
@@ -55,8 +46,7 @@
   justify-content: center;
   color: #ff7100;
   background: #fff0e5;
-  box-shadow:
-    0 8px 22px rgba(255, 113, 0, 0.07);
+  box-shadow: 0 8px 22px rgba(255, 113, 0, 0.07);
 }
 
 .Testimonial__headerLeft h1 {
@@ -93,107 +83,6 @@
 }
 
 /* =========================================================
-   STATS
-========================================================= */
-
-.Testimonial__stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 17px;
-  margin-bottom: 22px;
-}
-
-.Testimonial__statCard {
-  min-height: 127px;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  border: 1px solid #e4ebf0;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow:
-    0 6px 22px rgba(28, 56, 82, 0.035);
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.Testimonial__statCard:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    0 13px 30px rgba(28, 56, 82, 0.08);
-}
-
-.Testimonial__statIcon {
-  width: 70px;
-  height: 70px;
-  min-width: 70px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.Testimonial__statIcon--orange {
-  color: #ff7100;
-  background: #fff0df;
-}
-
-.Testimonial__statIcon--green {
-  color: #09a45b;
-  background: #e5f9ed;
-}
-
-.Testimonial__statIcon--yellow {
-  color: #f39300;
-  background: #fff1d9;
-}
-
-.Testimonial__statIcon--red {
-  color: #ef3434;
-  background: #ffe8e8;
-}
-
-.Testimonial__statContent > span {
-  display: block;
-  margin-bottom: 4px;
-  color: #687d9c;
-  font-size: 13px;
-}
-
-.Testimonial__statValue {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.Testimonial__statValue strong {
-  color: #101e3c;
-  font-size: 27px;
-  line-height: 1;
-}
-
-.Testimonial__statValue small {
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.Testimonial__green {
-  color: #08a456;
-}
-
-.Testimonial__red {
-  color: #ef3535;
-}
-
-.Testimonial__statContent p {
-  margin: 6px 0 0;
-  color: #7f91aa;
-  font-size: 12px;
-}
-
-/* =========================================================
    FILTER CARD
 ========================================================= */
 
@@ -201,13 +90,7 @@
   position: relative;
   z-index: 100;
   display: grid;
-  grid-template-columns:
-    1.7fr
-    0.8fr
-    0.8fr
-    1fr
-    1fr
-    auto;
+  grid-template-columns: 1.7fr 0.8fr 0.8fr 1fr 1fr auto;
   gap: 16px;
   align-items: end;
   padding: 20px;
@@ -215,8 +98,7 @@
   border: 1px solid #e3ebf0;
   border-radius: 12px;
   background: #fff;
-  box-shadow:
-    0 6px 22px rgba(28, 56, 82, 0.035);
+  box-shadow: 0 6px 22px rgba(28, 56, 82, 0.035);
 }
 
 .Testimonial__filterField {
@@ -259,8 +141,7 @@
 
 .Testimonial__inputBox:focus-within {
   border-color: #ff7200;
-  box-shadow:
-    0 0 0 3px rgba(255, 114, 0, 0.08);
+  box-shadow: 0 0 0 3px rgba(255, 114, 0, 0.08);
 }
 
 .Testimonial__inputBox input {
@@ -316,8 +197,7 @@
   border: 1px solid #e1e8ee;
   border-radius: 13px;
   background: #fff;
-  box-shadow:
-    0 20px 50px rgba(20, 40, 60, 0.16);
+  box-shadow: 0 20px 50px rgba(20, 40, 60, 0.16);
   animation: TestimonialCalendarIn 0.18s ease;
 }
 
@@ -326,7 +206,6 @@
     opacity: 0;
     transform: translateY(-5px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -402,12 +281,10 @@
   cursor: default;
 }
 
-.Testimonial__calendarDays
-  .Testimonial__calendarSelected {
+.Testimonial__calendarDays .Testimonial__calendarSelected {
   color: #fff;
   background: #ff7100;
-  box-shadow:
-    0 5px 12px rgba(255, 113, 0, 0.2);
+  box-shadow: 0 5px 12px rgba(255, 113, 0, 0.2);
 }
 
 /* =========================================================
@@ -443,8 +320,7 @@
 
 .Testimonial__filterButton:hover {
   background: #e96000;
-  box-shadow:
-    0 8px 17px rgba(255, 113, 0, 0.22);
+  box-shadow: 0 8px 17px rgba(255, 113, 0, 0.22);
   transform: translateY(-1px);
 }
 
@@ -470,8 +346,7 @@
   border: 1px solid #e3ebf0;
   border-radius: 12px;
   background: #fff;
-  box-shadow:
-    0 6px 22px rgba(28, 56, 82, 0.035);
+  box-shadow: 0 6px 22px rgba(28, 56, 82, 0.035);
 }
 
 .Testimonial__listHeader {
@@ -507,7 +382,6 @@
   gap: 10px;
 }
 
-.Testimonial__exportButton,
 .Testimonial__deleteSelected,
 .Testimonial__refreshButton {
   height: 40px;
@@ -520,18 +394,6 @@
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
-}
-
-.Testimonial__exportButton {
-  padding: 0 15px;
-  border: 1px solid #10a65d;
-  background: #10a65d;
-  color: #fff;
-}
-
-.Testimonial__exportButton:hover {
-  background: #0b9250;
-  transform: translateY(-1px);
 }
 
 .Testimonial__deleteSelected {
@@ -674,8 +536,7 @@
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #fff;
-  box-shadow:
-    0 2px 7px rgba(30, 50, 70, 0.12);
+  box-shadow: 0 2px 7px rgba(30, 50, 70, 0.12);
 }
 
 .Testimonial__customer > div {
@@ -718,13 +579,11 @@
   color: #ffad00;
 }
 
-.Testimonial__stars--interactive
-  .Testimonial__star {
+.Testimonial__stars--interactive .Testimonial__star {
   cursor: pointer;
 }
 
-.Testimonial__stars--interactive
-  .Testimonial__star:hover {
+.Testimonial__stars--interactive .Testimonial__star:hover {
   color: #ffad00;
   transform: scale(1.08);
 }
@@ -914,8 +773,7 @@
   color: #fff !important;
   border-color: #ff7100 !important;
   background: #ff7100 !important;
-  box-shadow:
-    0 6px 14px rgba(255, 113, 0, 0.2);
+  box-shadow: 0 6px 14px rgba(255, 113, 0, 0.2);
 }
 
 .Testimonial__dots {
@@ -945,7 +803,6 @@
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
   }
@@ -958,8 +815,7 @@
   width: 100%;
   background: #fff;
   border-radius: 16px;
-  box-shadow:
-    0 25px 70px rgba(10, 30, 50, 0.25);
+  box-shadow: 0 25px 70px rgba(10, 30, 50, 0.25);
   animation: TestimonialModalIn 0.25s ease;
 }
 
@@ -978,14 +834,11 @@
 @keyframes TestimonialModalIn {
   from {
     opacity: 0;
-    transform: translateY(16px)
-      scale(0.98);
+    transform: translateY(16px) scale(0.98);
   }
-
   to {
     opacity: 1;
-    transform: translateY(0)
-      scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -1217,8 +1070,7 @@
 .Testimonial__editField select:focus,
 .Testimonial__editField textarea:focus {
   border-color: #ff7100;
-  box-shadow:
-    0 0 0 3px rgba(255, 113, 0, 0.08);
+  box-shadow: 0 0 0 3px rgba(255, 114, 0, 0.08);
 }
 
 .Testimonial__editField--rating {
@@ -1272,8 +1124,7 @@
 .Testimonial__saveButton:hover {
   background: #e96000;
   transform: translateY(-1px);
-  box-shadow:
-    0 7px 15px rgba(255, 113, 0, 0.2);
+  box-shadow: 0 7px 15px rgba(255, 113, 0, 0.2);
 }
 
 /* =========================================================
@@ -1350,42 +1201,20 @@
 .Testimonial__confirmDelete:hover {
   background: #d92f2f;
   transform: translateY(-1px);
-  box-shadow:
-    0 7px 15px rgba(239, 61, 61, 0.2);
+  box-shadow: 0 7px 15px rgba(239, 61, 61, 0.2);
 }
 
 /* =========================================================
-   1250px
+   RESPONSIVE DESIGN
 ========================================================= */
 
 @media (max-width: 1250px) {
-
   .Testimonial {
     padding: 23px;
   }
 
-  .Testimonial__stats {
-    gap: 12px;
-  }
-
-  .Testimonial__statCard {
-    padding: 15px;
-    gap: 11px;
-  }
-
-  .Testimonial__statIcon {
-    width: 58px;
-    height: 58px;
-    min-width: 58px;
-  }
-
   .Testimonial__filterCard {
-    grid-template-columns:
-      1.4fr
-      0.9fr
-      0.9fr
-      1fr
-      1fr;
+    grid-template-columns: 1.4fr 0.9fr 0.9fr 1fr 1fr;
   }
 
   .Testimonial__filterButtons {
@@ -1394,16 +1223,7 @@
   }
 }
 
-/* =========================================================
-   1050px
-========================================================= */
-
 @media (max-width: 1050px) {
-
-  .Testimonial__stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .Testimonial__header {
     align-items: flex-start;
     flex-direction: column;
@@ -1423,12 +1243,7 @@
   }
 }
 
-/* =========================================================
-   800px
-========================================================= */
-
 @media (max-width: 800px) {
-
   .Testimonial {
     padding: 18px 13px 25px;
   }
@@ -1462,7 +1277,6 @@
     width: 100%;
   }
 
-  .Testimonial__exportButton,
   .Testimonial__deleteSelected {
     flex: 1;
   }
@@ -1472,12 +1286,7 @@
   }
 }
 
-/* =========================================================
-   650px
-========================================================= */
-
 @media (max-width: 650px) {
-
   .Testimonial {
     padding: 14px 9px 22px;
   }
@@ -1498,10 +1307,6 @@
 
   .Testimonial__breadcrumb {
     display: none;
-  }
-
-  .Testimonial__stats {
-    grid-template-columns: 1fr;
   }
 
   .Testimonial__filterCard {
@@ -1526,10 +1331,9 @@
 
   .Testimonial__listActions {
     display: grid;
-    grid-template-columns: 1fr 1fr auto;
+    grid-template-columns: 1fr auto;
   }
 
-  .Testimonial__exportButton,
   .Testimonial__deleteSelected {
     width: 100%;
   }
@@ -1573,12 +1377,7 @@
   }
 }
 
-/* =========================================================
-   480px
-========================================================= */
-
 @media (max-width: 480px) {
-
   .Testimonial__headerLeft {
     gap: 11px;
   }
@@ -1597,33 +1396,12 @@
     font-size: 11px;
   }
 
-  .Testimonial__statCard {
-    min-height: 102px;
-  }
-
-  .Testimonial__statIcon {
-    width: 55px;
-    height: 55px;
-    min-width: 55px;
-  }
-
-  .Testimonial__statValue strong {
-    font-size: 23px;
-  }
-
   .Testimonial__listActions {
-    grid-template-columns: 1fr;
-  }
-
-  .Testimonial__refreshButton {
-    width: 100%;
+    grid-template-columns: 1fr auto;
   }
 
   .Testimonial__calendar {
-    width: min(
-      290px,
-      calc(100vw - 35px)
-    );
+    width: min(290px, calc(100vw - 35px));
   }
 
   .Testimonial__deleteModal {
@@ -1646,12 +1424,7 @@
   }
 }
 
-/* =========================================================
-   360px
-========================================================= */
-
 @media (max-width: 360px) {
-
   .Testimonial__filterButtons {
     grid-template-columns: 1fr;
   }

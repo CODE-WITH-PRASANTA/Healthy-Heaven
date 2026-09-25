@@ -1,1199 +1,519 @@
 /* =========================================================
-   HEALTHY HEAVEN
-   PREMIUM ADMIN SIDEBAR
-   COLLAPSE BUTTON REMOVED
+   HEALTHY HAVEN - BOLD EMERALD ADMIN SIDEBAR
 ========================================================= */
 
+:root {
+  --sb-width: 280px;
+  --sb-collapsed-width: 84px;
+
+  --sb-bg-darkest: #011d14;
+  --sb-bg-dark: #032b1d;
+  --sb-bg-card: rgba(255, 255, 255, 0.06);
+
+  --sb-accent-neon: #00e88f;
+  --sb-accent-bright: #00ffa3;
+  --sb-accent-gradient: linear-gradient(135deg, #00ffa3 0%, #00d27a 100%);
+  --sb-accent-glow: 0 8px 24px rgba(0, 255, 163, 0.35);
+
+  --sb-text-bright: #ffffff;
+  --sb-text-medium: #c2e5d7;
+  --sb-text-muted: rgba(255, 255, 255, 0.45);
+
+  --sb-border-light: rgba(255, 255, 255, 0.1);
+  --sb-border-glow: rgba(0, 255, 163, 0.35);
+
+  --sb-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --sb-transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sidebar Shell */
 .HealthySidebar {
-  --sidebar-width: 270px;
-  --sidebar-collapsed-width: 82px;
-
-  --green-dark: #063d2b;
-  --green-main: #075238;
-  --green-medium: #0b6744;
-  --green-light: #32c979;
-  --green-active: #27b968;
-
   position: fixed;
   top: 0;
   left: 0;
-
-  width: var(--sidebar-width);
+  width: var(--sb-width);
   height: 100vh;
-
+  height: 100dvh;
   display: flex;
   flex-direction: column;
-
-  z-index: 1200;
-
+  background: 
+    radial-gradient(circle at 10% 5%, rgba(0, 255, 163, 0.18), transparent 45%),
+    radial-gradient(circle at 90% 90%, rgba(0, 184, 117, 0.15), transparent 45%),
+    linear-gradient(180deg, var(--sb-bg-dark) 0%, var(--sb-bg-darkest) 100%);
+  border-right: 1px solid var(--sb-border-light);
+  box-shadow: 10px 0 35px rgba(0, 0, 0, 0.4);
+  color: var(--sb-text-bright);
+  font-family: var(--sb-font);
   overflow: hidden;
-
-  color: #ffffff;
-
-  background:
-    radial-gradient(
-      circle at 15% 5%,
-      rgba(61, 221, 137, 0.18),
-      transparent 26%
-    ),
-    radial-gradient(
-      circle at 95% 85%,
-      rgba(35, 184, 116, 0.12),
-      transparent 28%
-    ),
-    linear-gradient(
-      180deg,
-      #063b29 0%,
-      #075239 45%,
-      #06412f 100%
-    );
-
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-
-  box-shadow:
-    8px 0 35px rgba(0, 36, 25, 0.16);
-
-  transition:
-    width 0.3s ease,
-    transform 0.3s ease;
-
-  box-sizing: border-box;
+  z-index: 1050;
+  transition: width var(--sb-transition), transform var(--sb-transition);
 }
 
-
-/* =========================================================
-   COLLAPSED SIDEBAR
-========================================================= */
-
-.HealthySidebar.is-collapsed {
-  width: var(--sidebar-collapsed-width);
-}
-
-
-/* =========================================================
-   BACKGROUND GLOW
-========================================================= */
-
+/* Ambient Glow */
 .HealthySidebar-glow {
   position: absolute;
-  border-radius: 50%;
   pointer-events: none;
+  border-radius: 50%;
+  filter: blur(55px);
   z-index: 0;
-  filter: blur(3px);
+}
+.HealthySidebar-glow-top {
+  width: 220px;
+  height: 220px;
+  background: rgba(0, 255, 163, 0.16);
+  top: -80px;
+  right: -70px;
+}
+.HealthySidebar-glow-bottom {
+  width: 200px;
+  height: 200px;
+  background: rgba(0, 184, 117, 0.12);
+  bottom: 40px;
+  left: -60px;
 }
 
-.HealthySidebar-glow-one {
-  width: 190px;
-  height: 190px;
-
-  top: -95px;
-  right: -85px;
-
-  background:
-    rgba(49, 211, 134, 0.14);
+/* Mobile Backdrop */
+.HealthySidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(1, 29, 20, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1040;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--sb-transition);
 }
-
-.HealthySidebar-glow-two {
-  width: 240px;
-  height: 240px;
-
-  bottom: -125px;
-  left: -115px;
-
-  background:
-    rgba(34, 175, 106, 0.12);
+.HealthySidebar-backdrop.is-visible {
+  opacity: 1;
+  pointer-events: auto;
 }
-
 
 /* =========================================================
-   BRAND
+   HEADER / BRAND
 ========================================================= */
 
-.HealthySidebar-brand {
+.HealthySidebar-header {
   position: relative;
-
-  min-height: 84px;
-
   display: flex;
   align-items: center;
-
-  padding:
-    14px 16px;
-
-  box-sizing: border-box;
-
-  border-bottom:
-    1px solid rgba(255, 255, 255, 0.075);
-
-  z-index: 5;
+  justify-content: space-between;
+  padding: 18px 20px;
+  min-height: 80px;
+  border-bottom: 1px solid var(--sb-border-light);
+  z-index: 2;
 }
 
+.HealthySidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
 
-/* =========================================================
-   LOGO
-========================================================= */
-
-.HealthySidebar-logo-wrap {
+.HealthySidebar-logo-ring {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #ffffff;
+  padding: 2px;
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.35),
+    0 0 0 2px var(--sb-accent-bright);
   flex-shrink: 0;
-
-  width: 53px;
-  height: 53px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border-radius: 50%;
-
-  background: #ffffff;
-
   overflow: hidden;
-
-  border:
-    2px solid rgba(255, 255, 255, 0.7);
-
-  box-shadow:
-    0 8px 25px rgba(0, 0, 0, 0.18);
 }
 
 .HealthySidebar-logo {
   width: 100%;
   height: 100%;
-
   object-fit: cover;
-
-  display: block;
 }
 
-
-/* =========================================================
-   BRAND TEXT
-========================================================= */
-
-.HealthySidebar-brand-text {
-  min-width: 0;
-
-  margin-left: 11px;
-
+.HealthySidebar-brand-meta {
   display: flex;
   flex-direction: column;
-
-  overflow: hidden;
-
-  transition:
-    opacity 0.2s ease,
-    width 0.25s ease,
-    margin 0.25s ease;
+  min-width: 0;
 }
 
-.HealthySidebar-brand-text h2 {
+.HealthySidebar-brand-meta h2 {
   margin: 0;
-
-  color: #ffffff;
-
-  font-size: 16px;
-  line-height: 1.25;
-
+  font-size: 17px;
   font-weight: 800;
-
+  letter-spacing: -0.3px;
+  color: #ffffff;
   white-space: nowrap;
 }
 
-.HealthySidebar-brand-text span {
-  margin-top: 4px;
-
-  color:
-    rgba(255, 255, 255, 0.62);
-
-  font-size: 10px;
-  line-height: 1;
-
-  font-weight: 600;
-
-  letter-spacing: 0.65px;
-
-  white-space: nowrap;
-}
-
-
-/* =========================================================
-   COLLAPSED BRAND
-========================================================= */
-
-.HealthySidebar.is-collapsed .HealthySidebar-brand {
-  justify-content: center;
-  padding-left: 8px;
-  padding-right: 8px;
-}
-
-.HealthySidebar.is-collapsed .HealthySidebar-brand-text {
-  display: none;
-}
-
-.HealthySidebar.is-collapsed .HealthySidebar-logo-wrap {
-  width: 51px;
-  height: 51px;
-}
-
-
-/* =========================================================
-   PROFILE
-========================================================= */
-
-.HealthySidebar-profile {
-  position: relative;
-
-  margin:
-    14px 12px 8px;
-
-  padding:
-    10px;
-
-  display: flex;
-  align-items: center;
-
-  border:
-    1px solid rgba(255, 255, 255, 0.075);
-
-  border-radius: 14px;
-
-  background:
-    rgba(255, 255, 255, 0.065);
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.2s ease;
-
-  z-index: 5;
-}
-
-.HealthySidebar-profile:hover {
-  background:
-    rgba(255, 255, 255, 0.105);
-
-  border-color:
-    rgba(255, 255, 255, 0.14);
-
-  transform:
-    translateY(-1px);
-}
-
-
-/* =========================================================
-   AVATAR
-========================================================= */
-
-.HealthySidebar-avatar {
-  flex-shrink: 0;
-
-  width: 40px;
-  height: 40px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 12px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #b4f5ce,
-      #54d998
-    );
-
-  color:
-    #06442f;
-
-  font-size: 13px;
-  font-weight: 800;
-
-  overflow: hidden;
-
-  box-shadow:
-    0 5px 15px rgba(0, 0, 0, 0.12);
-}
-
-.HealthySidebar-avatar img {
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-}
-
-
-/* =========================================================
-   PROFILE INFO
-========================================================= */
-
-.HealthySidebar-profile-info {
-  min-width: 0;
-
-  margin-left: 10px;
-
-  display: flex;
-  flex-direction: column;
-}
-
-.HealthySidebar-profile-info strong {
-  overflow: hidden;
-
-  color: #ffffff;
-
-  font-size: 12px;
+.HealthySidebar-brand-meta span {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--sb-accent-neon);
   font-weight: 700;
-
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  margin-top: 2px;
 }
 
-.HealthySidebar-profile-info span {
-  margin-top: 3px;
-
-  overflow: hidden;
-
-  color:
-    rgba(255, 255, 255, 0.55);
-
-  font-size: 9px;
-  font-weight: 500;
-
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-
-/* =========================================================
-   ONLINE STATUS
-========================================================= */
-
-.HealthySidebar-profile-status {
-  position: absolute;
-
-  right: 10px;
-  bottom: 9px;
-
-  width: 7px;
-  height: 7px;
-
-  border:
-    2px solid #075238;
-
-  border-radius: 50%;
-
-  background:
-    #52df94;
-
-  box-shadow:
-    0 0 0 3px rgba(82, 223, 148, 0.08);
-}
-
-
-/* =========================================================
-   COLLAPSED PROFILE
-========================================================= */
-
-.HealthySidebar.is-collapsed .HealthySidebar-profile {
-  margin:
-    14px 10px 8px;
-
-  padding: 8px;
-
-  justify-content: center;
-}
-
-.HealthySidebar.is-collapsed
-.HealthySidebar-profile-info,
-
-.HealthySidebar.is-collapsed
-.HealthySidebar-profile-status {
+.HealthySidebar-mobile-close {
   display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--sb-border-light);
+  border-radius: 10px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all var(--sb-transition);
 }
 
-.HealthySidebar.is-collapsed
-.HealthySidebar-avatar {
+.HealthySidebar-mobile-close:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: var(--sb-border-glow);
+}
+
+/* =========================================================
+   USER PROFILE
+========================================================= */
+
+.HealthySidebar-profile-card {
+  position: relative;
+  margin: 16px 18px 10px;
+  padding: 12px 14px;
+  background: var(--sb-bg-card);
+  border: 1px solid var(--sb-border-light);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  cursor: pointer;
+  z-index: 2;
+  transition: all var(--sb-transition);
+}
+
+.HealthySidebar-profile-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--sb-border-glow);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.HealthySidebar-profile-card.is-active {
+  border-color: var(--sb-accent-bright);
+  background: rgba(0, 255, 163, 0.08);
+}
+
+.HealthySidebar-avatar-wrap {
+  position: relative;
   width: 42px;
   height: 42px;
+  flex-shrink: 0;
 }
 
+.HealthySidebar-avatar-img,
+.HealthySidebar-avatar-fallback {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.HealthySidebar-avatar-fallback {
+  background: var(--sb-accent-gradient);
+  color: #021a12;
+  font-weight: 800;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.HealthySidebar-status-beacon {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--sb-accent-bright);
+  border: 2px solid var(--sb-bg-dark);
+  box-shadow: 0 0 8px var(--sb-accent-bright);
+}
+
+.HealthySidebar-profile-details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.HealthySidebar-profile-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.HealthySidebar-profile-role {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--sb-text-medium);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 1px;
+}
 
 /* =========================================================
    NAVIGATION
 ========================================================= */
 
-.HealthySidebar-navigation {
+.HealthySidebar-nav {
   flex: 1;
-
-  min-height: 0;
-
-  padding:
-    5px 10px 15px;
-
-  overflow-x: hidden;
   overflow-y: auto;
-
-  scrollbar-width: thin;
-
-  scrollbar-color:
-    rgba(255, 255, 255, 0.17)
-    transparent;
+  overflow-x: hidden;
+  padding: 10px 14px 20px;
+  z-index: 2;
 }
 
-.HealthySidebar-navigation::-webkit-scrollbar {
+.HealthySidebar-nav::-webkit-scrollbar {
   width: 4px;
 }
-
-.HealthySidebar-navigation::-webkit-scrollbar-track {
-  background: transparent;
+.HealthySidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+}
+.HealthySidebar-nav::-webkit-scrollbar-thumb:hover {
+  background: var(--sb-accent-bright);
 }
 
-.HealthySidebar-navigation::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-
-  background:
-    rgba(255, 255, 255, 0.16);
-}
-
-
-/* =========================================================
-   SECTION
-========================================================= */
-
-.HealthySidebar-section {
-  margin-bottom: 8px;
-}
-
-.HealthySidebar-section-title {
-  padding:
-    10px 10px 7px;
-
-  color:
-    rgba(255, 255, 255, 0.39);
-
-  font-size: 9px;
-  line-height: 1;
-
+.HealthySidebar-nav-heading {
+  padding: 8px 12px;
+  font-size: 11px;
   font-weight: 800;
-
-  letter-spacing: 1.15px;
+  letter-spacing: 1.2px;
+  color: var(--sb-accent-neon);
+  text-transform: uppercase;
 }
 
-
-/* =========================================================
-   MENU
-========================================================= */
-
-.HealthySidebar-menu {
+.HealthySidebar-nav-list {
   display: flex;
   flex-direction: column;
-
-  gap: 2px;
+  gap: 6px;
+  margin-top: 4px;
 }
 
-
-/* =========================================================
-   MENU ITEM
-========================================================= */
-
-.HealthySidebar-menu-item {
+/* NavLink Standard */
+.HealthySidebar-link {
   position: relative;
-
   width: 100%;
-  min-height: 43px;
-
   display: flex;
   align-items: center;
-
-  padding:
-    0 11px;
-
-  box-sizing: border-box;
-
-  border: 0;
-  border-radius: 11px;
-
-  background: transparent;
-
-  color:
-    rgba(255, 255, 255, 0.72);
-
-  text-decoration: none;
-
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  color: var(--sb-text-medium);
   font-family: inherit;
-
-  font-size: 12px;
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
-}
-
-.HealthySidebar-menu-item:hover {
-  background:
-    rgba(255, 255, 255, 0.075);
-
-  color: #ffffff;
-
-  transform:
-    translateX(2px);
-}
-
-
-/* =========================================================
-   ACTIVE ITEM
-========================================================= */
-
-.HealthySidebar-menu-item.active {
-  color: #ffffff;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(52, 211, 137, 0.98),
-      rgba(27, 181, 103, 0.94)
-    );
-
-  box-shadow:
-    0 8px 20px rgba(12, 121, 71, 0.25);
-}
-
-.HealthySidebar-menu-item.active::before {
-  content: "";
-
-  position: absolute;
-
-  left: 0;
-  top: 8px;
-  bottom: 8px;
-
-  width: 3px;
-
-  border-radius:
-    0 5px 5px 0;
-
-  background:
-    #ddffeb;
-}
-
-
-/* =========================================================
-   MENU ICON
-========================================================= */
-
-.HealthySidebar-menu-icon {
-  width: 24px;
-  height: 24px;
-
-  flex-shrink: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  color: currentColor;
-}
-
-.HealthySidebar-menu-label {
-  min-width: 0;
-
-  margin-left: 10px;
-
-  overflow: hidden;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-}
-
-
-/* =========================================================
-   DROPDOWN
-========================================================= */
-
-.HealthySidebar-dropdown-toggle {
-  appearance: none;
-}
-
-.HealthySidebar-dropdown-toggle.dropdown-open {
-  background:
-    rgba(255, 255, 255, 0.075);
-
-  color:
-    #ffffff;
-}
-
-.HealthySidebar-dropdown-arrow {
-  margin-left: auto;
-
-  width: 20px;
-  height: 20px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  color:
-    rgba(255, 255, 255, 0.48);
-}
-
-
-/* =========================================================
-   SUBMENU
-========================================================= */
-
-.HealthySidebar-submenu {
-  position: relative;
-
-  margin:
-    2px 0 4px 23px;
-
-  padding:
-    3px 0 3px 15px;
-
-  border-left:
-    1px solid rgba(255, 255, 255, 0.1);
-
-  animation:
-    HealthySidebarSubmenu 0.2s ease;
-}
-
-@keyframes HealthySidebarSubmenu {
-  from {
-    opacity: 0;
-    transform:
-      translateY(-4px);
-  }
-
-  to {
-    opacity: 1;
-    transform:
-      translateY(0);
-  }
-}
-
-
-/* =========================================================
-   SUBMENU ITEM
-========================================================= */
-
-.HealthySidebar-submenu-item {
-  position: relative;
-
-  min-height: 35px;
-
-  display: flex;
-  align-items: center;
-
-  padding:
-    0 9px;
-
-  border-radius: 8px;
-
-  color:
-    rgba(255, 255, 255, 0.58);
-
-  font-size: 10.5px;
-  font-weight: 500;
-
-  text-decoration: none;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    padding-left 0.2s ease;
-}
-
-.HealthySidebar-submenu-item:hover {
-  padding-left: 12px;
-
-  color: #ffffff;
-
-  background:
-    rgba(255, 255, 255, 0.06);
-}
-
-.HealthySidebar-submenu-item.active {
-  color:
-    #aaf2c9;
-
-  background:
-    rgba(66, 219, 145, 0.1);
-
+  font-size: 14px;
   font-weight: 700;
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--sb-transition);
+  box-sizing: border-box;
 }
 
-
-/* =========================================================
-   SUBMENU LINE
-========================================================= */
-
-.HealthySidebar-submenu-line {
-  position: absolute;
-
-  left: -16px;
-
-  width: 9px;
-  height: 1px;
-
-  background:
-    rgba(255, 255, 255, 0.13);
+.HealthySidebar-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  transform: translateX(3px);
 }
 
+/* High-Contrast Bold Emerald Active State (Applied to Orders & Dashboard) */
+.HealthySidebar-link.active {
+  background: var(--sb-accent-gradient) !important;
+  color: #012117 !important;
+  font-weight: 800 !important;
+  box-shadow: var(--sb-accent-glow) !important;
+  border-color: transparent !important;
+  transform: none;
+}
 
-/* =========================================================
-   SUBMENU ICON
-========================================================= */
+.HealthySidebar-link.active .HealthySidebar-icon-box {
+  color: #012117 !important;
+}
 
-.HealthySidebar-submenu-icon {
-  width: 20px;
-
+.HealthySidebar-icon-box {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  margin-right: 6px;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.85);
+  transition: color var(--sb-transition);
 }
 
-
-/* =========================================================
-   COLLAPSED NAVIGATION
-========================================================= */
-
-.HealthySidebar.is-collapsed
-.HealthySidebar-navigation {
-  padding-left: 9px;
-  padding-right: 9px;
+.HealthySidebar-link:hover .HealthySidebar-icon-box {
+  color: var(--sb-accent-bright);
 }
 
-.HealthySidebar.is-collapsed
-.HealthySidebar-section-title {
-  display: none;
+.HealthySidebar-link-title {
+  flex: 1;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -0.1px;
 }
-
-.HealthySidebar.is-collapsed
-.HealthySidebar-menu-item {
-  justify-content: center;
-
-  padding: 0;
-
-  min-height: 45px;
-}
-
-.HealthySidebar.is-collapsed
-.HealthySidebar-menu-icon {
-  width: 30px;
-  height: 30px;
-}
-
-.HealthySidebar.is-collapsed
-.HealthySidebar-menu-label {
-  display: none;
-}
-
-.HealthySidebar.is-collapsed
-.HealthySidebar-dropdown-arrow {
-  display: none;
-}
-
 
 /* =========================================================
    FOOTER
 ========================================================= */
 
 .HealthySidebar-footer {
-  flex-shrink: 0;
-
-  padding:
-    8px 10px 12px;
-
-  border-top:
-    1px solid rgba(255, 255, 255, 0.07);
-
-  background:
-    rgba(0, 40, 27, 0.16);
-
-  z-index: 5;
+  padding: 14px 16px;
+  border-top: 1px solid var(--sb-border-light);
+  background: rgba(1, 29, 20, 0.7);
+  backdrop-filter: blur(10px);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-.HealthySidebar-logout {
+.HealthySidebar-logout-btn {
   width: 100%;
-
-  min-height: 42px;
-
   display: flex;
   align-items: center;
-
-  padding:
-    0 11px;
-
-  border:
-    1px solid transparent;
-
-  border-radius: 10px;
-
-  background:
-    transparent;
-
-  color:
-    rgba(255, 255, 255, 0.67);
-
+  gap: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255, 87, 87, 0.08);
+  border: 1px solid rgba(255, 87, 87, 0.2);
+  color: #ff7e7e;
   font-family: inherit;
-
-  font-size: 11px;
-  font-weight: 600;
-
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease;
+  transition: all var(--sb-transition);
 }
 
-.HealthySidebar-logout:hover {
-  background:
-    rgba(239, 95, 95, 0.12);
-
-  color:
-    #ffb0b0;
-
-  border-color:
-    rgba(255, 120, 120, 0.08);
+.HealthySidebar-logout-btn:hover {
+  background: rgba(255, 87, 87, 0.2);
+  color: #ffffff;
+  border-color: #ff5757;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(255, 87, 87, 0.25);
 }
 
-.HealthySidebar-logout-icon {
-  width: 24px;
-  height: 24px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  flex-shrink: 0;
-}
-
-.HealthySidebar.is-collapsed
-.HealthySidebar-logout {
-  justify-content: center;
-  padding: 0;
-}
-
-.HealthySidebar.is-collapsed
-.HealthySidebar-logout
-.HealthySidebar-menu-label {
-  display: none;
-}
-
-
-/* =========================================================
-   VERSION
-========================================================= */
-
-.HealthySidebar-version {
-  margin-top: 7px;
-
+.HealthySidebar-footer-meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  padding:
-    0 4px;
-
-  color:
-    rgba(255, 255, 255, 0.27);
-
-  font-size: 8px;
+  padding: 2px 4px 0;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--sb-text-muted);
 }
 
-.HealthySidebar-version small {
-  font-size: 8px;
-
-  color:
-    rgba(255, 255, 255, 0.2);
+.HealthySidebar-brand-copy {
+  white-space: nowrap;
 }
 
+.HealthySidebar-version-pill {
+  padding: 2px 7px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  color: var(--sb-text-medium);
+}
 
 /* =========================================================
-   DECORATIVE LEAVES
+   COLLAPSED VIEW (DESKTOP)
 ========================================================= */
 
-.HealthySidebar-leaf {
-  position: absolute;
-
-  pointer-events: none;
-
-  opacity: 0.11;
-
-  user-select: none;
-
-  z-index: 1;
+.HealthySidebar.is-collapsed {
+  width: var(--sb-collapsed-width);
 }
 
-.leaf-one {
-  right: -15px;
-  bottom: 105px;
-
-  font-size: 54px;
-
-  transform:
-    rotate(-18deg);
+.HealthySidebar.is-collapsed .HealthySidebar-brand-meta,
+.HealthySidebar.is-collapsed .HealthySidebar-profile-details,
+.HealthySidebar.is-collapsed .HealthySidebar-nav-heading,
+.HealthySidebar.is-collapsed .HealthySidebar-link-title,
+.HealthySidebar.is-collapsed .HealthySidebar-footer-meta {
+  display: none !important;
 }
 
-.leaf-two {
-  left: -18px;
-  bottom: 20px;
-
-  font-size: 48px;
-
-  transform:
-    rotate(20deg);
+.HealthySidebar.is-collapsed .HealthySidebar-header {
+  padding: 16px 10px;
+  justify-content: center;
 }
 
+.HealthySidebar.is-collapsed .HealthySidebar-profile-card {
+  margin: 14px 10px;
+  padding: 8px;
+  justify-content: center;
+}
+
+.HealthySidebar.is-collapsed .HealthySidebar-link,
+.HealthySidebar.is-collapsed .HealthySidebar-logout-btn {
+  justify-content: center;
+  padding: 12px 0;
+}
 
 /* =========================================================
-   MOBILE SIDEBAR
+   RESPONSIVE DESIGN (TABLETS & PHONES <= 992px)
 ========================================================= */
 
-.HealthySidebar-mobile-close {
-  display: none;
-}
-
-
-@media (max-width: 768px) {
-
+@media (max-width: 992px) {
   .HealthySidebar {
-    width: 270px;
-
-    transform:
-      translateX(-105%);
-
-    box-shadow:
-      12px 0 40px rgba(0, 30, 21, 0.32);
-  }
-
-  .HealthySidebar.is-collapsed {
-    width: 270px;
+    transform: translateX(-105%);
+    width: 280px;
+    box-shadow: none;
   }
 
   .HealthySidebar.is-mobile-open {
-    transform:
-      translateX(0);
+    transform: translateX(0);
+    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.75);
   }
-
-
-  /* MOBILE CLOSE */
 
   .HealthySidebar-mobile-close {
-    position: absolute;
-
-    top: 18px;
-    right: 15px;
-
-    width: 37px;
-    height: 37px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 0;
-
-    border:
-      1px solid rgba(255, 255, 255, 0.14);
-
-    border-radius: 11px;
-
-    background:
-      rgba(255, 255, 255, 0.1);
-
-    color: #ffffff;
-
-    cursor: pointer;
-
-    z-index: 30;
-
-    transition:
-      background 0.2s ease,
-      transform 0.2s ease,
-      border-color 0.2s ease;
-  }
-
-  .HealthySidebar-mobile-close:hover {
-    background:
-      rgba(255, 255, 255, 0.18);
-
-    border-color:
-      rgba(255, 255, 255, 0.25);
-
-    transform:
-      rotate(90deg);
-  }
-
-  .HealthySidebar-mobile-close:active {
-    transform:
-      scale(0.92);
-  }
-
-
-  /* MOBILE BRAND */
-
-  .HealthySidebar-brand {
-    min-height: 84px;
-
-    padding:
-      14px 65px 14px 15px;
-  }
-
-
-  /* MOBILE NAV */
-
-  .HealthySidebar-navigation {
-    padding-top: 7px;
-  }
-
-
-  /* MOBILE PROFILE */
-
-  .HealthySidebar-profile {
-    margin-top: 12px;
-  }
-
-
-  /* ALWAYS EXPANDED ON MOBILE */
-
-  .HealthySidebar .HealthySidebar-brand-text,
-  .HealthySidebar .HealthySidebar-profile-info,
-  .HealthySidebar .HealthySidebar-profile-status,
-  .HealthySidebar .HealthySidebar-section-title,
-  .HealthySidebar .HealthySidebar-menu-label {
     display: flex;
   }
 
-  .HealthySidebar .HealthySidebar-menu-label {
-    margin-left: 10px;
-  }
-
-  .HealthySidebar .HealthySidebar-section-title {
-    display: block;
-  }
-
-  .HealthySidebar .HealthySidebar-dropdown-arrow {
-    display: flex;
-  }
-
-  .HealthySidebar .HealthySidebar-menu-item {
-    justify-content: flex-start;
-    padding: 0 11px;
-    min-height: 43px;
-  }
-
-  .HealthySidebar .HealthySidebar-navigation {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-
-  .HealthySidebar .HealthySidebar-profile {
-    justify-content: flex-start;
-  }
-}
-
-
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
-
-@media (max-width: 480px) {
-
-  .HealthySidebar {
-    width: 285px;
-  }
-
+  /* Reset collapsed state on smaller screens */
   .HealthySidebar.is-collapsed {
-    width: 285px;
+    width: 280px;
   }
 
-  .HealthySidebar-mobile-close {
-    top: 17px;
-    right: 14px;
-
-    width: 37px;
-    height: 37px;
+  .HealthySidebar.is-collapsed .HealthySidebar-brand-meta,
+  .HealthySidebar.is-collapsed .HealthySidebar-profile-details,
+  .HealthySidebar.is-collapsed .HealthySidebar-nav-heading,
+  .HealthySidebar.is-collapsed .HealthySidebar-link-title,
+  .HealthySidebar.is-collapsed .HealthySidebar-footer-meta {
+    display: flex !important;
   }
 
-  .HealthySidebar-brand {
-    padding-left: 14px;
-    padding-right: 60px;
+  .HealthySidebar.is-collapsed .HealthySidebar-nav-heading {
+    display: block !important;
   }
 
-  .HealthySidebar-logo-wrap {
-    width: 49px;
-    height: 49px;
-  }
-
-  .HealthySidebar-brand-text h2 {
-    font-size: 15px;
-  }
-
-  .HealthySidebar-menu-item {
-    min-height: 44px;
-  }
-
-  .HealthySidebar-section-title {
-    padding-left: 9px;
+  .HealthySidebar.is-collapsed .HealthySidebar-link {
+    justify-content: flex-start;
+    padding: 12px 14px;
   }
 }
 
-
-/* =========================================================
-   DESKTOP
-========================================================= */
-
-@media (min-width: 769px) {
-
-  .HealthySidebar-mobile-close {
-    display: none !important;
-  }
-}
-
-
-/* =========================================================
-   ACCESSIBILITY
-========================================================= */
-
-.HealthySidebar button:focus-visible,
-.HealthySidebar a:focus-visible {
-  outline:
-    2px solid #68e39b;
-
-  outline-offset:
-    2px;
-}
-
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-  .HealthySidebar,
-  .HealthySidebar *,
-  .HealthySidebar *::before,
-  .HealthySidebar *::after {
-    animation: none !important;
-
-    transition: none !important;
-  }
+/* Focus styles */
+.HealthySidebar a:focus-visible,
+.HealthySidebar button:focus-visible {
+  outline: 2px solid var(--sb-accent-bright);
+  outline-offset: 2px;
 }

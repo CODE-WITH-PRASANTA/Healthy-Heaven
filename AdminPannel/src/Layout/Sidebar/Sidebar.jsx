@@ -1,551 +1,240 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-
+import React from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import {
-  Home,
+  LayoutDashboard,
+  ShoppingBag,
+  Inbox,
   FileText,
-  Bell,
-  Calendar,
-  Users,
-  HeartHandshake,
   Image as ImageIcon,
-  Video,
-  ThumbsUp,
-  CheckSquare,
-  Award,
-  Layers,
-  MessageSquare,
-  Mail,
-  ChevronDown,
-  ChevronRight,
-  PlusCircle,
-  Edit3,
-  UserPlus,
-  UserCheck,
-  Settings,
+  Star,
+  Bell,
   User,
+  Settings,
   LogOut,
   X,
-  FolderKanban,
 } from "lucide-react";
 
 import logo from "../../assets/HealthyLogo.webp";
 import "./Sidebar.css";
 
+// Navigation Items configuration
+export const NAV_ITEMS = [
+  {
+    label: "Dashboard",
+    icon: LayoutDashboard,
+    path: "/dashboard",
+    // Matches root '/' and '/dashboard'
+    isMatch: (currentPath) => currentPath === "/" || currentPath.startsWith("/dashboard"),
+  },
+  {
+    label: "Orders",
+    icon: ShoppingBag,
+    path: "/order",
+    isMatch: (currentPath) => currentPath.startsWith("/orders") || currentPath.startsWith("/order"),
+  },
+  {
+    label: "Contact Leads",
+    icon: Inbox,
+    path: "/contact-lead",
+  },
+  {
+    label: "Blogs",
+    icon: FileText,
+    path: "/blogs",
+  },
+  {
+    label: "Gallery",
+    icon: ImageIcon,
+    path: "/gallery",
+  },
+  {
+    label: "Testimonials",
+    icon: Star,
+    path: "/testimonial",
+  },
+  {
+    label: "Notices & Alerts",
+    icon: Bell,
+    path: "/notices",
+  },
+  {
+    label: "Admin Profile",
+    icon: User,
+    path: "/profile",
+  },
+  {
+    label: "Settings",
+    icon: Settings,
+    path: "/settings",
+  },
+];
+
 const Sidebar = ({
-  isCollapsed,
-  isMobileOpen,
+  isCollapsed = false,
+  isMobileOpen = false,
   onMobileClose = () => {},
   onProfileClick = () => {},
   onLogout = () => {},
   brandName = "Healthy Haven",
-  brandTagline = "Admin Panel",
+  brandTagline = "ADMIN PANEL",
   user = {
     name: "Admin",
     role: "Super Administrator",
     initials: "AD",
     avatarUrl: "",
   },
-  version = "v1.0.0",
+  version = "v2.5.0",
 }) => {
-  const [openDropdowns, setOpenDropdowns] = useState({});
+  const location = useLocation();
+  const currentPath = location.pathname.toLowerCase();
 
-  const toggleDropdown = (menuName) => {
-    setOpenDropdowns((prev) => ({
-      ...prev,
-      [menuName]: !prev[menuName],
-    }));
+  // Helper to determine if an item is active
+  const checkIsActive = (item, isNavActive) => {
+    if (item.isMatch) {
+      return item.isMatch(currentPath);
+    }
+    // Normalizes trailing slashes and handles sub-routes
+    const targetPath = item.path.toLowerCase();
+    return isNavActive || currentPath === targetPath || currentPath.startsWith(`${targetPath}/`);
   };
 
-  const handleNavClick = () => {
-    if (window.innerWidth <= 768) {
+  const handleLinkClick = (customClick) => (e) => {
+    if (customClick) customClick(e);
+    // Auto-close drawer on mobile upon clicking a link
+    if (window.innerWidth <= 992) {
       onMobileClose();
     }
   };
 
-  const menuSections = [
-    {
-      title: "MAIN",
-      items: [
-        {
-          label: "Dashboard",
-          icon: Home,
-          path: "/",
-        },
-      ],
-    },
-
-    {
-      title: "CONTENT MANAGEMENT",
-      items: [
-        {
-          label: "Blogs",
-          icon: FileText,
-          dropdown: true,
-          children: [
-            {
-              label: "Create Blog",
-              icon: PlusCircle,
-              path: "/blogs/create",
-            },
-            {
-              label: "Manage Blogs",
-              icon: FolderKanban,
-              path: "/blogs/manage",
-            },
-          ],
-        },
-
-        {
-          label: "Notices",
-          icon: Bell,
-          dropdown: true,
-          children: [
-            {
-              label: "Add Notice",
-              icon: PlusCircle,
-              path: "/notices/add",
-            },
-            {
-              label: "Manage Notices",
-              icon: FolderKanban,
-              path: "/notices/manage",
-            },
-          ],
-        },
-
-        {
-          label: "Gallery",
-          icon: ImageIcon,
-          dropdown: true,
-          children: [
-            {
-              label: "Event Gallery",
-              icon: Calendar,
-              path: "/gallery/event",
-            },
-            {
-              label: "Home Gallery",
-              icon: ImageIcon,
-              path: "/gallery/home",
-            },
-          ],
-        },
-
-        {
-          label: "Media Manage",
-          icon: Video,
-          dropdown: true,
-          children: [
-            {
-              label: "YouTube",
-              icon: Video,
-              path: "/media/youtube",
-            },
-            {
-              label: "Photos",
-              icon: ImageIcon,
-              path: "/media/photos",
-            },
-          ],
-        },
-      ],
-    },
-
-    {
-      title: "USER MANAGEMENT",
-      items: [
-        {
-          label: "Users",
-          icon: Users,
-          path: "/users",
-        },
-        {
-          label: "Donations",
-          icon: HeartHandshake,
-          path: "/donations",
-        },
-      ],
-    },
-
-    {
-      title: "EVENT MANAGEMENT",
-      items: [
-        {
-          label: "Events",
-          icon: Calendar,
-          dropdown: true,
-          children: [
-            {
-              label: "Add Event",
-              icon: PlusCircle,
-              path: "/events/add",
-            },
-            {
-              label: "Edit Events",
-              icon: Edit3,
-              path: "/events/edit",
-            },
-            {
-              label: "Registered Users",
-              icon: UserCheck,
-              path: "/events/registered",
-            },
-          ],
-        },
-
-        {
-          label: "Team",
-          icon: Users,
-          dropdown: true,
-          children: [
-            {
-              label: "Add Team Member",
-              icon: UserPlus,
-              path: "/team/add",
-            },
-            {
-              label: "Manage Team",
-              icon: FolderKanban,
-              path: "/team/manage",
-            },
-          ],
-        },
-      ],
-    },
-
-    {
-      title: "URU MANAGEMENT",
-      items: [
-        {
-          label: "Manage URU",
-          icon: Layers,
-          path: "/uru/manage",
-        },
-        {
-          label: "Approve URU",
-          icon: CheckSquare,
-          path: "/uru/approve",
-        },
-        {
-          label: "Final URU",
-          icon: ThumbsUp,
-          path: "/uru/final",
-        },
-      ],
-    },
-
-    {
-      title: "ACHIEVEMENTS",
-      items: [
-        {
-          label: "Post Achievement",
-          icon: Award,
-          path: "/achievements/post",
-        },
-        {
-          label: "Manage Achievements",
-          icon: FolderKanban,
-          path: "/achievements/manage",
-        },
-      ],
-    },
-
-    {
-      title: "CATEGORIES",
-      items: [
-        {
-          label: "Manage Categories",
-          icon: Layers,
-          path: "/categories",
-        },
-      ],
-    },
-
-    {
-      title: "COMMENTS",
-      items: [
-        {
-          label: "Blog Comments",
-          icon: MessageSquare,
-          path: "/comments/blog",
-        },
-        {
-          label: "Achievement Comments",
-          icon: MessageSquare,
-          path: "/comments/achievement",
-        },
-      ],
-    },
-
-    {
-      title: "COMMUNICATION",
-      items: [
-        {
-          label: "User Opinions",
-          icon: MessageSquare,
-          path: "/communication/opinions",
-        },
-        {
-          label: "Subscribed Newsletter",
-          icon: Mail,
-          path: "/communication/newsletter",
-        },
-      ],
-    },
-
-    {
-      title: "SETTINGS",
-      items: [
-        {
-          label: "Profile",
-          icon: User,
-          path: "/profile",
-          onClick: onProfileClick,
-        },
-        {
-          label: "Settings",
-          icon: Settings,
-          path: "/settings",
-        },
-      ],
-    },
-  ];
-
   return (
-    <aside
-      className={`
-        HealthySidebar
-        ${isCollapsed ? "is-collapsed" : ""}
-        ${isMobileOpen ? "is-mobile-open" : ""}
-      `}
-    >
-      {/* Mobile Close */}
-      {isMobileOpen && (
-        <button
-          type="button"
-          className="HealthySidebar-mobile-close"
-          onClick={onMobileClose}
-          aria-label="Close sidebar"
-        >
-          <X size={21} strokeWidth={2.4} />
-        </button>
-      )}
-
-      {/* Decorative background */}
-      <div className="HealthySidebar-glow HealthySidebar-glow-one" />
-      <div className="HealthySidebar-glow HealthySidebar-glow-two" />
-
-      {/* BRAND */}
-      <div className="HealthySidebar-brand">
-        <div className="HealthySidebar-logo-wrap">
-          <img
-            src={logo}
-            alt="Healthy Heaven"
-            className="HealthySidebar-logo"
-          />
-        </div>
-
-        <div className="HealthySidebar-brand-text">
-          <h2>{brandName}</h2>
-          <span>{brandTagline}</span>
-        </div>
-      </div>
-
-      {/* PROFILE */}
+    <>
+      {/* Mobile Drawer Overlay */}
       <div
-        className="HealthySidebar-profile"
-        onClick={onProfileClick}
-        role="button"
-        tabIndex={0}
+        className={`HealthySidebar-backdrop ${isMobileOpen ? "is-visible" : ""}`}
+        onClick={onMobileClose}
+        aria-hidden="true"
+      />
+
+      <aside
+        className={`HealthySidebar ${isCollapsed ? "is-collapsed" : ""} ${
+          isMobileOpen ? "is-mobile-open" : ""
+        }`}
+        aria-label="Healthy Haven Sidebar"
       >
-        <div className="HealthySidebar-avatar">
-          {user.avatarUrl ? (
-            <img src={user.avatarUrl} alt={user.name} />
-          ) : (
-            <span>
-              {user.initials ||
-                user.name
-                  ?.split(" ")
-                  .map((word) => word[0])
-                  .join("")
-                  .slice(0, 2)
-                  .toUpperCase()}
-            </span>
-          )}
-        </div>
+        {/* Ambient Glows */}
+        <div className="HealthySidebar-glow HealthySidebar-glow-top" />
+        <div className="HealthySidebar-glow HealthySidebar-glow-bottom" />
 
-        <div className="HealthySidebar-profile-info">
-          <strong>{user.name}</strong>
-          <span>{user.role}</span>
-        </div>
+        {/* Brand Header */}
+        <div className="HealthySidebar-header">
+          <div className="HealthySidebar-brand">
+            <div className="HealthySidebar-logo-ring">
+              <img src={logo} alt="Healthy Haven Logo" className="HealthySidebar-logo" />
+            </div>
 
-        <div className="HealthySidebar-profile-status" />
-      </div>
-
-      {/* NAVIGATION */}
-      <div className="HealthySidebar-navigation">
-        {menuSections.map((section) => (
-          <div
-            className="HealthySidebar-section"
-            key={section.title}
-          >
-            {!isCollapsed && (
-              <div className="HealthySidebar-section-title">
-                {section.title}
-              </div>
-            )}
-
-            <div className="HealthySidebar-menu">
-              {section.items.map((item) => {
-                const Icon = item.icon;
-                const isOpen = openDropdowns[item.label];
-
-                /* DROPDOWN MENU */
-                if (item.dropdown) {
-                  return (
-                    <div
-                      className="HealthySidebar-dropdown"
-                      key={item.label}
-                    >
-                      <button
-                        type="button"
-                        className={`
-                          HealthySidebar-menu-item
-                          HealthySidebar-dropdown-toggle
-                          ${isOpen ? "dropdown-open" : ""}
-                        `}
-                        onClick={() => toggleDropdown(item.label)}
-                        title={isCollapsed ? item.label : undefined}
-                      >
-                        <span className="HealthySidebar-menu-icon">
-                          <Icon
-                            size={19}
-                            strokeWidth={2}
-                          />
-                        </span>
-
-                        <span className="HealthySidebar-menu-label">
-                          {item.label}
-                        </span>
-
-                        {!isCollapsed && (
-                          <span className="HealthySidebar-dropdown-arrow">
-                            {isOpen ? (
-                              <ChevronDown size={16} />
-                            ) : (
-                              <ChevronRight size={16} />
-                            )}
-                          </span>
-                        )}
-                      </button>
-
-                      {!isCollapsed && isOpen && (
-                        <div className="HealthySidebar-submenu">
-                          {item.children.map((child) => {
-                            const ChildIcon = child.icon;
-
-                            return (
-                              <NavLink
-                                key={child.path}
-                                to={child.path}
-                                className={({ isActive }) =>
-                                  `HealthySidebar-submenu-item ${
-                                    isActive ? "active" : ""
-                                  }`
-                                }
-                                onClick={handleNavClick}
-                              >
-                                <span className="HealthySidebar-submenu-line" />
-
-                                <span className="HealthySidebar-submenu-icon">
-                                  <ChildIcon
-                                    size={15}
-                                    strokeWidth={2}
-                                  />
-                                </span>
-
-                                <span>{child.label}</span>
-                              </NavLink>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
-                  );
-                }
-
-                /* NORMAL MENU ITEM */
-                return (
-                  <NavLink
-                    key={item.path}
-                    to={item.path}
-                    className={({ isActive }) =>
-                      `HealthySidebar-menu-item ${
-                        isActive ? "active" : ""
-                      }`
-                    }
-                    onClick={(event) => {
-                      if (item.onClick) {
-                        item.onClick(event);
-                      }
-
-                      handleNavClick();
-                    }}
-                    title={isCollapsed ? item.label : undefined}
-                  >
-                    <span className="HealthySidebar-menu-icon">
-                      <Icon
-                        size={19}
-                        strokeWidth={2}
-                      />
-                    </span>
-
-                    <span className="HealthySidebar-menu-label">
-                      {item.label}
-                    </span>
-                  </NavLink>
-                );
-              })}
+            <div className="HealthySidebar-brand-meta">
+              <h2>{brandName}</h2>
+              <span>{brandTagline}</span>
             </div>
           </div>
-        ))}
-      </div>
 
-      {/* FOOTER */}
-      <div className="HealthySidebar-footer">
-        <button
-          type="button"
-          className="HealthySidebar-logout"
-          onClick={onLogout}
-          title={isCollapsed ? "Logout" : undefined}
+          {/* Close button on mobile */}
+          <button
+            type="button"
+            className="HealthySidebar-mobile-close"
+            onClick={onMobileClose}
+            aria-label="Close menu"
+          >
+            <X size={20} strokeWidth={2.5} />
+          </button>
+        </div>
+
+        {/* Profile Card */}
+        <NavLink
+          to="/profile"
+          className={({ isActive }) =>
+            `HealthySidebar-profile-card ${isActive ? "is-active" : ""}`
+          }
+          onClick={handleLinkClick(onProfileClick)}
+          title={isCollapsed ? `${user.name} (${user.role})` : undefined}
         >
-          <span className="HealthySidebar-logout-icon">
-            <LogOut size={18} />
-          </span>
-
-          <span className="HealthySidebar-menu-label">
-            Logout
-          </span>
-        </button>
-
-        {!isCollapsed && (
-          <div className="HealthySidebar-version">
-            <span>Healthy Haven</span>
-            <small>{version}</small>
+          <div className="HealthySidebar-avatar-wrap">
+            {user.avatarUrl ? (
+              <img src={user.avatarUrl} alt={user.name} className="HealthySidebar-avatar-img" />
+            ) : (
+              <div className="HealthySidebar-avatar-fallback">
+                {user.initials ||
+                  user.name
+                    ?.split(" ")
+                    .map((w) => w[0])
+                    .join("")
+                    .slice(0, 2)
+                    .toUpperCase()}
+              </div>
+            )}
+            <span className="HealthySidebar-status-beacon" />
           </div>
-        )}
-      </div>
 
-      {/* Decorative leaves */}
-      <div className="HealthySidebar-leaf leaf-one">
-        🍃
-      </div>
+          <div className="HealthySidebar-profile-details">
+            <span className="HealthySidebar-profile-name">{user.name}</span>
+            <span className="HealthySidebar-profile-role">{user.role}</span>
+          </div>
+        </NavLink>
 
-      <div className="HealthySidebar-leaf leaf-two">
-        🌿
-      </div>
-    </aside>
+        {/* Navigation List */}
+        <nav className="HealthySidebar-nav" aria-label="Main Navigation">
+          {!isCollapsed && <div className="HealthySidebar-nav-heading">MAIN NAVIGATION</div>}
+
+          <div className="HealthySidebar-nav-list">
+            {NAV_ITEMS.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <NavLink
+                  key={item.label}
+                  to={item.path}
+                  end={item.path === "/dashboard"}
+                  className={({ isActive: isNavActive }) => {
+                    const active = checkIsActive(item, isNavActive);
+                    return `HealthySidebar-link ${active ? "active" : ""}`;
+                  }}
+                  onClick={handleLinkClick(item.onClick)}
+                  title={isCollapsed ? item.label : undefined}
+                >
+                  <span className="HealthySidebar-icon-box">
+                    <Icon size={20} strokeWidth={2.2} />
+                  </span>
+
+                  <span className="HealthySidebar-link-title">{item.label}</span>
+                </NavLink>
+              );
+            })}
+          </div>
+        </nav>
+
+        {/* Footer Area */}
+        <div className="HealthySidebar-footer">
+          <button
+            type="button"
+            className="HealthySidebar-logout-btn"
+            onClick={onLogout}
+            title={isCollapsed ? "Log Out" : undefined}
+          >
+            <span className="HealthySidebar-icon-box">
+              <LogOut size={20} strokeWidth={2.2} />
+            </span>
+            <span className="HealthySidebar-link-title">Log Out</span>
+          </button>
+
+          {!isCollapsed && (
+            <div className="HealthySidebar-footer-meta">
+              <span className="HealthySidebar-brand-copy">Healthy Haven Platform</span>
+              <span className="HealthySidebar-version-pill">{version}</span>
+            </div>
+          )}
+        </div>
+      </aside>
+    </>
   );
 };
 

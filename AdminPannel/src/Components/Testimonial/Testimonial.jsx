@@ -3,7 +3,7 @@ import "./Testimonial.css";
 
 const Testimonial = () => {
   /* =========================================================
-     DEMO DATA
+      DEMO DATA
   ========================================================= */
 
   const initialTestimonials = [
@@ -11,8 +11,7 @@ const Testimonial = () => {
       id: 1,
       name: "Priya Sharma",
       email: "priya@gmail.com",
-      image:
-        "https://randomuser.me/api/portraits/women/44.jpg",
+      image: "https://randomuser.me/api/portraits/women/44.jpg",
       rating: 5,
       message:
         "Amazing food! Fresh ingredients and great taste. Super fast delivery. This is now my go-to food place. Highly recommended!",
@@ -24,8 +23,7 @@ const Testimonial = () => {
       id: 2,
       name: "Rahul Verma",
       email: "rahul@gmail.com",
-      image:
-        "https://randomuser.me/api/portraits/men/32.jpg",
+      image: "https://randomuser.me/api/portraits/men/32.jpg",
       rating: 4,
       message:
         "Great taste and fast delivery. Highly recommended for everyone.",
@@ -37,8 +35,7 @@ const Testimonial = () => {
       id: 3,
       name: "Sneha Patra",
       email: "sneha@gmail.com",
-      image:
-        "https://randomuser.me/api/portraits/women/65.jpg",
+      image: "https://randomuser.me/api/portraits/women/65.jpg",
       rating: 5,
       message:
         "Loved the varieties and quick service. Will definitely order again.",
@@ -50,8 +47,7 @@ const Testimonial = () => {
       id: 4,
       name: "Amit Kumar",
       email: "amit@gmail.com",
-      image:
-        "https://randomuser.me/api/portraits/men/46.jpg",
+      image: "https://randomuser.me/api/portraits/men/46.jpg",
       rating: 4,
       message:
         "Good food and hygienic packaging. Only improvement needed in delivery timing.",
@@ -63,8 +59,7 @@ const Testimonial = () => {
       id: 5,
       name: "Vikram Singh",
       email: "vikram@gmail.com",
-      image:
-        "https://randomuser.me/api/portraits/men/41.jpg",
+      image: "https://randomuser.me/api/portraits/men/41.jpg",
       rating: 5,
       message:
         "Best biryani in town! Keep it up! The quality was excellent.",
@@ -76,8 +71,7 @@ const Testimonial = () => {
       id: 6,
       name: "Neha Reddy",
       email: "neha@gmail.com",
-      image:
-        "https://randomuser.me/api/portraits/women/49.jpg",
+      image: "https://randomuser.me/api/portraits/women/49.jpg",
       rating: 4,
       message:
         "Food was good, but delivery was a bit late. Overall nice experience.",
@@ -89,8 +83,7 @@ const Testimonial = () => {
       id: 7,
       name: "Arjun Das",
       email: "arjun@gmail.com",
-      image:
-        "https://randomuser.me/api/portraits/men/22.jpg",
+      image: "https://randomuser.me/api/portraits/men/22.jpg",
       rating: 5,
       message:
         "Excellent food quality and wonderful customer service.",
@@ -102,8 +95,7 @@ const Testimonial = () => {
       id: 8,
       name: "Riya Mohanty",
       email: "riya@gmail.com",
-      image:
-        "https://randomuser.me/api/portraits/women/33.jpg",
+      image: "https://randomuser.me/api/portraits/women/33.jpg",
       rating: 3,
       message:
         "The food was tasty and nicely packed. Delivery could be faster.",
@@ -115,8 +107,7 @@ const Testimonial = () => {
       id: 9,
       name: "Sourav Nayak",
       email: "sourav@gmail.com",
-      image:
-        "https://randomuser.me/api/portraits/men/55.jpg",
+      image: "https://randomuser.me/api/portraits/men/55.jpg",
       rating: 5,
       message:
         "Absolutely loved the food. Everything was fresh and delicious.",
@@ -128,8 +119,7 @@ const Testimonial = () => {
       id: 10,
       name: "Puja Rout",
       email: "puja@gmail.com",
-      image:
-        "https://randomuser.me/api/portraits/women/52.jpg",
+      image: "https://randomuser.me/api/portraits/women/52.jpg",
       rating: 4,
       message:
         "Very good experience. The food arrived hot and fresh.",
@@ -141,8 +131,7 @@ const Testimonial = () => {
       id: 11,
       name: "Manas Behera",
       email: "manas@gmail.com",
-      image:
-        "https://randomuser.me/api/portraits/men/64.jpg",
+      image: "https://randomuser.me/api/portraits/men/64.jpg",
       rating: 5,
       message:
         "Wonderful taste and excellent packaging. Highly recommended.",
@@ -154,8 +143,7 @@ const Testimonial = () => {
       id: 12,
       name: "Sweta Jena",
       email: "sweta@gmail.com",
-      image:
-        "https://randomuser.me/api/portraits/women/68.jpg",
+      image: "https://randomuser.me/api/portraits/women/68.jpg",
       rating: 2,
       message:
         "Food was average and delivery took longer than expected.",
@@ -167,8 +155,7 @@ const Testimonial = () => {
       id: 13,
       name: "Rakesh Das",
       email: "rakesh@gmail.com",
-      image:
-        "https://randomuser.me/api/portraits/men/72.jpg",
+      image: "https://randomuser.me/api/portraits/men/72.jpg",
       rating: 5,
       message:
         "Amazing experience. The taste was exactly what I expected.",
@@ -180,8 +167,7 @@ const Testimonial = () => {
       id: 14,
       name: "Anjali Mehta",
       email: "anjali@gmail.com",
-      image:
-        "https://randomuser.me/api/portraits/women/21.jpg",
+      image: "https://randomuser.me/api/portraits/women/21.jpg",
       rating: 4,
       message:
         "Fresh food, great presentation and quick delivery.",
@@ -193,8 +179,7 @@ const Testimonial = () => {
       id: 15,
       name: "Karan Patel",
       email: "karan@gmail.com",
-      image:
-        "https://randomuser.me/api/portraits/men/31.jpg",
+      image: "https://randomuser.me/api/portraits/men/31.jpg",
       rating: 5,
       message:
         "One of the best food experiences I have had recently.",
@@ -206,8 +191,7 @@ const Testimonial = () => {
       id: 16,
       name: "Megha Sahu",
       email: "megha@gmail.com",
-      image:
-        "https://randomuser.me/api/portraits/women/18.jpg",
+      image: "https://randomuser.me/api/portraits/women/18.jpg",
       rating: 4,
       message:
         "Very tasty and well packed. Would order again.",
@@ -219,8 +203,7 @@ const Testimonial = () => {
       id: 17,
       name: "Deepak Roy",
       email: "deepak@gmail.com",
-      image:
-        "https://randomuser.me/api/portraits/men/38.jpg",
+      image: "https://randomuser.me/api/portraits/men/38.jpg",
       rating: 3,
       message:
         "Good overall experience, but there is room for improvement.",
@@ -232,8 +215,7 @@ const Testimonial = () => {
       id: 18,
       name: "Nisha Gupta",
       email: "nisha@gmail.com",
-      image:
-        "https://randomuser.me/api/portraits/women/29.jpg",
+      image: "https://randomuser.me/api/portraits/women/29.jpg",
       rating: 5,
       message:
         "Everything was perfect from ordering to delivery.",
@@ -244,12 +226,11 @@ const Testimonial = () => {
   ];
 
   /* =========================================================
-     STATES
+      STATES
   ========================================================= */
 
   const [testimonials, setTestimonials] = useState(() => {
-    const saved =
-      localStorage.getItem("TestimonialData");
+    const saved = localStorage.getItem("TestimonialData");
 
     if (saved) {
       try {
@@ -263,40 +244,22 @@ const Testimonial = () => {
   });
 
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] =
-    useState("All Status");
-
-  const [ratingFilter, setRatingFilter] =
-    useState("All Ratings");
-
+  const [statusFilter, setStatusFilter] = useState("All Status");
+  const [ratingFilter, setRatingFilter] = useState("All Ratings");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
 
-  const [calendarType, setCalendarType] =
-    useState(null);
+  const [calendarType, setCalendarType] = useState(null);
+  const [calendarMonth, setCalendarMonth] = useState(new Date().getMonth());
+  const [calendarYear, setCalendarYear] = useState(new Date().getFullYear());
 
-  const [calendarMonth, setCalendarMonth] =
-    useState(new Date().getMonth());
-
-  const [calendarYear, setCalendarYear] =
-    useState(new Date().getFullYear());
-
-  const [selectedIds, setSelectedIds] =
-    useState([]);
-
+  const [selectedIds, setSelectedIds] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [viewTestimonial, setViewTestimonial] =
-    useState(null);
-
-  const [editTestimonial, setEditTestimonial] =
-    useState(null);
-
-  const [deleteTestimonial, setDeleteTestimonial] =
-    useState(null);
-
-  const [showBulkDelete, setShowBulkDelete] =
-    useState(false);
+  const [viewTestimonial, setViewTestimonial] = useState(null);
+  const [editTestimonial, setEditTestimonial] = useState(null);
+  const [deleteTestimonial, setDeleteTestimonial] = useState(null);
+  const [showBulkDelete, setShowBulkDelete] = useState(false);
 
   const [editForm, setEditForm] = useState({
     name: "",
@@ -309,44 +272,21 @@ const Testimonial = () => {
   const ITEMS_PER_PAGE = 6;
 
   /* =========================================================
-     SAVE DATA
+      SAVE DATA
   ========================================================= */
 
   useEffect(() => {
-    localStorage.setItem(
-      "TestimonialData",
-      JSON.stringify(testimonials)
-    );
+    localStorage.setItem("TestimonialData", JSON.stringify(testimonials));
   }, [testimonials]);
 
   /* =========================================================
-     STATISTICS
-  ========================================================= */
-
-  const totalTestimonials = testimonials.length;
-
-  const approvedCount = testimonials.filter(
-    (item) => item.status === "Approved"
-  ).length;
-
-  const pendingCount = testimonials.filter(
-    (item) => item.status === "Pending"
-  ).length;
-
-  const rejectedCount = testimonials.filter(
-    (item) => item.status === "Rejected"
-  ).length;
-
-  /* =========================================================
-     FORMAT DATE
+      FORMAT DATE
   ========================================================= */
 
   const formatDate = (date) => {
     if (!date) return "";
 
-    return new Date(
-      `${date}T00:00:00`
-    ).toLocaleDateString("en-IN", {
+    return new Date(`${date}T00:00:00`).toLocaleDateString("en-IN", {
       day: "2-digit",
       month: "short",
       year: "numeric",
@@ -354,7 +294,7 @@ const Testimonial = () => {
   };
 
   /* =========================================================
-     FILTER DATA
+      FILTER DATA
   ========================================================= */
 
   const filteredTestimonials = useMemo(() => {
@@ -368,18 +308,13 @@ const Testimonial = () => {
         item.message.toLowerCase().includes(query);
 
       const matchesStatus =
-        statusFilter === "All Status" ||
-        item.status === statusFilter;
+        statusFilter === "All Status" || item.status === statusFilter;
 
       const matchesRating =
-        ratingFilter === "All Ratings" ||
-        item.rating === Number(ratingFilter);
+        ratingFilter === "All Ratings" || item.rating === Number(ratingFilter);
 
-      const matchesFrom =
-        !fromDate || item.date >= fromDate;
-
-      const matchesTo =
-        !toDate || item.date <= toDate;
+      const matchesFrom = !fromDate || item.date >= fromDate;
+      const matchesTo = !toDate || item.date <= toDate;
 
       return (
         matchesSearch &&
@@ -389,35 +324,23 @@ const Testimonial = () => {
         matchesTo
       );
     });
-  }, [
-    testimonials,
-    search,
-    statusFilter,
-    ratingFilter,
-    fromDate,
-    toDate,
-  ]);
+  }, [testimonials, search, statusFilter, ratingFilter, fromDate, toDate]);
 
   /* =========================================================
-     PAGINATION
+      PAGINATION
   ========================================================= */
 
   const totalPages = Math.max(
     1,
-    Math.ceil(
-      filteredTestimonials.length /
-        ITEMS_PER_PAGE
-    )
+    Math.ceil(filteredTestimonials.length / ITEMS_PER_PAGE)
   );
 
-  const startIndex =
-    (currentPage - 1) * ITEMS_PER_PAGE;
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
 
-  const currentTestimonials =
-    filteredTestimonials.slice(
-      startIndex,
-      startIndex + ITEMS_PER_PAGE
-    );
+  const currentTestimonials = filteredTestimonials.slice(
+    startIndex,
+    startIndex + ITEMS_PER_PAGE
+  );
 
   useEffect(() => {
     if (currentPage > totalPages) {
@@ -426,25 +349,19 @@ const Testimonial = () => {
   }, [currentPage, totalPages]);
 
   /* =========================================================
-     SELECT ALL
+      SELECT ALL
   ========================================================= */
 
-  const currentIds = currentTestimonials.map(
-    (item) => item.id
-  );
+  const currentIds = currentTestimonials.map((item) => item.id);
 
   const allSelected =
     currentIds.length > 0 &&
-    currentIds.every((id) =>
-      selectedIds.includes(id)
-    );
+    currentIds.every((id) => selectedIds.includes(id));
 
   const handleSelectAll = () => {
     if (allSelected) {
       setSelectedIds((prev) =>
-        prev.filter(
-          (id) => !currentIds.includes(id)
-        )
+        prev.filter((id) => !currentIds.includes(id))
       );
     } else {
       setSelectedIds((prev) => [
@@ -454,7 +371,7 @@ const Testimonial = () => {
   };
 
   /* =========================================================
-     SINGLE SELECT
+      SINGLE SELECT
   ========================================================= */
 
   const handleSelect = (id) => {
@@ -466,7 +383,7 @@ const Testimonial = () => {
   };
 
   /* =========================================================
-     RESET
+      RESET
   ========================================================= */
 
   const handleReset = () => {
@@ -480,7 +397,7 @@ const Testimonial = () => {
   };
 
   /* =========================================================
-     REFRESH
+      REFRESH
   ========================================================= */
 
   const handleRefresh = () => {
@@ -490,7 +407,7 @@ const Testimonial = () => {
   };
 
   /* =========================================================
-     EDIT
+      EDIT
   ========================================================= */
 
   const openEdit = (item) => {
@@ -534,37 +451,30 @@ const Testimonial = () => {
   };
 
   /* =========================================================
-     DELETE SINGLE
+      DELETE SINGLE
   ========================================================= */
 
   const confirmDelete = () => {
     if (!deleteTestimonial) return;
 
     setTestimonials((prev) =>
-      prev.filter(
-        (item) =>
-          item.id !== deleteTestimonial.id
-      )
+      prev.filter((item) => item.id !== deleteTestimonial.id)
     );
 
     setSelectedIds((prev) =>
-      prev.filter(
-        (id) => id !== deleteTestimonial.id
-      )
+      prev.filter((id) => id !== deleteTestimonial.id)
     );
 
     setDeleteTestimonial(null);
   };
 
   /* =========================================================
-     DELETE SELECTED
+      DELETE SELECTED
   ========================================================= */
 
   const confirmBulkDelete = () => {
     setTestimonials((prev) =>
-      prev.filter(
-        (item) => !selectedIds.includes(item.id)
-      )
+      prev.filter((item) => !selectedIds.includes(item.id))
     );
 
     setSelectedIds([]);
@@ -572,93 +482,16 @@ const Testimonial = () => {
   };
 
   /* =========================================================
-     EXPORT CSV
-  ========================================================= */
-
-  const exportCSV = () => {
-    if (!filteredTestimonials.length) {
-      alert("No testimonials available.");
-      return;
-    }
-
-    const headers = [
-      "Name",
-      "Email",
-      "Rating",
-      "Message",
-      "Date",
-      "Status",
-    ];
-
-    const rows = filteredTestimonials.map(
-      (item) => [
-        item.name,
-        item.email,
-        item.rating,
-        item.message,
-        formatDate(item.date),
-        item.status,
-      ]
-    );
-
-    const csv = [
-      headers.join(","),
-      ...rows.map((row) =>
-        row
-          .map((value) =>
-            `"${String(value).replace(
-              /"/g,
-              '""'
-            )}"`
-          )
-          .join(",")
-      ),
-    ].join("\n");
-
-    const blob = new Blob([csv], {
-      type: "text/csv;charset=utf-8;",
-    });
-
-    const url =
-      URL.createObjectURL(blob);
-
-    const link =
-      document.createElement("a");
-
-    link.href = url;
-    link.download =
-      "testimonials.csv";
-
-    document.body.appendChild(link);
-
-    link.click();
-
-    document.body.removeChild(link);
-
-    URL.revokeObjectURL(url);
-  };
-
-  /* =========================================================
-     PAGINATION BUTTONS
+      PAGINATION BUTTONS
   ========================================================= */
 
   const getPages = () => {
     if (totalPages <= 6) {
-      return Array.from(
-        { length: totalPages },
-        (_, index) => index + 1
-      );
+      return Array.from({ length: totalPages }, (_, index) => index + 1);
     }
 
     if (currentPage <= 3) {
-      return [
-        1,
-        2,
-        3,
-        4,
-        "...",
-        totalPages,
-      ];
+      return [1, 2, 3, 4, "...", totalPages];
     }
 
     if (currentPage >= totalPages - 2) {
@@ -684,7 +517,7 @@ const Testimonial = () => {
   };
 
   /* =========================================================
-     CALENDAR
+      CALENDAR
   ========================================================= */
 
   const monthNames = [
@@ -703,18 +536,12 @@ const Testimonial = () => {
   ];
 
   const getCalendarDays = () => {
-    const firstDay = new Date(
-      calendarYear,
-      calendarMonth,
-      1
-    ).getDay();
-
+    const firstDay = new Date(calendarYear, calendarMonth, 1).getDay();
     const daysInMonth = new Date(
       calendarYear,
       calendarMonth + 1,
       0
     ).getDate();
-
     const previousMonthDays = new Date(
       calendarYear,
       calendarMonth,
@@ -723,22 +550,14 @@ const Testimonial = () => {
 
     const days = [];
 
-    for (
-      let i = firstDay - 1;
-      i >= 0;
-      i--
-    ) {
+    for (let i = firstDay - 1; i >= 0; i--) {
       days.push({
         day: previousMonthDays - i,
         outside: true,
       });
     }
 
-    for (
-      let i = 1;
-      i <= daysInMonth;
-      i++
-    ) {
+    for (let i = 1; i <= daysInMonth; i++) {
       days.push({
         day: i,
         outside: false,
@@ -747,11 +566,7 @@ const Testimonial = () => {
 
     while (days.length < 42) {
       days.push({
-        day:
-          days.length -
-          daysInMonth -
-          firstDay +
-          1,
+        day: days.length - daysInMonth - firstDay + 1,
         outside: true,
       });
     }
@@ -763,66 +578,38 @@ const Testimonial = () => {
     if (direction === "prev") {
       if (calendarMonth === 0) {
         setCalendarMonth(11);
-        setCalendarYear(
-          (prev) => prev - 1
-        );
+        setCalendarYear((prev) => prev - 1);
       } else {
-        setCalendarMonth(
-          (prev) => prev - 1
-        );
+        setCalendarMonth((prev) => prev - 1);
       }
     } else {
       if (calendarMonth === 11) {
         setCalendarMonth(0);
-        setCalendarYear(
-          (prev) => prev + 1
-        );
+        setCalendarYear((prev) => prev + 1);
       } else {
-        setCalendarMonth(
-          (prev) => prev + 1
-        );
+        setCalendarMonth((prev) => prev + 1);
       }
     }
   };
 
   const openCalendar = (type) => {
-    setCalendarType(
-      calendarType === type ? null : type
-    );
+    setCalendarType(calendarType === type ? null : type);
 
-    const selected =
-      type === "from" ? fromDate : toDate;
+    const selected = type === "from" ? fromDate : toDate;
 
     if (selected) {
-      const date = new Date(
-        `${selected}T00:00:00`
-      );
-
-      setCalendarMonth(
-        date.getMonth()
-      );
-
-      setCalendarYear(
-        date.getFullYear()
-      );
+      const date = new Date(`${selected}T00:00:00`);
+      setCalendarMonth(date.getMonth());
+      setCalendarYear(date.getFullYear());
     }
   };
 
-  const selectDate = (
-    day,
-    outside
-  ) => {
+  const selectDate = (day, outside) => {
     if (outside) return;
 
-    const month = String(
-      calendarMonth + 1
-    ).padStart(2, "0");
-
-    const selectedDay =
-      String(day).padStart(2, "0");
-
-    const selectedDate =
-      `${calendarYear}-${month}-${selectedDay}`;
+    const month = String(calendarMonth + 1).padStart(2, "0");
+    const selectedDay = String(day).padStart(2, "0");
+    const selectedDate = `${calendarYear}-${month}-${selectedDay}`;
 
     if (calendarType === "from") {
       setFromDate(selectedDate);
@@ -837,30 +624,18 @@ const Testimonial = () => {
   };
 
   const isSelectedDate = (day) => {
-    const month = String(
-      calendarMonth + 1
-    ).padStart(2, "0");
+    const month = String(calendarMonth + 1).padStart(2, "0");
+    const selectedDay = String(day).padStart(2, "0");
+    const value = `${calendarYear}-${month}-${selectedDay}`;
 
-    const selectedDay =
-      String(day).padStart(2, "0");
-
-    const value =
-      `${calendarYear}-${month}-${selectedDay}`;
-
-    return (
-      value === fromDate ||
-      value === toDate
-    );
+    return value === fromDate || value === toDate;
   };
 
   /* =========================================================
-     ICON SYSTEM
+      ICON SYSTEM
   ========================================================= */
 
-  const Icon = ({
-    name,
-    size = 20,
-  }) => {
+  const Icon = ({ name, size = 20 }) => {
     const props = {
       width: size,
       height: size,
@@ -915,13 +690,7 @@ const Testimonial = () => {
       case "calendar":
         return (
           <svg {...props}>
-            <rect
-              x="3"
-              y="4"
-              width="18"
-              height="17"
-              rx="2"
-            />
+            <rect x="3" y="4" width="18" height="17" rx="2" />
             <path d="M8 2v4M16 2v4M3 9h18" />
           </svg>
         );
@@ -940,15 +709,6 @@ const Testimonial = () => {
             <path d="M3 5v5h5" />
             <path d="M4 13a8 8 0 0 0 14.7 4L21 14" />
             <path d="M21 19v-5h-5" />
-          </svg>
-        );
-
-      case "download":
-        return (
-          <svg {...props}>
-            <path d="M12 3v12" />
-            <path d="m7 10 5 5 5-5" />
-            <path d="M4 21h16" />
           </svg>
         );
 
@@ -1014,210 +774,63 @@ const Testimonial = () => {
   };
 
   /* =========================================================
-     STAR COMPONENT
+      STAR COMPONENT
   ========================================================= */
 
-  const RatingStars = ({
-    rating,
-    interactive = false,
-    onChange,
-  }) => {
+  const RatingStars = ({ rating, interactive = false, onChange }) => {
     return (
       <div
         className={`Testimonial__stars ${
-          interactive
-            ? "Testimonial__stars--interactive"
-            : ""
+          interactive ? "Testimonial__stars--interactive" : ""
         }`}
       >
-        {[1, 2, 3, 4, 5].map(
-          (star) => (
-            <button
-              key={star}
-              type="button"
-              disabled={!interactive}
-              onClick={() =>
-                interactive &&
-                onChange &&
-                onChange(star)
-              }
-              className={
-                star <= rating
-                  ? "Testimonial__star Testimonial__star--active"
-                  : "Testimonial__star"
-              }
-            >
-              <Icon
-                name="star"
-                size={interactive ? 22 : 17}
-              />
-            </button>
-          )
-        )}
+        {[1, 2, 3, 4, 5].map((star) => (
+          <button
+            key={star}
+            type="button"
+            disabled={!interactive}
+            onClick={() => interactive && onChange && onChange(star)}
+            className={
+              star <= rating
+                ? "Testimonial__star Testimonial__star--active"
+                : "Testimonial__star"
+            }
+          >
+            <Icon name="star" size={interactive ? 22 : 17} />
+          </button>
+        ))}
       </div>
     );
   };
 
   return (
     <div className="Testimonial">
-
       {/* =====================================================
           HEADER
       ===================================================== */}
 
       <div className="Testimonial__header">
-
         <div className="Testimonial__headerLeft">
-
           <div className="Testimonial__headerIcon">
             <Icon name="star" size={30} />
           </div>
 
           <div>
             <h1>Testimonials</h1>
-
-            <p>
-              Manage and view all customer
-              testimonials
-            </p>
+            <p>Manage and view all customer testimonials</p>
           </div>
-
         </div>
 
         <div className="Testimonial__breadcrumb">
-
           <span>
             <Icon name="home" size={15} />
             Dashboard
           </span>
 
-          <Icon
-            name="arrowRight"
-            size={14}
-          />
+          <Icon name="arrowRight" size={14} />
 
           <strong>Testimonials</strong>
-
         </div>
-
-      </div>
-
-      {/* =====================================================
-          STAT CARDS
-      ===================================================== */}
-
-      <div className="Testimonial__stats">
-
-        <div className="Testimonial__statCard">
-
-          <div className="Testimonial__statIcon Testimonial__statIcon--orange">
-            <Icon name="star" size={28} />
-          </div>
-
-          <div className="Testimonial__statContent">
-
-            <span>Total Testimonials</span>
-
-            <div className="Testimonial__statValue">
-              <strong>
-                {totalTestimonials + 30}
-              </strong>
-
-              <small className="Testimonial__green">
-                ↗ +12%
-              </small>
-            </div>
-
-            <p>All time testimonials</p>
-
-          </div>
-
-        </div>
-
-        <div className="Testimonial__statCard">
-
-          <div className="Testimonial__statIcon Testimonial__statIcon--green">
-            <Icon
-              name="message"
-              size={28}
-            />
-          </div>
-
-          <div className="Testimonial__statContent">
-
-            <span>Approved</span>
-
-            <div className="Testimonial__statValue">
-              <strong>
-                {approvedCount + 25}
-              </strong>
-
-              <small className="Testimonial__green">
-                ↗ +18%
-              </small>
-            </div>
-
-            <p>Published on website</p>
-
-          </div>
-
-        </div>
-
-        <div className="Testimonial__statCard">
-
-          <div className="Testimonial__statIcon Testimonial__statIcon--yellow">
-            <Icon name="clock" size={28} />
-          </div>
-
-          <div className="Testimonial__statContent">
-
-            <span>Pending</span>
-
-            <div className="Testimonial__statValue">
-              <strong>
-                {pendingCount}
-              </strong>
-
-              <small className="Testimonial__red">
-                ↘ -14%
-              </small>
-            </div>
-
-            <p>Awaiting approval</p>
-
-          </div>
-
-        </div>
-
-        <div className="Testimonial__statCard">
-
-          <div className="Testimonial__statIcon Testimonial__statIcon--red">
-            <Icon
-              name="closeCircle"
-              size={28}
-            />
-          </div>
-
-          <div className="Testimonial__statContent">
-
-            <span>Rejected</span>
-
-            <div className="Testimonial__statValue">
-              <strong>
-                {rejectedCount}
-              </strong>
-
-              <small className="Testimonial__red">
-                ↘ -20%
-              </small>
-            </div>
-
-            <p>Not approved</p>
-
-          </div>
-
-        </div>
-
       </div>
 
       {/* =====================================================
@@ -1225,17 +838,11 @@ const Testimonial = () => {
       ===================================================== */}
 
       <div className="Testimonial__filterCard">
-
         <div className="Testimonial__filterField Testimonial__searchField">
-
           <label>Search</label>
 
           <div className="Testimonial__inputBox">
-
-            <Icon
-              name="search"
-              size={17}
-            />
+            <Icon name="search" size={17} />
 
             <input
               type="text"
@@ -1246,21 +853,16 @@ const Testimonial = () => {
               }}
               placeholder="Search by name, email or message..."
             />
-
           </div>
-
         </div>
 
         <div className="Testimonial__filterField">
-
           <label>Status</label>
 
           <select
             value={statusFilter}
             onChange={(e) => {
-              setStatusFilter(
-                e.target.value
-              );
+              setStatusFilter(e.target.value);
               setCurrentPage(1);
             }}
           >
@@ -1269,293 +871,170 @@ const Testimonial = () => {
             <option>Pending</option>
             <option>Rejected</option>
           </select>
-
         </div>
 
         <div className="Testimonial__filterField">
-
           <label>Rating</label>
 
           <select
             value={ratingFilter}
             onChange={(e) => {
-              setRatingFilter(
-                e.target.value
-              );
+              setRatingFilter(e.target.value);
               setCurrentPage(1);
             }}
           >
             <option>All Ratings</option>
-            <option value="5">
-              5 Stars
-            </option>
-            <option value="4">
-              4 Stars
-            </option>
-            <option value="3">
-              3 Stars
-            </option>
-            <option value="2">
-              2 Stars
-            </option>
-            <option value="1">
-              1 Star
-            </option>
+            <option value="5">5 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="2">2 Stars</option>
+            <option value="1">1 Star</option>
           </select>
-
         </div>
 
         {/* FROM DATE */}
 
         <div className="Testimonial__filterField Testimonial__calendarField">
-
           <label>From Date</label>
 
           <button
             type="button"
             className="Testimonial__dateButton"
-            onClick={() =>
-              openCalendar("from")
-            }
+            onClick={() => openCalendar("from")}
           >
-            <span>
-              {fromDate
-                ? formatDate(fromDate)
-                : "dd-mm-yyyy"}
-            </span>
+            <span>{fromDate ? formatDate(fromDate) : "dd-mm-yyyy"}</span>
 
-            <Icon
-              name="calendar"
-              size={16}
-            />
+            <Icon name="calendar" size={16} />
           </button>
 
           {calendarType === "from" && (
             <div className="Testimonial__calendar">
-
               <div className="Testimonial__calendarHeader">
-
                 <button
                   type="button"
-                  onClick={() =>
-                    changeMonth("prev")
-                  }
+                  onClick={() => changeMonth("prev")}
                 >
-                  <Icon
-                    name="arrowLeft"
-                    size={15}
-                  />
+                  <Icon name="arrowLeft" size={15} />
                 </button>
 
                 <strong>
-                  {
-                    monthNames[
-                      calendarMonth
-                    ]
-                  }{" "}
-                  {calendarYear}
+                  {monthNames[calendarMonth]} {calendarYear}
                 </strong>
 
                 <button
                   type="button"
-                  onClick={() =>
-                    changeMonth("next")
-                  }
+                  onClick={() => changeMonth("next")}
                 >
-                  <Icon
-                    name="arrowRight"
-                    size={15}
-                  />
+                  <Icon name="arrowRight" size={15} />
                 </button>
-
               </div>
 
               <div className="Testimonial__calendarWeek">
-
-                {[
-                  "Su",
-                  "Mo",
-                  "Tu",
-                  "We",
-                  "Th",
-                  "Fr",
-                  "Sa",
-                ].map((day) => (
-                  <span key={day}>
-                    {day}
-                  </span>
-                ))}
-
+                {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map(
+                  (day) => (
+                    <span key={day}>{day}</span>
+                  )
+                )}
               </div>
 
               <div className="Testimonial__calendarDays">
-
-                {getCalendarDays().map(
-                  (item, index) => (
-                    <button
-                      key={index}
-                      type="button"
-                      disabled={
-                        item.outside
-                      }
-                      className={
-                        isSelectedDate(
-                          item.day
-                        )
-                          ? "Testimonial__calendarSelected"
-                          : ""
-                      }
-                      onClick={() =>
-                        selectDate(
-                          item.day,
-                          item.outside
-                        )
-                      }
-                    >
-                      {item.day}
-                    </button>
-                  )
-                )}
-
+                {getCalendarDays().map((item, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    disabled={item.outside}
+                    className={
+                      isSelectedDate(item.day)
+                        ? "Testimonial__calendarSelected"
+                        : ""
+                    }
+                    onClick={() =>
+                      selectDate(item.day, item.outside)
+                    }
+                  >
+                    {item.day}
+                  </button>
+                ))}
               </div>
-
             </div>
           )}
-
         </div>
 
         {/* TO DATE */}
 
         <div className="Testimonial__filterField Testimonial__calendarField">
-
           <label>To Date</label>
 
           <button
             type="button"
             className="Testimonial__dateButton"
-            onClick={() =>
-              openCalendar("to")
-            }
+            onClick={() => openCalendar("to")}
           >
-            <span>
-              {toDate
-                ? formatDate(toDate)
-                : "dd-mm-yyyy"}
-            </span>
+            <span>{toDate ? formatDate(toDate) : "dd-mm-yyyy"}</span>
 
-            <Icon
-              name="calendar"
-              size={16}
-            />
+            <Icon name="calendar" size={16} />
           </button>
 
           {calendarType === "to" && (
             <div className="Testimonial__calendar">
-
               <div className="Testimonial__calendarHeader">
-
                 <button
                   type="button"
-                  onClick={() =>
-                    changeMonth("prev")
-                  }
+                  onClick={() => changeMonth("prev")}
                 >
-                  <Icon
-                    name="arrowLeft"
-                    size={15}
-                  />
+                  <Icon name="arrowLeft" size={15} />
                 </button>
 
                 <strong>
-                  {
-                    monthNames[
-                      calendarMonth
-                    ]
-                  }{" "}
-                  {calendarYear}
+                  {monthNames[calendarMonth]} {calendarYear}
                 </strong>
 
                 <button
                   type="button"
-                  onClick={() =>
-                    changeMonth("next")
-                  }
+                  onClick={() => changeMonth("next")}
                 >
-                  <Icon
-                    name="arrowRight"
-                    size={15}
-                  />
+                  <Icon name="arrowRight" size={15} />
                 </button>
-
               </div>
 
               <div className="Testimonial__calendarWeek">
-
-                {[
-                  "Su",
-                  "Mo",
-                  "Tu",
-                  "We",
-                  "Th",
-                  "Fr",
-                  "Sa",
-                ].map((day) => (
-                  <span key={day}>
-                    {day}
-                  </span>
-                ))}
-
+                {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map(
+                  (day) => (
+                    <span key={day}>{day}</span>
+                  )
+                )}
               </div>
 
               <div className="Testimonial__calendarDays">
-
-                {getCalendarDays().map(
-                  (item, index) => (
-                    <button
-                      key={index}
-                      type="button"
-                      disabled={
-                        item.outside
-                      }
-                      className={
-                        isSelectedDate(
-                          item.day
-                        )
-                          ? "Testimonial__calendarSelected"
-                          : ""
-                      }
-                      onClick={() =>
-                        selectDate(
-                          item.day,
-                          item.outside
-                        )
-                      }
-                    >
-                      {item.day}
-                    </button>
-                  )
-                )}
-
+                {getCalendarDays().map((item, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    disabled={item.outside}
+                    className={
+                      isSelectedDate(item.day)
+                        ? "Testimonial__calendarSelected"
+                        : ""
+                    }
+                    onClick={() =>
+                      selectDate(item.day, item.outside)
+                    }
+                  >
+                    {item.day}
+                  </button>
+                ))}
               </div>
-
             </div>
           )}
-
         </div>
 
         <div className="Testimonial__filterButtons">
-
           <button
             type="button"
             className="Testimonial__filterButton"
-            onClick={() =>
-              setCurrentPage(1)
-            }
+            onClick={() => setCurrentPage(1)}
           >
-            <Icon
-              name="filter"
-              size={17}
-            />
+            <Icon name="filter" size={17} />
             Filter
           </button>
 
@@ -1564,15 +1043,10 @@ const Testimonial = () => {
             className="Testimonial__resetButton"
             onClick={handleReset}
           >
-            <Icon
-              name="refresh"
-              size={16}
-            />
+            <Icon name="refresh" size={16} />
             Reset
           </button>
-
         </div>
-
       </div>
 
       {/* =====================================================
@@ -1580,52 +1054,23 @@ const Testimonial = () => {
       ===================================================== */}
 
       <div className="Testimonial__listCard">
-
         <div className="Testimonial__listHeader">
-
           <div className="Testimonial__listTitle">
-
             <div className="Testimonial__listIcon">
-              <Icon
-                name="message"
-                size={22}
-              />
+              <Icon name="message" size={22} />
             </div>
 
-            <h2>
-              Testimonials List
-            </h2>
-
+            <h2>Testimonials List</h2>
           </div>
 
           <div className="Testimonial__listActions">
-
-            <button
-              type="button"
-              className="Testimonial__exportButton"
-              onClick={exportCSV}
-            >
-              <Icon
-                name="download"
-                size={16}
-              />
-              Export CSV
-            </button>
-
             <button
               type="button"
               className="Testimonial__deleteSelected"
-              disabled={
-                selectedIds.length === 0
-              }
-              onClick={() =>
-                setShowBulkDelete(true)
-              }
+              disabled={selectedIds.length === 0}
+              onClick={() => setShowBulkDelete(true)}
             >
-              <Icon
-                name="trash"
-                size={16}
-              />
+              <Icon name="trash" size={16} />
               Delete Selected
             </button>
 
@@ -1635,14 +1080,9 @@ const Testimonial = () => {
               onClick={handleRefresh}
               title="Refresh"
             >
-              <Icon
-                name="refresh"
-                size={17}
-              />
+              <Icon name="refresh" size={17} />
             </button>
-
           </div>
-
         </div>
 
         {/* =====================================================
@@ -1650,31 +1090,18 @@ const Testimonial = () => {
         ===================================================== */}
 
         <div className="Testimonial__tableWrapper">
-
           <table className="Testimonial__table">
-
             <thead>
-
               <tr>
-
                 <th className="Testimonial__checkColumn">
-
                   <label className="Testimonial__checkbox">
-
                     <input
                       type="checkbox"
-                      checked={
-                        allSelected
-                      }
-                      onChange={
-                        handleSelectAll
-                      }
+                      checked={allSelected}
+                      onChange={handleSelectAll}
                     />
-
                     <span></span>
-
                   </label>
-
                 </th>
 
                 <th>#</th>
@@ -1684,194 +1111,103 @@ const Testimonial = () => {
                 <th>Date</th>
                 <th>Status</th>
                 <th>Actions</th>
-
               </tr>
-
             </thead>
 
             <tbody>
-
-              {currentTestimonials.length >
-              0 ? (
-                currentTestimonials.map(
-                  (item, index) => (
-                    <tr key={item.id}>
-
-                      <td>
-
-                        <label className="Testimonial__checkbox">
-
-                          <input
-                            type="checkbox"
-                            checked={selectedIds.includes(
-                              item.id
-                            )}
-                            onChange={() =>
-                              handleSelect(
-                                item.id
-                              )
-                            }
-                          />
-
-                          <span></span>
-
-                        </label>
-
-                      </td>
-
-                      <td>
-                        {startIndex +
-                          index +
-                          1}
-                      </td>
-
-                      <td>
-
-                        <div className="Testimonial__customer">
-
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                          />
-
-                          <div>
-
-                            <strong>
-                              {item.name}
-                            </strong>
-
-                            <span>
-                              {item.email}
-                            </span>
-
-                          </div>
-
-                        </div>
-
-                      </td>
-
-                      <td>
-
-                        <RatingStars
-                          rating={
-                            item.rating
-                          }
+              {currentTestimonials.length > 0 ? (
+                currentTestimonials.map((item, index) => (
+                  <tr key={item.id}>
+                    <td>
+                      <label className="Testimonial__checkbox">
+                        <input
+                          type="checkbox"
+                          checked={selectedIds.includes(item.id)}
+                          onChange={() => handleSelect(item.id)}
                         />
+                        <span></span>
+                      </label>
+                    </td>
 
-                      </td>
+                    <td>{startIndex + index + 1}</td>
 
-                      <td>
+                    <td>
+                      <div className="Testimonial__customer">
+                        <img src={item.image} alt={item.name} />
 
-                        <div className="Testimonial__message">
-
-                          {item.message}
-
+                        <div>
+                          <strong>{item.name}</strong>
+                          <span>{item.email}</span>
                         </div>
+                      </div>
+                    </td>
 
-                      </td>
+                    <td>
+                      <RatingStars rating={item.rating} />
+                    </td>
 
-                      <td>
+                    <td>
+                      <div className="Testimonial__message">
+                        {item.message}
+                      </div>
+                    </td>
 
-                        <div className="Testimonial__date">
+                    <td>
+                      <div className="Testimonial__date">
+                        <span>{formatDate(item.date)}</span>
+                        <small>{item.time}</small>
+                      </div>
+                    </td>
 
-                          <span>
-                            {formatDate(
-                              item.date
-                            )}
-                          </span>
+                    <td>
+                      <span
+                        className={`Testimonial__status Testimonial__status--${item.status.toLowerCase()}`}
+                      >
+                        {item.status}
+                      </span>
+                    </td>
 
-                          <small>
-                            {item.time}
-                          </small>
-
-                        </div>
-
-                      </td>
-
-                      <td>
-
-                        <span
-                          className={`Testimonial__status Testimonial__status--${item.status.toLowerCase()}`}
+                    <td>
+                      <div className="Testimonial__rowActions">
+                        <button
+                          type="button"
+                          className="Testimonial__rowButton Testimonial__viewButton"
+                          onClick={() => setViewTestimonial(item)}
+                          title="View"
                         >
-                          {item.status}
-                        </span>
+                          <Icon name="eye" size={16} />
+                        </button>
 
-                      </td>
+                        <button
+                          type="button"
+                          className="Testimonial__rowButton Testimonial__editButton"
+                          onClick={() => openEdit(item)}
+                          title="Edit"
+                        >
+                          <Icon name="edit" size={16} />
+                        </button>
 
-                      <td>
-
-                        <div className="Testimonial__rowActions">
-
-                          <button
-                            type="button"
-                            className="Testimonial__rowButton Testimonial__viewButton"
-                            onClick={() =>
-                              setViewTestimonial(
-                                item
-                              )
-                            }
-                            title="View"
-                          >
-                            <Icon
-                              name="eye"
-                              size={16}
-                            />
-                          </button>
-
-                          <button
-                            type="button"
-                            className="Testimonial__rowButton Testimonial__editButton"
-                            onClick={() =>
-                              openEdit(item)
-                            }
-                            title="Edit"
-                          >
-                            <Icon
-                              name="edit"
-                              size={16}
-                            />
-                          </button>
-
-                          <button
-                            type="button"
-                            className="Testimonial__rowButton Testimonial__deleteButton"
-                            onClick={() =>
-                              setDeleteTestimonial(
-                                item
-                              )
-                            }
-                            title="Delete"
-                          >
-                            <Icon
-                              name="trash"
-                              size={16}
-                            />
-                          </button>
-
-                        </div>
-
-                      </td>
-
-                    </tr>
-                  )
-                )
+                        <button
+                          type="button"
+                          className="Testimonial__rowButton Testimonial__deleteButton"
+                          onClick={() => setDeleteTestimonial(item)}
+                          title="Delete"
+                        >
+                          <Icon name="trash" size={16} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
               ) : (
                 <tr>
-
-                  <td
-                    colSpan="8"
-                    className="Testimonial__empty"
-                  >
+                  <td colSpan="8" className="Testimonial__empty">
                     No testimonials found.
                   </td>
-
                 </tr>
               )}
-
             </tbody>
-
           </table>
-
         </div>
 
         {/* =====================================================
@@ -1879,106 +1215,67 @@ const Testimonial = () => {
         ===================================================== */}
 
         <div className="Testimonial__paginationWrapper">
-
           <div className="Testimonial__paginationInfo">
-
             Showing{" "}
             <strong>
-              {filteredTestimonials.length
-                ? startIndex + 1
-                : 0}
+              {filteredTestimonials.length ? startIndex + 1 : 0}
             </strong>{" "}
             to{" "}
             <strong>
               {Math.min(
-                startIndex +
-                  ITEMS_PER_PAGE,
+                startIndex + ITEMS_PER_PAGE,
                 filteredTestimonials.length
               )}
             </strong>{" "}
-            of{" "}
-            <strong>
-              {filteredTestimonials.length}
-            </strong>{" "}
-            entries
-
+            of <strong>{filteredTestimonials.length}</strong> entries
           </div>
 
           {totalPages > 1 && (
             <div className="Testimonial__pagination">
-
               <button
                 type="button"
                 className="Testimonial__pageButton"
-                disabled={
-                  currentPage === 1
-                }
-                onClick={() =>
-                  setCurrentPage(
-                    (page) => page - 1
-                  )
-                }
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((page) => page - 1)}
               >
-                <Icon
-                  name="arrowLeft"
-                  size={16}
-                />
+                <Icon name="arrowLeft" size={16} />
               </button>
 
-              {getPages().map(
-                (page, index) =>
-                  page === "..." ? (
-                    <span
-                      key={`dots-${index}`}
-                      className="Testimonial__dots"
-                    >
-                      ...
-                    </span>
-                  ) : (
-                    <button
-                      type="button"
-                      key={page}
-                      className={`Testimonial__pageButton ${
-                        currentPage ===
-                        page
-                          ? "Testimonial__pageActive"
-                          : ""
-                      }`}
-                      onClick={() =>
-                        setCurrentPage(
-                          page
-                        )
-                      }
-                    >
-                      {page}
-                    </button>
-                  )
+              {getPages().map((page, index) =>
+                page === "..." ? (
+                  <span
+                    key={`dots-${index}`}
+                    className="Testimonial__dots"
+                  >
+                    ...
+                  </span>
+                ) : (
+                  <button
+                    type="button"
+                    key={page}
+                    className={`Testimonial__pageButton ${
+                      currentPage === page
+                        ? "Testimonial__pageActive"
+                        : ""
+                    }`}
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    {page}
+                  </button>
+                )
               )}
 
               <button
                 type="button"
                 className="Testimonial__pageButton"
-                disabled={
-                  currentPage ===
-                  totalPages
-                }
-                onClick={() =>
-                  setCurrentPage(
-                    (page) => page + 1
-                  )
-                }
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((page) => page + 1)}
               >
-                <Icon
-                  name="arrowRight"
-                  size={16}
-                />
+                <Icon name="arrowRight" size={16} />
               </button>
-
             </div>
           )}
-
         </div>
-
       </div>
 
       {/* =====================================================
@@ -1988,152 +1285,76 @@ const Testimonial = () => {
       {viewTestimonial && (
         <div
           className="Testimonial__modalOverlay"
-          onClick={() =>
-            setViewTestimonial(null)
-          }
+          onClick={() => setViewTestimonial(null)}
         >
-
           <div
             className="Testimonial__viewModal"
-            onClick={(e) =>
-              e.stopPropagation()
-            }
+            onClick={(e) => e.stopPropagation()}
           >
-
             <button
               type="button"
               className="Testimonial__modalClose"
-              onClick={() =>
-                setViewTestimonial(null)
-              }
+              onClick={() => setViewTestimonial(null)}
             >
-              <Icon
-                name="close"
-                size={17}
-              />
+              <Icon name="close" size={17} />
             </button>
 
             <div className="Testimonial__modalHeader">
-
               <div className="Testimonial__modalIcon Testimonial__modalIcon--blue">
-                <Icon
-                  name="eye"
-                  size={22}
-                />
+                <Icon name="eye" size={22} />
               </div>
 
               <div>
-
-                <h3>
-                  Testimonial Details
-                </h3>
-
-                <p>
-                  Customer feedback
-                </p>
-
+                <h3>Testimonial Details</h3>
+                <p>Customer feedback</p>
               </div>
-
             </div>
 
             <div className="Testimonial__profileBox">
-
               <img
-                src={
-                  viewTestimonial.image
-                }
-                alt={
-                  viewTestimonial.name
-                }
+                src={viewTestimonial.image}
+                alt={viewTestimonial.name}
               />
 
               <div>
-
-                <strong>
-                  {viewTestimonial.name}
-                </strong>
-
-                <span>
-                  {viewTestimonial.email}
-                </span>
-
-                <RatingStars
-                  rating={
-                    viewTestimonial.rating
-                  }
-                />
-
+                <strong>{viewTestimonial.name}</strong>
+                <span>{viewTestimonial.email}</span>
+                <RatingStars rating={viewTestimonial.rating} />
               </div>
-
             </div>
 
             <div className="Testimonial__viewGrid">
-
               <div className="Testimonial__viewItem">
-
                 <span>Date</span>
-
-                <strong>
-                  {formatDate(
-                    viewTestimonial.date
-                  )}
-                </strong>
-
-                <small>
-                  {viewTestimonial.time}
-                </small>
-
+                <strong>{formatDate(viewTestimonial.date)}</strong>
+                <small>{viewTestimonial.time}</small>
               </div>
 
               <div className="Testimonial__viewItem">
-
                 <span>Status</span>
-
                 <span
                   className={`Testimonial__status Testimonial__status--${viewTestimonial.status.toLowerCase()}`}
                 >
                   {viewTestimonial.status}
                 </span>
-
               </div>
 
               <div className="Testimonial__viewItem">
-
                 <span>Rating</span>
-
-                <strong>
-                  {
-                    viewTestimonial.rating
-                  }{" "}
-                  out of 5
-                </strong>
-
+                <strong>{viewTestimonial.rating} out of 5</strong>
               </div>
-
             </div>
 
             <div className="Testimonial__quoteBox">
-
-              <div className="Testimonial__quoteMark">
-                “
-              </div>
-
-              <p>
-                {viewTestimonial.message}
-              </p>
-
+              <div className="Testimonial__quoteMark">“</div>
+              <p>{viewTestimonial.message}</p>
             </div>
 
             <div className="Testimonial__modalFooter">
-
               <button
                 type="button"
                 className="Testimonial__cancelButton"
-                onClick={() =>
-                  setViewTestimonial(
-                    null
-                  )
-                }
+                onClick={() => setViewTestimonial(null)}
               >
                 Close
               </button>
@@ -2142,25 +1363,15 @@ const Testimonial = () => {
                 type="button"
                 className="Testimonial__saveButton"
                 onClick={() => {
-                  setViewTestimonial(
-                    null
-                  );
-                  openEdit(
-                    viewTestimonial
-                  );
+                  setViewTestimonial(null);
+                  openEdit(viewTestimonial);
                 }}
               >
-                <Icon
-                  name="edit"
-                  size={15}
-                />
+                <Icon name="edit" size={15} />
                 Edit Testimonial
               </button>
-
             </div>
-
           </div>
-
         </div>
       )}
 
@@ -2171,176 +1382,96 @@ const Testimonial = () => {
       {editTestimonial && (
         <div
           className="Testimonial__modalOverlay"
-          onClick={() =>
-            setEditTestimonial(null)
-          }
+          onClick={() => setEditTestimonial(null)}
         >
-
           <div
             className="Testimonial__editModal"
-            onClick={(e) =>
-              e.stopPropagation()
-            }
+            onClick={(e) => e.stopPropagation()}
           >
-
             <button
               type="button"
               className="Testimonial__modalClose"
-              onClick={() =>
-                setEditTestimonial(null)
-              }
+              onClick={() => setEditTestimonial(null)}
             >
-              <Icon
-                name="close"
-                size={17}
-              />
+              <Icon name="close" size={17} />
             </button>
 
             <div className="Testimonial__modalHeader">
-
               <div className="Testimonial__modalIcon Testimonial__modalIcon--green">
-                <Icon
-                  name="edit"
-                  size={22}
-                />
+                <Icon name="edit" size={22} />
               </div>
 
               <div>
-
-                <h3>
-                  Edit Testimonial
-                </h3>
-
-                <p>
-                  Update customer testimonial
-                </p>
-
+                <h3>Edit Testimonial</h3>
+                <p>Update customer testimonial</p>
               </div>
-
             </div>
 
             <div className="Testimonial__editGrid">
-
               <div className="Testimonial__editField">
-
-                <label>
-                  Customer Name *
-                </label>
-
+                <label>Customer Name *</label>
                 <input
                   type="text"
-                  value={
-                    editForm.name
-                  }
+                  value={editForm.name}
                   onChange={(e) =>
-                    handleEditChange(
-                      "name",
-                      e.target.value
-                    )
+                    handleEditChange("name", e.target.value)
                   }
                 />
-
               </div>
 
               <div className="Testimonial__editField">
-
                 <label>Email *</label>
-
                 <input
                   type="email"
-                  value={
-                    editForm.email
-                  }
+                  value={editForm.email}
                   onChange={(e) =>
-                    handleEditChange(
-                      "email",
-                      e.target.value
-                    )
+                    handleEditChange("email", e.target.value)
                   }
                 />
-
               </div>
 
               <div className="Testimonial__editField Testimonial__editField--rating">
-
                 <label>Rating *</label>
-
                 <RatingStars
-                  rating={
-                    editForm.rating
-                  }
+                  rating={editForm.rating}
                   interactive
                   onChange={(value) =>
-                    handleEditChange(
-                      "rating",
-                      value
-                    )
+                    handleEditChange("rating", value)
                   }
                 />
-
               </div>
 
               <div className="Testimonial__editField">
-
                 <label>Status *</label>
-
                 <select
-                  value={
-                    editForm.status
-                  }
+                  value={editForm.status}
                   onChange={(e) =>
-                    handleEditChange(
-                      "status",
-                      e.target.value
-                    )
+                    handleEditChange("status", e.target.value)
                   }
                 >
-                  <option>
-                    Approved
-                  </option>
-                  <option>
-                    Pending
-                  </option>
-                  <option>
-                    Rejected
-                  </option>
+                  <option>Approved</option>
+                  <option>Pending</option>
+                  <option>Rejected</option>
                 </select>
-
               </div>
 
               <div className="Testimonial__editField Testimonial__editField--full">
-
-                <label>
-                  Message *
-                </label>
-
+                <label>Message *</label>
                 <textarea
                   rows="5"
-                  value={
-                    editForm.message
-                  }
+                  value={editForm.message}
                   onChange={(e) =>
-                    handleEditChange(
-                      "message",
-                      e.target.value
-                    )
+                    handleEditChange("message", e.target.value)
                   }
                 />
-
               </div>
-
             </div>
 
             <div className="Testimonial__modalFooter">
-
               <button
                 type="button"
                 className="Testimonial__cancelButton"
-                onClick={() =>
-                  setEditTestimonial(
-                    null
-                  )
-                }
+                onClick={() => setEditTestimonial(null)}
               >
                 Cancel
               </button>
@@ -2352,11 +1483,8 @@ const Testimonial = () => {
               >
                 Update
               </button>
-
             </div>
-
           </div>
-
         </div>
       )}
 
@@ -2367,66 +1495,36 @@ const Testimonial = () => {
       {deleteTestimonial && (
         <div
           className="Testimonial__modalOverlay"
-          onClick={() =>
-            setDeleteTestimonial(
-              null
-            )
-          }
+          onClick={() => setDeleteTestimonial(null)}
         >
-
           <div
             className="Testimonial__deleteModal"
-            onClick={(e) =>
-              e.stopPropagation()
-            }
+            onClick={(e) => e.stopPropagation()}
           >
-
             <button
               type="button"
               className="Testimonial__modalClose"
-              onClick={() =>
-                setDeleteTestimonial(
-                  null
-                )
-              }
+              onClick={() => setDeleteTestimonial(null)}
             >
-              <Icon
-                name="close"
-                size={17}
-              />
+              <Icon name="close" size={17} />
             </button>
 
             <div className="Testimonial__deleteIcon">
-              <Icon
-                name="trash"
-                size={29}
-              />
+              <Icon name="trash" size={29} />
             </div>
 
-            <h3>
-              Delete Testimonial?
-            </h3>
+            <h3>Delete Testimonial?</h3>
 
             <p>
-              Are you sure you want to
-              permanently delete the
-              testimonial from{" "}
-              <strong>
-                {deleteTestimonial.name}
-              </strong>
-              ?
+              Are you sure you want to permanently delete the testimonial
+              from <strong>{deleteTestimonial.name}</strong>?
             </p>
 
             <div className="Testimonial__deleteActions">
-
               <button
                 type="button"
                 className="Testimonial__cancelDelete"
-                onClick={() =>
-                  setDeleteTestimonial(
-                    null
-                  )
-                }
+                onClick={() => setDeleteTestimonial(null)}
               >
                 Cancel
               </button>
@@ -2434,21 +1532,13 @@ const Testimonial = () => {
               <button
                 type="button"
                 className="Testimonial__confirmDelete"
-                onClick={
-                  confirmDelete
-                }
+                onClick={confirmDelete}
               >
-                <Icon
-                  name="trash"
-                  size={16}
-                />
+                <Icon name="trash" size={16} />
                 Delete
               </button>
-
             </div>
-
           </div>
-
         </div>
       )}
 
@@ -2459,62 +1549,37 @@ const Testimonial = () => {
       {showBulkDelete && (
         <div
           className="Testimonial__modalOverlay"
-          onClick={() =>
-            setShowBulkDelete(false)
-          }
+          onClick={() => setShowBulkDelete(false)}
         >
-
           <div
             className="Testimonial__deleteModal"
-            onClick={(e) =>
-              e.stopPropagation()
-            }
+            onClick={(e) => e.stopPropagation()}
           >
-
             <button
               type="button"
               className="Testimonial__modalClose"
-              onClick={() =>
-                setShowBulkDelete(false)
-              }
+              onClick={() => setShowBulkDelete(false)}
             >
-              <Icon
-                name="close"
-                size={17}
-              />
+              <Icon name="close" size={17} />
             </button>
 
             <div className="Testimonial__deleteIcon">
-              <Icon
-                name="trash"
-                size={29}
-              />
+              <Icon name="trash" size={29} />
             </div>
 
-            <h3>
-              Delete Selected?
-            </h3>
+            <h3>Delete Selected?</h3>
 
             <p>
               You have selected{" "}
-              <strong>
-                {selectedIds.length}
-              </strong>{" "}
-              testimonials. Are you
-              sure you want to delete
-              them?
+              <strong>{selectedIds.length}</strong> testimonials. Are you
+              sure you want to delete them?
             </p>
 
             <div className="Testimonial__deleteActions">
-
               <button
                 type="button"
                 className="Testimonial__cancelDelete"
-                onClick={() =>
-                  setShowBulkDelete(
-                    false
-                  )
-                }
+                onClick={() => setShowBulkDelete(false)}
               >
                 Cancel
               </button>
@@ -2522,24 +1587,15 @@ const Testimonial = () => {
               <button
                 type="button"
                 className="Testimonial__confirmDelete"
-                onClick={
-                  confirmBulkDelete
-                }
+                onClick={confirmBulkDelete}
               >
-                <Icon
-                  name="trash"
-                  size={16}
-                />
+                <Icon name="trash" size={16} />
                 Delete Selected
               </button>
-
             </div>
-
           </div>
-
         </div>
       )}
-
     </div>
   );
 };
