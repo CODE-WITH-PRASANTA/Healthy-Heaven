@@ -89,7 +89,7 @@
 }
 
 /* =========================================================
-   NAVIGATION LINKS (Bolder & crisp styling)
+   NAVIGATION LINKS
 ========================================================= */
 
 .Navbar-link {
@@ -106,7 +106,7 @@
 
   font-family: "Poppins", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 17px;
-  font-weight: 600; /* Bolder font weight */
+  font-weight: 600;
   letter-spacing: -0.2px;
 
   white-space: nowrap;
@@ -124,7 +124,7 @@
 }
 
 /* =========================================================
-   ACTIVE LINK (Real-time active state)
+   ACTIVE LINK
 ========================================================= */
 
 .Navbar-linkActive {
@@ -164,6 +164,8 @@
   align-items: center;
   gap: 14px;
   flex-shrink: 0;
+  position: relative;
+  z-index: 10;
 }
 
 /* =========================================================
@@ -175,13 +177,14 @@
   height: 42px;
   position: relative;
 
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 
   padding: 0;
   border: none;
   outline: none;
+  text-decoration: none;
 
   border-radius: 12px;
   background: #7da83b;
@@ -202,11 +205,18 @@
   transform: translateY(0) scale(0.96);
 }
 
+/* Prevents SVG elements from intercepting clicks meant for the <Link> */
 .Navbar-actionIcon {
   width: 25px;
   height: 25px;
   display: block;
+  pointer-events: none;
   transition: transform 0.25s ease;
+}
+
+.Navbar-actionIcon path,
+.Navbar-actionIcon circle {
+  pointer-events: none;
 }
 
 .Navbar-actionButton:hover .Navbar-actionIcon {
@@ -240,6 +250,7 @@
   line-height: 1;
 
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
 }
 
 /* =========================================================

@@ -1,35 +1,66 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
-import Home from "./pages/Home/Home";
-import Footer from "./Components/Footer/Footer";
-import Contact from "./Pages/Contact/Contact";
-import Faq from "./Pages/Faq/Faq";
+// Layout Components
 import Navbar from "./Components/Navbar/Navbar";
-import Testimonial from "./Pages/Testimonial/Testimonial";
-import MenuDetails from "./Pages/MenuDetails/MenuDetails";
+import Footer from "./Components/Footer/Footer";
+
+// Pages
+import Home from "./pages/Home/Home";
 import AboutUs from "./Pages/AboutUs/AboutUs";
-import Gallery from "./Pages/Gallery/Gallery";
+import MenuDetails from "./Pages/MenuDetails/MenuDetails";
 import MenuDetailsSection from "./Pages/MenuDetailsSection/MenuDetailsSection";
+import Gallery from "./Pages/Gallery/Gallery";
+import Testimonial from "./Pages/Testimonial/Testimonial";
+import Faq from "./Pages/Faq/Faq";
+import Contact from "./Pages/Contact/Contact";
+
+// Action Route Components
+import AddToCart from "./Components/AddToCart/AddToCart";
+import Account from "./Components/Account/Account";
+import FloatingForm from "./Components/FloatingForm/FloatingForm";
+
+// Automatically scrolls the window to the top on every route change
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant",
+    });
+  }, [pathname]);
+
+  return null;
+};
 
 const App = () => {
   return (
     <BrowserRouter>
-     <Navbar/>
+      <ScrollToTop />
+      <Navbar />
+
       <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/contact" element={<Contact/>} />
-        <Route path="/faq" element={<Faq/>} />
-        <Route path="/testimonial" element={<Testimonial/>} />
-        <Route path="/menu" element={<MenuDetails/>} />
-        <Route path="/about" element={<AboutUs/>} />
-        <Route path="/gallery" element={<Gallery/>} />
+        {/* Main Navigation Routes */}
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/menu" element={<MenuDetails />} />
+        <Route path="/menu-details" element={<MenuDetailsSection />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/testimonial" element={<Testimonial />} />
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/contact" element={<Contact />} />
+
+        {/* Action Routes */}
+        <Route path="/cart" element={<AddToCart />} />
+        <Route path="/account" element={<Account />} />
 
 
-        <Route path="/menu-details" element={<MenuDetailsSection/>} />
+
 
       </Routes>
-
+       <FloatingForm/>
       <Footer />
     </BrowserRouter>
   );

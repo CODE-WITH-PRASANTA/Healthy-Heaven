@@ -1,0 +1,372 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Overlay (Backdrop)
+   ========================================================================== */
+.Account-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+  z-index: 9998;
+}
+
+.Account-overlay-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ==========================================================================
+   Slide-in Drawer
+   ========================================================================== */
+.Account-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 460px;
+  max-width: 100vw;
+  height: 100vh;
+  background: #ffffff;
+  box-shadow: -10px 0 35px rgba(0, 0, 0, 0.14);
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.Account-drawer-open {
+  transform: translateX(0);
+}
+
+/* Cancel / Close Button */
+.Account-close-btn {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #718096;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  z-index: 10;
+}
+
+.Account-close-btn:hover {
+  background-color: #f7fafc;
+  color: #1a202c;
+}
+
+/* Drawer Content Container */
+.Account-content {
+  padding: 65px 38px 40px 38px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Notification banner */
+.Account-notification {
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  text-align: center;
+  animation: AccountFadeIn 0.3s ease;
+}
+
+.Account-notification-success {
+  background-color: #e6fffa;
+  color: #234e52;
+  border: 1px solid #b2f5ea;
+}
+
+.Account-notification-error {
+  background-color: #fff5f5;
+  color: #9b2c2c;
+  border: 1px solid #feb2b2;
+}
+
+@keyframes AccountFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header */
+.Account-header {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.Account-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1b1d28;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.3px;
+}
+
+.Account-subtitle {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #636a7b;
+  margin: 0;
+  padding: 0 8px;
+}
+
+/* Google Button */
+.Account-google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  height: 48px;
+  background: #ffffff;
+  border: 1px solid #dbe2ea;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #212529;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.Account-google-btn:hover {
+  background-color: #f8fafc;
+  border-color: #c7d2de;
+}
+
+.Account-google-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.Account-google-icon {
+  flex-shrink: 0;
+}
+
+/* Divider */
+.Account-divider {
+  display: flex;
+  align-items: center;
+  margin: 24px 0;
+  width: 100%;
+}
+
+.Account-divider-line {
+  flex: 1;
+  height: 1px;
+  background-color: #e2e8f0;
+}
+
+.Account-divider-text {
+  padding: 0 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a202c;
+  letter-spacing: 0.5px;
+}
+
+/* Form */
+.Account-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.Account-form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.Account-label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #1a202c;
+  margin-bottom: 7px;
+}
+
+.Account-required {
+  color: #ea2b3e;
+  margin-left: 2px;
+}
+
+.Account-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 15px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 13.5px;
+  color: #2d3748;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.Account-input::placeholder {
+  color: #9aa5b5;
+  font-weight: 400;
+}
+
+.Account-input:focus {
+  border-color: #ea2b3e;
+  box-shadow: 0 0 0 3px rgba(234, 43, 62, 0.1);
+}
+
+.Account-password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.Account-password-input {
+  padding-right: 46px;
+}
+
+.Account-password-toggle {
+  position: absolute;
+  right: 12px;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.Account-password-toggle:hover svg {
+  stroke: #4a5568;
+}
+
+/* Submit Button & Spinner */
+.Account-submit-btn {
+  width: 100%;
+  height: 48px;
+  background-color: #ea2b3e;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(234, 43, 62, 0.25);
+}
+
+.Account-submit-btn:hover:not(:disabled) {
+  background-color: #d82436;
+  box-shadow: 0 6px 16px rgba(234, 43, 62, 0.35);
+}
+
+.Account-submit-btn:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.Account-submit-btn:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+.Account-loader {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ffffff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: AccountSpin 0.7s linear infinite;
+}
+
+@keyframes AccountSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Footer & Toggle Links */
+.Account-footer {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 13.5px;
+}
+
+.Account-footer-text {
+  color: #555b6a;
+}
+
+.Account-footer-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #ea2b3e;
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+  font-family: inherit;
+  margin-left: 4px;
+  transition: text-decoration 0.2s ease;
+}
+
+.Account-footer-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media screen and (max-width: 500px) {
+  .Account-drawer {
+    width: 100vw;
+  }
+
+  .Account-content {
+    padding: 60px 24px 30px 24px;
+  }
+
+  .Account-title {
+    font-size: 22px;
+  }
+
+  .Account-subtitle {
+    font-size: 12.5px;
+    padding: 0;
+  }
+
+  .Account-close-btn {
+    top: 18px;
+    left: 18px;
+  }
+}
