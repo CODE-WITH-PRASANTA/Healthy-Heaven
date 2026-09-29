@@ -13,7 +13,11 @@ const coldLeadRoutes =
 const galleryRoutes =
   require("./src/routes/galleryRoutes");
 
-  const testimonialRoutes = require("./src/routes/testimonialRoutes");
+const testimonialRoutes =
+  require("./src/routes/testimonialRoutes");
+
+const menuRoutes =
+  require("./src/routes/menuRoutes");
 
 // =========================================================
 // ENV
@@ -63,9 +67,7 @@ app.use(
 // BODY PARSER
 // =========================================================
 
-app.use(
-  express.json()
-);
+app.use(express.json());
 
 app.use(
   express.urlencoded({
@@ -77,9 +79,7 @@ app.use(
 // COOKIE
 // =========================================================
 
-app.use(
-  cookieParser()
-);
+app.use(cookieParser());
 
 // =========================================================
 // STATIC UPLOADS
@@ -87,18 +87,24 @@ app.use(
 //
 // IMPORTANT:
 //
-// Existing Multer upload middleware stores files in:
+// Your existing Multer stores images inside:
 //
 // backend/src/uploads/
 //
-// Therefore Express must serve:
+// Your Menu controller currently stores Menu images inside:
 //
-// /uploads
+// backend/uploads/menu/
 //
-// from:
+// Therefore we serve BOTH locations.
 //
-// backend/src/uploads
+// Do NOT remove the first one because your existing
+// Gallery / Testimonial / Team / Settings images depend on it.
 //
+// =========================================================
+
+
+// =========================================================
+// 1. EXISTING BACKEND UPLOADS
 // =========================================================
 
 app.use(
@@ -125,6 +131,45 @@ app.use(
   )
 );
 
+
+// =========================================================
+// 2. MENU UPLOADS
+// =========================================================
+//
+// Menu controller stores files in:
+//
+// backend/uploads/menu/
+//
+// So this also exposes:
+//
+// /uploads/menu/filename.webp
+//
+// =========================================================
+
+app.use(
+  "/uploads",
+  (req, res, next) => {
+    res.setHeader(
+      "Cross-Origin-Resource-Policy",
+      "cross-origin"
+    );
+
+    res.setHeader(
+      "Access-Control-Allow-Origin",
+      "*"
+    );
+
+    next();
+  },
+  express.static(
+    path.join(
+      process.cwd(),
+      "uploads"
+    )
+  )
+);
+
+
 // =========================================================
 // API ROUTES
 // =========================================================
@@ -144,6 +189,11 @@ app.use(
   testimonialRoutes
 );
 
+app.use(
+  "/api/menu",
+  menuRoutes
+);
+
 
 // =========================================================
 // ROOT
@@ -157,6 +207,7 @@ app.get("/", (req, res) => {
   });
 });
 
+
 // =========================================================
 // 404
 // =========================================================
@@ -168,12 +219,18 @@ app.use((req, res) => {
   });
 });
 
+
 // =========================================================
 // GLOBAL ERROR HANDLER
 // =========================================================
 
 app.use(
   (err, req, res, next) => {
+    console.error(
+      "GLOBAL ERROR:",
+      err
+    );
+
     if (
       err.message ===
       "Not allowed by CORS"
@@ -194,6 +251,7 @@ app.use(
   }
 );
 
+
 // =========================================================
 // SERVER
 // =========================================================
@@ -201,4 +259,8 @@ app.use(
 const PORT =
   process.env.PORT || 5000;
 
-app.listen(PORT);
+app.listen(PORT, () => {
+  console.log(
+    `Server running on http://localhost:${PORT}`
+  );
+});

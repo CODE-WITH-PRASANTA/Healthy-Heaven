@@ -17,6 +17,7 @@ import Gallery from "./Components/Gallery/Gallery";
 import ContactLead from "./Components/ContactLead/ContactLead";
 import Order from "./Components/Order/Order";
 import Testimonial from "./Components/Testimonial/Testimonial";
+import Menu from "./Components/Menu/Menu";
 
 
 const App = () => {
@@ -55,6 +56,8 @@ const App = () => {
             path="/testimonial"
             element={<Testimonial/>}
           />
+
+          <Route path="/menu" element={<Menu />} />
 
           {/* Blog Create Route */}
           

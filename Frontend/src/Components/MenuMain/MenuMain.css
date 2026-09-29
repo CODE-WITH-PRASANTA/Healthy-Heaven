@@ -1,684 +1,666 @@
-/* =========================================================
+
+/* =====================================================
    MENU MAIN
-========================================================= */
+===================================================== */
 
-.MenuMain {
+.menu-main {
   width: 100%;
-  min-height: 100vh;
-  padding: 55px 0 90px;
+  padding: 80px 6%;
   background: #ffffff;
-  overflow: hidden;
-  font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+  box-sizing: border-box;
 }
 
-.MenuMain__container {
-  width: min(1320px, calc(100% - 50px));
-  margin: 0 auto;
+/* =====================================================
+   HEADER
+===================================================== */
+
+.menu-header {
+  max-width: 700px;
+  margin: 0 auto 45px;
+  text-align: center;
 }
 
-/* =========================================================
-   TOP CATEGORY BAR
-========================================================= */
-
-.MenuMain__topBar {
-  position: relative;
-  z-index: 50;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 25px;
-  margin-bottom: 38px;
-}
-
-.MenuMain__categories {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 15px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  padding: 3px 2px 7px;
-}
-
-.MenuMain__categories::-webkit-scrollbar {
-  display: none;
-}
-
-/* =========================================================
-   CATEGORY BUTTON
-========================================================= */
-
-.MenuMain__category {
-  position: relative;
-  flex: 0 0 auto;
-  height: 50px;
-  padding: 0 18px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 11px;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  background: transparent;
-  color: #111111;
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 600;
-  white-space: nowrap;
-  cursor: pointer;
-  transition:
-    color 0.25s ease,
-    background 0.25s ease,
-    border-color 0.25s ease,
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.MenuMain__category:hover {
-  color: #78a63b;
-  background: #f5faec;
-  border-color: #eaf3db;
-  transform: translateY(-2px);
-  box-shadow: 0 7px 17px rgba(121, 166, 59, 0.08);
-}
-
-.MenuMain__category--active {
-  color: #78a63b;
-  background: #f1f9e6;
-  border-color: #e2efce;
-  box-shadow: 0 7px 18px rgba(121, 166, 59, 0.08);
-}
-
-/* =========================================================
-   CATEGORY ICON
-========================================================= */
-
-.MenuMain__categoryIcon {
-  width: 31px;
-  height: 31px;
-  flex: 0 0 31px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.MenuMain__categoryIcon svg {
-  width: 26px;
-  height: 26px;
-  fill: none;
-  stroke: #111111;
-  stroke-width: 1.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  transition: stroke 0.25s ease, transform 0.25s ease;
-}
-
-.MenuMain__category:hover .MenuMain__categoryIcon svg,
-.MenuMain__category--active .MenuMain__categoryIcon svg {
-  stroke: #78a63b;
-  transform: scale(0.96);
-}
-
-.MenuMain__categoryName {
-  line-height: 1;
-}
-
-/* =========================================================
-   FILTER BUTTON & DROPDOWN
-========================================================= */
-
-.MenuMain__filterWrapper {
-  position: relative;
-  flex: 0 0 auto;
-}
-
-.MenuMain__filterButton {
-  height: 50px;
-  min-width: 130px;
-  padding: 0 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  border: 1px solid #7da73d;
-  border-radius: 8px;
-  background: #7da73d;
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition:
-    background 0.3s ease,
-    border-color 0.3s ease,
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.MenuMain__filterButton:hover,
-.MenuMain__filterButton--active {
-  background: #222222;
-  border-color: #222222;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-}
-
-.MenuMain__filterIcon {
-  width: 19px;
-  height: 19px;
-  transition: transform 0.3s ease;
-}
-
-.MenuMain__filterButton--active .MenuMain__filterIcon {
-  transform: rotate(180deg);
-}
-
-.MenuMain__filterDropdown {
-  position: absolute;
-  top: calc(100% + 10px);
-  right: 0;
-  z-index: 100;
-  width: 230px;
-  padding: 10px;
-  border: 1px solid #eeeeee;
-  border-radius: 14px;
-  background: #ffffff;
-  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.14);
-  animation: MenuMainFilterOpen 0.22s ease both;
-}
-
-@keyframes MenuMainFilterOpen {
-  from {
-    opacity: 0;
-    transform: translateY(-7px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.MenuMain__filterTitle {
-  padding: 10px 12px;
-  color: #8b8b8b;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.2px;
-}
-
-.MenuMain__filterOption {
-  width: 100%;
-  min-height: 42px;
-  padding: 0 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: none;
-  border-radius: 8px;
-  background: transparent;
-  color: #222222;
-  font-family: inherit;
+.menu-small-title {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: #63b600;
   font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.menu-header h2 {
+  margin: 0;
+  color: #111111;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.menu-header h2 span {
+  color: #63b600;
+}
+
+.menu-header p {
+  max-width: 600px;
+  margin: 18px auto 0;
+  color: #777777;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* =====================================================
+   CATEGORIES
+===================================================== */
+
+.menu-categories {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 45px;
+}
+
+.menu-categories button {
+  border: 1px solid #e5e5e5;
+  outline: none;
+  background: #ffffff;
+  color: #444444;
+  padding: 11px 20px;
+  border-radius: 30px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition:
     background 0.25s ease,
     color 0.25s ease,
-    padding 0.25s ease;
+    border-color 0.25s ease,
+    transform 0.25s ease;
 }
 
-.MenuMain__filterOption:hover {
-  padding-left: 16px;
-  background: #f2f8e8;
-  color: #78a63b;
+.menu-categories button:hover {
+  border-color: #d8ff3e;
+  background: #f8ffe3;
+  color: #111111;
+  transform: translateY(-1px);
 }
 
-.MenuMain__filterOptionIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.menu-categories button.active {
+  border-color: #d8ff3e;
+  background: #d8ff3e;
+  color: #111111;
 }
 
-.MenuMain__filterOption svg {
-  width: 18px;
-  height: 18px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-/* =========================================================
+/* =====================================================
    FOOD GRID
-========================================================= */
+===================================================== */
 
-.MenuMain__grid {
+.menu-grid {
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(
+    4,
+    minmax(0, 1fr)
+  );
   gap: 25px;
 }
 
-/* =========================================================
-   CARD & HOVER EFFECTS
-========================================================= */
+/* =====================================================
+   FOOD CARD
+===================================================== */
 
-.MenuMain__card {
-  position: relative;
-  min-width: 0;
-  min-height: 196px;
-  padding: 23px 20px 0;
+.food-card {
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  border-radius: 16px;
+  width: 100%;
   background: #ffffff;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
-  isolation: isolate;
+  border: 1px solid #eeeeee;
+  border-radius: 20px;
+  cursor: pointer;
+  box-sizing: border-box;
+
   transition:
-    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.42s ease;
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
 }
 
-.MenuMain__hoverLayer {
-  position: absolute;
-  z-index: -1;
-  right: 0;
-  bottom: 0;
-  width: 65px;
-  height: 65px;
-  border-radius: 18px 0 0 0;
-  background: radial-gradient(
-    circle at 100% 100%,
-    #000000 0%,
-    #090909 15%,
-    #151515 35%,
-    #222222 60%,
-    transparent 100%
-  );
-  opacity: 0;
-  transform: scale(1);
-  transform-origin: bottom right;
-  transition:
-    width 1.2s cubic-bezier(0.22, 1, 0.36, 1),
-    height 1.2s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.5s ease;
-}
-
-.MenuMain__card:hover .MenuMain__hoverLayer {
-  width: 190%;
-  height: 190%;
-  opacity: 1;
-}
-
-.MenuMain__card:hover {
+.food-card:hover {
+  border-color: #e4e4e4;
   transform: translateY(-6px);
-  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.16);
+  box-shadow:
+    0 18px 45px
+    rgba(0, 0, 0, 0.09);
 }
 
-/* =========================================================
-   CARD CONTENT
-========================================================= */
+/* =====================================================
+   FOOD IMAGE
+===================================================== */
 
-.MenuMain__cardTop {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  min-width: 0;
-}
-
-.MenuMain__imageWrapper {
-  width: 82px;
-  height: 82px;
-  flex: 0 0 82px;
+.food-image {
+  position: relative;
+  width: 100%;
+  height: 240px;
   overflow: hidden;
-  border-radius: 50%;
-  border: 4px solid #ffffff;
-  background: #f0f0f0;
-  box-shadow: 0 5px 17px rgba(0, 0, 0, 0.12);
-  transition: transform 0.42s ease, box-shadow 0.42s ease;
+  background: #f4f4f4;
 }
 
-.MenuMain__card:hover .MenuMain__imageWrapper {
-  transform: scale(1.06) rotate(-2deg);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.28);
-}
-
-.MenuMain__foodImage {
+.food-image img {
+  display: block;
   width: 100%;
   height: 100%;
-  display: block;
   object-fit: cover;
-  background-color: #f4f4f4;
-}
 
-.MenuMain__foodInfo {
-  min-width: 0;
-  flex: 1;
-}
-
-.MenuMain__foodName {
-  margin: 0 0 6px;
-  overflow: hidden;
-  color: #252525;
-  font-size: 18px;
-  line-height: 1.2;
-  font-weight: 700;
-  letter-spacing: -0.3px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  transition: color 0.3s ease;
-}
-
-.MenuMain__foodDescription {
-  margin: 0;
-  color: #777777;
-  font-size: 12px;
-  line-height: 1.4;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  transition: color 0.3s ease;
-}
-
-.MenuMain__card:hover .MenuMain__foodName {
-  color: #ffffff;
-}
-
-.MenuMain__card:hover .MenuMain__foodDescription {
-  color: rgba(255, 255, 255, 0.65);
-}
-
-/* =========================================================
-   CARD FOOTER & PRICE
-========================================================= */
-
-.MenuMain__cardBottom {
-  min-height: 70px;
-  margin-top: 16px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.MenuMain__priceBox {
-  padding-bottom: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.MenuMain__priceLabel {
-  color: #777777;
-  font-size: 11px;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.MenuMain__price {
-  color: #79a63a;
-  font-size: 22px;
-  line-height: 1;
-  font-weight: 800;
-  transition: color 0.3s ease;
-}
-
-.MenuMain__card:hover .MenuMain__priceLabel {
-  color: rgba(255, 255, 255, 0.55);
-}
-
-.MenuMain__card:hover .MenuMain__price {
-  color: #ffffff;
-}
-
-/* =========================================================
-   ADD / VIEW BUTTON
-========================================================= */
-
-.MenuMain__addButton {
-  position: relative;
-  width: 58px;
-  height: 58px;
-  flex: 0 0 58px;
-  margin-right: -20px;
-  margin-bottom: -1px;
-  border: none;
-  border-radius: 16px 0 16px 0;
-  display: grid;
-  place-items: center;
-  background: #7daa3b;
-  color: #ffffff;
-  cursor: pointer;
-  z-index: 5;
   transition:
-    background 0.25s ease,
+    transform 0.45s ease;
+}
+
+.food-card:hover .food-image img {
+  transform: scale(1.06);
+}
+
+/* =====================================================
+   FOOD CATEGORY
+===================================================== */
+
+.food-category {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+
+  padding: 7px 12px;
+
+  border-radius: 20px;
+
+  background: #ffffff;
+  color: #222222;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  box-shadow:
+    0 5px 15px
+    rgba(0, 0, 0, 0.1);
+}
+
+/* =====================================================
+   FOOD CONTENT
+===================================================== */
+
+.food-content {
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.food-content h3 {
+  margin: 0 0 8px;
+  color: #111111;
+  font-size: 19px;
+  font-weight: 750;
+  line-height: 1.3;
+}
+
+.food-content p {
+  display: -webkit-box;
+
+  overflow: hidden;
+
+  margin: 0;
+
+  color: #777777;
+  font-size: 13px;
+  line-height: 1.6;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/* =====================================================
+   FOOD BOTTOM
+===================================================== */
+
+.food-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-top: 20px;
+}
+
+.food-price {
+  color: #111111;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+/* =====================================================
+   ADD TO CART BUTTON
+===================================================== */
+
+.food-cart-btn {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  outline: none;
+
+  background: #d8ff3e;
+  color: #111111;
+
+  cursor: pointer;
+
+  transition:
     transform 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease,
     box-shadow 0.25s ease;
 }
 
-.MenuMain__addButton:hover {
-  background: #91bd4b;
-  transform: scale(1.04);
-  box-shadow: 0 8px 20px rgba(125, 170, 59, 0.25);
+.food-cart-btn:hover {
+  background: #111111;
+  color: #d8ff3e;
+
+  transform:
+    translateY(-2px)
+    scale(1.06);
+
+  box-shadow:
+    0 8px 20px
+    rgba(0, 0, 0, 0.15);
 }
 
-.MenuMain__addButton:active {
-  transform: scale(0.96);
+.food-cart-btn:active {
+  transform: scale(0.92);
 }
 
-.MenuMain__plusIcon {
-  display: inline-block;
-  font-size: 28px;
-  line-height: 1;
-  font-weight: 300;
-  animation: MenuMainPlusRotate 6.5s linear infinite;
-  transition: transform 0.25s ease;
+.food-cart-btn:focus-visible {
+  outline: 2px solid #63b600;
+  outline-offset: 3px;
 }
 
-.MenuMain__addButton:hover .MenuMain__plusIcon {
-  animation-play-state: paused;
-  transform: rotate(90deg) scale(1.08);
+.food-cart-btn svg {
+  display: block;
+  pointer-events: none;
 }
 
-@keyframes MenuMainPlusRotate {
-  from {
-    transform: rotate(0deg);
-  }
+/* =====================================================
+   LOADING
+===================================================== */
+
+.menu-loading {
+  min-height: 300px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  gap: 15px;
+
+  color: #777777;
+}
+
+.menu-loading p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.menu-loader {
+  width: 38px;
+  height: 38px;
+
+  border: 4px solid #eeeeee;
+  border-top-color: #63b600;
+
+  border-radius: 50%;
+
+  animation:
+    menuSpin 0.8s linear infinite;
+}
+
+@keyframes menuSpin {
   to {
     transform: rotate(360deg);
   }
 }
 
-/* =========================================================
-   PAGINATION
-========================================================= */
+/* =====================================================
+   ERROR
+===================================================== */
 
-.MenuMain__pagination {
+.menu-error {
   width: 100%;
-  margin-top: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+  max-width: 500px;
+
+  margin: 30px auto;
+  padding: 25px;
+
+  box-sizing: border-box;
+
+  text-align: center;
+
+  border: 1px solid #ffd5d5;
+  border-radius: 15px;
+
+  background: #fff4f4;
 }
 
-.MenuMain__pageNumbers {
+.menu-error p {
+  margin: 0 0 15px;
+
+  color: #d33;
+  font-size: 14px;
+}
+
+.menu-error button {
+  border: none;
+  outline: none;
+
+  padding: 10px 20px;
+
+  border-radius: 8px;
+
+  background: #111111;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.menu-error button:hover {
+  background: #63b600;
+  color: #111111;
+  transform: translateY(-1px);
+}
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.menu-empty {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.menu-empty h3 {
+  margin: 0 0 8px;
+
+  color: #111111;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.menu-empty p {
+  margin: 0;
+
+  color: #777777;
+  font-size: 14px;
+}
+
+/* =====================================================
+   PAGINATION
+===================================================== */
+
+.menu-pagination {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
+
   gap: 8px;
+
+  margin-top: 50px;
 }
 
-.MenuMain__paginationArrow,
-.MenuMain__pageNumber {
-  width: 44px;
-  height: 44px;
+.menu-pagination button {
+  min-width: 40px;
+  height: 40px;
+
+  padding: 0 12px;
+
   border: 1px solid #e5e5e5;
-  border-radius: 10px;
-  display: grid;
-  place-items: center;
+  border-radius: 8px;
+
+  outline: none;
+
   background: #ffffff;
   color: #333333;
-  font-family: inherit;
+
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
+
   cursor: pointer;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
+
   transition:
     background 0.25s ease,
     color 0.25s ease,
     border-color 0.25s ease,
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+    transform 0.25s ease;
 }
 
-.MenuMain__paginationArrow svg {
-  width: 18px;
-  height: 18px;
+.menu-pagination button:hover:not(:disabled) {
+  border-color: #d8ff3e;
+  background: #f5ffd9;
+  transform: translateY(-1px);
 }
 
-.MenuMain__paginationArrow:hover:not(:disabled),
-.MenuMain__pageNumber:hover {
-  color: #ffffff;
-  border-color: #7daa3b;
-  background: #7daa3b;
-  transform: translateY(-2px);
-  box-shadow: 0 9px 20px rgba(126, 173, 54, 0.2);
+.menu-pagination button.active {
+  border-color: #d8ff3e;
+  background: #d8ff3e;
+  color: #111111;
 }
 
-.MenuMain__pageNumber--active {
-  border-color: #7daa3b;
-  background: #7daa3b;
-  color: #ffffff;
-  box-shadow: 0 9px 20px rgba(126, 173, 54, 0.2);
-}
-
-.MenuMain__paginationArrow:disabled {
-  opacity: 0.35;
+.menu-pagination button:disabled {
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
-/* =========================================================
-   RESPONSIVE DESIGN
-========================================================= */
+/* =====================================================
+   COUNT
+===================================================== */
 
-@media (max-width: 1200px) {
-  .MenuMain__container {
-    width: min(1100px, calc(100% - 40px));
+.menu-count {
+  margin-top: 18px;
+
+  text-align: center;
+
+  color: #888888;
+  font-size: 13px;
+}
+
+/* =====================================================
+   RESPONSIVE - TABLET LARGE
+===================================================== */
+
+@media (max-width: 1100px) {
+  .menu-main {
+    padding: 70px 5%;
   }
-  .MenuMain__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  .menu-grid {
+    grid-template-columns:
+      repeat(
+        3,
+        minmax(0, 1fr)
+      );
+  }
+}
+
+/* =====================================================
+   RESPONSIVE - TABLET
+===================================================== */
+
+@media (max-width: 800px) {
+  .menu-main {
+    padding: 60px 4%;
+  }
+
+  .menu-grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+
+    gap: 18px;
+  }
+
+  .food-image {
+    height: 220px;
+  }
+
+  .food-content {
+    padding: 18px;
+  }
+
+  .food-content h3 {
+    font-size: 18px;
+  }
+
+  .food-price {
+    font-size: 19px;
+  }
+}
+
+/* =====================================================
+   RESPONSIVE - MOBILE
+===================================================== */
+
+@media (max-width: 550px) {
+  .menu-main {
+    padding: 50px 16px;
+  }
+
+  .menu-header {
+    margin-bottom: 30px;
+  }
+
+  .menu-header h2 {
+    font-size: 32px;
+  }
+
+  .menu-header p {
+    margin-top: 14px;
+    font-size: 14px;
+  }
+
+  /* -----------------------------------------------
+     CATEGORY SCROLL
+  ------------------------------------------------ */
+
+  .menu-categories {
+    justify-content: flex-start;
+
+    overflow-x: auto;
+
+    flex-wrap: nowrap;
+
+    margin-bottom: 30px;
+
+    padding-bottom: 5px;
+
+    scrollbar-width: none;
+  }
+
+  .menu-categories::-webkit-scrollbar {
+    display: none;
+  }
+
+  .menu-categories button {
+    flex-shrink: 0;
+
+    padding: 10px 16px;
+  }
+
+  /* -----------------------------------------------
+     SINGLE COLUMN
+  ------------------------------------------------ */
+
+  .menu-grid {
+    grid-template-columns: 1fr;
     gap: 20px;
   }
-}
 
-@media (max-width: 900px) {
-  .MenuMain {
-    padding: 45px 0 70px;
+  .food-image {
+    height: 240px;
   }
-  .MenuMain__container {
-    width: min(760px, calc(100% - 32px));
-  }
-  .MenuMain__topBar {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 16px;
-  }
-  .MenuMain__categories {
-    width: 100%;
-  }
-  .MenuMain__filterWrapper {
-    align-self: flex-end;
-  }
-  .MenuMain__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
 
-@media (max-width: 600px) {
-  .MenuMain {
-    padding: 35px 0 60px;
+  .food-content {
+    padding: 18px;
   }
-  .MenuMain__container {
-    width: calc(100% - 24px);
+
+  .food-content h3 {
+    font-size: 18px;
   }
-  .MenuMain__topBar {
-    margin-bottom: 28px;
+
+  .food-price {
+    font-size: 19px;
   }
-  .MenuMain__categories {
-    gap: 8px;
-    padding: 2px 3px 8px;
+
+  .food-cart-btn {
+    width: 40px;
+    height: 40px;
   }
-  .MenuMain__category {
-    height: 44px;
-    padding: 0 12px;
-    font-size: 12px;
-  }
-  .MenuMain__categoryIcon {
-    width: 24px;
-    height: 24px;
-    flex-basis: 24px;
-  }
-  .MenuMain__categoryIcon svg {
-    width: 22px;
-    height: 22px;
-  }
-  .MenuMain__filterWrapper {
-    width: 100%;
-  }
-  .MenuMain__filterButton {
-    width: 100%;
-    height: 48px;
-  }
-  .MenuMain__filterDropdown {
-    width: 100%;
-    left: 0;
-    right: 0;
-  }
-  .MenuMain__grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  .MenuMain__card {
-    min-height: 180px;
-    padding: 20px 18px 0;
-  }
-  .MenuMain__imageWrapper {
-    width: 74px;
-    height: 74px;
-    flex-basis: 74px;
-  }
-  .MenuMain__foodName {
-    font-size: 17px;
-  }
-  .MenuMain__foodDescription {
-    font-size: 11px;
-  }
-  .MenuMain__addButton {
-    width: 55px;
-    height: 55px;
-    flex-basis: 55px;
-    margin-right: -18px;
-  }
-  .MenuMain__pagination {
+
+  /* -----------------------------------------------
+     PAGINATION
+  ------------------------------------------------ */
+
+  .menu-pagination {
     margin-top: 35px;
   }
+
+  .menu-pagination button {
+    min-width: 38px;
+    height: 38px;
+  }
 }
 
-@media (max-width: 400px) {
-  .MenuMain__category {
-    padding: 0 9px;
-    font-size: 11px;
+/* =====================================================
+   RESPONSIVE - SMALL MOBILE
+===================================================== */
+
+@media (max-width: 360px) {
+  .menu-main {
+    padding-right: 12px;
+    padding-left: 12px;
   }
-  .MenuMain__paginationArrow,
-  .MenuMain__pageNumber {
+
+  .menu-header h2 {
+    font-size: 28px;
+  }
+
+  .menu-header p {
+    font-size: 13px;
+  }
+
+  .food-image {
+    height: 220px;
+  }
+
+  .food-content {
+    padding: 16px;
+  }
+
+  .food-cart-btn {
     width: 38px;
     height: 38px;
   }

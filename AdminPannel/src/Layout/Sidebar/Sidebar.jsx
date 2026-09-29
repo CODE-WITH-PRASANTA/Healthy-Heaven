@@ -38,9 +38,9 @@ export const NAV_ITEMS = [
     path: "/contact-lead",
   },
   {
-    label: "Blogs",
+    label: "Menu",
     icon: FileText,
-    path: "/blogs",
+    path: "/menu",
   },
   {
     label: "Gallery",
