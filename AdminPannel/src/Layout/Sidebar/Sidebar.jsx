@@ -7,7 +7,6 @@ import {
   FileText,
   Image as ImageIcon,
   Star,
-  Bell,
   User,
   Settings,
   LogOut,
@@ -42,6 +41,7 @@ export const NAV_ITEMS = [
     icon: FileText,
     path: "/menu",
   },
+ 
   {
     label: "Gallery",
     icon: ImageIcon,
@@ -52,11 +52,7 @@ export const NAV_ITEMS = [
     icon: Star,
     path: "/testimonial",
   },
-  {
-    label: "Notices & Alerts",
-    icon: Bell,
-    path: "/notices",
-  },
+ 
   {
     label: "Admin Profile",
     icon: User,

@@ -19,6 +19,10 @@ const testimonialRoutes =
 const menuRoutes =
   require("./src/routes/menuRoutes");
 
+  const cartRoutes = require("./src/routes/cartRoutes");
+
+  const orderRoutes = require("./src/routes/orderRoutes");
+
 // =========================================================
 // ENV
 // =========================================================
@@ -193,6 +197,10 @@ app.use(
   "/api/menu",
   menuRoutes
 );
+
+app.use("/api/cart", cartRoutes);
+
+app.use("/api/orders", orderRoutes);
 
 
 // =========================================================

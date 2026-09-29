@@ -1,4 +1,3 @@
-
 import React, {
   useEffect,
   useMemo,
@@ -25,6 +24,29 @@ const categories = [
 ];
 
 // =====================================================
+// CART ID
+// =====================================================
+
+const getCartId = () => {
+  let cartId =
+    localStorage.getItem("healthy_heaven_cart_id");
+
+  if (!cartId) {
+    cartId =
+      `cart_${Date.now()}_${Math.random()
+        .toString(36)
+        .substring(2, 10)}`;
+
+    localStorage.setItem(
+      "healthy_heaven_cart_id",
+      cartId
+    );
+  }
+
+  return cartId;
+};
+
+// =====================================================
 // IMAGE URL
 // =====================================================
 
@@ -41,9 +63,12 @@ const getImageUrl = (image) => {
     return image;
   }
 
-  const cleanImage = image.replace(/^\/+/, "");
+  const cleanImage =
+    image.replace(/^\/+/, "");
 
-  if (cleanImage.startsWith("uploads/")) {
+  if (
+    cleanImage.startsWith("uploads/")
+  ) {
     return `${IMG_URL}/${cleanImage}`;
   }
 
@@ -57,23 +82,29 @@ const getImageUrl = (image) => {
 const MenuMain = () => {
   const navigate = useNavigate();
 
-  // ===================================================
-  // STATES
-  // ===================================================
+  const [foods, setFoods] =
+    useState([]);
 
-  const [foods, setFoods] = useState([]);
+  const [
+    activeCategory,
+    setActiveCategory,
+  ] = useState("All");
 
-  const [activeCategory, setActiveCategory] =
-    useState("All");
-
-  const [currentPage, setCurrentPage] =
-    useState(1);
+  const [
+    currentPage,
+    setCurrentPage,
+  ] = useState(1);
 
   const [loading, setLoading] =
     useState(true);
 
   const [error, setError] =
     useState("");
+
+  const [
+    addingProductId,
+    setAddingProductId,
+  ] = useState(null);
 
   const itemsPerPage = 8;
 
@@ -86,14 +117,16 @@ const MenuMain = () => {
       setLoading(true);
       setError("");
 
-      const response = await API.get("/menu", {
-        params: {
-          page: 1,
-          limit: 1000,
-        },
-      });
+      const response =
+        await API.get("/menu", {
+          params: {
+            page: 1,
+            limit: 1000,
+          },
+        });
 
-      const result = response.data;
+      const result =
+        response.data;
 
       if (
         result?.success &&
@@ -110,7 +143,8 @@ const MenuMain = () => {
       );
 
       setError(
-        error?.response?.data?.message ||
+        error?.response?.data
+          ?.message ||
           "Failed to load menu."
       );
 
@@ -129,67 +163,74 @@ const MenuMain = () => {
   }, []);
 
   // ===================================================
-  // FILTER FOOD
+  // FILTER
   // ===================================================
 
-  const filteredFoods = useMemo(() => {
-    if (activeCategory === "All") {
-      return foods;
-    }
+  const filteredFoods =
+    useMemo(() => {
+      if (
+        activeCategory ===
+        "All"
+      ) {
+        return foods;
+      }
 
-    return foods.filter(
-      (food) =>
-        food.category === activeCategory
+      return foods.filter(
+        (food) =>
+          food.category ===
+          activeCategory
+      );
+    }, [
+      foods,
+      activeCategory,
+    ]);
+
+  // ===================================================
+  // PAGINATION
+  // ===================================================
+
+  const totalPages =
+    Math.max(
+      Math.ceil(
+        filteredFoods.length /
+          itemsPerPage
+      ),
+      1
     );
-  }, [
-    foods,
-    activeCategory,
-  ]);
+
+  const paginatedFoods =
+    useMemo(() => {
+      const start =
+        (currentPage - 1) *
+        itemsPerPage;
+
+      return filteredFoods.slice(
+        start,
+        start + itemsPerPage
+      );
+    }, [
+      filteredFoods,
+      currentPage,
+    ]);
 
   // ===================================================
-  // TOTAL PAGES
+  // CATEGORY
   // ===================================================
 
-  const totalPages = Math.max(
-    Math.ceil(
-      filteredFoods.length /
-        itemsPerPage
-    ),
-    1
-  );
-
-  // ===================================================
-  // PAGINATED FOOD
-  // ===================================================
-
-  const paginatedFoods = useMemo(() => {
-    const start =
-      (currentPage - 1) *
-      itemsPerPage;
-
-    return filteredFoods.slice(
-      start,
-      start + itemsPerPage
-    );
-  }, [
-    filteredFoods,
-    currentPage,
-  ]);
-
-  // ===================================================
-  // CATEGORY CHANGE
-  // ===================================================
-
-  const handleCategory = (category) => {
+  const handleCategory = (
+    category
+  ) => {
     setActiveCategory(category);
     setCurrentPage(1);
   };
 
   // ===================================================
-  // PAGE CHANGE
+  // PAGE
   // ===================================================
 
-  const handlePageChange = (page) => {
+  const handlePageChange = (
+    page
+  ) => {
     if (
       page < 1 ||
       page > totalPages
@@ -209,81 +250,71 @@ const MenuMain = () => {
   // FOOD DETAILS
   // ===================================================
 
-  const handleFoodClick = (food) => {
-    navigate(`/food/${food._id}`);
+  const handleFoodClick = (
+    food
+  ) => {
+    navigate(
+      `/food/${food._id}`
+    );
   };
 
   // ===================================================
-  // ADD TO CART
+  // ADD TO CART - BACKEND
   // ===================================================
 
-  const handleAddToCart = (food) => {
+  const handleAddToCart = async (
+    food
+  ) => {
     try {
-      const existingCart =
-        JSON.parse(
-          localStorage.getItem("cart")
-        ) || [];
-
-      const existingItem =
-        existingCart.find(
-          (item) =>
-            item._id === food._id
-        );
-
-      let updatedCart;
-
-      // -----------------------------------------------
-      // ITEM ALREADY EXISTS
-      // -----------------------------------------------
-
-      if (existingItem) {
-        updatedCart =
-          existingCart.map(
-            (item) =>
-              item._id === food._id
-                ? {
-                    ...item,
-                    quantity:
-                      (item.quantity ||
-                        1) + 1,
-                  }
-                : item
-          );
-      }
-
-      // -----------------------------------------------
-      // NEW ITEM
-      // -----------------------------------------------
-
-      else {
-        updatedCart = [
-          ...existingCart,
-          {
-            ...food,
-            quantity: 1,
-          },
-        ];
-      }
-
-      // -----------------------------------------------
-      // SAVE CART
-      // -----------------------------------------------
-
-      localStorage.setItem(
-        "cart",
-        JSON.stringify(updatedCart)
+      setAddingProductId(
+        food._id
       );
 
-      // -----------------------------------------------
-      // GO TO CART
-      // -----------------------------------------------
+      const cartId =
+        getCartId();
 
+      await API.post("/cart", {
+        cartId,
+
+        productId:
+          food._id,
+
+        name:
+          food.name,
+
+        price:
+          Number(
+            food.price || 0
+          ),
+
+        image:
+          food.image || "",
+
+        description:
+          food.description ||
+          "",
+
+        category:
+          food.category || "",
+
+        quantity: 1,
+      });
+
+      // Go directly to cart
       navigate("/cart");
     } catch (error) {
       console.error(
         "ADD TO CART ERROR:",
         error
       );
+
+      alert(
+        error?.response?.data
+          ?.message ||
+          "Failed to add product to cart"
+      );
+    } finally {
+      setAddingProductId(null);
     }
   };
 
@@ -306,7 +337,7 @@ const MenuMain = () => {
   }
 
   // ===================================================
-  // MAIN JSX
+  // JSX
   // ===================================================
 
   return (
@@ -314,9 +345,7 @@ const MenuMain = () => {
       className="menu-main"
       id="menu"
     >
-      {/* =================================================
-          HEADER
-      ================================================= */}
+      {/* HEADER */}
 
       <div className="menu-header">
         <span className="menu-small-title">
@@ -338,9 +367,7 @@ const MenuMain = () => {
         </p>
       </div>
 
-      {/* =================================================
-          CATEGORIES
-      ================================================= */}
+      {/* CATEGORIES */}
 
       <div className="menu-categories">
         {categories.map(
@@ -366,28 +393,24 @@ const MenuMain = () => {
         )}
       </div>
 
-      {/* =================================================
-          ERROR
-      ================================================= */}
+      {/* ERROR */}
 
       {error && (
         <div className="menu-error">
-          <p>
-            {error}
-          </p>
+          <p>{error}</p>
 
           <button
             type="button"
-            onClick={fetchMenu}
+            onClick={
+              fetchMenu
+            }
           >
             Try Again
           </button>
         </div>
       )}
 
-      {/* =================================================
-          EMPTY
-      ================================================= */}
+      {/* EMPTY */}
 
       {!error &&
         paginatedFoods.length ===
@@ -405,9 +428,7 @@ const MenuMain = () => {
           </div>
         )}
 
-      {/* =================================================
-          FOOD GRID
-      ================================================= */}
+      {/* FOOD GRID */}
 
       {!error &&
         paginatedFoods.length >
@@ -424,9 +445,7 @@ const MenuMain = () => {
                     )
                   }
                 >
-                  {/* =======================================
-                      FOOD IMAGE
-                  ======================================= */}
+                  {/* IMAGE */}
 
                   <div className="food-image">
                     <img
@@ -449,9 +468,7 @@ const MenuMain = () => {
                     )}
                   </div>
 
-                  {/* =======================================
-                      FOOD CONTENT
-                  ======================================= */}
+                  {/* CONTENT */}
 
                   <div className="food-content">
                     <h3>
@@ -464,10 +481,6 @@ const MenuMain = () => {
                       }
                     </p>
 
-                    {/* =====================================
-                        PRICE + CART
-                    ===================================== */}
-
                     <div className="food-bottom">
                       <span className="food-price">
                         ₹
@@ -479,18 +492,19 @@ const MenuMain = () => {
                         )}
                       </span>
 
-                      {/* =================================
-                          ADD TO CART BUTTON
-                      ================================= */}
+                      {/* CART */}
 
                       <button
                         type="button"
                         className="food-cart-btn"
                         title="Add to Cart"
-                        aria-label={`Add ${
-                          food.name
-                        } to cart`}
-                        onClick={(e) => {
+                        disabled={
+                          addingProductId ===
+                          food._id
+                        }
+                        onClick={(
+                          e
+                        ) => {
                           e.stopPropagation();
 
                           handleAddToCart(
@@ -498,10 +512,19 @@ const MenuMain = () => {
                           );
                         }}
                       >
-                        <ShoppingCart
-                          size={19}
-                          strokeWidth={2.5}
-                        />
+                        {addingProductId ===
+                        food._id ? (
+                          <span className="cart-btn-loader">
+                            +
+                          </span>
+                        ) : (
+                          <ShoppingCart
+                            size={19}
+                            strokeWidth={
+                              2.5
+                            }
+                          />
+                        )}
                       </button>
                     </div>
                   </div>
@@ -511,20 +534,17 @@ const MenuMain = () => {
           </div>
         )}
 
-      {/* =================================================
-          PAGINATION
-      ================================================= */}
+      {/* PAGINATION */}
 
       {!error &&
         filteredFoods.length >
           itemsPerPage && (
           <div className="menu-pagination">
-            {/* PREVIOUS */}
-
             <button
               type="button"
               disabled={
-                currentPage === 1
+                currentPage ===
+                1
               }
               onClick={() =>
                 handlePageChange(
@@ -535,11 +555,10 @@ const MenuMain = () => {
               Prev
             </button>
 
-            {/* PAGE NUMBERS */}
-
             {Array.from(
               {
-                length: totalPages,
+                length:
+                  totalPages,
               },
               (_, index) =>
                 index + 1
@@ -565,8 +584,6 @@ const MenuMain = () => {
               )
             )}
 
-            {/* NEXT */}
-
             <button
               type="button"
               disabled={
@@ -584,9 +601,7 @@ const MenuMain = () => {
           </div>
         )}
 
-      {/* =================================================
-          ITEM COUNT
-      ================================================= */}
+      {/* COUNT */}
 
       {!error &&
         filteredFoods.length >
@@ -608,5 +623,3 @@ const MenuMain = () => {
 };
 
 export default MenuMain;
-
-

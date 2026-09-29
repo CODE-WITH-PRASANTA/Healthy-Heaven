@@ -4,7 +4,6 @@ import "./Navbar.css";
 
 // Modals / Drawers
 import Account from "../Account/Account";
-import AddToCart from "../AddToCart/AddToCart";
 
 // Logo
 import mainLogo from "../../assets/main-logo.png";
@@ -12,7 +11,6 @@ import mainLogo from "../../assets/main-logo.png";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
-  const [cartOpen, setCartOpen] = useState(false);
 
   const handleMenuClick = () => {
     setMenuOpen(false);
@@ -20,13 +18,6 @@ const Navbar = () => {
 
   const toggleAccount = () => {
     setAccountOpen((prev) => !prev);
-    setCartOpen(false);
-    setMenuOpen(false);
-  };
-
-  const toggleCart = () => {
-    setCartOpen((prev) => !prev);
-    setAccountOpen(false);
     setMenuOpen(false);
   };
 
@@ -158,11 +149,11 @@ const Navbar = () => {
               </svg>
             </button>
 
-            {/* Cart Dropdown Trigger Button */}
-            <button
-              type="button"
+            {/* Cart Page Route Link */}
+            <Link
+              to="/cart"
               className="Navbar-actionButton Navbar-cartButton"
-              onClick={toggleCart}
+              onClick={handleMenuClick}
               aria-label="Shopping Cart"
               title="Cart"
             >
@@ -186,13 +177,7 @@ const Navbar = () => {
                 />
               </svg>
               <span className="Navbar-cartBadge">3</span>
-            </button>
-
-            {/* Cart Dropdown Container */}
-            <AddToCart
-              isOpen={cartOpen}
-              onClose={() => setCartOpen(false)}
-            />
+            </Link>
           </div>
 
           {/* MOBILE MENU TOGGLE */}

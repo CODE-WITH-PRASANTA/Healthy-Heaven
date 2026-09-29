@@ -1,308 +1,174 @@
+
 import React, { useEffect, useMemo, useState } from "react";
+import Swal from "sweetalert2";
+import API, { IMG_URL } from "../../api/axios";
 import "./Order.css";
 
-const Order = () => {
-  /* =========================================================
-     DEMO ORDER DATA
-  ========================================================= */
+/* =========================================================
+   CONSTANTS
+========================================================= */
 
-  const initialOrders = [
-    {
-      id: 1,
-      orderId: "#ORD1001",
-      customer: "Rahul Sharma",
-      email: "rahul@gmail.com",
-      items: [
-        {
-          name: "Classic Burger",
-          image:
-            "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=100&q=80",
-        },
-        {
-          name: "French Fries",
-          image:
-            "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=100&q=80",
-        },
-        {
-          name: "Cold Drink",
-          image:
-            "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=100&q=80",
-        },
-      ],
-      moreItems: 2,
-      total: 520,
-      payment: "Paid",
-      status: "Delivered",
-      date: "2026-09-23",
-      time: "10:45 AM",
-      address: "Bhubaneswar, Odisha",
-    },
-    {
-      id: 2,
-      orderId: "#ORD1002",
-      customer: "Priya Mehta",
-      email: "priya@gmail.com",
-      items: [
-        {
-          name: "Pizza",
-          image:
-            "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=100&q=80",
-        },
-        {
-          name: "Cold Drink",
-          image:
-            "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=100&q=80",
-        },
-      ],
-      moreItems: 1,
-      total: 350,
-      payment: "Paid",
-      status: "Pending",
-      date: "2026-09-22",
-      time: "08:20 PM",
-      address: "Cuttack, Odisha",
-    },
-    {
-      id: 3,
-      orderId: "#ORD1003",
-      customer: "Amit Kumar",
-      email: "amit@gmail.com",
-      items: [
-        {
-          name: "Rice Bowl",
-          image:
-            "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=100&q=80",
-        },
-        {
-          name: "Cold Drink",
-          image:
-            "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=100&q=80",
-        },
-      ],
-      moreItems: 3,
-      total: 780,
-      payment: "COD",
-      status: "Out for Delivery",
-      date: "2026-09-22",
-      time: "06:15 PM",
-      address: "Kendrapara, Odisha",
-    },
-    {
-      id: 4,
-      orderId: "#ORD1004",
-      customer: "Sneha Patel",
-      email: "sneha@gmail.com",
-      items: [
-        {
-          name: "Burger",
-          image:
-            "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=100&q=80",
-        },
-        {
-          name: "French Fries",
-          image:
-            "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=100&q=80",
-        },
-      ],
-      moreItems: 2,
-      total: 410,
-      payment: "Paid",
-      status: "Preparing",
-      date: "2026-09-21",
-      time: "01:30 PM",
-      address: "Bhubaneswar, Odisha",
-    },
-    {
-      id: 5,
-      orderId: "#ORD1005",
-      customer: "Vikram Singh",
-      email: "vikram@gmail.com",
-      items: [
-        {
-          name: "Pizza",
-          image:
-            "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=100&q=80",
-        },
-        {
-          name: "Cold Drink",
-          image:
-            "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=100&q=80",
-        },
-      ],
-      moreItems: 1,
-      total: 299,
-      payment: "Paid",
-      status: "Delivered",
-      date: "2026-09-20",
-      time: "11:10 AM",
-      address: "Puri, Odisha",
-    },
-    {
-      id: 6,
-      orderId: "#ORD1006",
-      customer: "Neha Reddy",
-      email: "neha@gmail.com",
-      items: [
-        {
-          name: "Rice Bowl",
-          image:
-            "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=100&q=80",
-        },
-        {
-          name: "Cold Drink",
-          image:
-            "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=100&q=80",
-        },
-      ],
-      moreItems: 4,
-      total: 890,
-      payment: "COD",
-      status: "Cancelled",
-      date: "2026-09-19",
-      time: "09:25 PM",
-      address: "Cuttack, Odisha",
-    },
-    {
-      id: 7,
-      orderId: "#ORD1007",
-      customer: "Ankit Das",
-      email: "ankit@gmail.com",
-      items: [
-        {
-          name: "Burger",
-          image:
-            "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=100&q=80",
-        },
-      ],
-      moreItems: 1,
-      total: 430,
-      payment: "Paid",
-      status: "Preparing",
-      date: "2026-09-18",
-      time: "07:30 PM",
-      address: "Puri, Odisha",
-    },
-    {
-      id: 8,
-      orderId: "#ORD1008",
-      customer: "Riya Mohanty",
-      email: "riya@gmail.com",
-      items: [
-        {
-          name: "Pizza",
-          image:
-            "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=100&q=80",
-        },
-      ],
-      moreItems: 2,
-      total: 650,
-      payment: "Paid",
-      status: "Delivered",
-      date: "2026-09-17",
-      time: "04:20 PM",
-      address: "Cuttack, Odisha",
-    },
-    {
-      id: 9,
-      orderId: "#ORD1009",
-      customer: "Sourav Nayak",
-      email: "sourav@gmail.com",
-      items: [
-        {
-          name: "Rice Bowl",
-          image:
-            "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=100&q=80",
-        },
-      ],
-      moreItems: 2,
-      total: 590,
-      payment: "COD",
-      status: "Out for Delivery",
-      date: "2026-09-16",
-      time: "02:10 PM",
-      address: "Aul, Odisha",
-    },
-    {
-      id: 10,
-      orderId: "#ORD1010",
-      customer: "Puja Rout",
-      email: "puja@gmail.com",
-      items: [
-        {
-          name: "Burger",
-          image:
-            "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=100&q=80",
-        },
-      ],
-      moreItems: 3,
-      total: 740,
-      payment: "Paid",
-      status: "Pending",
-      date: "2026-09-15",
-      time: "08:45 PM",
-      address: "Bhubaneswar, Odisha",
-    },
-    {
-      id: 11,
-      orderId: "#ORD1011",
-      customer: "Manas Behera",
-      email: "manas@gmail.com",
-      items: [
-        {
-          name: "Pizza",
-          image:
-            "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=100&q=80",
-        },
-      ],
-      moreItems: 1,
-      total: 370,
-      payment: "Paid",
-      status: "Delivered",
-      date: "2026-09-14",
-      time: "01:10 PM",
-      address: "Kendrapara, Odisha",
-    },
-    {
-      id: 12,
-      orderId: "#ORD1012",
-      customer: "Sweta Jena",
-      email: "sweta@gmail.com",
-      items: [
-        {
-          name: "Burger",
-          image:
-            "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=100&q=80",
-        },
-      ],
-      moreItems: 2,
-      total: 480,
-      payment: "COD",
-      status: "Cancelled",
-      date: "2026-09-13",
-      time: "09:15 AM",
-      address: "Puri, Odisha",
-    },
-  ];
+const ITEMS_PER_PAGE = 6;
 
-  /* =========================================================
-     STATES
-  ========================================================= */
+const ORDER_STATUSES = [
+  "Pending",
+  "Preparing",
+  "Out for Delivery",
+  "Delivered",
+  "Cancelled",
+];
 
-  const [orders, setOrders] = useState(() => {
-    const savedOrders = localStorage.getItem("foodOrderData");
+const PAYMENT_STATUSES = [
+  "pending",
+  "paid",
+  "failed",
+  "refunded",
+];
 
-    if (savedOrders) {
-      try {
-        return JSON.parse(savedOrders);
-      } catch {
-        return initialOrders;
-      }
-    }
+const PAYMENT_METHODS = [
+  "upi",
+  "cash",
+  "card",
+];
 
-    return initialOrders;
+/* =========================================================
+   HELPERS
+========================================================= */
+
+const getImageUrl = (image) => {
+  if (!image) return "";
+
+  if (
+    image.startsWith("http://") ||
+    image.startsWith("https://") ||
+    image.startsWith("blob:")
+  ) {
+    return image;
+  }
+
+  const cleanImage = image.replace(/^\/+/, "");
+
+  if (cleanImage.startsWith("uploads/")) {
+    return `${IMG_URL}/${cleanImage}`;
+  }
+
+  return `${IMG_URL}/uploads/menu/${cleanImage}`;
+};
+
+const formatDate = (value) => {
+  if (!value) return "-";
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "-";
+  }
+
+  return date.toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
   });
+};
+
+const formatTime = (value) => {
+  if (!value) return "-";
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "-";
+  }
+
+  return date.toLocaleTimeString("en-IN", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
+const formatMoney = (value) => {
+  return Number(value || 0).toLocaleString("en-IN", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
+};
+
+const getPaymentLabel = (method) => {
+  switch (method) {
+    case "upi":
+      return "UPI";
+
+    case "cash":
+      return "Cash on Delivery";
+
+    case "card":
+      return "Card";
+
+    default:
+      return method || "-";
+  }
+};
+
+const getPaymentStatusLabel = (status) => {
+  if (!status) return "-";
+
+  return (
+    status.charAt(0).toUpperCase() +
+    status.slice(1)
+  );
+};
+
+const getStatusClass = (status) => {
+  switch (status) {
+    case "Delivered":
+      return "Order__status--delivered";
+
+    case "Preparing":
+      return "Order__status--preparing";
+
+    case "Out for Delivery":
+      return "Order__status--out-for-delivery";
+
+    case "Cancelled":
+      return "Order__status--cancelled";
+
+    default:
+      return "Order__status--pending";
+  }
+};
+
+const getInitials = (name = "") => {
+  const parts = name.trim().split(/\s+/);
+
+  if (!parts.length) return "?";
+
+  return parts
+    .slice(0, 2)
+    .map((part) => part.charAt(0).toUpperCase())
+    .join("");
+};
+
+/* =========================================================
+   COMPONENT
+========================================================= */
+
+const Order = () => {
+  /* =======================================================
+     DATA
+  ======================================================= */
+
+  const [orders, setOrders] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  /* =======================================================
+     FILTERS
+  ======================================================= */
 
   const [search, setSearch] = useState("");
+
   const [orderStatus, setOrderStatus] =
     useState("All Status");
 
@@ -310,7 +176,12 @@ const Order = () => {
     useState("All Payments");
 
   const [fromDate, setFromDate] = useState("");
+
   const [toDate, setToDate] = useState("");
+
+  /* =======================================================
+     CALENDAR
+  ======================================================= */
 
   const [calendarType, setCalendarType] =
     useState(null);
@@ -321,39 +192,110 @@ const Order = () => {
   const [calendarYear, setCalendarYear] =
     useState(new Date().getFullYear());
 
+  /* =======================================================
+     SELECTION
+  ======================================================= */
+
   const [selectedOrders, setSelectedOrders] =
     useState([]);
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] =
+    useState(1);
 
-  const [viewOrder, setViewOrder] = useState(null);
-  const [editOrder, setEditOrder] = useState(null);
-  const [deleteOrder, setDeleteOrder] = useState(null);
+  /* =======================================================
+     MODALS
+  ======================================================= */
+
+  const [viewOrder, setViewOrder] =
+    useState(null);
+
+  const [editOrder, setEditOrder] =
+    useState(null);
+
+  const [deleteOrder, setDeleteOrder] =
+    useState(null);
 
   const [bulkDelete, setBulkDelete] =
     useState(false);
 
+  /* =======================================================
+     LOADING STATES
+  ======================================================= */
+
+  const [editLoading, setEditLoading] =
+    useState(false);
+
+  const [deleteLoading, setDeleteLoading] =
+    useState(false);
+
+  /* =======================================================
+     EDIT FORM
+  ======================================================= */
+
   const [editForm, setEditForm] = useState({
-    customer: "",
-    email: "",
-    total: "",
-    payment: "Paid",
-    status: "Pending",
+    name: "",
+    phone: "",
     address: "",
+    paymentMethod: "upi",
+    paymentStatus: "pending",
+    orderStatus: "Pending",
   });
 
-  const ITEMS_PER_PAGE = 6;
-
   /* =========================================================
-     SAVE LOCAL DATA
+     FETCH ORDERS
   ========================================================= */
 
+  const fetchOrders = async (
+    showInitialLoader = false
+  ) => {
+    try {
+      if (showInitialLoader) {
+        setLoading(true);
+      } else {
+        setRefreshing(true);
+      }
+
+      const response = await API.get("/orders");
+
+      if (!response.data?.success) {
+        throw new Error(
+          response.data?.message ||
+            "Unable to fetch orders."
+        );
+      }
+
+      const fetchedOrders =
+        Array.isArray(response.data.data)
+          ? response.data.data
+          : [];
+
+      setOrders(fetchedOrders);
+
+      setSelectedOrders([]);
+    } catch (error) {
+      console.error(
+        "FETCH ORDERS ERROR:",
+        error
+      );
+
+      Swal.fire({
+        icon: "error",
+        title: "Unable to Load Orders",
+        text:
+          error?.response?.data?.message ||
+          error?.message ||
+          "Please check your backend server.",
+        confirmButtonColor: "#ff6b00",
+      });
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
   useEffect(() => {
-    localStorage.setItem(
-      "foodOrderData",
-      JSON.stringify(orders)
-    );
-  }, [orders]);
+    fetchOrders(true);
+  }, []);
 
   /* =========================================================
      STATISTICS
@@ -362,73 +304,95 @@ const Order = () => {
   const totalOrders = orders.length;
 
   const deliveredOrders = orders.filter(
-    (order) => order.status === "Delivered"
+    (order) =>
+      order.orderStatus === "Delivered"
   ).length;
 
   const pendingOrders = orders.filter(
     (order) =>
-      order.status === "Pending" ||
-      order.status === "Preparing"
+      order.orderStatus === "Pending" ||
+      order.orderStatus === "Preparing"
   ).length;
 
   const cancelledOrders = orders.filter(
-    (order) => order.status === "Cancelled"
+    (order) =>
+      order.orderStatus === "Cancelled"
   ).length;
-
-  /* =========================================================
-     FORMAT DATE
-  ========================================================= */
-
-  const formatDate = (date) => {
-    if (!date) return "";
-
-    return new Date(`${date}T00:00:00`).toLocaleDateString(
-      "en-IN",
-      {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      }
-    );
-  };
 
   /* =========================================================
      FILTER
   ========================================================= */
 
   const filteredOrders = useMemo(() => {
+    const searchValue =
+      search.trim().toLowerCase();
+
     return orders.filter((order) => {
-      const searchValue = search.toLowerCase();
+      const customerName =
+        order.customer?.name || "";
+
+      const customerPhone =
+        order.customer?.phone || "";
+
+      const customerAddress =
+        order.customer?.address || "";
+
+      const orderNumber =
+        order.orderNumber || "";
+
+      const items = Array.isArray(order.items)
+        ? order.items
+        : [];
+
+      const itemMatch = items.some((item) =>
+        String(item.name || "")
+          .toLowerCase()
+          .includes(searchValue)
+      );
 
       const matchesSearch =
-        order.orderId
+        !searchValue ||
+        orderNumber
           .toLowerCase()
           .includes(searchValue) ||
-        order.customer
+        customerName
           .toLowerCase()
           .includes(searchValue) ||
-        order.email
+        customerPhone
           .toLowerCase()
           .includes(searchValue) ||
-        order.items.some((item) =>
-          item.name
-            .toLowerCase()
-            .includes(searchValue)
-        );
+        customerAddress
+          .toLowerCase()
+          .includes(searchValue) ||
+        itemMatch;
 
       const matchesOrderStatus =
         orderStatus === "All Status" ||
-        order.status === orderStatus;
+        order.orderStatus === orderStatus;
 
       const matchesPayment =
         paymentStatus === "All Payments" ||
-        order.payment === paymentStatus;
+        order.paymentStatus === paymentStatus;
+
+      const createdDate = order.createdAt
+        ? new Date(order.createdAt)
+        : null;
+
+      const from = fromDate
+        ? new Date(`${fromDate}T00:00:00`)
+        : null;
+
+      const to = toDate
+        ? new Date(`${toDate}T23:59:59`)
+        : null;
 
       const matchesFrom =
-        !fromDate || order.date >= fromDate;
+        !from ||
+        (createdDate && createdDate >= from);
 
       const matchesTo =
-        !toDate || order.date <= toDate;
+        !to ||
+        (createdDate && createdDate <= to);
 
       return (
         matchesSearch &&
@@ -454,17 +418,20 @@ const Order = () => {
   const totalPages = Math.max(
     1,
     Math.ceil(
-      filteredOrders.length / ITEMS_PER_PAGE
+      filteredOrders.length /
+        ITEMS_PER_PAGE
     )
   );
 
   const startIndex =
-    (currentPage - 1) * ITEMS_PER_PAGE;
+    (currentPage - 1) *
+    ITEMS_PER_PAGE;
 
-  const currentOrders = filteredOrders.slice(
-    startIndex,
-    startIndex + ITEMS_PER_PAGE
-  );
+  const currentOrders =
+    filteredOrders.slice(
+      startIndex,
+      startIndex + ITEMS_PER_PAGE
+    );
 
   useEffect(() => {
     if (currentPage > totalPages) {
@@ -476,9 +443,10 @@ const Order = () => {
      SELECT ALL
   ========================================================= */
 
-  const currentOrderIds = currentOrders.map(
-    (order) => order.id
-  );
+  const currentOrderIds =
+    currentOrders.map(
+      (order) => order._id
+    );
 
   const allSelected =
     currentOrderIds.length > 0 &&
@@ -488,30 +456,35 @@ const Order = () => {
 
   const handleSelectAll = () => {
     if (allSelected) {
-      setSelectedOrders((prev) =>
-        prev.filter(
-          (id) => !currentOrderIds.includes(id)
+      setSelectedOrders((previous) =>
+        previous.filter(
+          (id) =>
+            !currentOrderIds.includes(id)
         )
       );
-    } else {
-      setSelectedOrders((prev) => [
-        ...new Set([
-          ...prev,
-          ...currentOrderIds,
-        ]),
-      ]);
+
+      return;
     }
+
+    setSelectedOrders((previous) => [
+      ...new Set([
+        ...previous,
+        ...currentOrderIds,
+      ]),
+    ]);
   };
 
   /* =========================================================
-     SINGLE SELECT
+     SELECT SINGLE
   ========================================================= */
 
   const handleSelectOrder = (id) => {
-    setSelectedOrders((prev) =>
-      prev.includes(id)
-        ? prev.filter((item) => item !== id)
-        : [...prev, id]
+    setSelectedOrders((previous) =>
+      previous.includes(id)
+        ? previous.filter(
+            (item) => item !== id
+          )
+        : [...previous, id]
     );
   };
 
@@ -534,163 +507,454 @@ const Order = () => {
   ========================================================= */
 
   const handleRefresh = () => {
-    setSelectedOrders([]);
     setCurrentPage(1);
     setCalendarType(null);
+
+    fetchOrders(false);
   };
 
   /* =========================================================
-     DELETE SINGLE
+     VIEW
   ========================================================= */
 
-  const confirmDelete = () => {
-    if (!deleteOrder) return;
+  const openView = async (order) => {
+    try {
+      const response = await API.get(
+        `/orders/${order._id}`
+      );
 
-    setOrders((prev) =>
-      prev.filter(
-        (order) => order.id !== deleteOrder.id
-      )
-    );
+      if (response.data?.success) {
+        setViewOrder(response.data.data);
+      } else {
+        setViewOrder(order);
+      }
+    } catch (error) {
+      console.error(
+        "VIEW ORDER ERROR:",
+        error
+      );
 
-    setSelectedOrders((prev) =>
-      prev.filter(
-        (id) => id !== deleteOrder.id
-      )
-    );
-
-    setDeleteOrder(null);
+      setViewOrder(order);
+    }
   };
 
   /* =========================================================
-     DELETE SELECTED
-  ========================================================= */
-
-  const confirmBulkDelete = () => {
-    setOrders((prev) =>
-      prev.filter(
-        (order) =>
-          !selectedOrders.includes(order.id)
-      )
-    );
-
-    setSelectedOrders([]);
-    setBulkDelete(false);
-  };
-
-  /* =========================================================
-     OPEN EDIT
+     EDIT
   ========================================================= */
 
   const openEdit = (order) => {
     setEditOrder(order);
 
     setEditForm({
-      customer: order.customer,
-      email: order.email,
-      total: order.total,
-      payment: order.payment,
-      status: order.status,
-      address: order.address,
+      name:
+        order.customer?.name || "",
+
+      phone:
+        order.customer?.phone || "",
+
+      address:
+        order.customer?.address || "",
+
+      paymentMethod:
+        order.paymentMethod || "upi",
+
+      paymentStatus:
+        order.paymentStatus || "pending",
+
+      orderStatus:
+        order.orderStatus || "Pending",
     });
   };
 
-  /* =========================================================
-     EDIT FORM
-  ========================================================= */
-
-  const handleEditChange = (field, value) => {
-    setEditForm((prev) => ({
-      ...prev,
+  const handleEditChange = (
+    field,
+    value
+  ) => {
+    setEditForm((previous) => ({
+      ...previous,
       [field]: value,
     }));
   };
 
   /* =========================================================
-     SAVE EDIT
+     SAVE EDIT TO BACKEND
   ========================================================= */
 
-  const saveEdit = () => {
+  const saveEdit = async () => {
     if (!editOrder) return;
 
-    setOrders((prev) =>
-      prev.map((order) =>
-        order.id === editOrder.id
-          ? {
-              ...order,
-              customer: editForm.customer,
-              email: editForm.email,
-              total: Number(editForm.total),
-              payment: editForm.payment,
-              status: editForm.status,
-              address: editForm.address,
-            }
-          : order
-      )
-    );
+    const name =
+      editForm.name.trim();
 
-    setEditOrder(null);
+    const phone =
+      editForm.phone.trim();
+
+    const address =
+      editForm.address.trim();
+
+    if (!name) {
+      Swal.fire({
+        icon: "warning",
+        title: "Name Required",
+        text:
+          "Customer name is required.",
+        confirmButtonColor: "#ff6b00",
+      });
+
+      return;
+    }
+
+    if (
+      !/^[6-9]\d{9}$/.test(phone)
+    ) {
+      Swal.fire({
+        icon: "warning",
+        title: "Invalid Phone Number",
+        text:
+          "Enter a valid 10-digit Indian mobile number.",
+        confirmButtonColor: "#ff6b00",
+      });
+
+      return;
+    }
+
+    if (!address) {
+      Swal.fire({
+        icon: "warning",
+        title: "Address Required",
+        text:
+          "Delivery address is required.",
+        confirmButtonColor: "#ff6b00",
+      });
+
+      return;
+    }
+
+    try {
+      setEditLoading(true);
+
+      const response = await API.put(
+        `/orders/${editOrder._id}`,
+        {
+          customer: {
+            name,
+            phone,
+            address,
+          },
+
+          paymentMethod:
+            editForm.paymentMethod,
+
+          paymentStatus:
+            editForm.paymentStatus,
+
+          orderStatus:
+            editForm.orderStatus,
+        }
+      );
+
+      if (!response.data?.success) {
+        throw new Error(
+          response.data?.message ||
+            "Failed to update order."
+        );
+      }
+
+      const updatedOrder =
+        response.data.data;
+
+      setOrders((previous) =>
+        previous.map((order) =>
+          order._id === updatedOrder._id
+            ? updatedOrder
+            : order
+        )
+      );
+
+      setEditOrder(null);
+
+      Swal.fire({
+        icon: "success",
+        title: "Order Updated",
+        text:
+          "Order information has been updated successfully.",
+        timer: 1700,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      console.error(
+        "UPDATE ORDER ERROR:",
+        error
+      );
+
+      Swal.fire({
+        icon: "error",
+        title: "Update Failed",
+        text:
+          error?.response?.data?.message ||
+          error?.message ||
+          "Unable to update order.",
+        confirmButtonColor: "#ff6b00",
+      });
+    } finally {
+      setEditLoading(false);
+    }
   };
 
   /* =========================================================
-     EXPORT CSV
+     DELETE SINGLE
+  ========================================================= */
+
+  const confirmDelete = async () => {
+    if (!deleteOrder) return;
+
+    try {
+      setDeleteLoading(true);
+
+      const response = await API.delete(
+        `/orders/${deleteOrder._id}`
+      );
+
+      if (!response.data?.success) {
+        throw new Error(
+          response.data?.message ||
+            "Unable to delete order."
+        );
+      }
+
+      setOrders((previous) =>
+        previous.filter(
+          (order) =>
+            order._id !==
+            deleteOrder._id
+        )
+      );
+
+      setSelectedOrders((previous) =>
+        previous.filter(
+          (id) =>
+            id !== deleteOrder._id
+        )
+      );
+
+      setDeleteOrder(null);
+
+      Swal.fire({
+        icon: "success",
+        title: "Order Deleted",
+        text:
+          "The order has been removed from the database.",
+        timer: 1600,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      console.error(
+        "DELETE ORDER ERROR:",
+        error
+      );
+
+      Swal.fire({
+        icon: "error",
+        title: "Delete Failed",
+        text:
+          error?.response?.data?.message ||
+          error?.message ||
+          "Unable to delete order.",
+        confirmButtonColor: "#ff6b00",
+      });
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+
+  /* =========================================================
+     BULK DELETE
+  ========================================================= */
+
+  const confirmBulkDelete = async () => {
+    if (!selectedOrders.length) return;
+
+    try {
+      setDeleteLoading(true);
+
+      const response = await API.delete(
+        "/orders/bulk-delete",
+        {
+          data: {
+            ids: selectedOrders,
+          },
+        }
+      );
+
+      if (!response.data?.success) {
+        throw new Error(
+          response.data?.message ||
+            "Unable to delete selected orders."
+        );
+      }
+
+      const selectedSet =
+        new Set(selectedOrders);
+
+      setOrders((previous) =>
+        previous.filter(
+          (order) =>
+            !selectedSet.has(
+              order._id
+            )
+        )
+      );
+
+      setSelectedOrders([]);
+      setBulkDelete(false);
+
+      Swal.fire({
+        icon: "success",
+        title: "Orders Deleted",
+        text:
+          response.data.message ||
+          "Selected orders deleted successfully.",
+        timer: 1700,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      console.error(
+        "BULK DELETE ERROR:",
+        error
+      );
+
+      Swal.fire({
+        icon: "error",
+        title: "Delete Failed",
+        text:
+          error?.response?.data?.message ||
+          error?.message ||
+          "Unable to delete selected orders.",
+        confirmButtonColor: "#ff6b00",
+      });
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+
+  /* =========================================================
+     CSV EXPORT
   ========================================================= */
 
   const exportCSV = () => {
     if (!filteredOrders.length) {
-      alert("No orders available to export.");
+      Swal.fire({
+        icon: "info",
+        title: "No Orders",
+        text:
+          "There are no orders available to export.",
+        confirmButtonColor: "#ff6b00",
+      });
+
       return;
     }
 
     const headers = [
       "Order ID",
-      "Customer",
-      "Email",
-      "Total Amount",
-      "Payment",
-      "Status",
+      "Customer Name",
+      "Phone",
+      "Address",
+      "Items",
+      "Subtotal",
+      "Discount",
+      "Shipping",
+      "Total",
+      "Payment Method",
+      "Payment Status",
+      "Order Status",
       "Date",
       "Time",
-      "Address",
     ];
 
-    const rows = filteredOrders.map((order) => [
-      order.orderId,
-      order.customer,
-      order.email,
-      order.total,
-      order.payment,
-      order.status,
-      formatDate(order.date),
-      order.time,
-      order.address,
-    ]);
+    const rows = filteredOrders.map(
+      (order) => {
+        const items = Array.isArray(
+          order.items
+        )
+          ? order.items
+          : [];
+
+        const itemText = items
+          .map(
+            (item) =>
+              `${item.name} x${item.quantity}`
+          )
+          .join(" | ");
+
+        return [
+          order.orderNumber || "",
+          order.customer?.name || "",
+          order.customer?.phone || "",
+          order.customer?.address || "",
+          itemText,
+          order.subtotal || 0,
+          order.discount || 0,
+          order.shippingFee || 0,
+          order.totalAmount || 0,
+          getPaymentLabel(
+            order.paymentMethod
+          ),
+          getPaymentStatusLabel(
+            order.paymentStatus
+          ),
+          order.orderStatus || "",
+          formatDate(
+            order.createdAt
+          ),
+          formatTime(
+            order.createdAt
+          ),
+        ];
+      }
+    );
 
     const csv = [
-      headers.join(","),
-      ...rows.map((row) =>
+      headers,
+      ...rows,
+    ]
+      .map((row) =>
         row
-          .map((value) =>
-            `"${String(value).replace(
-              /"/g,
-              '""'
-            )}"`
+          .map(
+            (value) =>
+              `"${String(
+                value ?? ""
+              ).replace(
+                /"/g,
+                '""'
+              )}"`
           )
           .join(",")
-      ),
-    ].join("\n");
+      )
+      .join("\n");
 
-    const blob = new Blob([csv], {
-      type: "text/csv;charset=utf-8;",
-    });
+    const blob = new Blob(
+      [csv],
+      {
+        type:
+          "text/csv;charset=utf-8;",
+      }
+    );
 
-    const url = URL.createObjectURL(blob);
+    const url =
+      URL.createObjectURL(blob);
 
-    const link = document.createElement("a");
+    const link =
+      document.createElement("a");
 
     link.href = url;
-    link.download = "food-orders.csv";
+
+    link.download =
+      `healthy-heaven-orders-${new Date()
+        .toISOString()
+        .slice(0, 10)}.csv`;
 
     document.body.appendChild(link);
+
     link.click();
 
     document.body.removeChild(link);
@@ -705,16 +969,28 @@ const Order = () => {
   const getPages = () => {
     if (totalPages <= 6) {
       return Array.from(
-        { length: totalPages },
+        {
+          length: totalPages,
+        },
         (_, index) => index + 1
       );
     }
 
     if (currentPage <= 3) {
-      return [1, 2, 3, 4, "...", totalPages];
+      return [
+        1,
+        2,
+        3,
+        4,
+        "...",
+        totalPages,
+      ];
     }
 
-    if (currentPage >= totalPages - 2) {
+    if (
+      currentPage >=
+      totalPages - 2
+    ) {
       return [
         1,
         "...",
@@ -762,28 +1038,38 @@ const Order = () => {
       1
     ).getDay();
 
-    const daysInMonth = new Date(
-      calendarYear,
-      calendarMonth + 1,
-      0
-    ).getDate();
+    const daysInMonth =
+      new Date(
+        calendarYear,
+        calendarMonth + 1,
+        0
+      ).getDate();
 
-    const previousDays = new Date(
-      calendarYear,
-      calendarMonth,
-      0
-    ).getDate();
+    const previousDays =
+      new Date(
+        calendarYear,
+        calendarMonth,
+        0
+      ).getDate();
 
     const days = [];
 
-    for (let i = firstDay - 1; i >= 0; i--) {
+    for (
+      let i = firstDay - 1;
+      i >= 0;
+      i--
+    ) {
       days.push({
         day: previousDays - i,
         outside: true,
       });
     }
 
-    for (let i = 1; i <= daysInMonth; i++) {
+    for (
+      let i = 1;
+      i <= daysInMonth;
+      i++
+    ) {
       days.push({
         day: i,
         outside: false,
@@ -804,11 +1090,15 @@ const Order = () => {
     return days;
   };
 
-  const changeMonth = (direction) => {
+  const changeMonth = (
+    direction
+  ) => {
     if (direction === "prev") {
       if (calendarMonth === 0) {
         setCalendarMonth(11);
-        setCalendarYear((year) => year - 1);
+        setCalendarYear(
+          (year) => year - 1
+        );
       } else {
         setCalendarMonth(
           (month) => month - 1
@@ -817,7 +1107,9 @@ const Order = () => {
     } else {
       if (calendarMonth === 11) {
         setCalendarMonth(0);
-        setCalendarYear((year) => year + 1);
+        setCalendarYear(
+          (year) => year + 1
+        );
       } else {
         setCalendarMonth(
           (month) => month + 1
@@ -826,43 +1118,62 @@ const Order = () => {
     }
   };
 
-  const openCalendar = (type) => {
+  const openCalendar = (
+    type
+  ) => {
     setCalendarType(
-      calendarType === type ? null : type
+      calendarType === type
+        ? null
+        : type
     );
 
     const selected =
-      type === "from" ? fromDate : toDate;
+      type === "from"
+        ? fromDate
+        : toDate;
 
     if (selected) {
       const date = new Date(
         `${selected}T00:00:00`
       );
 
-      setCalendarMonth(date.getMonth());
-      setCalendarYear(date.getFullYear());
+      setCalendarMonth(
+        date.getMonth()
+      );
+
+      setCalendarYear(
+        date.getFullYear()
+      );
     }
   };
 
-  const selectDate = (day, outside) => {
+  const selectDate = (
+    day,
+    outside
+  ) => {
     if (outside) return;
 
     const month = String(
       calendarMonth + 1
     ).padStart(2, "0");
 
-    const selectedDay = String(day).padStart(
-      2,
-      "0"
-    );
+    const selectedDay =
+      String(day).padStart(
+        2,
+        "0"
+      );
 
     const selectedDate = `${calendarYear}-${month}-${selectedDay}`;
 
-    if (calendarType === "from") {
+    if (
+      calendarType === "from"
+    ) {
       setFromDate(selectedDate);
     }
 
-    if (calendarType === "to") {
+    if (
+      calendarType === "to"
+    ) {
       setToDate(selectedDate);
     }
 
@@ -870,15 +1181,18 @@ const Order = () => {
     setCurrentPage(1);
   };
 
-  const isSelectedDate = (day) => {
+  const isSelectedDate = (
+    day
+  ) => {
     const month = String(
       calendarMonth + 1
     ).padStart(2, "0");
 
-    const selectedDay = String(day).padStart(
-      2,
-      "0"
-    );
+    const selectedDay =
+      String(day).padStart(
+        2,
+        "0"
+      );
 
     const value = `${calendarYear}-${month}-${selectedDay}`;
 
@@ -889,10 +1203,13 @@ const Order = () => {
   };
 
   /* =========================================================
-     ICON COMPONENT
+     ICONS
   ========================================================= */
 
-  const Icon = ({ name, size = 20 }) => {
+  const Icon = ({
+    name,
+    size = 20,
+  }) => {
     const props = {
       width: size,
       height: size,
@@ -1046,54 +1363,88 @@ const Order = () => {
       );
     }
 
-    if (name === "home") {
-      return (
-        <svg {...props}>
-          <path d="m3 10 9-7 9 7" />
-          <path d="M5 9v11h14V9" />
-          <path d="M9 20v-6h6v6" />
-        </svg>
-      );
-    }
-
     return null;
   };
+
+  /* =========================================================
+     LOADING
+  ========================================================= */
+
+  if (loading) {
+    return (
+      <div className="Order">
+        <div className="Order__loading">
+          <div className="Order__loadingSpinner" />
+          <strong>
+            Loading orders...
+          </strong>
+          <span>
+            Connecting to Healthy Heaven database
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  /* =========================================================
+     RENDER
+  ========================================================= */
 
   return (
     <div className="Order">
 
       {/* =====================================================
-          PAGE HEADER
+          TOP HEADER
       ===================================================== */}
 
-      <div className="Order__header">
+      <div className="Order__pageHeader">
 
-        <div className="Order__headerLeft">
-
-          <div className="Order__headerIcon">
-            <Icon name="bag" size={28} />
-          </div>
-
-          <div>
-            <h1>Orders</h1>
-
-            <p>
-              Manage and track all customer orders
-            </p>
-          </div>
-
-        </div>
-
-        <div className="Order__breadcrumb">
-
-          <span>
-            <Icon name="home" size={15} />
-            Dashboard
+        <div>
+          <span className="Order__pageEyebrow">
+            HEALTHY HEAVEN
           </span>
 
-          <Icon name="arrowRight" size={14} />
+          <h1 className="Order__pageTitle">
+            Order Management
+          </h1>
 
-          <strong>Orders</strong>
+          <p className="Order__pageSubtitle">
+            Manage customer orders,
+            customer information,
+            payments and delivery.
+          </p>
+        </div>
+
+        <div className="Order__pageHeaderActions">
+
+          <button
+            type="button"
+            className="Order__topRefresh"
+            onClick={handleRefresh}
+            disabled={refreshing}
+          >
+            <Icon
+              name="refresh"
+              size={16}
+            />
+
+            {refreshing
+              ? "Refreshing..."
+              : "Refresh"}
+          </button>
+
+          <button
+            type="button"
+            className="Order__topExport"
+            onClick={exportCSV}
+          >
+            <Icon
+              name="download"
+              size={16}
+            />
+
+            Export Orders
+          </button>
 
         </div>
 
@@ -1108,22 +1459,27 @@ const Order = () => {
         <div className="Order__statCard">
 
           <div className="Order__statIcon Order__statIcon--orange">
-            <Icon name="bag" size={27} />
+            <Icon
+              name="bag"
+              size={25}
+            />
           </div>
 
           <div className="Order__statContent">
 
-            <span>Total Orders</span>
+            <span>
+              Total Orders
+            </span>
 
             <div className="Order__statValue">
-              <strong>{totalOrders + 316}</strong>
-
-              <small className="Order__growth Order__growth--green">
-                ↗ +12%
-              </small>
+              <strong>
+                {totalOrders}
+              </strong>
             </div>
 
-            <p>All time orders</p>
+            <p>
+              All database orders
+            </p>
 
           </div>
 
@@ -1132,22 +1488,27 @@ const Order = () => {
         <div className="Order__statCard">
 
           <div className="Order__statIcon Order__statIcon--green">
-            <Icon name="check" size={27} />
+            <Icon
+              name="check"
+              size={25}
+            />
           </div>
 
           <div className="Order__statContent">
 
-            <span>Delivered</span>
+            <span>
+              Delivered
+            </span>
 
             <div className="Order__statValue">
-              <strong>256</strong>
-
-              <small className="Order__growth Order__growth--green">
-                ↗ +18%
-              </small>
+              <strong>
+                {deliveredOrders}
+              </strong>
             </div>
 
-            <p>Successfully delivered</p>
+            <p>
+              Successfully completed
+            </p>
 
           </div>
 
@@ -1156,22 +1517,27 @@ const Order = () => {
         <div className="Order__statCard">
 
           <div className="Order__statIcon Order__statIcon--yellow">
-            <Icon name="clock" size={27} />
+            <Icon
+              name="clock"
+              size={25}
+            />
           </div>
 
           <div className="Order__statContent">
 
-            <span>Pending</span>
+            <span>
+              Active Orders
+            </span>
 
             <div className="Order__statValue">
-              <strong>34</strong>
-
-              <small className="Order__growth Order__growth--red">
-                ↘ -6%
-              </small>
+              <strong>
+                {pendingOrders}
+              </strong>
             </div>
 
-            <p>Awaiting processing</p>
+            <p>
+              Pending & preparing
+            </p>
 
           </div>
 
@@ -1180,22 +1546,27 @@ const Order = () => {
         <div className="Order__statCard">
 
           <div className="Order__statIcon Order__statIcon--red">
-            <Icon name="closeCircle" size={27} />
+            <Icon
+              name="closeCircle"
+              size={25}
+            />
           </div>
 
           <div className="Order__statContent">
 
-            <span>Cancelled</span>
+            <span>
+              Cancelled
+            </span>
 
             <div className="Order__statValue">
-              <strong>38</strong>
-
-              <small className="Order__growth Order__growth--red">
-                ↘ +4%
-              </small>
+              <strong>
+                {cancelledOrders}
+              </strong>
             </div>
 
-            <p>Total cancelled</p>
+            <p>
+              Cancelled orders
+            </p>
 
           </div>
 
@@ -1209,22 +1580,30 @@ const Order = () => {
 
       <div className="Order__filterCard">
 
-        <div className="Order__filterField Order__searchField">
+        <div className="Order__filterField">
 
-          <label>Search</label>
+          <label>
+            Search Orders
+          </label>
 
           <div className="Order__inputBox">
 
-            <Icon name="search" size={17} />
+            <Icon
+              name="search"
+              size={17}
+            />
 
             <input
               type="text"
               value={search}
               onChange={(e) => {
-                setSearch(e.target.value);
+                setSearch(
+                  e.target.value
+                );
+
                 setCurrentPage(1);
               }}
-              placeholder="Search by order ID, customer, or item..."
+              placeholder="Order ID, customer, phone or product..."
             />
 
           </div>
@@ -1233,64 +1612,103 @@ const Order = () => {
 
         <div className="Order__filterField">
 
-          <label>Order Status</label>
+          <label>
+            Order Status
+          </label>
 
           <select
             value={orderStatus}
             onChange={(e) => {
-              setOrderStatus(e.target.value);
+              setOrderStatus(
+                e.target.value
+              );
+
               setCurrentPage(1);
             }}
           >
-            <option>All Status</option>
-            <option>Pending</option>
-            <option>Preparing</option>
-            <option>Out for Delivery</option>
-            <option>Delivered</option>
-            <option>Cancelled</option>
+            <option>
+              All Status
+            </option>
+
+            {ORDER_STATUSES.map(
+              (status) => (
+                <option
+                  key={status}
+                  value={status}
+                >
+                  {status}
+                </option>
+              )
+            )}
           </select>
 
         </div>
 
         <div className="Order__filterField">
 
-          <label>Payment Status</label>
+          <label>
+            Payment
+          </label>
 
           <select
             value={paymentStatus}
             onChange={(e) => {
-              setPaymentStatus(e.target.value);
+              setPaymentStatus(
+                e.target.value
+              );
+
               setCurrentPage(1);
             }}
           >
-            <option>All Payments</option>
-            <option>Paid</option>
-            <option>COD</option>
+            <option>
+              All Payments
+            </option>
+
+            {PAYMENT_STATUSES.map(
+              (status) => (
+                <option
+                  key={status}
+                  value={status}
+                >
+                  {getPaymentStatusLabel(
+                    status
+                  )}
+                </option>
+              )
+            )}
           </select>
 
         </div>
 
-        {/* FROM DATE */}
+        <div className="Order__filterField">
 
-        <div className="Order__filterField Order__calendarField">
-
-          <label>From Date</label>
+          <label>
+            From Date
+          </label>
 
           <button
             type="button"
             className="Order__dateButton"
-            onClick={() => openCalendar("from")}
+            onClick={() =>
+              openCalendar("from")
+            }
           >
             <span>
               {fromDate
-                ? formatDate(fromDate)
-                : "dd-mm-yyyy"}
+                ? formatDate(
+                    fromDate
+                  )
+                : "Select date"}
             </span>
 
-            <Icon name="calendar" size={16} />
+            <Icon
+              name="calendar"
+              size={16}
+            />
           </button>
 
-          {calendarType === "from" && (
+          {calendarType ===
+            "from" && (
             <div className="Order__calendar">
 
               <div className="Order__calendarHeader">
@@ -1298,7 +1716,9 @@ const Order = () => {
                 <button
                   type="button"
                   onClick={() =>
-                    changeMonth("prev")
+                    changeMonth(
+                      "prev"
+                    )
                   }
                 >
                   <Icon
@@ -1308,14 +1728,20 @@ const Order = () => {
                 </button>
 
                 <strong>
-                  {monthNames[calendarMonth]}{" "}
+                  {
+                    monthNames[
+                      calendarMonth
+                    ]
+                  }{" "}
                   {calendarYear}
                 </strong>
 
                 <button
                   type="button"
                   onClick={() =>
-                    changeMonth("next")
+                    changeMonth(
+                      "next"
+                    )
                   }
                 >
                   <Icon
@@ -1327,19 +1753,23 @@ const Order = () => {
               </div>
 
               <div className="Order__calendarWeek">
-
                 {[
-                  "Su",
-                  "Mo",
-                  "Tu",
-                  "We",
-                  "Th",
-                  "Fr",
-                  "Sa",
-                ].map((day) => (
-                  <span key={day}>{day}</span>
-                ))}
-
+                  "Sun",
+                  "Mon",
+                  "Tue",
+                  "Wed",
+                  "Thu",
+                  "Fri",
+                  "Sat",
+                ].map(
+                  (day) => (
+                    <span
+                      key={day}
+                    >
+                      {day}
+                    </span>
+                  )
+                )}
               </div>
 
               <div className="Order__calendarDays">
@@ -1347,10 +1777,13 @@ const Order = () => {
                 {getCalendarDays().map(
                   (item, index) => (
                     <button
-                      type="button"
                       key={index}
-                      disabled={item.outside}
+                      type="button"
+                      disabled={
+                        item.outside
+                      }
                       className={
+                        !item.outside &&
                         isSelectedDate(
                           item.day
                         )
@@ -1376,27 +1809,33 @@ const Order = () => {
 
         </div>
 
-        {/* TO DATE */}
+        <div className="Order__filterField">
 
-        <div className="Order__filterField Order__calendarField">
-
-          <label>To Date</label>
+          <label>
+            To Date
+          </label>
 
           <button
             type="button"
             className="Order__dateButton"
-            onClick={() => openCalendar("to")}
+            onClick={() =>
+              openCalendar("to")
+            }
           >
             <span>
               {toDate
                 ? formatDate(toDate)
-                : "dd-mm-yyyy"}
+                : "Select date"}
             </span>
 
-            <Icon name="calendar" size={16} />
+            <Icon
+              name="calendar"
+              size={16}
+            />
           </button>
 
-          {calendarType === "to" && (
+          {calendarType ===
+            "to" && (
             <div className="Order__calendar">
 
               <div className="Order__calendarHeader">
@@ -1404,7 +1843,9 @@ const Order = () => {
                 <button
                   type="button"
                   onClick={() =>
-                    changeMonth("prev")
+                    changeMonth(
+                      "prev"
+                    )
                   }
                 >
                   <Icon
@@ -1414,14 +1855,20 @@ const Order = () => {
                 </button>
 
                 <strong>
-                  {monthNames[calendarMonth]}{" "}
+                  {
+                    monthNames[
+                      calendarMonth
+                    ]
+                  }{" "}
                   {calendarYear}
                 </strong>
 
                 <button
                   type="button"
                   onClick={() =>
-                    changeMonth("next")
+                    changeMonth(
+                      "next"
+                    )
                   }
                 >
                   <Icon
@@ -1433,19 +1880,23 @@ const Order = () => {
               </div>
 
               <div className="Order__calendarWeek">
-
                 {[
-                  "Su",
-                  "Mo",
-                  "Tu",
-                  "We",
-                  "Th",
-                  "Fr",
-                  "Sa",
-                ].map((day) => (
-                  <span key={day}>{day}</span>
-                ))}
-
+                  "Sun",
+                  "Mon",
+                  "Tue",
+                  "Wed",
+                  "Thu",
+                  "Fri",
+                  "Sat",
+                ].map(
+                  (day) => (
+                    <span
+                      key={day}
+                    >
+                      {day}
+                    </span>
+                  )
+                )}
               </div>
 
               <div className="Order__calendarDays">
@@ -1453,10 +1904,13 @@ const Order = () => {
                 {getCalendarDays().map(
                   (item, index) => (
                     <button
-                      type="button"
                       key={index}
-                      disabled={item.outside}
+                      type="button"
+                      disabled={
+                        item.outside
+                      }
                       className={
+                        !item.outside &&
                         isSelectedDate(
                           item.day
                         )
@@ -1486,21 +1940,9 @@ const Order = () => {
 
           <button
             type="button"
-            className="Order__filterButton"
-            onClick={() =>
-              setCurrentPage(1)
-            }
-          >
-            <Icon name="filter" size={17} />
-            Filter
-          </button>
-
-          <button
-            type="button"
             className="Order__resetButton"
             onClick={handleReset}
           >
-            <Icon name="refresh" size={16} />
             Reset
           </button>
 
@@ -1509,7 +1951,7 @@ const Order = () => {
       </div>
 
       {/* =====================================================
-          ORDERS LIST
+          LIST CARD
       ===================================================== */}
 
       <div className="Order__listCard">
@@ -1518,11 +1960,22 @@ const Order = () => {
 
           <div className="Order__listTitle">
 
-            <div className="Order__listIcon">
-              <Icon name="filter" size={22} />
-            </div>
+            <span className="Order__listIcon">
+              <Icon
+                name="bag"
+                size={21}
+              />
+            </span>
 
-            <h2>Orders List</h2>
+            <div>
+              <h2>
+                Customer Orders
+              </h2>
+
+              <small className="Order__databaseStatus">
+                ● Live database
+              </small>
+            </div>
 
           </div>
 
@@ -1530,40 +1983,58 @@ const Order = () => {
 
             <button
               type="button"
+              className="Order__refreshButton"
+              onClick={handleRefresh}
+              disabled={refreshing}
+              title="Refresh orders"
+            >
+              <Icon
+                name="refresh"
+                size={16}
+              />
+            </button>
+
+            <button
+              type="button"
               className="Order__exportButton"
               onClick={exportCSV}
             >
-              <Icon name="download" size={16} />
-              Export CSV
+              <Icon
+                name="download"
+                size={15}
+              />
+              Export
             </button>
 
             <button
               type="button"
               className="Order__deleteSelected"
-              disabled={!selectedOrders.length}
+              disabled={
+                selectedOrders.length ===
+                0
+              }
               onClick={() =>
                 setBulkDelete(true)
               }
             >
-              <Icon name="trash" size={16} />
-              Delete Selected
-            </button>
+              <Icon
+                name="trash"
+                size={15}
+              />
 
-            <button
-              type="button"
-              className="Order__refreshButton"
-              onClick={handleRefresh}
-            >
-              <Icon name="refresh" size={17} />
+              Delete Selected
+              {selectedOrders.length >
+                0 &&
+                ` (${selectedOrders.length})`}
             </button>
 
           </div>
 
         </div>
 
-        {/* =====================================================
+        {/* ===================================================
             TABLE
-        ===================================================== */}
+        =================================================== */}
 
         <div className="Order__tableWrapper">
 
@@ -1579,25 +2050,55 @@ const Order = () => {
 
                     <input
                       type="checkbox"
-                      checked={allSelected}
-                      onChange={handleSelectAll}
+                      checked={
+                        allSelected
+                      }
+                      onChange={
+                        handleSelectAll
+                      }
                     />
 
-                    <span></span>
+                    <span />
 
                   </label>
 
                 </th>
 
-                <th>#</th>
-                <th>Order ID</th>
-                <th>Customer</th>
-                <th>Items</th>
-                <th>Total Amount</th>
-                <th>Payment</th>
-                <th>Status</th>
-                <th>Order Date</th>
-                <th>Actions</th>
+                <th>
+                  Order ID
+                </th>
+
+                <th>
+                  Customer
+                </th>
+
+                <th>
+                  Phone
+                </th>
+
+                <th>
+                  Items
+                </th>
+
+                <th>
+                  Total
+                </th>
+
+                <th>
+                  Payment
+                </th>
+
+                <th>
+                  Status
+                </th>
+
+                <th>
+                  Date
+                </th>
+
+                <th>
+                  Actions
+                </th>
 
               </tr>
 
@@ -1605,214 +2106,388 @@ const Order = () => {
 
             <tbody>
 
-              {currentOrders.length ? (
-                currentOrders.map(
-                  (order, index) => (
-                    <tr key={order.id}>
-
-                      <td>
-
-                        <label className="Order__checkbox">
-
-                          <input
-                            type="checkbox"
-                            checked={selectedOrders.includes(
-                              order.id
-                            )}
-                            onChange={() =>
-                              handleSelectOrder(
-                                order.id
-                              )
-                            }
-                          />
-
-                          <span></span>
-
-                        </label>
-
-                      </td>
-
-                      <td>
-                        {startIndex + index + 1}
-                      </td>
-
-                      <td>
-                        <strong className="Order__orderId">
-                          {order.orderId}
-                        </strong>
-                      </td>
-
-                      <td>
-
-                        <div className="Order__customer">
-
-                          <div className="Order__customerAvatar">
-                            {order.customer
-                              .charAt(0)
-                              .toUpperCase()}
-                          </div>
-
-                          <div>
-
-                            <strong>
-                              {order.customer}
-                            </strong>
-
-                            <span>
-                              {order.email}
-                            </span>
-
-                          </div>
-
-                        </div>
-
-                      </td>
-
-                      <td>
-
-                        <div className="Order__items">
-
-                          {order.items
-                            .slice(0, 3)
-                            .map((item, itemIndex) => (
-                              <img
-                                key={itemIndex}
-                                src={item.image}
-                                alt={item.name}
-                                title={item.name}
-                              />
-                            ))}
-
-                          {order.moreItems > 0 && (
-                            <span>
-                              +{order.moreItems}
-                            </span>
-                          )}
-
-                        </div>
-
-                      </td>
-
-                      <td>
-
-                        <strong className="Order__amount">
-                          ₹
-                          {order.total.toFixed(2)}
-                        </strong>
-
-                      </td>
-
-                      <td>
-
-                        <span
-                          className={`Order__payment Order__payment--${order.payment.toLowerCase()}`}
-                        >
-                          {order.payment}
-                        </span>
-
-                      </td>
-
-                      <td>
-
-                        <span
-                          className={`Order__status Order__status--${order.status
-                            .toLowerCase()
-                            .replaceAll(
-                              " ",
-                              "-"
-                            )}`}
-                        >
-                          {order.status}
-                        </span>
-
-                      </td>
-
-                      <td>
-
-                        <div className="Order__date">
-
-                          <span>
-                            {formatDate(
-                              order.date
-                            )}
-                          </span>
-
-                          <small>
-                            {order.time}
-                          </small>
-
-                        </div>
-
-                      </td>
-
-                      <td>
-
-                        <div className="Order__rowActions">
-
-                          <button
-                            type="button"
-                            className="Order__rowButton Order__viewButton"
-                            title="View order"
-                            onClick={() =>
-                              setViewOrder(
-                                order
-                              )
-                            }
-                          >
-                            <Icon
-                              name="eye"
-                              size={16}
-                            />
-                          </button>
-
-                          <button
-                            type="button"
-                            className="Order__rowButton Order__editButton"
-                            title="Edit order"
-                            onClick={() =>
-                              openEdit(order)
-                            }
-                          >
-                            <Icon
-                              name="edit"
-                              size={16}
-                            />
-                          </button>
-
-                          <button
-                            type="button"
-                            className="Order__rowButton Order__deleteButton"
-                            title="Delete order"
-                            onClick={() =>
-                              setDeleteOrder(
-                                order
-                              )
-                            }
-                          >
-                            <Icon
-                              name="trash"
-                              size={16}
-                            />
-                          </button>
-
-                        </div>
-
-                      </td>
-
-                    </tr>
-                  )
-                )
-              ) : (
+              {currentOrders.length ===
+              0 ? (
                 <tr>
-
                   <td
                     colSpan="10"
                     className="Order__empty"
                   >
-                    No orders found.
-                  </td>
+                    <div className="Order__emptyContent">
 
+                      <div>
+                        <Icon
+                          name="bag"
+                          size={30}
+                        />
+                      </div>
+
+                      <strong>
+                        No orders found
+                      </strong>
+
+                      <span>
+                        New checkout orders
+                        will appear here
+                        automatically.
+                      </span>
+
+                    </div>
+                  </td>
                 </tr>
+              ) : (
+                currentOrders.map(
+                  (order) => {
+                    const items =
+                      Array.isArray(
+                        order.items
+                      )
+                        ? order.items
+                        : [];
+
+                    return (
+                      <tr
+                        key={
+                          order._id
+                        }
+                      >
+
+                        <td className="Order__checkColumn">
+
+                          <label className="Order__checkbox">
+
+                            <input
+                              type="checkbox"
+                              checked={selectedOrders.includes(
+                                order._id
+                              )}
+                              onChange={() =>
+                                handleSelectOrder(
+                                  order._id
+                                )
+                              }
+                            />
+
+                            <span />
+
+                          </label>
+
+                        </td>
+
+                        {/* ORDER ID */}
+
+                        <td>
+
+                          <div className="Order__orderCell">
+
+                            <strong className="Order__orderId">
+                              {
+                                order.orderNumber
+                              }
+                            </strong>
+
+                            <small>
+                              #
+                              {String(
+                                order._id
+                              ).slice(
+                                -6
+                              )}
+                            </small>
+
+                          </div>
+
+                        </td>
+
+                        {/* CUSTOMER */}
+
+                        <td>
+
+                          <div className="Order__customer">
+
+                            <div className="Order__customerAvatar">
+                              {getInitials(
+                                order.customer
+                                  ?.name
+                              )}
+                            </div>
+
+                            <div>
+
+                              <strong>
+                                {
+                                  order.customer
+                                    ?.name ||
+                                  "-"
+                                }
+                              </strong>
+
+                              <span>
+                                {
+                                  order.customer
+                                    ?.address ||
+                                  "-"
+                                }
+                              </span>
+
+                            </div>
+
+                          </div>
+
+                        </td>
+
+                        {/* PHONE */}
+
+                        <td>
+
+                          <div className="Order__phoneCell">
+
+                            <strong>
+                              {
+                                order.customer
+                                  ?.phone ||
+                                "-"
+                              }
+                            </strong>
+
+                          </div>
+
+                        </td>
+
+                        {/* ITEMS */}
+
+                        <td>
+
+                          <div className="Order__items">
+
+                            {items
+                              .slice(0, 3)
+                              .map(
+                                (
+                                  item,
+                                  index
+                                ) => (
+                                  <div
+                                    className="Order__itemPreview"
+                                    key={
+                                      item._id ||
+                                      index
+                                    }
+                                    title={
+                                      item.name
+                                    }
+                                  >
+
+                                    {item.image ? (
+                                      <img
+                                        src={getImageUrl(
+                                          item.image
+                                        )}
+                                        alt={
+                                          item.name
+                                        }
+                                      />
+                                    ) : (
+                                      <div className="Order__itemPlaceholder">
+                                        <Icon
+                                          name="bag"
+                                          size={14}
+                                        />
+                                      </div>
+                                    )}
+
+                                  </div>
+                                )
+                              )}
+
+                            {items.length >
+                              3 && (
+                              <span className="Order__moreItems">
+                                +
+                                {items.length -
+                                  3}
+                              </span>
+                            )}
+
+                            <small className="Order__itemCount">
+                              {items.reduce(
+                                (
+                                  total,
+                                  item
+                                ) =>
+                                  total +
+                                  Number(
+                                    item.quantity ||
+                                      0
+                                  ),
+                                0
+                              )}{" "}
+                              item
+                              {items.reduce(
+                                (
+                                  total,
+                                  item
+                                ) =>
+                                  total +
+                                  Number(
+                                    item.quantity ||
+                                      0
+                                  ),
+                                0
+                              ) !==
+                              1
+                                ? "s"
+                                : ""}
+                            </small>
+
+                          </div>
+
+                        </td>
+
+                        {/* TOTAL */}
+
+                        <td>
+
+                          <strong className="Order__amount">
+                            ₹
+                            {formatMoney(
+                              order.totalAmount
+                            )}
+                          </strong>
+
+                        </td>
+
+                        {/* PAYMENT */}
+
+                        <td>
+
+                          <div className="Order__paymentCell">
+
+                            <span
+                              className={`Order__payment ${
+                                order.paymentMethod ===
+                                "cash"
+                                  ? "Order__payment--cod"
+                                  : "Order__payment--paid"
+                              }`}
+                            >
+                              {getPaymentLabel(
+                                order.paymentMethod
+                              )}
+                            </span>
+
+                            <small
+                              className={`Order__paymentStatus Order__paymentStatus--${order.paymentStatus}`}
+                            >
+                              {getPaymentStatusLabel(
+                                order.paymentStatus
+                              )}
+                            </small>
+
+                          </div>
+
+                        </td>
+
+                        {/* STATUS */}
+
+                        <td>
+
+                          <span
+                            className={`Order__status ${getStatusClass(
+                              order.orderStatus
+                            )}`}
+                          >
+                            {
+                              order.orderStatus
+                            }
+                          </span>
+
+                        </td>
+
+                        {/* DATE */}
+
+                        <td>
+
+                          <div className="Order__date">
+
+                            <span>
+                              {formatDate(
+                                order.createdAt
+                              )}
+                            </span>
+
+                            <small>
+                              {formatTime(
+                                order.createdAt
+                              )}
+                            </small>
+
+                          </div>
+
+                        </td>
+
+                        {/* ACTIONS */}
+
+                        <td>
+
+                          <div className="Order__rowActions">
+
+                            <button
+                              type="button"
+                              className="Order__rowButton Order__viewButton"
+                              title="View Order"
+                              onClick={() =>
+                                openView(
+                                  order
+                                )
+                              }
+                            >
+                              <Icon
+                                name="eye"
+                                size={15}
+                              />
+                            </button>
+
+                            <button
+                              type="button"
+                              className="Order__rowButton Order__editButton"
+                              title="Edit Order"
+                              onClick={() =>
+                                openEdit(
+                                  order
+                                )
+                              }
+                            >
+                              <Icon
+                                name="edit"
+                                size={15}
+                              />
+                            </button>
+
+                            <button
+                              type="button"
+                              className="Order__rowButton Order__deleteButton"
+                              title="Delete Order"
+                              onClick={() =>
+                                setDeleteOrder(
+                                  order
+                                )
+                              }
+                            >
+                              <Icon
+                                name="trash"
+                                size={15}
+                              />
+                            </button>
+
+                          </div>
+
+                        </td>
+
+                      </tr>
+                    );
+                  }
+                )
               )}
 
             </tbody>
@@ -1821,9 +2496,9 @@ const Order = () => {
 
         </div>
 
-        {/* =====================================================
+        {/* ===================================================
             PAGINATION
-        ===================================================== */}
+        =================================================== */}
 
         <div className="Order__paginationWrapper">
 
@@ -1831,14 +2506,14 @@ const Order = () => {
 
             Showing{" "}
             <strong>
-              {filteredOrders.length
-                ? startIndex + 1
-                : 0}
-            </strong>{" "}
-            to{" "}
-            <strong>
+              {filteredOrders.length ===
+              0
+                ? 0
+                : startIndex + 1}
+              -
               {Math.min(
-                startIndex + ITEMS_PER_PAGE,
+                startIndex +
+                  currentOrders.length,
                 filteredOrders.length
               )}
             </strong>{" "}
@@ -1846,94 +2521,113 @@ const Order = () => {
             <strong>
               {filteredOrders.length}
             </strong>{" "}
-            entries
+            orders
 
           </div>
 
-          {totalPages > 1 && (
-            <div className="Order__pagination">
+          <div className="Order__pagination">
 
-              <button
-                type="button"
-                className="Order__pageButton Order__pageArrow"
-                disabled={currentPage === 1}
-                onClick={() =>
-                  setCurrentPage(
-                    (page) => page - 1
-                  )
-                }
-              >
-                <Icon
-                  name="arrowLeft"
-                  size={16}
-                />
-              </button>
+            <button
+              type="button"
+              className="Order__pageButton"
+              disabled={
+                currentPage === 1
+              }
+              onClick={() =>
+                setCurrentPage(
+                  (page) =>
+                    Math.max(
+                      1,
+                      page - 1
+                    )
+                )
+              }
+            >
+              <Icon
+                name="arrowLeft"
+                size={15}
+              />
+            </button>
 
-              {getPages().map(
-                (page, index) =>
-                  page === "..." ? (
-                    <span
-                      key={`dots-${index}`}
-                      className="Order__dots"
-                    >
-                      ...
-                    </span>
-                  ) : (
-                    <button
-                      type="button"
-                      key={page}
-                      className={`Order__pageButton ${
-                        currentPage === page
-                          ? "Order__pageActive"
-                          : ""
-                      }`}
-                      onClick={() =>
-                        setCurrentPage(page)
-                      }
-                    >
-                      {page}
-                    </button>
-                  )
-              )}
+            {getPages().map(
+              (page, index) =>
+                page === "..." ? (
+                  <span
+                    key={`dots-${index}`}
+                    className="Order__dots"
+                  >
+                    ...
+                  </span>
+                ) : (
+                  <button
+                    key={page}
+                    type="button"
+                    className={`Order__pageButton ${
+                      currentPage ===
+                      page
+                        ? "Order__pageActive"
+                        : ""
+                    }`}
+                    onClick={() =>
+                      setCurrentPage(
+                        page
+                      )
+                    }
+                  >
+                    {page}
+                  </button>
+                )
+            )}
 
-              <button
-                type="button"
-                className="Order__pageButton Order__pageArrow"
-                disabled={
-                  currentPage === totalPages
-                }
-                onClick={() =>
-                  setCurrentPage(
-                    (page) => page + 1
-                  )
-                }
-              >
-                <Icon
-                  name="arrowRight"
-                  size={16}
-                />
-              </button>
+            <button
+              type="button"
+              className="Order__pageButton"
+              disabled={
+                currentPage ===
+                totalPages
+              }
+              onClick={() =>
+                setCurrentPage(
+                  (page) =>
+                    Math.min(
+                      totalPages,
+                      page + 1
+                    )
+                )
+              }
+            >
+              <Icon
+                name="arrowRight"
+                size={15}
+              />
+            </button>
 
-            </div>
-          )}
+          </div>
 
         </div>
 
       </div>
 
       {/* =====================================================
-          VIEW MODAL
+          VIEW ORDER MODAL
       ===================================================== */}
 
       {viewOrder && (
         <div
           className="Order__modalOverlay"
-          onClick={() => setViewOrder(null)}
+          onMouseDown={(e) => {
+            if (
+              e.target ===
+              e.currentTarget
+            ) {
+              setViewOrder(null);
+            }
+          }}
         >
 
           <div
             className="Order__viewModal"
-            onClick={(e) =>
+            onMouseDown={(e) =>
               e.stopPropagation()
             }
           >
@@ -1945,110 +2639,298 @@ const Order = () => {
                 setViewOrder(null)
               }
             >
-              <Icon name="close" size={17} />
+              <Icon
+                name="close"
+                size={17}
+              />
             </button>
 
             <div className="Order__modalHeader">
 
               <div className="Order__modalIcon Order__modalIcon--orange">
-                <Icon name="bag" size={24} />
+                <Icon
+                  name="bag"
+                  size={24}
+                />
               </div>
 
               <div>
 
-                <h3>Order Details</h3>
+                <h3>
+                  Order Details
+                </h3>
 
                 <p>
-                  {viewOrder.orderId}
+                  {
+                    viewOrder.orderNumber
+                  }
                 </p>
 
               </div>
 
             </div>
 
-            <div className="Order__viewGrid">
+            {/* CUSTOMER */}
 
-              <div className="Order__viewItem">
-                <span>Customer</span>
-                <strong>
-                  {viewOrder.customer}
-                </strong>
+            <div className="Order__viewSection">
+
+              <div className="Order__viewSectionTitle">
+                Customer Information
               </div>
 
-              <div className="Order__viewItem">
-                <span>Email</span>
-                <strong>
-                  {viewOrder.email}
-                </strong>
-              </div>
+              <div className="Order__viewGrid">
 
-              <div className="Order__viewItem">
-                <span>Total Amount</span>
-                <strong>
-                  ₹
-                  {viewOrder.total.toFixed(2)}
-                </strong>
-              </div>
+                <div className="Order__viewItem">
+                  <span>
+                    Full Name
+                  </span>
 
-              <div className="Order__viewItem">
-                <span>Payment</span>
-                <strong>
-                  {viewOrder.payment}
-                </strong>
-              </div>
-
-              <div className="Order__viewItem">
-                <span>Status</span>
-
-                <span
-                  className={`Order__status Order__status--${viewOrder.status
-                    .toLowerCase()
-                    .replaceAll(
-                      " ",
+                  <strong>
+                    {
+                      viewOrder.customer
+                        ?.name ||
                       "-"
+                    }
+                  </strong>
+                </div>
+
+                <div className="Order__viewItem">
+                  <span>
+                    Phone Number
+                  </span>
+
+                  <strong>
+                    {
+                      viewOrder.customer
+                        ?.phone ||
+                      "-"
+                    }
+                  </strong>
+                </div>
+
+                <div className="Order__viewItem Order__viewItem--full">
+                  <span>
+                    Delivery Address
+                  </span>
+
+                  <strong>
+                    {
+                      viewOrder.customer
+                        ?.address ||
+                      "-"
+                    }
+                  </strong>
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* PAYMENT */}
+
+            <div className="Order__viewSection">
+
+              <div className="Order__viewSectionTitle">
+                Payment & Order Status
+              </div>
+
+              <div className="Order__viewGrid">
+
+                <div className="Order__viewItem">
+                  <span>
+                    Payment Method
+                  </span>
+
+                  <strong>
+                    {getPaymentLabel(
+                      viewOrder.paymentMethod
+                    )}
+                  </strong>
+                </div>
+
+                <div className="Order__viewItem">
+                  <span>
+                    Payment Status
+                  </span>
+
+                  <strong
+                    className={`Order__paymentStatus Order__paymentStatus--${viewOrder.paymentStatus}`}
+                  >
+                    {getPaymentStatusLabel(
+                      viewOrder.paymentStatus
+                    )}
+                  </strong>
+                </div>
+
+                <div className="Order__viewItem">
+                  <span>
+                    Order Status
+                  </span>
+
+                  <span
+                    className={`Order__status ${getStatusClass(
+                      viewOrder.orderStatus
                     )}`}
-                >
-                  {viewOrder.status}
+                  >
+                    {
+                      viewOrder.orderStatus
+                    }
+                  </span>
+                </div>
+
+                <div className="Order__viewItem">
+                  <span>
+                    Order Date
+                  </span>
+
+                  <strong>
+                    {formatDate(
+                      viewOrder.createdAt
+                    )}
+                  </strong>
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* ITEMS */}
+
+            <div className="Order__viewSection">
+
+              <div className="Order__viewSectionTitle">
+                Ordered Products
+              </div>
+
+              <div className="Order__modalItems">
+
+                {viewOrder.items?.map(
+                  (item, index) => (
+                    <div
+                      className="Order__modalItem"
+                      key={
+                        item._id ||
+                        index
+                      }
+                    >
+
+                      {item.image ? (
+                        <img
+                          src={getImageUrl(
+                            item.image
+                          )}
+                          alt={
+                            item.name
+                          }
+                        />
+                      ) : (
+                        <div className="Order__modalItemPlaceholder">
+                          <Icon
+                            name="bag"
+                            size={20}
+                          />
+                        </div>
+                      )}
+
+                      <div className="Order__modalItemInfo">
+
+                        <strong>
+                          {
+                            item.name
+                          }
+                        </strong>
+
+                        <span>
+                          {item.category ||
+                            "Healthy Heaven"}
+                        </span>
+
+                        <small>
+                          ₹
+                          {formatMoney(
+                            item.price
+                          )}{" "}
+                          ×{" "}
+                          {
+                            item.quantity
+                          }
+                        </small>
+
+                      </div>
+
+                      <strong className="Order__modalItemTotal">
+                        ₹
+                        {formatMoney(
+                          item.subtotal
+                        )}
+                      </strong>
+
+                    </div>
+                  )
+                )}
+
+              </div>
+
+            </div>
+
+            {/* SUMMARY */}
+
+            <div className="Order__viewSummary">
+
+              <div>
+                <span>
+                  Subtotal
                 </span>
 
-              </div>
-
-              <div className="Order__viewItem">
-                <span>Order Date</span>
                 <strong>
-                  {formatDate(
-                    viewOrder.date
+                  ₹
+                  {formatMoney(
+                    viewOrder.subtotal
                   )}
                 </strong>
               </div>
 
-            </div>
+              <div>
+                <span>
+                  Discount
+                </span>
 
-            <div className="Order__viewAddress">
-
-              <span>Delivery Address</span>
-
-              <p>{viewOrder.address}</p>
-
-            </div>
-
-            <div className="Order__modalFood">
-
-              <span>Order Items</span>
+                <strong className="Order__discountValue">
+                  - ₹
+                  {formatMoney(
+                    viewOrder.discount
+                  )}
+                </strong>
+              </div>
 
               <div>
+                <span>
+                  Shipping
+                </span>
 
-                {viewOrder.items.map(
-                  (item, index) => (
-                    <img
-                      key={index}
-                      src={item.image}
-                      alt={item.name}
-                      title={item.name}
-                    />
-                  )
-                )}
+                <strong>
+                  {Number(
+                    viewOrder.shippingFee ||
+                      0
+                  ) === 0
+                    ? "Free"
+                    : `₹${formatMoney(
+                        viewOrder.shippingFee
+                      )}`}
+                </strong>
+              </div>
 
+              <div className="Order__viewSummaryTotal">
+                <span>
+                  Total Amount
+                </span>
+
+                <strong>
+                  ₹
+                  {formatMoney(
+                    viewOrder.totalAmount
+                  )}
+                </strong>
               </div>
 
             </div>
@@ -2070,13 +2952,16 @@ const Order = () => {
                 className="Order__saveModalButton"
                 onClick={() => {
                   setViewOrder(null);
-                  openEdit(viewOrder);
+                  openEdit(
+                    viewOrder
+                  );
                 }}
               >
                 <Icon
                   name="edit"
                   size={15}
                 />
+
                 Edit Order
               </button>
 
@@ -2094,12 +2979,21 @@ const Order = () => {
       {editOrder && (
         <div
           className="Order__modalOverlay"
-          onClick={() => setEditOrder(null)}
+          onMouseDown={(e) => {
+            if (
+              e.target ===
+              e.currentTarget
+            ) {
+              if (!editLoading) {
+                setEditOrder(null);
+              }
+            }
+          }}
         >
 
           <div
             className="Order__editModal"
-            onClick={(e) =>
+            onMouseDown={(e) =>
               e.stopPropagation()
             }
           >
@@ -2107,25 +3001,38 @@ const Order = () => {
             <button
               type="button"
               className="Order__modalClose"
+              disabled={
+                editLoading
+              }
               onClick={() =>
                 setEditOrder(null)
               }
             >
-              <Icon name="close" size={17} />
+              <Icon
+                name="close"
+                size={17}
+              />
             </button>
 
             <div className="Order__modalHeader">
 
               <div className="Order__modalIcon Order__modalIcon--green">
-                <Icon name="edit" size={23} />
+                <Icon
+                  name="edit"
+                  size={23}
+                />
               </div>
 
               <div>
 
-                <h3>Edit Order</h3>
+                <h3>
+                  Edit Order
+                </h3>
 
                 <p>
-                  Update order information
+                  {
+                    editOrder.orderNumber
+                  }
                 </p>
 
               </div>
@@ -2136,112 +3043,188 @@ const Order = () => {
 
               <div className="Order__editField">
 
-                <label>Customer Name</label>
+                <label>
+                  Customer Name
+                  <span>*</span>
+                </label>
 
                 <input
                   type="text"
-                  value={editForm.customer}
+                  value={
+                    editForm.name
+                  }
                   onChange={(e) =>
                     handleEditChange(
-                      "customer",
+                      "name",
                       e.target.value
                     )
                   }
+                  placeholder="Customer name"
                 />
 
               </div>
 
               <div className="Order__editField">
 
-                <label>Email</label>
+                <label>
+                  Phone Number
+                  <span>*</span>
+                </label>
 
                 <input
-                  type="email"
-                  value={editForm.email}
+                  type="tel"
+                  value={
+                    editForm.phone
+                  }
+                  maxLength={10}
                   onChange={(e) =>
                     handleEditChange(
-                      "email",
+                      "phone",
                       e.target.value
+                        .replace(
+                          /\D/g,
+                          ""
+                        )
+                        .slice(
+                          0,
+                          10
+                        )
                     )
                   }
+                  placeholder="10-digit mobile"
                 />
 
               </div>
 
-              <div className="Order__editField">
+              <div className="Order__editField Order__editField--full">
 
-                <label>Total Amount</label>
+                <label>
+                  Delivery Address
+                  <span>*</span>
+                </label>
 
-                <input
-                  type="number"
-                  value={editForm.total}
-                  onChange={(e) =>
-                    handleEditChange(
-                      "total",
-                      e.target.value
-                    )
+                <textarea
+                  rows="3"
+                  value={
+                    editForm.address
                   }
-                />
-
-              </div>
-
-              <div className="Order__editField">
-
-                <label>Payment</label>
-
-                <select
-                  value={editForm.payment}
-                  onChange={(e) =>
-                    handleEditChange(
-                      "payment",
-                      e.target.value
-                    )
-                  }
-                >
-                  <option>Paid</option>
-                  <option>COD</option>
-                </select>
-
-              </div>
-
-              <div className="Order__editField">
-
-                <label>Order Status</label>
-
-                <select
-                  value={editForm.status}
-                  onChange={(e) =>
-                    handleEditChange(
-                      "status",
-                      e.target.value
-                    )
-                  }
-                >
-                  <option>Pending</option>
-                  <option>Preparing</option>
-                  <option>
-                    Out for Delivery
-                  </option>
-                  <option>Delivered</option>
-                  <option>Cancelled</option>
-                </select>
-
-              </div>
-
-              <div className="Order__editField">
-
-                <label>Address</label>
-
-                <input
-                  type="text"
-                  value={editForm.address}
                   onChange={(e) =>
                     handleEditChange(
                       "address",
                       e.target.value
                     )
                   }
+                  placeholder="Complete delivery address"
                 />
+
+              </div>
+
+              <div className="Order__editField">
+
+                <label>
+                  Payment Method
+                </label>
+
+                <select
+                  value={
+                    editForm.paymentMethod
+                  }
+                  onChange={(e) =>
+                    handleEditChange(
+                      "paymentMethod",
+                      e.target.value
+                    )
+                  }
+                >
+                  {PAYMENT_METHODS.map(
+                    (method) => (
+                      <option
+                        key={
+                          method
+                        }
+                        value={
+                          method
+                        }
+                      >
+                        {getPaymentLabel(
+                          method
+                        )}
+                      </option>
+                    )
+                  )}
+                </select>
+
+              </div>
+
+              <div className="Order__editField">
+
+                <label>
+                  Payment Status
+                </label>
+
+                <select
+                  value={
+                    editForm.paymentStatus
+                  }
+                  onChange={(e) =>
+                    handleEditChange(
+                      "paymentStatus",
+                      e.target.value
+                    )
+                  }
+                >
+                  {PAYMENT_STATUSES.map(
+                    (status) => (
+                      <option
+                        key={
+                          status
+                        }
+                        value={
+                          status
+                        }
+                      >
+                        {getPaymentStatusLabel(
+                          status
+                        )}
+                      </option>
+                    )
+                  )}
+                </select>
+
+              </div>
+
+              <div className="Order__editField Order__editField--full">
+
+                <label>
+                  Order Status
+                </label>
+
+                <select
+                  value={
+                    editForm.orderStatus
+                  }
+                  onChange={(e) =>
+                    handleEditChange(
+                      "orderStatus",
+                      e.target.value
+                    )
+                  }
+                >
+                  {ORDER_STATUSES.map(
+                    (status) => (
+                      <option
+                        key={
+                          status
+                        }
+                        value={
+                          status
+                        }
+                      >
+                        {status}
+                      </option>
+                    )
+                  )}
+                </select>
 
               </div>
 
@@ -2252,6 +3235,9 @@ const Order = () => {
               <button
                 type="button"
                 className="Order__cancelModalButton"
+                disabled={
+                  editLoading
+                }
                 onClick={() =>
                   setEditOrder(null)
                 }
@@ -2262,9 +3248,27 @@ const Order = () => {
               <button
                 type="button"
                 className="Order__saveModalButton"
-                onClick={saveEdit}
+                disabled={
+                  editLoading
+                }
+                onClick={
+                  saveEdit
+                }
               >
-                Save Changes
+                {editLoading ? (
+                  <>
+                    <span className="Order__buttonSpinner" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Icon
+                      name="check"
+                      size={15}
+                    />
+                    Save Changes
+                  </>
+                )}
               </button>
 
             </div>
@@ -2281,14 +3285,21 @@ const Order = () => {
       {deleteOrder && (
         <div
           className="Order__modalOverlay"
-          onClick={() =>
-            setDeleteOrder(null)
-          }
+          onMouseDown={(e) => {
+            if (
+              e.target ===
+              e.currentTarget
+            ) {
+              if (!deleteLoading) {
+                setDeleteOrder(null);
+              }
+            }
+          }}
         >
 
           <div
             className="Order__deleteModal"
-            onClick={(e) =>
+            onMouseDown={(e) =>
               e.stopPropagation()
             }
           >
@@ -2296,25 +3307,39 @@ const Order = () => {
             <button
               type="button"
               className="Order__modalClose"
+              disabled={
+                deleteLoading
+              }
               onClick={() =>
                 setDeleteOrder(null)
               }
             >
-              <Icon name="close" size={17} />
+              <Icon
+                name="close"
+                size={17}
+              />
             </button>
 
             <div className="Order__deleteIcon">
-              <Icon name="trash" size={30} />
+              <Icon
+                name="trash"
+                size={30}
+              />
             </div>
 
-            <h3>Delete Order?</h3>
+            <h3>
+              Delete Order?
+            </h3>
 
             <p>
-              Are you sure you want to delete{" "}
+              Are you sure you want
+              to permanently delete{" "}
               <strong>
-                {deleteOrder.orderId}
+                {
+                  deleteOrder.orderNumber
+                }
               </strong>
-              ? This action cannot be undone.
+              ?
             </p>
 
             <div className="Order__deleteActions">
@@ -2322,8 +3347,13 @@ const Order = () => {
               <button
                 type="button"
                 className="Order__cancelDelete"
+                disabled={
+                  deleteLoading
+                }
                 onClick={() =>
-                  setDeleteOrder(null)
+                  setDeleteOrder(
+                    null
+                  )
                 }
               >
                 Cancel
@@ -2332,13 +3362,27 @@ const Order = () => {
               <button
                 type="button"
                 className="Order__confirmDelete"
-                onClick={confirmDelete}
+                disabled={
+                  deleteLoading
+                }
+                onClick={
+                  confirmDelete
+                }
               >
-                <Icon
-                  name="trash"
-                  size={16}
-                />
-                Delete Order
+                {deleteLoading ? (
+                  <>
+                    <span className="Order__buttonSpinner" />
+                    Deleting...
+                  </>
+                ) : (
+                  <>
+                    <Icon
+                      name="trash"
+                      size={16}
+                    />
+                    Delete Order
+                  </>
+                )}
               </button>
 
             </div>
@@ -2355,14 +3399,21 @@ const Order = () => {
       {bulkDelete && (
         <div
           className="Order__modalOverlay"
-          onClick={() =>
-            setBulkDelete(false)
-          }
+          onMouseDown={(e) => {
+            if (
+              e.target ===
+              e.currentTarget
+            ) {
+              if (!deleteLoading) {
+                setBulkDelete(false);
+              }
+            }
+          }}
         >
 
           <div
             className="Order__deleteModal"
-            onClick={(e) =>
+            onMouseDown={(e) =>
               e.stopPropagation()
             }
           >
@@ -2370,26 +3421,39 @@ const Order = () => {
             <button
               type="button"
               className="Order__modalClose"
+              disabled={
+                deleteLoading
+              }
               onClick={() =>
                 setBulkDelete(false)
               }
             >
-              <Icon name="close" size={17} />
+              <Icon
+                name="close"
+                size={17}
+              />
             </button>
 
             <div className="Order__deleteIcon">
-              <Icon name="trash" size={30} />
+              <Icon
+                name="trash"
+                size={30}
+              />
             </div>
 
-            <h3>Delete Selected Orders?</h3>
+            <h3>
+              Delete Selected Orders?
+            </h3>
 
             <p>
-              You have selected{" "}
+              You selected{" "}
               <strong>
-                {selectedOrders.length}
+                {
+                  selectedOrders.length
+                }
               </strong>{" "}
-              orders. Are you sure you want to
-              delete them?
+              orders. This action
+              cannot be undone.
             </p>
 
             <div className="Order__deleteActions">
@@ -2397,8 +3461,13 @@ const Order = () => {
               <button
                 type="button"
                 className="Order__cancelDelete"
+                disabled={
+                  deleteLoading
+                }
                 onClick={() =>
-                  setBulkDelete(false)
+                  setBulkDelete(
+                    false
+                  )
                 }
               >
                 Cancel
@@ -2407,13 +3476,27 @@ const Order = () => {
               <button
                 type="button"
                 className="Order__confirmDelete"
-                onClick={confirmBulkDelete}
+                disabled={
+                  deleteLoading
+                }
+                onClick={
+                  confirmBulkDelete
+                }
               >
-                <Icon
-                  name="trash"
-                  size={16}
-                />
-                Delete Selected
+                {deleteLoading ? (
+                  <>
+                    <span className="Order__buttonSpinner" />
+                    Deleting...
+                  </>
+                ) : (
+                  <>
+                    <Icon
+                      name="trash"
+                      size={16}
+                    />
+                    Delete Selected
+                  </>
+                )}
               </button>
 
             </div>
@@ -2428,3 +3511,4 @@ const Order = () => {
 };
 
 export default Order;
+
