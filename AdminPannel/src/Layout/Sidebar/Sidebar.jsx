@@ -4,10 +4,8 @@ import {
   LayoutDashboard,
   ShoppingBag,
   Inbox,
-  FileText,
   Image as ImageIcon,
   Star,
-  Bell,
   User,
   Settings,
   LogOut,
@@ -37,11 +35,7 @@ export const NAV_ITEMS = [
     icon: Inbox,
     path: "/contact-lead",
   },
-  {
-    label: "Blogs",
-    icon: FileText,
-    path: "/blogs",
-  },
+ 
   {
     label: "Gallery",
     icon: ImageIcon,
@@ -52,11 +46,7 @@ export const NAV_ITEMS = [
     icon: Star,
     path: "/testimonial",
   },
-  {
-    label: "Notices & Alerts",
-    icon: Bell,
-    path: "/notices",
-  },
+ 
   {
     label: "Admin Profile",
     icon: User,

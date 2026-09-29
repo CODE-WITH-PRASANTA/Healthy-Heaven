@@ -1062,42 +1062,6 @@ const Order = () => {
   return (
     <div className="Order">
 
-      {/* =====================================================
-          PAGE HEADER
-      ===================================================== */}
-
-      <div className="Order__header">
-
-        <div className="Order__headerLeft">
-
-          <div className="Order__headerIcon">
-            <Icon name="bag" size={28} />
-          </div>
-
-          <div>
-            <h1>Orders</h1>
-
-            <p>
-              Manage and track all customer orders
-            </p>
-          </div>
-
-        </div>
-
-        <div className="Order__breadcrumb">
-
-          <span>
-            <Icon name="home" size={15} />
-            Dashboard
-          </span>
-
-          <Icon name="arrowRight" size={14} />
-
-          <strong>Orders</strong>
-
-        </div>
-
-      </div>
 
       {/* =====================================================
           STATISTICS
