@@ -1,206 +1,24 @@
 import React, { useEffect, useMemo, useState } from "react";
+import Swal from "sweetalert2";
+import API from "../../api/axios";
 import "./ContactLead.css";
 
 const ContactLead = () => {
-  /* =====================================================
-     DEMO DATA
-  ===================================================== */
+  // ======================================================
+  // STATES
+  // ======================================================
 
-  const initialLeads = [
-    {
-      id: 1,
-      name: "Rajesh Kumar",
-      surname: "",
-      email: "rajesh@gmail.com",
-      phone: "+91 98765 43210",
-      city: "Bhubaneswar",
-      message:
-        "I would like to know more about your school admission process.",
-      date: "2026-09-23",
-      status: "New",
-    },
-    {
-      id: 2,
-      name: "Priya Sharma",
-      surname: "",
-      email: "priya@gmail.com",
-      phone: "+91 87654 32109",
-      city: "Cuttack",
-      message:
-        "Please share the admission details and available courses.",
-      date: "2026-09-22",
-      status: "Replied",
-    },
-    {
-      id: 3,
-      name: "Amit Patra",
-      surname: "",
-      email: "amit@gmail.com",
-      phone: "+91 76543 21098",
-      city: "Kendrapara",
-      message:
-        "I am interested in your school and would like more information.",
-      date: "2026-09-21",
-      status: "Pending",
-    },
-    {
-      id: 4,
-      name: "Sneha Das",
-      surname: "",
-      email: "sneha@gmail.com",
-      phone: "+91 98760 11122",
-      city: "Bhubaneswar",
-      message: "Can you provide the complete fee structure?",
-      date: "2026-09-20",
-      status: "Replied",
-    },
-    {
-      id: 5,
-      name: "Vikash Singh",
-      surname: "",
-      email: "vikash@gmail.com",
-      phone: "+91 91234 56789",
-      city: "Puri",
-      message:
-        "I want to schedule a campus visit for my child.",
-      date: "2026-09-19",
-      status: "New",
-    },
-    {
-      id: 6,
-      name: "Anjali Mehta",
-      surname: "",
-      email: "anjali@gmail.com",
-      phone: "+91 99887 66554",
-      city: "Cuttack",
-      message:
-        "Do you have transport facility for students?",
-      date: "2026-09-18",
-      status: "Pending",
-    },
-    {
-      id: 7,
-      name: "Rahul Mishra",
-      surname: "",
-      email: "rahul@gmail.com",
-      phone: "+91 98761 12345",
-      city: "Puri",
-      message:
-        "I want information about the upcoming admission session.",
-      date: "2026-09-17",
-      status: "New",
-    },
-    {
-      id: 8,
-      name: "Neha Sahu",
-      surname: "",
-      email: "neha@gmail.com",
-      phone: "+91 87651 34567",
-      city: "Bhubaneswar",
-      message:
-        "Please let me know about hostel and accommodation facilities.",
-      date: "2026-09-16",
-      status: "Replied",
-    },
-    {
-      id: 9,
-      name: "Sourav Nayak",
-      surname: "",
-      email: "sourav@gmail.com",
-      phone: "+91 76541 22233",
-      city: "Aul",
-      message:
-        "Can you send me the complete school brochure?",
-      date: "2026-09-15",
-      status: "Pending",
-    },
-    {
-      id: 10,
-      name: "Riya Mohanty",
-      surname: "",
-      email: "riya@gmail.com",
-      phone: "+91 98765 77788",
-      city: "Cuttack",
-      message:
-        "I would like to discuss admission with your team.",
-      date: "2026-09-14",
-      status: "Replied",
-    },
-    {
-      id: 11,
-      name: "Manas Behera",
-      surname: "",
-      email: "manas@gmail.com",
-      phone: "+91 91234 88990",
-      city: "Kendrapara",
-      message:
-        "What documents are required during admission?",
-      date: "2026-09-13",
-      status: "New",
-    },
-    {
-      id: 12,
-      name: "Puja Rout",
-      surname: "",
-      email: "puja@gmail.com",
-      phone: "+91 99887 22334",
-      city: "Bhubaneswar",
-      message:
-        "Please tell me the application submission procedure.",
-      date: "2026-09-12",
-      status: "Pending",
-    },
-    {
-      id: 13,
-      name: "Arun Das",
-      surname: "",
-      email: "arun@gmail.com",
-      phone: "+91 98765 99887",
-      city: "Puri",
-      message:
-        "I need information about the school timings.",
-      date: "2026-09-11",
-      status: "New",
-    },
-    {
-      id: 14,
-      name: "Sweta Jena",
-      surname: "",
-      email: "sweta@gmail.com",
-      phone: "+91 87654 11223",
-      city: "Cuttack",
-      message:
-        "Is there any scholarship available for students?",
-      date: "2026-09-10",
-      status: "Replied",
-    },
-  ];
+  const [leads, setLeads] = useState([]);
 
-  /* =====================================================
-     STATES
-  ===================================================== */
-
-  const [leads, setLeads] = useState(() => {
-    const saved = localStorage.getItem("contactLeadData");
-
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return initialLeads;
-      }
-    }
-
-    return initialLeads;
-  });
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("All Status");
+  const [statusFilter, setStatusFilter] =
+    useState("All Status");
 
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-
-  const [calendarType, setCalendarType] = useState(null);
 
   const [selectedIds, setSelectedIds] = useState([]);
 
@@ -210,33 +28,67 @@ const ContactLead = () => {
   const [editLead, setEditLead] = useState(null);
   const [deleteLead, setDeleteLead] = useState(null);
 
-  const [showBulkDelete, setShowBulkDelete] = useState(false);
+  const [showBulkDelete, setShowBulkDelete] =
+    useState(false);
 
   const [editForm, setEditForm] = useState({
     name: "",
     email: "",
     phone: "",
-    city: "",
+    address: "",
     message: "",
     status: "New",
   });
 
   const ITEMS_PER_PAGE = 6;
 
-  /* =====================================================
-     SAVE LOCAL DATA
-  ===================================================== */
+  // ======================================================
+  // FETCH LEADS
+  // ======================================================
 
-  useEffect(() => {
-    localStorage.setItem(
-      "contactLeadData",
-      JSON.stringify(leads)
-    );
-  }, [leads]);
+  const fetchLeads = async (showLoader = true, showError = true) => {
+    try {
+      if (showLoader) {
+        setLoading(true);
+      } else {
+        setRefreshing(true);
+      }
 
-  /* =====================================================
-     STATISTICS
-  ===================================================== */
+      const response = await API.get("/cold-leads");
+
+      if (response.data?.success) {
+        setLeads(response.data.data || []);
+      } else {
+        throw new Error(
+          response.data?.message ||
+            "Failed to fetch leads."
+        );
+      }
+    } catch (error) {
+      console.error("Fetch leads error:", error);
+
+      if (showError) {
+        Swal.fire({
+          icon: "error",
+          title: "Unable to Load Leads",
+          text:
+            error?.response?.data?.message ||
+            "Please check your backend server.",
+        });
+      }
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+ useEffect(() => {
+  fetchLeads(true, true);
+}, []);
+
+  // ======================================================
+  // STATISTICS
+  // ======================================================
 
   const totalLeads = leads.length;
 
@@ -252,14 +104,18 @@ const ContactLead = () => {
     (lead) => lead.status === "Pending"
   ).length;
 
-  /* =====================================================
-     FORMAT DATE
-  ===================================================== */
+  // ======================================================
+  // FORMAT DATE
+  // ======================================================
 
-  const formatDate = (dateString) => {
-    if (!dateString) return "";
+  const formatDate = (value) => {
+    if (!value) return "";
 
-    const date = new Date(`${dateString}T00:00:00`);
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return "";
+    }
 
     return date.toLocaleDateString("en-IN", {
       day: "2-digit",
@@ -268,30 +124,55 @@ const ContactLead = () => {
     });
   };
 
-  /* =====================================================
-     FILTER DATA
-  ===================================================== */
+  const getDateOnly = (value) => {
+    if (!value) return "";
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+      return "";
+    }
+
+    return date.toISOString().split("T")[0];
+  };
+
+  // ======================================================
+  // FILTER
+  // ======================================================
 
   const filteredLeads = useMemo(() => {
-    return leads.filter((lead) => {
-      const searchText = search.toLowerCase();
+    const searchText = search.toLowerCase().trim();
 
+    return leads.filter((lead) => {
       const matchesSearch =
-        lead.name.toLowerCase().includes(searchText) ||
-        lead.email.toLowerCase().includes(searchText) ||
-        lead.message.toLowerCase().includes(searchText) ||
-        lead.phone.toLowerCase().includes(searchText) ||
-        lead.city.toLowerCase().includes(searchText);
+        !searchText ||
+        lead.name
+          ?.toLowerCase()
+          .includes(searchText) ||
+        lead.email
+          ?.toLowerCase()
+          .includes(searchText) ||
+        lead.phone
+          ?.toLowerCase()
+          .includes(searchText) ||
+        lead.address
+          ?.toLowerCase()
+          .includes(searchText) ||
+        lead.message
+          ?.toLowerCase()
+          .includes(searchText);
 
       const matchesStatus =
         statusFilter === "All Status" ||
         lead.status === statusFilter;
 
+      const leadDate = getDateOnly(lead.createdAt);
+
       const matchesFrom =
-        !fromDate || lead.date >= fromDate;
+        !fromDate || leadDate >= fromDate;
 
       const matchesTo =
-        !toDate || lead.date <= toDate;
+        !toDate || leadDate <= toDate;
 
       return (
         matchesSearch &&
@@ -308,9 +189,9 @@ const ContactLead = () => {
     toDate,
   ]);
 
-  /* =====================================================
-     PAGINATION
-  ===================================================== */
+  // ======================================================
+  // PAGINATION
+  // ======================================================
 
   const totalPages = Math.max(
     1,
@@ -333,12 +214,12 @@ const ContactLead = () => {
     }
   }, [currentPage, totalPages]);
 
-  /* =====================================================
-     SELECT ALL
-  ===================================================== */
+  // ======================================================
+  // SELECT
+  // ======================================================
 
   const currentIds = currentLeads.map(
-    (lead) => lead.id
+    (lead) => lead._id
   );
 
   const allCurrentSelected =
@@ -361,10 +242,6 @@ const ContactLead = () => {
     }
   };
 
-  /* =====================================================
-     SELECT SINGLE
-  ===================================================== */
-
   const handleSelectSingle = (id) => {
     setSelectedIds((prev) =>
       prev.includes(id)
@@ -373,107 +250,58 @@ const ContactLead = () => {
     );
   };
 
-  /* =====================================================
-     SEARCH
-  ===================================================== */
-
-  const handleSearch = (value) => {
-    setSearch(value);
-    setCurrentPage(1);
-  };
-
-  /* =====================================================
-     FILTER
-  ===================================================== */
-
-  const handleFilter = () => {
-    setCurrentPage(1);
-    setCalendarType(null);
-  };
-
-  /* =====================================================
-     RESET
-  ===================================================== */
+  // ======================================================
+  // RESET
+  // ======================================================
 
   const handleReset = () => {
     setSearch("");
     setStatusFilter("All Status");
     setFromDate("");
     setToDate("");
-    setCurrentPage(1);
-    setCalendarType(null);
-  };
-
-  /* =====================================================
-     REFRESH
-  ===================================================== */
-
-  const handleRefresh = () => {
-    setSearch("");
-    setStatusFilter("All Status");
-    setFromDate("");
-    setToDate("");
     setSelectedIds([]);
     setCurrentPage(1);
   };
 
-  /* =====================================================
-     DELETE
-  ===================================================== */
+  // ======================================================
+  // REFRESH
+  // ======================================================
 
-  const confirmDelete = () => {
-    if (!deleteLead) return;
-
-    setLeads((prev) =>
-      prev.filter(
-        (lead) => lead.id !== deleteLead.id
-      )
-    );
-
-    setSelectedIds((prev) =>
-      prev.filter(
-        (id) => id !== deleteLead.id
-      )
-    );
-
-    setDeleteLead(null);
-  };
-
-  /* =====================================================
-     BULK DELETE
-  ===================================================== */
-
-  const confirmBulkDelete = () => {
-    setLeads((prev) =>
-      prev.filter(
-        (lead) => !selectedIds.includes(lead.id)
-      )
-    );
-
+  const handleRefresh = async () => {
     setSelectedIds([]);
-    setShowBulkDelete(false);
+    setCurrentPage(1);
+
+    await fetchLeads(false, true);
   };
 
-  /* =====================================================
-     OPEN EDIT
-  ===================================================== */
+  // ======================================================
+  // VIEW
+  // ======================================================
+
+  const handleView = (lead) => {
+    setViewLead(lead);
+  };
+
+  // ======================================================
+  // OPEN EDIT
+  // ======================================================
 
   const openEdit = (lead) => {
     setEditLead(lead);
 
     setEditForm({
-      name: lead.name,
-      email: lead.email,
-      phone: lead.phone,
-      city: lead.city,
-      message: lead.message,
-      status: lead.status,
+      name: lead.name || "",
+      email: lead.email || "",
+      phone: lead.phone || "",
+      address: lead.address || "",
+      message: lead.message || "",
+      status: lead.status || "New",
     });
   };
 
-  /* =====================================================
-     EDIT CHANGE
-  ===================================================== */
+  // ======================================================
+  // EDIT CHANGE
+  // ======================================================
 
   const handleEditChange = (field, value) => {
     setEditForm((prev) => ({
@@ -482,34 +310,171 @@ const ContactLead = () => {
     }));
   };
 
-  /* =====================================================
-     SAVE EDIT
-  ===================================================== */
+  // ======================================================
+  // SAVE EDIT
+  // ======================================================
 
-  const handleSaveEdit = () => {
+  const handleSaveEdit = async () => {
     if (!editLead) return;
 
-    setLeads((prev) =>
-      prev.map((lead) =>
-        lead.id === editLead.id
-          ? {
-              ...lead,
-              ...editForm,
-            }
-          : lead
-      )
-    );
+    try {
+      const response = await API.put(
+        `/cold-leads/${editLead._id}`,
+        editForm
+      );
 
-    setEditLead(null);
+      if (!response.data?.success) {
+        throw new Error(
+          response.data?.message ||
+            "Failed to update lead."
+        );
+      }
+
+      setLeads((prev) =>
+        prev.map((lead) =>
+          lead._id === editLead._id
+            ? response.data.data
+            : lead
+        )
+      );
+
+      setEditLead(null);
+
+      Swal.fire({
+        icon: "success",
+        title: "Updated!",
+        text: "Lead updated successfully.",
+        timer: 1400,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      console.error(error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Update Failed",
+        text:
+          error?.response?.data?.message ||
+          error.message,
+      });
+    }
   };
 
-  /* =====================================================
-     EXPORT CSV
-  ===================================================== */
+  // ======================================================
+  // DELETE SINGLE
+  // ======================================================
+
+  const confirmDelete = async () => {
+    if (!deleteLead) return;
+
+    try {
+      const response = await API.delete(
+        `/cold-leads/${deleteLead._id}`
+      );
+
+      if (!response.data?.success) {
+        throw new Error(
+          response.data?.message ||
+            "Delete failed."
+        );
+      }
+
+      setLeads((prev) =>
+        prev.filter(
+          (lead) => lead._id !== deleteLead._id
+        )
+      );
+
+      setSelectedIds((prev) =>
+        prev.filter(
+          (id) => id !== deleteLead._id
+        )
+      );
+
+      setDeleteLead(null);
+
+      Swal.fire({
+        icon: "success",
+        title: "Deleted!",
+        text: "Lead deleted successfully.",
+        timer: 1400,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Delete Failed",
+        text:
+          error?.response?.data?.message ||
+          error.message,
+      });
+    }
+  };
+
+  // ======================================================
+  // BULK DELETE
+  // ======================================================
+
+  const confirmBulkDelete = async () => {
+    if (selectedIds.length === 0) return;
+
+    try {
+      const response = await API.delete(
+        "/cold-leads/bulk",
+        {
+          data: {
+            ids: selectedIds,
+          },
+        }
+      );
+
+      if (!response.data?.success) {
+        throw new Error(
+          response.data?.message ||
+            "Bulk delete failed."
+        );
+      }
+
+      setLeads((prev) =>
+        prev.filter(
+          (lead) =>
+            !selectedIds.includes(lead._id)
+        )
+      );
+
+      setSelectedIds([]);
+      setShowBulkDelete(false);
+
+      Swal.fire({
+        icon: "success",
+        title: "Deleted!",
+        text: response.data.message,
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Delete Failed",
+        text:
+          error?.response?.data?.message ||
+          error.message,
+      });
+    }
+  };
+
+  // ======================================================
+  // EXPORT CSV
+  // ======================================================
 
   const handleExportCSV = () => {
     if (filteredLeads.length === 0) {
-      alert("No data available to export.");
+      Swal.fire({
+        icon: "info",
+        title: "No Data",
+        text: "There are no leads to export.",
+      });
+
       return;
     }
 
@@ -517,20 +482,27 @@ const ContactLead = () => {
       "Name",
       "Email",
       "Phone",
-      "City",
+      "Address",
       "Message",
       "Date",
       "Status",
     ];
 
+    const escapeCSV = (value) => {
+      return `"${String(value ?? "").replace(
+        /"/g,
+        '""'
+      )}"`;
+    };
+
     const rows = filteredLeads.map((lead) => [
-      lead.name,
-      lead.email,
-      lead.phone,
-      lead.city,
-      `"${lead.message.replace(/"/g, '""')}"`,
-      formatDate(lead.date),
-      lead.status,
+      escapeCSV(lead.name),
+      escapeCSV(lead.email),
+      escapeCSV(lead.phone),
+      escapeCSV(lead.address),
+      escapeCSV(lead.message),
+      escapeCSV(formatDate(lead.createdAt)),
+      escapeCSV(lead.status),
     ]);
 
     const csvContent = [
@@ -547,18 +519,22 @@ const ContactLead = () => {
     const link = document.createElement("a");
 
     link.href = url;
-    link.download = "contact-leads.csv";
+    link.download = `cold-leads-${new Date()
+      .toISOString()
+      .split("T")[0]}.csv`;
 
     document.body.appendChild(link);
+
     link.click();
+
     document.body.removeChild(link);
 
     URL.revokeObjectURL(url);
   };
 
-  /* =====================================================
-     PAGINATION NUMBERS
-  ===================================================== */
+  // ======================================================
+  // PAGE NUMBERS
+  // ======================================================
 
   const getPageNumbers = () => {
     if (totalPages <= 6) {
@@ -594,166 +570,9 @@ const ContactLead = () => {
     ];
   };
 
-  /* =====================================================
-     CALENDAR
-  ===================================================== */
-
-  const today = new Date();
-
-  const [calendarMonth, setCalendarMonth] = useState(
-    today.getMonth()
-  );
-
-  const [calendarYear, setCalendarYear] = useState(
-    today.getFullYear()
-  );
-
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  const getCalendarDays = () => {
-    const firstDay = new Date(
-      calendarYear,
-      calendarMonth,
-      1
-    ).getDay();
-
-    const daysInMonth = new Date(
-      calendarYear,
-      calendarMonth + 1,
-      0
-    ).getDate();
-
-    const previousMonthDays = new Date(
-      calendarYear,
-      calendarMonth,
-      0
-    ).getDate();
-
-    const days = [];
-
-    for (let i = firstDay - 1; i >= 0; i--) {
-      days.push({
-        day: previousMonthDays - i,
-        outside: true,
-      });
-    }
-
-    for (let i = 1; i <= daysInMonth; i++) {
-      days.push({
-        day: i,
-        outside: false,
-      });
-    }
-
-    while (days.length < 42) {
-      days.push({
-        day: days.length - daysInMonth - firstDay + 1,
-        outside: true,
-      });
-    }
-
-    return days;
-  };
-
-  const changeCalendarMonth = (direction) => {
-    if (direction === "prev") {
-      if (calendarMonth === 0) {
-        setCalendarMonth(11);
-        setCalendarYear((prev) => prev - 1);
-      } else {
-        setCalendarMonth((prev) => prev - 1);
-      }
-    } else {
-      if (calendarMonth === 11) {
-        setCalendarMonth(0);
-        setCalendarYear((prev) => prev + 1);
-      } else {
-        setCalendarMonth((prev) => prev + 1);
-      }
-    }
-  };
-
-  const selectCalendarDate = (day, outside) => {
-    if (outside) return;
-
-    const month = String(calendarMonth + 1).padStart(
-      2,
-      "0"
-    );
-
-    const date = String(day).padStart(2, "0");
-
-    const selectedDate = `${calendarYear}-${month}-${date}`;
-
-    if (calendarType === "from") {
-      setFromDate(selectedDate);
-    } else {
-      setToDate(selectedDate);
-    }
-
-    setCalendarType(null);
-    setCurrentPage(1);
-  };
-
-  const openCalendar = (type) => {
-    setCalendarType(
-      calendarType === type ? null : type
-    );
-
-    const selected =
-      type === "from" ? fromDate : toDate;
-
-    if (selected) {
-      const date = new Date(
-        `${selected}T00:00:00`
-      );
-
-      setCalendarMonth(date.getMonth());
-      setCalendarYear(date.getFullYear());
-    } else {
-      const now = new Date();
-
-      setCalendarMonth(now.getMonth());
-      setCalendarYear(now.getFullYear());
-    }
-  };
-
-  /* =====================================================
-     CALENDAR SELECTED CHECK
-  ===================================================== */
-
-  const isSelectedCalendarDate = (day) => {
-    const month = String(calendarMonth + 1).padStart(
-      2,
-      "0"
-    );
-
-    const date = String(day).padStart(2, "0");
-
-    const value = `${calendarYear}-${month}-${date}`;
-
-    return (
-      value === fromDate ||
-      value === toDate
-    );
-  };
-
-  /* =====================================================
-     ICONS
-  ===================================================== */
+  // ======================================================
+  // ICON
+  // ======================================================
 
   const Icon = ({ type, size = 20 }) => {
     const common = {
@@ -767,180 +586,122 @@ const ContactLead = () => {
       strokeLinejoin: "round",
     };
 
-    if (type === "mail") {
-      return (
-        <svg {...common}>
-          <rect
-            x="3"
-            y="5"
-            width="18"
-            height="14"
-            rx="2"
-          />
+    const icons = {
+      mail: (
+        <>
+          <rect x="3" y="5" width="18" height="14" rx="2" />
           <path d="m3 7 9 6 9-6" />
-        </svg>
-      );
-    }
+        </>
+      ),
 
-    if (type === "users") {
-      return (
-        <svg {...common}>
+      users: (
+        <>
           <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
           <circle cx="9" cy="7" r="4" />
           <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
           <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-        </svg>
-      );
-    }
+        </>
+      ),
 
-    if (type === "check") {
-      return (
-        <svg {...common}>
+      check: (
+        <>
           <circle cx="12" cy="12" r="9" />
           <path d="m8 12 2.5 2.5L16 9" />
-        </svg>
-      );
-    }
+        </>
+      ),
 
-    if (type === "clock") {
-      return (
-        <svg {...common}>
+      clock: (
+        <>
           <circle cx="12" cy="12" r="9" />
           <path d="M12 7v5l3 2" />
-        </svg>
-      );
-    }
+        </>
+      ),
 
-    if (type === "search") {
-      return (
-        <svg {...common}>
+      search: (
+        <>
           <circle cx="11" cy="11" r="7" />
           <path d="m20 20-4-4" />
-        </svg>
-      );
-    }
+        </>
+      ),
 
-    if (type === "calendar") {
-      return (
-        <svg {...common}>
-          <rect
-            x="3"
-            y="4"
-            width="18"
-            height="17"
-            rx="2"
-          />
-          <path d="M16 2v4M8 2v4M3 9h18" />
-        </svg>
-      );
-    }
+      filter: <path d="M4 5h16l-6 7v6l-4 2v-8z" />,
 
-    if (type === "filter") {
-      return (
-        <svg {...common}>
-          <path d="M4 5h16l-6 7v6l-4 2v-8z" />
-        </svg>
-      );
-    }
-
-    if (type === "refresh") {
-      return (
-        <svg {...common}>
+      refresh: (
+        <>
           <path d="M20 11a8 8 0 0 0-14.7-4L3 10" />
           <path d="M3 5v5h5" />
           <path d="M4 13a8 8 0 0 0 14.7 4L21 14" />
           <path d="M21 19v-5h-5" />
-        </svg>
-      );
-    }
+        </>
+      ),
 
-    if (type === "download") {
-      return (
-        <svg {...common}>
+      download: (
+        <>
           <path d="M12 3v12" />
           <path d="m7 10 5 5 5-5" />
           <path d="M4 21h16" />
-        </svg>
-      );
-    }
+        </>
+      ),
 
-    if (type === "eye") {
-      return (
-        <svg {...common}>
+      eye: (
+        <>
           <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z" />
           <circle cx="12" cy="12" r="2.5" />
-        </svg>
-      );
-    }
+        </>
+      ),
 
-    if (type === "edit") {
-      return (
-        <svg {...common}>
+      edit: (
+        <>
           <path d="M12 20h9" />
           <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z" />
-        </svg>
-      );
-    }
+        </>
+      ),
 
-    if (type === "delete") {
-      return (
-        <svg {...common}>
+      delete: (
+        <>
           <path d="M4 7h16" />
           <path d="M10 11v6M14 11v6" />
           <path d="M6 7l1 14h10l1-14" />
           <path d="M9 7V4h6v3" />
-        </svg>
-      );
-    }
+        </>
+      ),
 
-    if (type === "arrowLeft") {
-      return (
-        <svg {...common}>
-          <path d="m15 18-6-6 6-6" />
-        </svg>
-      );
-    }
-
-    if (type === "arrowRight") {
-      return (
-        <svg {...common}>
-          <path d="m9 18 6-6-6-6" />
-        </svg>
-      );
-    }
-
-    if (type === "close") {
-      return (
-        <svg {...common}>
+      close: (
+        <>
           <path d="M18 6 6 18M6 6l12 12" />
-        </svg>
-      );
-    }
+        </>
+      ),
 
-    if (type === "home") {
-      return (
-        <svg {...common}>
+      arrowLeft: <path d="m15 18-6-6 6-6" />,
+
+      arrowRight: <path d="m9 18 6-6-6-6" />,
+
+      home: (
+        <>
           <path d="m3 10 9-7 9 7" />
           <path d="M5 9v11h14V9" />
           <path d="M9 20v-6h6v6" />
-        </svg>
-      );
-    }
+        </>
+      ),
+    };
 
-    return null;
+    return (
+      <svg {...common}>
+        {icons[type]}
+      </svg>
+    );
   };
+
+  // ======================================================
+  // RENDER
+  // ======================================================
 
   return (
     <div className="ContactLead">
-
-      {/* =================================================
-          HEADER
-      ================================================= */}
+      {/* HEADER */}
 
       <div className="ContactLead__header">
-
         <div className="ContactLead__header-left">
-
           <div className="ContactLead__header-icon">
             <Icon type="mail" size={31} />
           </div>
@@ -951,11 +712,9 @@ const ContactLead = () => {
               Manage and view all contact form inquiries
             </p>
           </div>
-
         </div>
 
         <div className="ContactLead__breadcrumb">
-
           <span>
             <Icon type="home" size={17} />
             Dashboard
@@ -964,132 +723,106 @@ const ContactLead = () => {
           <Icon type="arrowRight" size={16} />
 
           <strong>Contact Leads</strong>
-
         </div>
-
       </div>
 
-      {/* =================================================
-          STATISTICS
-      ================================================= */}
+      {/* STATISTICS */}
 
       <div className="ContactLead__stats">
-
         <div className="ContactLead__stat-card">
-
           <div className="ContactLead__stat-icon ContactLead__stat-icon--blue">
             <Icon type="users" size={28} />
           </div>
 
           <div className="ContactLead__stat-content">
             <span>Total Leads</span>
-
             <div className="ContactLead__stat-value-row">
               <strong>{totalLeads}</strong>
-              <small className="ContactLead__growth ContactLead__growth--green">
-                ↗ +12%
-              </small>
             </div>
-
             <p>All time inquiries</p>
           </div>
-
         </div>
 
         <div className="ContactLead__stat-card">
-
           <div className="ContactLead__stat-icon ContactLead__stat-icon--green">
             <Icon type="mail" size={28} />
           </div>
 
           <div className="ContactLead__stat-content">
             <span>New Leads</span>
-
             <div className="ContactLead__stat-value-row">
               <strong>{newLeads}</strong>
-              <small className="ContactLead__growth ContactLead__growth--green">
-                ↗ +8%
-              </small>
             </div>
-
-            <p>This month</p>
+            <p>Awaiting response</p>
           </div>
-
         </div>
 
         <div className="ContactLead__stat-card">
-
           <div className="ContactLead__stat-icon ContactLead__stat-icon--orange">
             <Icon type="check" size={28} />
           </div>
 
           <div className="ContactLead__stat-content">
             <span>Replied</span>
-
             <div className="ContactLead__stat-value-row">
               <strong>{repliedLeads}</strong>
-              <small className="ContactLead__growth ContactLead__growth--green">
-                ↗ +18%
-              </small>
             </div>
-
             <p>Total responded</p>
           </div>
-
         </div>
 
         <div className="ContactLead__stat-card">
-
           <div className="ContactLead__stat-icon ContactLead__stat-icon--red">
             <Icon type="clock" size={28} />
           </div>
 
           <div className="ContactLead__stat-content">
             <span>Pending</span>
-
             <div className="ContactLead__stat-value-row">
               <strong>{pendingLeads}</strong>
-              <small className="ContactLead__growth ContactLead__growth--red">
-                ↘ -5%
-              </small>
             </div>
-
             <p>Awaiting response</p>
           </div>
-
         </div>
-
       </div>
 
-      {/* =================================================
-          FILTER AREA
-      ================================================= */}
+      {/* FILTER */}
 
       <div className="ContactLead__filter-card">
-
         <div className="ContactLead__filter-field ContactLead__search-field">
-
           <label>Search</label>
 
           <div className="ContactLead__input-wrapper">
-
             <Icon type="search" size={19} />
 
             <input
               type="text"
-              placeholder="Search by name, email or message..."
+              placeholder="Search by name, email, phone or address..."
               value={search}
-              onChange={(e) =>
-                handleSearch(e.target.value)
-              }
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setCurrentPage(1);
+              }}
+              aria-label="Search contact leads"
             />
-
+            {search && (
+              <button
+                type="button"
+                className="ContactLead__search-clear"
+                onClick={() => {
+                  setSearch("");
+                  setCurrentPage(1);
+                }}
+                title="Clear search"
+                aria-label="Clear search"
+              >
+                <Icon type="close" size={15} />
+              </button>
+            )}
           </div>
-
         </div>
 
         <div className="ContactLead__filter-field">
-
           <label>Status</label>
 
           <select
@@ -1101,210 +834,42 @@ const ContactLead = () => {
           >
             <option>All Status</option>
             <option>New</option>
-            <option>Replied</option>
             <option>Pending</option>
+            <option>Replied</option>
           </select>
-
         </div>
 
-        {/* FROM DATE */}
-
-        <div className="ContactLead__filter-field ContactLead__calendar-field">
-
+        <div className="ContactLead__filter-field">
           <label>From Date</label>
 
-          <button
-            type="button"
-            className="ContactLead__date-input"
-            onClick={() => openCalendar("from")}
-          >
-            <span>
-              {fromDate
-                ? formatDate(fromDate)
-                : "dd-mm-yyyy"}
-            </span>
-
-            <Icon type="calendar" size={18} />
-          </button>
-
-          {calendarType === "from" && (
-            <div className="ContactLead__calendar">
-
-              <div className="ContactLead__calendar-header">
-
-                <button
-                  type="button"
-                  onClick={() =>
-                    changeCalendarMonth("prev")
-                  }
-                >
-                  <Icon type="arrowLeft" size={17} />
-                </button>
-
-                <strong>
-                  {monthNames[calendarMonth]}{" "}
-                  {calendarYear}
-                </strong>
-
-                <button
-                  type="button"
-                  onClick={() =>
-                    changeCalendarMonth("next")
-                  }
-                >
-                  <Icon type="arrowRight" size={17} />
-                </button>
-
-              </div>
-
-              <div className="ContactLead__calendar-weekdays">
-                {[
-                  "Su",
-                  "Mo",
-                  "Tu",
-                  "We",
-                  "Th",
-                  "Fr",
-                  "Sa",
-                ].map((day) => (
-                  <span key={day}>{day}</span>
-                ))}
-              </div>
-
-              <div className="ContactLead__calendar-days">
-                {getCalendarDays().map(
-                  (item, index) => (
-                    <button
-                      type="button"
-                      key={index}
-                      disabled={item.outside}
-                      className={
-                        isSelectedCalendarDate(
-                          item.day
-                        )
-                          ? "ContactLead__calendar-day--selected"
-                          : ""
-                      }
-                      onClick={() =>
-                        selectCalendarDate(
-                          item.day,
-                          item.outside
-                        )
-                      }
-                    >
-                      {item.day}
-                    </button>
-                  )
-                )}
-              </div>
-
-            </div>
-          )}
-
+          <input
+            type="date"
+            value={fromDate}
+            onChange={(e) => {
+              setFromDate(e.target.value);
+              setCurrentPage(1);
+            }}
+          />
         </div>
 
-        {/* TO DATE */}
-
-        <div className="ContactLead__filter-field ContactLead__calendar-field">
-
+        <div className="ContactLead__filter-field">
           <label>To Date</label>
 
-          <button
-            type="button"
-            className="ContactLead__date-input"
-            onClick={() => openCalendar("to")}
-          >
-            <span>
-              {toDate
-                ? formatDate(toDate)
-                : "dd-mm-yyyy"}
-            </span>
-
-            <Icon type="calendar" size={18} />
-          </button>
-
-          {calendarType === "to" && (
-            <div className="ContactLead__calendar">
-
-              <div className="ContactLead__calendar-header">
-
-                <button
-                  type="button"
-                  onClick={() =>
-                    changeCalendarMonth("prev")
-                  }
-                >
-                  <Icon type="arrowLeft" size={17} />
-                </button>
-
-                <strong>
-                  {monthNames[calendarMonth]}{" "}
-                  {calendarYear}
-                </strong>
-
-                <button
-                  type="button"
-                  onClick={() =>
-                    changeCalendarMonth("next")
-                  }
-                >
-                  <Icon type="arrowRight" size={17} />
-                </button>
-
-              </div>
-
-              <div className="ContactLead__calendar-weekdays">
-                {[
-                  "Su",
-                  "Mo",
-                  "Tu",
-                  "We",
-                  "Th",
-                  "Fr",
-                  "Sa",
-                ].map((day) => (
-                  <span key={day}>{day}</span>
-                ))}
-              </div>
-
-              <div className="ContactLead__calendar-days">
-                {getCalendarDays().map(
-                  (item, index) => (
-                    <button
-                      type="button"
-                      key={index}
-                      disabled={item.outside}
-                      className={
-                        isSelectedCalendarDate(
-                          item.day
-                        )
-                          ? "ContactLead__calendar-day--selected"
-                          : ""
-                      }
-                      onClick={() =>
-                        selectCalendarDate(
-                          item.day,
-                          item.outside
-                        )
-                      }
-                    >
-                      {item.day}
-                    </button>
-                  )
-                )}
-              </div>
-
-            </div>
-          )}
-
+          <input
+            type="date"
+            value={toDate}
+            onChange={(e) => {
+              setToDate(e.target.value);
+              setCurrentPage(1);
+            }}
+          />
         </div>
 
         <div className="ContactLead__filter-buttons">
-
           <button
             type="button"
             className="ContactLead__filter-button"
-            onClick={handleFilter}
+            onClick={() => setCurrentPage(1)}
           >
             <Icon type="filter" size={18} />
             Filter
@@ -1318,31 +883,28 @@ const ContactLead = () => {
             <Icon type="refresh" size={17} />
             Reset
           </button>
-
         </div>
-
       </div>
 
-      {/* =================================================
-          LEADS LIST
-      ================================================= */}
+      {/* LIST */}
 
       <div className="ContactLead__list-card">
-
         <div className="ContactLead__list-header">
-
           <div className="ContactLead__list-title">
-
             <div className="ContactLead__list-title-icon">
               <Icon type="users" size={25} />
             </div>
 
-            <h2>Contact Leads List</h2>
-
+            <div>
+              <h2>Cold Leads List</h2>
+              <span className="ContactLead__live-indicator">
+                <span className="ContactLead__live-dot" />
+                Live sync
+              </span>
+            </div>
           </div>
 
           <div className="ContactLead__list-actions">
-
             <button
               type="button"
               className="ContactLead__export-button"
@@ -1366,86 +928,81 @@ const ContactLead = () => {
 
             <button
               type="button"
-              className="ContactLead__refresh-button"
+              className={`ContactLead__refresh-button ${
+                refreshing ? "ContactLead__refresh-button--loading" : ""
+              }`}
               onClick={handleRefresh}
+              disabled={refreshing}
               title="Refresh"
             >
               <Icon type="refresh" size={19} />
             </button>
-
           </div>
-
         </div>
 
-        {/* =================================================
-            TABLE
-        ================================================= */}
+        {/* TABLE */}
 
         <div className="ContactLead__table-wrapper">
+          {loading ? (
+            <div className="ContactLead__empty">
+              <div className="ContactLead__empty-content">
+                <div className="ContactLead__empty-icon">
+                  <Icon type="refresh" size={30} />
+                </div>
 
-          <table className="ContactLead__table">
+                <h3>Loading Leads...</h3>
 
-            <thead>
+                <p>
+                  Fetching the latest cold leads.
+                </p>
+              </div>
+            </div>
+          ) : (
+            <table className="ContactLead__table">
+              <thead>
+                <tr>
+                  <th className="ContactLead__checkbox-column">
+                    <label className="ContactLead__checkbox">
+                      <input
+                        type="checkbox"
+                        checked={allCurrentSelected}
+                        onChange={handleSelectAll}
+                      />
+                      <span />
+                    </label>
+                  </th>
 
-              <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Address</th>
+                  <th>Message</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
 
-                <th className="ContactLead__checkbox-column">
-
-                  <label className="ContactLead__checkbox">
-
-                    <input
-                      type="checkbox"
-                      checked={allCurrentSelected}
-                      onChange={handleSelectAll}
-                    />
-
-                    <span></span>
-
-                  </label>
-
-                </th>
-
-                <th>#</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>City</th>
-                <th>Message</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Actions</th>
-
-              </tr>
-
-            </thead>
-
-            <tbody>
-
-              {currentLeads.length > 0 ? (
-                currentLeads.map(
-                  (lead, index) => (
-                    <tr key={lead.id}>
-
+              <tbody>
+                {currentLeads.length > 0 ? (
+                  currentLeads.map((lead, index) => (
+                    <tr key={lead._id}>
                       <td>
-
                         <label className="ContactLead__checkbox">
-
                           <input
                             type="checkbox"
                             checked={selectedIds.includes(
-                              lead.id
+                              lead._id
                             )}
                             onChange={() =>
                               handleSelectSingle(
-                                lead.id
+                                lead._id
                               )
                             }
                           />
-
-                          <span></span>
-
+                          <span />
                         </label>
-
                       </td>
 
                       <td>
@@ -1472,49 +1029,46 @@ const ContactLead = () => {
 
                       <td>
                         <span className="ContactLead__city">
-                          {lead.city}
+                          {lead.address}
                         </span>
                       </td>
 
                       <td>
-
                         <div
                           className="ContactLead__message"
-                          title={lead.message}
+                          title={
+                            lead.message || "No message"
+                          }
                         >
-                          {lead.message}
+                          {lead.message || "—"}
                         </div>
-
                       </td>
 
                       <td>
                         <span className="ContactLead__date">
-                          {formatDate(lead.date)}
+                          {formatDate(
+                            lead.createdAt
+                          )}
                         </span>
                       </td>
 
                       <td>
-
                         <span
-                          className={`ContactLead__status ContactLead__status--${lead.status.toLowerCase()}`}
+                          className={`ContactLead__status ContactLead__status--${String(lead.status || "New").toLowerCase()}`}
                         >
                           {lead.status}
                         </span>
-
                       </td>
 
                       <td>
-
                         <div className="ContactLead__row-actions">
-
-                          {/* VIEW */}
-
                           <button
                             type="button"
                             className="ContactLead__row-action ContactLead__row-action--view"
                             title="View"
-                            onClick={() =>
-                              setViewLead(lead)
+                             aria-label={`View ${lead.name || "lead"}`}
+                             onClick={() =>
+                              handleView(lead)
                             }
                           >
                             <Icon
@@ -1523,13 +1077,12 @@ const ContactLead = () => {
                             />
                           </button>
 
-                          {/* EDIT */}
-
                           <button
                             type="button"
                             className="ContactLead__row-action ContactLead__row-action--edit"
                             title="Edit"
-                            onClick={() =>
+                             aria-label={`Edit ${lead.name || "lead"}`}
+                             onClick={() =>
                               openEdit(lead)
                             }
                           >
@@ -1539,13 +1092,12 @@ const ContactLead = () => {
                             />
                           </button>
 
-                          {/* DELETE */}
-
                           <button
                             type="button"
                             className="ContactLead__row-action ContactLead__row-action--delete"
                             title="Delete"
-                            onClick={() =>
+                             aria-label={`Delete ${lead.name || "lead"}`}
+                             onClick={() =>
                               setDeleteLead(lead)
                             }
                           >
@@ -1554,171 +1106,154 @@ const ContactLead = () => {
                               size={17}
                             />
                           </button>
-
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td
+                      colSpan="10"
+                      className="ContactLead__empty"
+                    >
+                      <div className="ContactLead__empty-content">
+                        <div className="ContactLead__empty-icon">
+                          <Icon
+                            type="mail"
+                            size={30}
+                          />
                         </div>
 
-                      </td>
+                        <h3>
+                          No contact leads found
+                        </h3>
 
-                    </tr>
-                  )
-                )
-              ) : (
-                <tr>
-
-                  <td
-                    colSpan="10"
-                    className="ContactLead__empty"
-                  >
-                    <div className="ContactLead__empty-content">
-
-                      <div className="ContactLead__empty-icon">
-                        <Icon
-                          type="mail"
-                          size={30}
-                        />
+                        <p>
+                          Submit a form or change your
+                          filters.
+                        </p>
                       </div>
-
-                      <h3>
-                        No contact leads found
-                      </h3>
-
-                      <p>
-                        Try changing your search or
-                        filter options.
-                      </p>
-
-                    </div>
-                  </td>
-
-                </tr>
-              )}
-
-            </tbody>
-
-          </table>
-
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          )}
         </div>
 
-        {/* =================================================
-            PAGINATION
-        ================================================= */}
+        {/* PAGINATION */}
 
-        <div className="ContactLead__pagination-wrapper">
+        {!loading && (
+          <div className="ContactLead__pagination-wrapper">
+            <div className="ContactLead__pagination-info">
+              Showing{" "}
+              <strong>
+                {filteredLeads.length === 0
+                  ? 0
+                  : startIndex + 1}
+              </strong>{" "}
+              to{" "}
+              <strong>
+                {Math.min(
+                  startIndex + ITEMS_PER_PAGE,
+                  filteredLeads.length
+                )}
+              </strong>{" "}
+              of{" "}
+              <strong>
+                {filteredLeads.length}
+              </strong>{" "}
+              entries
+            </div>
 
-          <div className="ContactLead__pagination-info">
+            {totalPages > 1 && (
+              <div className="ContactLead__pagination">
+                <button
+                  type="button"
+                  disabled={currentPage === 1}
+                  className="ContactLead__page-button ContactLead__page-button--arrow"
+                  onClick={() =>
+                    setCurrentPage(
+                      (prev) => prev - 1
+                    )
+                  }
+                >
+                  <Icon
+                    type="arrowLeft"
+                    size={17}
+                  />
+                </button>
 
-            Showing{" "}
-            <strong>
-              {filteredLeads.length === 0
-                ? 0
-                : startIndex + 1}
-            </strong>{" "}
-            to{" "}
-            <strong>
-              {Math.min(
-                startIndex + ITEMS_PER_PAGE,
-                filteredLeads.length
-              )}
-            </strong>{" "}
-            of{" "}
-            <strong>{filteredLeads.length}</strong>{" "}
-            entries
+                {getPageNumbers().map(
+                  (page, index) => {
+                    if (page === "...") {
+                      return (
+                        <span
+                          key={`dots-${index}`}
+                          className="ContactLead__pagination-dots"
+                        >
+                          ...
+                        </span>
+                      );
+                    }
 
-          </div>
-
-          {totalPages > 1 && (
-            <div className="ContactLead__pagination">
-
-              <button
-                type="button"
-                disabled={currentPage === 1}
-                className="ContactLead__page-button ContactLead__page-button--arrow"
-                onClick={() =>
-                  setCurrentPage(
-                    (prev) => prev - 1
-                  )
-                }
-              >
-                <Icon
-                  type="arrowLeft"
-                  size={17}
-                />
-              </button>
-
-              {getPageNumbers().map(
-                (page, index) => {
-                  if (page === "...") {
                     return (
-                      <span
-                        key={`dots-${index}`}
-                        className="ContactLead__pagination-dots"
+                      <button
+                        type="button"
+                        key={page}
+                        className={`ContactLead__page-button ${
+                          currentPage === page
+                            ? "ContactLead__page-button--active"
+                            : ""
+                        }`}
+                        onClick={() =>
+                          setCurrentPage(page)
+                        }
                       >
-                        ...
-                      </span>
+                        {page}
+                      </button>
                     );
                   }
+                )}
 
-                  return (
-                    <button
-                      type="button"
-                      key={page}
-                      className={`ContactLead__page-button ${
-                        currentPage === page
-                          ? "ContactLead__page-button--active"
-                          : ""
-                      }`}
-                      onClick={() =>
-                        setCurrentPage(page)
-                      }
-                    >
-                      {page}
-                    </button>
-                  );
-                }
-              )}
-
-              <button
-                type="button"
-                disabled={
-                  currentPage === totalPages
-                }
-                className="ContactLead__page-button ContactLead__page-button--arrow"
-                onClick={() =>
-                  setCurrentPage(
-                    (prev) => prev + 1
-                  )
-                }
-              >
-                <Icon
-                  type="arrowRight"
-                  size={17}
-                />
-              </button>
-
-            </div>
-          )}
-
-        </div>
-
+                <button
+                  type="button"
+                  disabled={
+                    currentPage === totalPages
+                  }
+                  className="ContactLead__page-button ContactLead__page-button--arrow"
+                  onClick={() =>
+                    setCurrentPage(
+                      (prev) => prev + 1
+                    )
+                  }
+                >
+                  <Icon
+                    type="arrowRight"
+                    size={17}
+                  />
+                </button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
-      {/* =================================================
+      {/* ====================================================
           VIEW MODAL
-      ================================================= */}
+      ==================================================== */}
 
       {viewLead && (
         <div
           className="ContactLead__modal-overlay"
           onClick={() => setViewLead(null)}
         >
-
           <div
             className="ContactLead__view-modal"
             onClick={(e) =>
               e.stopPropagation()
             }
           >
-
             <button
               type="button"
               className="ContactLead__modal-close"
@@ -1730,7 +1265,6 @@ const ContactLead = () => {
             </button>
 
             <div className="ContactLead__modal-heading">
-
               <div className="ContactLead__modal-icon ContactLead__modal-icon--blue">
                 <Icon type="eye" size={25} />
               </div>
@@ -1738,38 +1272,47 @@ const ContactLead = () => {
               <div>
                 <h3>Lead Details</h3>
                 <p>
-                  Complete contact inquiry information
+                  Complete contact inquiry
+                  information
                 </p>
               </div>
-
             </div>
 
             <div className="ContactLead__view-grid">
-
               <div className="ContactLead__view-item">
                 <span>Name</span>
-                <strong>{viewLead.name}</strong>
+                <strong>
+                  {viewLead.name}
+                </strong>
               </div>
 
               <div className="ContactLead__view-item">
                 <span>Email</span>
-                <strong>{viewLead.email}</strong>
+                <strong>
+                  {viewLead.email}
+                </strong>
               </div>
 
               <div className="ContactLead__view-item">
                 <span>Phone</span>
-                <strong>{viewLead.phone}</strong>
+                <strong>
+                  {viewLead.phone}
+                </strong>
               </div>
 
               <div className="ContactLead__view-item">
-                <span>City</span>
-                <strong>{viewLead.city}</strong>
+                <span>Address</span>
+                <strong>
+                  {viewLead.address}
+                </strong>
               </div>
 
               <div className="ContactLead__view-item">
                 <span>Date</span>
                 <strong>
-                  {formatDate(viewLead.date)}
+                  {formatDate(
+                    viewLead.createdAt
+                  )}
                 </strong>
               </div>
 
@@ -1777,25 +1320,23 @@ const ContactLead = () => {
                 <span>Status</span>
 
                 <span
-                  className={`ContactLead__status ContactLead__status--${viewLead.status.toLowerCase()}`}
+                  className={`ContactLead__status ContactLead__status--${String(viewLead.status || "New").toLowerCase()}`}
                 >
                   {viewLead.status}
                 </span>
-
               </div>
-
             </div>
 
             <div className="ContactLead__message-box">
-
               <span>Message</span>
 
-              <p>{viewLead.message}</p>
-
+              <p>
+                {viewLead.message ||
+                  "No message provided."}
+              </p>
             </div>
 
             <div className="ContactLead__view-footer">
-
               <button
                 type="button"
                 className="ContactLead__modal-secondary"
@@ -1817,31 +1358,26 @@ const ContactLead = () => {
                 <Icon type="edit" size={17} />
                 Edit Lead
               </button>
-
             </div>
-
           </div>
-
         </div>
       )}
 
-      {/* =================================================
+      {/* ====================================================
           EDIT MODAL
-      ================================================= */}
+      ==================================================== */}
 
       {editLead && (
         <div
           className="ContactLead__modal-overlay"
           onClick={() => setEditLead(null)}
         >
-
           <div
             className="ContactLead__edit-modal"
             onClick={(e) =>
               e.stopPropagation()
             }
           >
-
             <button
               type="button"
               className="ContactLead__modal-close"
@@ -1853,7 +1389,6 @@ const ContactLead = () => {
             </button>
 
             <div className="ContactLead__modal-heading">
-
               <div className="ContactLead__modal-icon ContactLead__modal-icon--green">
                 <Icon type="edit" size={25} />
               </div>
@@ -1864,13 +1399,10 @@ const ContactLead = () => {
                   Update the lead information
                 </p>
               </div>
-
             </div>
 
             <div className="ContactLead__edit-grid">
-
               <div className="ContactLead__edit-field">
-
                 <label>Name</label>
 
                 <input
@@ -1883,11 +1415,9 @@ const ContactLead = () => {
                     )
                   }
                 />
-
               </div>
 
               <div className="ContactLead__edit-field">
-
                 <label>Email</label>
 
                 <input
@@ -1900,11 +1430,9 @@ const ContactLead = () => {
                     )
                   }
                 />
-
               </div>
 
               <div className="ContactLead__edit-field">
-
                 <label>Phone</label>
 
                 <input
@@ -1917,28 +1445,24 @@ const ContactLead = () => {
                     )
                   }
                 />
-
               </div>
 
               <div className="ContactLead__edit-field">
-
-                <label>City</label>
+                <label>Address</label>
 
                 <input
                   type="text"
-                  value={editForm.city}
+                  value={editForm.address}
                   onChange={(e) =>
                     handleEditChange(
-                      "city",
+                      "address",
                       e.target.value
                     )
                   }
                 />
-
               </div>
 
               <div className="ContactLead__edit-field ContactLead__edit-field--full">
-
                 <label>Status</label>
 
                 <select
@@ -1954,11 +1478,9 @@ const ContactLead = () => {
                   <option>Pending</option>
                   <option>Replied</option>
                 </select>
-
               </div>
 
               <div className="ContactLead__edit-field ContactLead__edit-field--full">
-
                 <label>Message</label>
 
                 <textarea
@@ -1971,13 +1493,10 @@ const ContactLead = () => {
                     )
                   }
                 />
-
               </div>
-
             </div>
 
             <div className="ContactLead__view-footer">
-
               <button
                 type="button"
                 className="ContactLead__modal-secondary"
@@ -1995,31 +1514,26 @@ const ContactLead = () => {
               >
                 Save Changes
               </button>
-
             </div>
-
           </div>
-
         </div>
       )}
 
-      {/* =================================================
+      {/* ====================================================
           DELETE MODAL
-      ================================================= */}
+      ==================================================== */}
 
       {deleteLead && (
         <div
           className="ContactLead__modal-overlay"
           onClick={() => setDeleteLead(null)}
         >
-
           <div
             className="ContactLead__delete-modal"
             onClick={(e) =>
               e.stopPropagation()
             }
           >
-
             <button
               type="button"
               className="ContactLead__modal-close"
@@ -2038,15 +1552,11 @@ const ContactLead = () => {
 
             <p>
               Are you sure you want to delete{" "}
-              <strong>
-                {deleteLead.name}
-              </strong>
-              's contact inquiry? This action
-              cannot be undone.
+              <strong>{deleteLead.name}</strong>'s
+              contact inquiry?
             </p>
 
             <div className="ContactLead__delete-actions">
-
               <button
                 type="button"
                 className="ContactLead__cancel-delete"
@@ -2062,20 +1572,20 @@ const ContactLead = () => {
                 className="ContactLead__confirm-delete"
                 onClick={confirmDelete}
               >
-                <Icon type="delete" size={17} />
+                <Icon
+                  type="delete"
+                  size={17}
+                />
                 Delete Lead
               </button>
-
             </div>
-
           </div>
-
         </div>
       )}
 
-      {/* =================================================
-          BULK DELETE MODAL
-      ================================================= */}
+      {/* ====================================================
+          BULK DELETE
+      ==================================================== */}
 
       {showBulkDelete && (
         <div
@@ -2084,14 +1594,12 @@ const ContactLead = () => {
             setShowBulkDelete(false)
           }
         >
-
           <div
             className="ContactLead__delete-modal"
             onClick={(e) =>
               e.stopPropagation()
             }
           >
-
             <button
               type="button"
               className="ContactLead__modal-close"
@@ -2106,21 +1614,17 @@ const ContactLead = () => {
               <Icon type="delete" size={31} />
             </div>
 
-            <h3>
-              Delete Selected Leads?
-            </h3>
+            <h3>Delete Selected Leads?</h3>
 
             <p>
               You have selected{" "}
               <strong>
                 {selectedIds.length}
               </strong>{" "}
-              contact leads. Are you sure you
-              want to delete them?
+              contact leads.
             </p>
 
             <div className="ContactLead__delete-actions">
-
               <button
                 type="button"
                 className="ContactLead__cancel-delete"
@@ -2136,17 +1640,16 @@ const ContactLead = () => {
                 className="ContactLead__confirm-delete"
                 onClick={confirmBulkDelete}
               >
-                <Icon type="delete" size={17} />
+                <Icon
+                  type="delete"
+                  size={17}
+                />
                 Delete Selected
               </button>
-
             </div>
-
           </div>
-
         </div>
       )}
-
     </div>
   );
 };

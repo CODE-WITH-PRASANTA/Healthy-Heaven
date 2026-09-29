@@ -4,6 +4,12 @@ import React, {
   useRef,
   useState,
 } from "react";
+
+import Swal from "sweetalert2";
+
+import axios from "axios";
+import API, { BASE_URL, IMG_URL } from "../../api/axios";
+
 import "./Gallery.css";
 
 const Gallery = () => {
@@ -12,122 +18,44 @@ const Gallery = () => {
 
   const ITEMS_PER_PAGE = 6;
 
-  /* =====================================================
-     DUMMY DATA
-  ===================================================== */
+  // =========================================================
+  // STATES
+  // =========================================================
 
-  const dummyData = [
-    {
-      id: 1,
-      title: "Annual Sports Day",
-      image: "https://picsum.photos/seed/gallery001/700/450",
-      uploadedOn: "23 Sept 2026",
-    },
-    {
-      id: 2,
-      title: "School Annual Function",
-      image: "https://picsum.photos/seed/gallery002/700/450",
-      uploadedOn: "22 Sept 2026",
-    },
-    {
-      id: 3,
-      title: "Independence Day Celebration",
-      image: "https://picsum.photos/seed/gallery003/700/450",
-      uploadedOn: "21 Sept 2026",
-    },
-    {
-      id: 4,
-      title: "Republic Day Program",
-      image: "https://picsum.photos/seed/gallery004/700/450",
-      uploadedOn: "20 Sept 2026",
-    },
-    {
-      id: 5,
-      title: "Science Exhibition",
-      image: "https://picsum.photos/seed/gallery005/700/450",
-      uploadedOn: "19 Sept 2026",
-    },
-    {
-      id: 6,
-      title: "Cultural Program",
-      image: "https://picsum.photos/seed/gallery006/700/450",
-      uploadedOn: "18 Sept 2026",
-    },
-    {
-      id: 7,
-      title: "Teachers Day Celebration",
-      image: "https://picsum.photos/seed/gallery007/700/450",
-      uploadedOn: "17 Sept 2026",
-    },
-    {
-      id: 8,
-      title: "Children's Day Event",
-      image: "https://picsum.photos/seed/gallery008/700/450",
-      uploadedOn: "16 Sept 2026",
-    },
-    {
-      id: 9,
-      title: "School Picnic",
-      image: "https://picsum.photos/seed/gallery009/700/450",
-      uploadedOn: "15 Sept 2026",
-    },
-    {
-      id: 10,
-      title: "Classroom Activities",
-      image: "https://picsum.photos/seed/gallery010/700/450",
-      uploadedOn: "14 Sept 2026",
-    },
-  ];
+  const [galleryItems, setGalleryItems] = useState([]);
 
-  /* =====================================================
-     STATES
-  ===================================================== */
+  const [loading, setLoading] = useState(false);
 
-  const [galleryItems, setGalleryItems] =
-    useState(dummyData);
+  const [saving, setSaving] = useState(false);
+
+  const [deleting, setDeleting] = useState(false);
 
   const [title, setTitle] = useState("");
-  const [selectedImage, setSelectedImage] =
-    useState(null);
 
-  const [previewImage, setPreviewImage] =
-    useState("");
+  const [selectedImage, setSelectedImage] = useState(null);
 
-  const [editingId, setEditingId] =
-    useState(null);
+  const [previewImage, setPreviewImage] = useState("");
 
-  const [searchTerm, setSearchTerm] =
-    useState("");
+  const [editingId, setEditingId] = useState(null);
 
-  const [selectedItems, setSelectedItems] =
-    useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const [currentPage, setCurrentPage] =
-    useState(1);
+  const [selectedItems, setSelectedItems] = useState([]);
 
-  const [deleteTarget, setDeleteTarget] =
-    useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
   const [showDeleteModal, setShowDeleteModal] =
     useState(false);
 
-  const [dragActive, setDragActive] =
-    useState(false);
+  const [dragActive, setDragActive] = useState(false);
 
-  /*
-    IMPORTANT:
-    Keep track of only blob URLs created by uploaded images.
-  */
+  // =========================================================
+  // BLOB URL MANAGEMENT
+  // =========================================================
 
   const blobUrlsRef = useRef(new Set());
-
-  /* =====================================================
-     CLEANUP ONLY WHEN COMPONENT UNMOUNTS
-     
-     IMPORTANT:
-     Do NOT use galleryItems as dependency here.
-     Otherwise every state update would revoke images.
-  ===================================================== */
 
   useEffect(() => {
     return () => {
@@ -139,9 +67,154 @@ const Gallery = () => {
     };
   }, []);
 
-  /* =====================================================
-     CREATE IMAGE URL
-  ===================================================== */
+  // =========================================================
+  // IMAGE URL
+  // =========================================================
+
+  const getImageUrl = (image) => {
+    if (!image) {
+      return "";
+    }
+
+    image = String(image).trim();
+
+    // Local preview
+    if (image.startsWith("blob:")) {
+      return image;
+    }
+
+    // Already full URL
+    if (
+      image.startsWith("http://") ||
+      image.startsWith("https://") ||
+      image.startsWith("data:")
+    ) {
+      return image;
+    }
+
+    // Backend image path
+    const normalizedBaseUrl = String(IMG_URL).replace(/\/$/, "");
+
+    if (image.startsWith("/")) {
+      return `${normalizedBaseUrl}${image}`;
+    }
+
+    return `${normalizedBaseUrl}/${image.replace(/^\/+/, "")}`;
+  };
+
+  // =========================================================
+  // FETCH GALLERY
+  // =========================================================
+
+  const fetchGallery = async () => {
+    try {
+      setLoading(true);
+
+      const response = await API.get("/gallery");
+
+      const responseData = response.data;
+
+      let items = [];
+
+      if (Array.isArray(responseData)) {
+        items = responseData;
+      } else if (Array.isArray(responseData?.data)) {
+        items = responseData.data;
+      } else if (
+        Array.isArray(responseData?.gallery)
+      ) {
+        items = responseData.gallery;
+      } else if (
+        Array.isArray(responseData?.data?.data)
+      ) {
+        items = responseData.data.data;
+      }
+
+      const formattedItems = items.map((item) => ({
+        ...item,
+
+        id: item._id || item.id,
+
+        title: item.title || "",
+
+        image:
+          item.image ||
+          item.imageUrl ||
+          item.url ||
+          "",
+
+        uploadedOn:
+          item.createdAt ||
+          item.uploadedAt ||
+          item.uploadedOn ||
+          null,
+      }));
+
+      setGalleryItems(formattedItems);
+
+      // Remove IDs that no longer exist
+      setSelectedItems((previous) =>
+        previous.filter((id) =>
+          formattedItems.some(
+            (item) => item.id === id
+          )
+        )
+      );
+
+    } catch (error) {
+
+      setGalleryItems([]);
+
+      Swal.fire({
+        icon: "error",
+        title: "Failed to Load Gallery",
+        text:
+          error.response?.data?.message ||
+          "Unable to fetch gallery images from server.",
+        confirmButtonColor: "#63b600",
+      });
+
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // =========================================================
+  // INITIAL FETCH
+  // =========================================================
+
+  useEffect(() => {
+    fetchGallery();
+  }, []);
+
+  // =========================================================
+  // DATE FORMAT
+  // =========================================================
+
+  const formatDate = (date) => {
+    if (!date) {
+      return "-";
+    }
+
+    const parsedDate = new Date(date);
+
+    if (Number.isNaN(parsedDate.getTime())) {
+      return date;
+    }
+
+    return parsedDate.toLocaleDateString(
+      "en-IN",
+      {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      }
+    );
+  };
+
+  // =========================================================
+  // CREATE IMAGE URL
+  // =========================================================
 
   const createImageUrl = (file) => {
     const url = URL.createObjectURL(file);
@@ -151,25 +224,30 @@ const Gallery = () => {
     return url;
   };
 
-  /* =====================================================
-     REVOKE IMAGE URL
-  ===================================================== */
+  // =========================================================
+  // REVOKE IMAGE URL
+  // =========================================================
 
   const revokeImageUrl = (url) => {
-    if (!url) return;
+    if (!url) {
+      return;
+    }
 
     if (url.startsWith("blob:")) {
       URL.revokeObjectURL(url);
+
       blobUrlsRef.current.delete(url);
     }
   };
 
-  /* =====================================================
-     FILE VALIDATION
-  ===================================================== */
+  // =========================================================
+  // FILE VALIDATION
+  // =========================================================
 
   const validateFile = (file) => {
-    if (!file) return false;
+    if (!file) {
+      return false;
+    }
 
     const allowedTypes = [
       "image/jpeg",
@@ -179,17 +257,23 @@ const Gallery = () => {
     ];
 
     if (!allowedTypes.includes(file.type)) {
-      alert(
-        "Please upload JPG, JPEG, PNG or WEBP image."
-      );
+      Swal.fire({
+        icon: "error",
+        title: "Invalid Image",
+        text: "Please upload JPG, JPEG, PNG or WEBP image.",
+        confirmButtonColor: "#63b600",
+      });
 
       return false;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      alert(
-        "Image size must be less than 5MB."
-      );
+      Swal.fire({
+        icon: "error",
+        title: "Image Too Large",
+        text: "Image size must be less than 5MB.",
+        confirmButtonColor: "#63b600",
+      });
 
       return false;
     }
@@ -197,19 +281,14 @@ const Gallery = () => {
     return true;
   };
 
-  /* =====================================================
-     HANDLE FILE
-  ===================================================== */
+  // =========================================================
+  // HANDLE FILE
+  // =========================================================
 
   const handleFile = (file) => {
     if (!validateFile(file)) {
       return;
     }
-
-    /*
-      If there is an old temporary preview,
-      remove only that preview.
-    */
 
     if (
       previewImage &&
@@ -221,12 +300,13 @@ const Gallery = () => {
     const imageUrl = createImageUrl(file);
 
     setSelectedImage(file);
+
     setPreviewImage(imageUrl);
   };
 
-  /* =====================================================
-     FILE INPUT
-  ===================================================== */
+  // =========================================================
+  // FILE INPUT
+  // =========================================================
 
   const handleImageChange = (event) => {
     const file =
@@ -237,26 +317,27 @@ const Gallery = () => {
     }
   };
 
-  /* =====================================================
-     DRAG OVER
-  ===================================================== */
+  // =========================================================
+  // DRAG OVER
+  // =========================================================
 
   const handleDragOver = (event) => {
     event.preventDefault();
+
     setDragActive(true);
   };
 
-  /* =====================================================
-     DRAG LEAVE
-  ===================================================== */
+  // =========================================================
+  // DRAG LEAVE
+  // =========================================================
 
   const handleDragLeave = () => {
     setDragActive(false);
   };
 
-  /* =====================================================
-     DROP
-  ===================================================== */
+  // =========================================================
+  // DROP
+  // =========================================================
 
   const handleDrop = (event) => {
     event.preventDefault();
@@ -271,194 +352,11 @@ const Gallery = () => {
     }
   };
 
-  /* =====================================================
-     SAVE / UPDATE
-  ===================================================== */
-
-  const handleSaveGallery = (event) => {
-    event.preventDefault();
-
-    if (!title.trim()) {
-      alert("Please enter image title.");
-      return;
-    }
-
-    if (!editingId && !selectedImage) {
-      alert("Please upload an image.");
-      return;
-    }
-
-    /* =================================================
-       UPDATE
-    ================================================= */
-
-    if (editingId) {
-      setGalleryItems((previous) =>
-        previous.map((item) => {
-          if (item.id !== editingId) {
-            return item;
-          }
-
-          /*
-            If user selected a new image,
-            previewImage is the new blob URL.
-          */
-
-          if (selectedImage && previewImage) {
-            /*
-              Remove old uploaded blob URL
-              only if it is different.
-            */
-
-            if (
-              item.image &&
-              item.image !== previewImage &&
-              item.image.startsWith("blob:")
-            ) {
-              revokeImageUrl(item.image);
-            }
-
-            return {
-              ...item,
-              title: title.trim(),
-              image: previewImage,
-            };
-          }
-
-          /*
-            No new image selected.
-            Keep existing image.
-          */
-
-          return {
-            ...item,
-            title: title.trim(),
-          };
-        })
-      );
-
-      /*
-        IMPORTANT:
-        Do NOT revoke previewImage here.
-        It is now being used by the table.
-      */
-
-      setTitle("");
-      setSelectedImage(null);
-      setPreviewImage("");
-      setEditingId(null);
-      setDragActive(false);
-
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
-
-      alert(
-        "Gallery image updated successfully."
-      );
-
-      return;
-    }
-
-    /* =================================================
-       ADD NEW
-    ================================================= */
-
-    const newItem = {
-      id:
-        Date.now() +
-        Math.floor(Math.random() * 100000),
-
-      title: title.trim(),
-
-      /*
-        IMPORTANT:
-        Keep the blob URL.
-        Do not revoke it after save.
-      */
-
-      image: previewImage,
-
-      uploadedOn:
-        new Date().toLocaleDateString(
-          "en-IN",
-          {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-          }
-        ),
-    };
-
-    setGalleryItems((previous) => [
-      newItem,
-      ...previous,
-    ]);
-
-    /*
-      Reset form WITHOUT revoking previewImage.
-      The image is now owned by galleryItems.
-    */
-
-    setTitle("");
-    setSelectedImage(null);
-    setPreviewImage("");
-    setEditingId(null);
-    setDragActive(false);
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-
-    /*
-      New item is inserted at top.
-    */
-
-    setCurrentPage(1);
-
-    alert(
-      "Gallery image added successfully."
-    );
-
-    setTimeout(() => {
-      galleryListRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }, 100);
-  };
-
-  /* =====================================================
-     RESET FORM
-     
-     IMPORTANT:
-     This function does NOT revoke previewImage.
-     Because during edit, previewImage may already
-     belong to galleryItems.
-  ===================================================== */
+  // =========================================================
+  // RESET FORM
+  // =========================================================
 
   const resetForm = () => {
-    setTitle("");
-    setSelectedImage(null);
-    setPreviewImage("");
-    setEditingId(null);
-    setDragActive(false);
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
-
-  /* =====================================================
-     CANCEL EDIT
-  ===================================================== */
-
-  const handleCancelEdit = () => {
-    /*
-      If user selected a new image during edit
-      but did not save it, remove that temporary URL.
-    */
-
     if (
       selectedImage &&
       previewImage &&
@@ -467,19 +365,156 @@ const Gallery = () => {
       revokeImageUrl(previewImage);
     }
 
+    setTitle("");
+
+    setSelectedImage(null);
+
+    setPreviewImage("");
+
+    setEditingId(null);
+
+    setDragActive(false);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  // =========================================================
+  // SAVE / UPDATE GALLERY
+  // =========================================================
+
+  const handleSaveGallery = async (event) => {
+    event.preventDefault();
+
+    if (!title.trim()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Title Required",
+        text: "Please enter image title.",
+        confirmButtonColor: "#63b600",
+      });
+
+      return;
+    }
+
+    // New image is mandatory when adding
+    if (!editingId && !selectedImage) {
+      Swal.fire({
+        icon: "error",
+        title: "Image Required",
+        text: "Please upload an image.",
+        confirmButtonColor: "#63b600",
+      });
+
+      return;
+    }
+
+    try {
+      setSaving(true);
+
+      const formData = new FormData();
+
+      formData.append(
+        "title",
+        title.trim()
+      );
+
+      // IMPORTANT:
+      // Backend Multer expects field name "image"
+      if (selectedImage instanceof File) {
+        formData.append(
+          "image",
+          selectedImage
+        );
+      }
+
+      // =====================================================
+      // UPDATE
+      // =====================================================
+
+      if (editingId) {
+        const response = await axios.put(
+          `${BASE_URL}/api/gallery/${editingId}`,
+          formData
+        );
+
+        Swal.fire({
+          icon: "success",
+          title: "Updated Successfully",
+          text: "Gallery image updated successfully.",
+          timer: 1800,
+          showConfirmButton: false,
+        });
+      }
+
+      // =====================================================
+      // CREATE
+      // =====================================================
+
+      else {
+        const response = await axios.post(
+          `${BASE_URL}/api/gallery`,
+          formData
+        );
+
+        Swal.fire({
+          icon: "success",
+          title: "Added Successfully",
+          text: "Gallery image added successfully.",
+          timer: 1800,
+          showConfirmButton: false,
+        });
+      }
+
+      // =====================================================
+      // REFRESH FROM DATABASE
+      // =====================================================
+
+      resetForm();
+
+      await fetchGallery();
+
+      setCurrentPage(1);
+
+      setTimeout(() => {
+        galleryListRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 100);
+
+    } catch (error) {
+
+      Swal.fire({
+        icon: "error",
+        title: "Save Failed",
+        text:
+          error.response?.data?.message ||
+          error.response?.data?.error ||
+          "Unable to save gallery image.",
+        confirmButtonColor: "#63b600",
+      });
+
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  // =========================================================
+  // CANCEL EDIT
+  // =========================================================
+
+  const handleCancelEdit = () => {
     resetForm();
   };
 
-  /* =====================================================
-     EDIT
-  ===================================================== */
+  // =========================================================
+  // EDIT
+  // =========================================================
 
   const handleEdit = (item) => {
-    /*
-      If another unsaved preview exists,
-      clean it first.
-    */
-
+    // Remove unsaved blob preview
     if (
       selectedImage &&
       previewImage &&
@@ -489,15 +524,18 @@ const Gallery = () => {
     }
 
     setEditingId(item.id);
-    setTitle(item.title);
 
-    /*
-      Existing item image is shown.
-    */
+    setTitle(item.title || "");
 
-    setPreviewImage(item.image);
+    setPreviewImage(
+      getImageUrl(item.image)
+    );
 
     setSelectedImage(null);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
 
     window.scrollTo({
       top: 0,
@@ -505,41 +543,22 @@ const Gallery = () => {
     });
   };
 
-  /* =====================================================
-     REMOVE PREVIEW
-  ===================================================== */
+  // =========================================================
+  // REMOVE PREVIEW
+  // =========================================================
 
   const handleRemovePreview = (event) => {
     event.stopPropagation();
-
-    /*
-      Only revoke if this is our blob URL.
-    */
 
     if (
       previewImage &&
       previewImage.startsWith("blob:")
     ) {
-      /*
-        If editing and previewImage is already
-        the item's current image, do not revoke it.
-      */
-
-      const currentItem = galleryItems.find(
-        (item) =>
-          item.id === editingId
-      );
-
-      const isCurrentSavedImage =
-        currentItem?.image ===
-        previewImage;
-
-      if (!isCurrentSavedImage) {
-        revokeImageUrl(previewImage);
-      }
+      revokeImageUrl(previewImage);
     }
 
     setPreviewImage("");
+
     setSelectedImage(null);
 
     if (fileInputRef.current) {
@@ -547,13 +566,15 @@ const Gallery = () => {
     }
   };
 
-  /* =====================================================
-     SEARCH
-  ===================================================== */
+  // =========================================================
+  // SEARCH
+  // =========================================================
 
   const filteredItems = useMemo(() => {
     const search =
-      searchTerm.trim().toLowerCase();
+      searchTerm
+        .trim()
+        .toLowerCase();
 
     if (!search) {
       return galleryItems;
@@ -562,14 +583,17 @@ const Gallery = () => {
     return galleryItems.filter(
       (item) =>
         item.title
-          .toLowerCase()
+          ?.toLowerCase()
           .includes(search)
     );
-  }, [galleryItems, searchTerm]);
+  }, [
+    galleryItems,
+    searchTerm,
+  ]);
 
-  /* =====================================================
-     TOTAL PAGES
-  ===================================================== */
+  // =========================================================
+  // TOTAL PAGES
+  // =========================================================
 
   const totalPages = Math.max(
     1,
@@ -579,9 +603,9 @@ const Gallery = () => {
     )
   );
 
-  /* =====================================================
-     CURRENT PAGE FIX
-  ===================================================== */
+  // =========================================================
+  // PAGE FIX
+  // =========================================================
 
   useEffect(() => {
     if (currentPage > totalPages) {
@@ -592,9 +616,9 @@ const Gallery = () => {
     totalPages,
   ]);
 
-  /* =====================================================
-     CURRENT ITEMS
-  ===================================================== */
+  // =========================================================
+  // CURRENT ITEMS
+  // =========================================================
 
   const startIndex =
     (currentPage - 1) *
@@ -603,12 +627,13 @@ const Gallery = () => {
   const currentItems =
     filteredItems.slice(
       startIndex,
-      startIndex + ITEMS_PER_PAGE
+      startIndex +
+        ITEMS_PER_PAGE
     );
 
-  /* =====================================================
-     SEARCH
-  ===================================================== */
+  // =========================================================
+  // SEARCH
+  // =========================================================
 
   const handleSearch = (event) => {
     setSearchTerm(
@@ -618,29 +643,33 @@ const Gallery = () => {
     setCurrentPage(1);
   };
 
-  /* =====================================================
-     SELECT ITEM
-  ===================================================== */
+  // =========================================================
+  // SELECT ITEM
+  // =========================================================
 
   const handleSelectItem = (id) => {
-    setSelectedItems((previous) => {
-      if (previous.includes(id)) {
-        return previous.filter(
-          (itemId) =>
-            itemId !== id
-        );
-      }
+    setSelectedItems(
+      (previous) => {
+        if (
+          previous.includes(id)
+        ) {
+          return previous.filter(
+            (itemId) =>
+              itemId !== id
+          );
+        }
 
-      return [
-        ...previous,
-        id,
-      ];
-    });
+        return [
+          ...previous,
+          id,
+        ];
+      }
+    );
   };
 
-  /* =====================================================
-     SELECT ALL
-  ===================================================== */
+  // =========================================================
+  // SELECT ALL
+  // =========================================================
 
   const currentPageIds =
     currentItems.map(
@@ -649,123 +678,140 @@ const Gallery = () => {
 
   const isAllSelected =
     currentPageIds.length > 0 &&
-    currentPageIds.every((id) =>
-      selectedItems.includes(id)
+    currentPageIds.every(
+      (id) =>
+        selectedItems.includes(id)
     );
 
   const handleSelectAll = () => {
     if (isAllSelected) {
-      setSelectedItems((previous) =>
-        previous.filter(
-          (id) =>
-            !currentPageIds.includes(
-              id
-            )
-        )
+      setSelectedItems(
+        (previous) =>
+          previous.filter(
+            (id) =>
+              !currentPageIds.includes(
+                id
+              )
+          )
       );
     } else {
-      setSelectedItems((previous) => [
-        ...new Set([
-          ...previous,
-          ...currentPageIds,
-        ]),
-      ]);
+      setSelectedItems(
+        (previous) => [
+          ...new Set([
+            ...previous,
+            ...currentPageIds,
+          ]),
+        ]
+      );
     }
   };
 
-  /* =====================================================
-     DELETE MODAL
-  ===================================================== */
+  // =========================================================
+  // DELETE MODAL
+  // =========================================================
 
   const openDeleteModal = (
     item = null
   ) => {
     setDeleteTarget(item);
+
     setShowDeleteModal(true);
   };
 
   const closeDeleteModal = () => {
-    setDeleteTarget(null);
-    setShowDeleteModal(false);
+    if (!deleting) {
+      setDeleteTarget(null);
+
+      setShowDeleteModal(false);
+    }
   };
 
-  /* =====================================================
-     DELETE
-  ===================================================== */
+  // =========================================================
+  // CONFIRM DELETE
+  // =========================================================
 
-  const confirmDelete = () => {
-    if (deleteTarget) {
-      /*
-        Revoke uploaded image URL.
-      */
+  const confirmDelete = async () => {
+    try {
+      setDeleting(true);
 
-      if (
-        deleteTarget.image?.startsWith(
-          "blob:"
-        )
-      ) {
-        revokeImageUrl(
-          deleteTarget.image
+      // =====================================================
+      // SINGLE DELETE
+      // =====================================================
+
+      if (deleteTarget) {
+        await API.delete(
+          `/gallery/${deleteTarget.id}`
         );
+
+        Swal.fire({
+          icon: "success",
+          title: "Deleted Successfully",
+          text: "Gallery image deleted successfully.",
+          timer: 1500,
+          showConfirmButton: false,
+        });
       }
 
-      setGalleryItems((previous) =>
-        previous.filter(
-          (item) =>
-            item.id !==
-            deleteTarget.id
-        )
-      );
+      // =====================================================
+      // BULK DELETE
+      // =====================================================
 
-      setSelectedItems((previous) =>
-        previous.filter(
-          (id) =>
-            id !== deleteTarget.id
-        )
-      );
-    } else {
-      /*
-        Bulk delete
-      */
-
-      const idsToDelete =
-        selectedItems;
-
-      galleryItems.forEach(
-        (item) => {
-          if (
-            idsToDelete.includes(
-              item.id
-            ) &&
-            item.image?.startsWith(
-              "blob:"
-            )
-          ) {
-            revokeImageUrl(
-              item.image
-            );
-          }
+      else {
+        if (
+          selectedItems.length === 0
+        ) {
+          return;
         }
-      );
 
-      setGalleryItems((previous) =>
-        previous.filter(
-          (item) =>
-            !idsToDelete.includes(
-              item.id
-            )
-        )
-      );
+        await API.delete(
+          "/gallery/bulk",
+          {
+            data: {
+              ids: selectedItems,
+            },
+          }
+        );
+
+        Swal.fire({
+          icon: "success",
+          title: "Deleted Successfully",
+          text: `${selectedItems.length} gallery images deleted successfully.`,
+          timer: 1800,
+          showConfirmButton: false,
+        });
+      }
+
+      // =====================================================
+      // REFRESH DATABASE DATA
+      // =====================================================
 
       setSelectedItems([]);
-    }
 
-    closeDeleteModal();
+      setDeleteTarget(null);
+
+      setShowDeleteModal(false);
+
+      await fetchGallery();
+
+    } catch (error) {
+
+      Swal.fire({
+        icon: "error",
+        title: "Delete Failed",
+        text:
+          error.response?.data?.message ||
+          "Unable to delete gallery image.",
+        confirmButtonColor: "#63b600",
+      });
+
+    } finally {
+      setDeleting(false);
+    }
   };
 
-  /* =====================================================
-     PAGE CHANGE
-  ===================================================== */
+  // =========================================================
+  // PAGE CHANGE
+  // =========================================================
 
   const goToPage = (page) => {
     if (
@@ -786,9 +832,9 @@ const Gallery = () => {
     }, 50);
   };
 
-  /* =====================================================
-     PAGE NUMBERS
-  ===================================================== */
+  // =========================================================
+  // PAGE NUMBERS
+  // =========================================================
 
   const renderPageNumbers = () => {
     if (totalPages <= 5) {
@@ -837,9 +883,9 @@ const Gallery = () => {
     ];
   };
 
-  /* =====================================================
-     JSX
-  ===================================================== */
+  // =========================================================
+  // JSX
+  // =========================================================
 
   return (
     <div className="gallery">
@@ -926,6 +972,7 @@ const Gallery = () => {
               onClick={
                 handleCancelEdit
               }
+              disabled={saving}
             >
               Cancel Edit
             </button>
@@ -960,6 +1007,7 @@ const Gallery = () => {
                   event.target.value
                 )
               }
+              disabled={saving}
             />
 
           </div>
@@ -980,6 +1028,7 @@ const Gallery = () => {
                   : ""
               }`}
               onClick={() =>
+                !saving &&
                 fileInputRef.current?.click()
               }
               onDragOver={
@@ -1012,6 +1061,7 @@ const Gallery = () => {
                     onClick={
                       handleRemovePreview
                     }
+                    disabled={saving}
                   >
                     <svg
                       viewBox="0 0 24 24"
@@ -1064,6 +1114,7 @@ const Gallery = () => {
               onChange={
                 handleImageChange
               }
+              disabled={saving}
             />
 
           </div>
@@ -1075,22 +1126,34 @@ const Gallery = () => {
             <button
               type="submit"
               className="gallery__saveButton"
+              disabled={saving}
             >
 
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M5 4h12l2 2v14H5z" />
-                <path d="M8 4v6h8V4" />
-                <path d="M8 20v-6h8v6" />
-              </svg>
+              {saving ? (
+                <>
+                  <span className="gallery__buttonLoader" />
+                  {editingId
+                    ? "Updating..."
+                    : "Saving..."}
+                </>
+              ) : (
+                <>
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M5 4h12l2 2v14H5z" />
+                    <path d="M8 4v6h8V4" />
+                    <path d="M8 20v-6h8v6" />
+                  </svg>
 
-              {editingId
-                ? "Update"
-                : "Save"}
+                  {editingId
+                    ? "Update"
+                    : "Save"}
+                </>
+              )}
 
             </button>
 
@@ -1169,6 +1232,7 @@ const Gallery = () => {
                 onClick={() =>
                   openDeleteModal()
                 }
+                disabled={deleting}
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -1265,8 +1329,11 @@ const Gallery = () => {
                 </th>
 
                 <th>#</th>
+
                 <th>Image</th>
+
                 <th>Title</th>
+
                 <th>Uploaded On</th>
 
                 <th className="gallery__actionsHead">
@@ -1279,8 +1346,27 @@ const Gallery = () => {
 
             <tbody>
 
-              {currentItems.length >
-              0 ? (
+              {loading ? (
+                <tr>
+                  <td
+                    colSpan="6"
+                    className="gallery__empty"
+                  >
+                    <div className="gallery__emptyBox">
+                      <h3>
+                        Loading gallery...
+                      </h3>
+
+                      <p>
+                        Please wait while
+                        gallery images are
+                        being loaded.
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+              ) : currentItems.length >
+                0 ? (
                 currentItems.map(
                   (
                     item,
@@ -1316,11 +1402,13 @@ const Gallery = () => {
                       </td>
 
                       <td>
+
                         <span className="gallery__number">
                           {startIndex +
                             index +
                             1}
                         </span>
+
                       </td>
 
                       <td>
@@ -1328,18 +1416,18 @@ const Gallery = () => {
                         <div className="gallery__imageBox">
 
                           <img
-                            src={
+                            src={getImageUrl(
                               item.image
-                            }
+                            )}
                             alt={
                               item.title
                             }
                             loading="lazy"
                             onError={(event) => {
-                              event.currentTarget.src =
-                                "https://picsum.photos/seed/fallback" +
-                                item.id +
-                                "/700/450";
+                              event.currentTarget.style.display = "none";
+                              event.currentTarget.parentElement.classList.add(
+                                "gallery__imageError"
+                              );
                             }}
                           />
 
@@ -1348,19 +1436,23 @@ const Gallery = () => {
                       </td>
 
                       <td>
+
                         <span className="gallery__itemTitle">
                           {
                             item.title
                           }
                         </span>
+
                       </td>
 
                       <td>
+
                         <span className="gallery__date">
-                          {
+                          {formatDate(
                             item.uploadedOn
-                          }
+                          )}
                         </span>
+
                       </td>
 
                       <td>
@@ -1376,7 +1468,12 @@ const Gallery = () => {
                                 item
                               )
                             }
+                            disabled={
+                              saving ||
+                              deleting
+                            }
                           >
+
                             <svg
                               viewBox="0 0 24 24"
                               fill="none"
@@ -1384,8 +1481,10 @@ const Gallery = () => {
                               strokeWidth="2"
                             >
                               <path d="M12 20h9" />
+
                               <path d="M16.5 3.5a2.1 2.1 0 013 3L8 18l-4 1 1-4z" />
                             </svg>
+
                           </button>
 
                           <button
@@ -1397,7 +1496,12 @@ const Gallery = () => {
                                 item
                               )
                             }
+                            disabled={
+                              saving ||
+                              deleting
+                            }
                           >
+
                             <svg
                               viewBox="0 0 24 24"
                               fill="none"
@@ -1405,10 +1509,14 @@ const Gallery = () => {
                               strokeWidth="2"
                             >
                               <path d="M4 7h16" />
+
                               <path d="M10 11v6M14 11v6" />
+
                               <path d="M6 7l1 14h10l1-14" />
+
                               <path d="M9 7V4h6v3" />
                             </svg>
+
                           </button>
 
                         </div>
@@ -1416,6 +1524,7 @@ const Gallery = () => {
                       </td>
 
                     </tr>
+
                   )
                 )
               ) : (
@@ -1509,7 +1618,9 @@ const Gallery = () => {
             {" of "}
 
             <strong>
-              {filteredItems.length}
+              {
+                filteredItems.length
+              }
             </strong>
 
             {" entries"}
@@ -1531,6 +1642,7 @@ const Gallery = () => {
                   )
                 }
               >
+
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -1539,6 +1651,7 @@ const Gallery = () => {
                 >
                   <path d="M15 18l-6-6 6-6" />
                 </svg>
+
               </button>
 
               <div className="gallery__pageNumbers">
@@ -1595,6 +1708,7 @@ const Gallery = () => {
                   )
                 }
               >
+
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
@@ -1603,6 +1717,7 @@ const Gallery = () => {
                 >
                   <path d="M9 18l6-6-6-6" />
                 </svg>
+
               </button>
 
             </div>
@@ -1637,6 +1752,7 @@ const Gallery = () => {
               onClick={
                 closeDeleteModal
               }
+              disabled={deleting}
             >
               ×
             </button>
@@ -1650,7 +1766,9 @@ const Gallery = () => {
                 strokeWidth="1.8"
               >
                 <path d="M12 9v4" />
+
                 <path d="M12 17h.01" />
+
                 <path d="M10.3 3.8L2.8 17a2 2 0 001.7 3h15a2 2 0 001.7-3L13.7 3.8a2 2 0 00-3.4 0z" />
               </svg>
 
@@ -1676,6 +1794,7 @@ const Gallery = () => {
                 onClick={
                   closeDeleteModal
                 }
+                disabled={deleting}
               >
                 Cancel
               </button>
@@ -1686,8 +1805,11 @@ const Gallery = () => {
                 onClick={
                   confirmDelete
                 }
+                disabled={deleting}
               >
-                Delete
+                {deleting
+                  ? "Deleting..."
+                  : "Delete"}
               </button>
 
             </div>

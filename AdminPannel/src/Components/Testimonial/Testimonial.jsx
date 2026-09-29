@@ -1,257 +1,26 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Swal from "sweetalert2";
+import axios from "axios";
+import API, { BASE_URL, IMG_URL } from "../../api/axios";
 import "./Testimonial.css";
 
 const Testimonial = () => {
-  /* =========================================================
-      DEMO DATA
-  ========================================================= */
+  const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [updating, setUpdating] = useState(false);
 
-  const initialTestimonials = [
-    {
-      id: 1,
-      name: "Priya Sharma",
-      email: "priya@gmail.com",
-      image: "https://randomuser.me/api/portraits/women/44.jpg",
-      rating: 5,
-      message:
-        "Amazing food! Fresh ingredients and great taste. Super fast delivery. This is now my go-to food place. Highly recommended!",
-      date: "2026-09-23",
-      time: "10:45 AM",
-      status: "Approved",
-    },
-    {
-      id: 2,
-      name: "Rahul Verma",
-      email: "rahul@gmail.com",
-      image: "https://randomuser.me/api/portraits/men/32.jpg",
-      rating: 4,
-      message:
-        "Great taste and fast delivery. Highly recommended for everyone.",
-      date: "2026-09-22",
-      time: "08:20 PM",
-      status: "Approved",
-    },
-    {
-      id: 3,
-      name: "Sneha Patra",
-      email: "sneha@gmail.com",
-      image: "https://randomuser.me/api/portraits/women/65.jpg",
-      rating: 5,
-      message:
-        "Loved the varieties and quick service. Will definitely order again.",
-      date: "2026-09-21",
-      time: "06:15 PM",
-      status: "Pending",
-    },
-    {
-      id: 4,
-      name: "Amit Kumar",
-      email: "amit@gmail.com",
-      image: "https://randomuser.me/api/portraits/men/46.jpg",
-      rating: 4,
-      message:
-        "Good food and hygienic packaging. Only improvement needed in delivery timing.",
-      date: "2026-09-20",
-      time: "11:30 AM",
-      status: "Approved",
-    },
-    {
-      id: 5,
-      name: "Vikram Singh",
-      email: "vikram@gmail.com",
-      image: "https://randomuser.me/api/portraits/men/41.jpg",
-      rating: 5,
-      message:
-        "Best biryani in town! Keep it up! The quality was excellent.",
-      date: "2026-09-19",
-      time: "09:25 PM",
-      status: "Rejected",
-    },
-    {
-      id: 6,
-      name: "Neha Reddy",
-      email: "neha@gmail.com",
-      image: "https://randomuser.me/api/portraits/women/49.jpg",
-      rating: 4,
-      message:
-        "Food was good, but delivery was a bit late. Overall nice experience.",
-      date: "2026-09-18",
-      time: "04:10 PM",
-      status: "Approved",
-    },
-    {
-      id: 7,
-      name: "Arjun Das",
-      email: "arjun@gmail.com",
-      image: "https://randomuser.me/api/portraits/men/22.jpg",
-      rating: 5,
-      message:
-        "Excellent food quality and wonderful customer service.",
-      date: "2026-09-17",
-      time: "02:20 PM",
-      status: "Approved",
-    },
-    {
-      id: 8,
-      name: "Riya Mohanty",
-      email: "riya@gmail.com",
-      image: "https://randomuser.me/api/portraits/women/33.jpg",
-      rating: 3,
-      message:
-        "The food was tasty and nicely packed. Delivery could be faster.",
-      date: "2026-09-16",
-      time: "01:10 PM",
-      status: "Pending",
-    },
-    {
-      id: 9,
-      name: "Sourav Nayak",
-      email: "sourav@gmail.com",
-      image: "https://randomuser.me/api/portraits/men/55.jpg",
-      rating: 5,
-      message:
-        "Absolutely loved the food. Everything was fresh and delicious.",
-      date: "2026-09-15",
-      time: "07:30 PM",
-      status: "Approved",
-    },
-    {
-      id: 10,
-      name: "Puja Rout",
-      email: "puja@gmail.com",
-      image: "https://randomuser.me/api/portraits/women/52.jpg",
-      rating: 4,
-      message:
-        "Very good experience. The food arrived hot and fresh.",
-      date: "2026-09-14",
-      time: "08:45 PM",
-      status: "Approved",
-    },
-    {
-      id: 11,
-      name: "Manas Behera",
-      email: "manas@gmail.com",
-      image: "https://randomuser.me/api/portraits/men/64.jpg",
-      rating: 5,
-      message:
-        "Wonderful taste and excellent packaging. Highly recommended.",
-      date: "2026-09-13",
-      time: "01:10 PM",
-      status: "Approved",
-    },
-    {
-      id: 12,
-      name: "Sweta Jena",
-      email: "sweta@gmail.com",
-      image: "https://randomuser.me/api/portraits/women/68.jpg",
-      rating: 2,
-      message:
-        "Food was average and delivery took longer than expected.",
-      date: "2026-09-12",
-      time: "09:15 AM",
-      status: "Rejected",
-    },
-    {
-      id: 13,
-      name: "Rakesh Das",
-      email: "rakesh@gmail.com",
-      image: "https://randomuser.me/api/portraits/men/72.jpg",
-      rating: 5,
-      message:
-        "Amazing experience. The taste was exactly what I expected.",
-      date: "2026-09-11",
-      time: "06:20 PM",
-      status: "Approved",
-    },
-    {
-      id: 14,
-      name: "Anjali Mehta",
-      email: "anjali@gmail.com",
-      image: "https://randomuser.me/api/portraits/women/21.jpg",
-      rating: 4,
-      message:
-        "Fresh food, great presentation and quick delivery.",
-      date: "2026-09-10",
-      time: "05:10 PM",
-      status: "Pending",
-    },
-    {
-      id: 15,
-      name: "Karan Patel",
-      email: "karan@gmail.com",
-      image: "https://randomuser.me/api/portraits/men/31.jpg",
-      rating: 5,
-      message:
-        "One of the best food experiences I have had recently.",
-      date: "2026-09-09",
-      time: "08:15 PM",
-      status: "Approved",
-    },
-    {
-      id: 16,
-      name: "Megha Sahu",
-      email: "megha@gmail.com",
-      image: "https://randomuser.me/api/portraits/women/18.jpg",
-      rating: 4,
-      message:
-        "Very tasty and well packed. Would order again.",
-      date: "2026-09-08",
-      time: "12:15 PM",
-      status: "Approved",
-    },
-    {
-      id: 17,
-      name: "Deepak Roy",
-      email: "deepak@gmail.com",
-      image: "https://randomuser.me/api/portraits/men/38.jpg",
-      rating: 3,
-      message:
-        "Good overall experience, but there is room for improvement.",
-      date: "2026-09-07",
-      time: "04:45 PM",
-      status: "Pending",
-    },
-    {
-      id: 18,
-      name: "Nisha Gupta",
-      email: "nisha@gmail.com",
-      image: "https://randomuser.me/api/portraits/women/29.jpg",
-      rating: 5,
-      message:
-        "Everything was perfect from ordering to delivery.",
-      date: "2026-09-06",
-      time: "10:30 AM",
-      status: "Approved",
-    },
-  ];
-
-  /* =========================================================
-      STATES
-  ========================================================= */
-
-  const [testimonials, setTestimonials] = useState(() => {
-    const saved = localStorage.getItem("TestimonialData");
-
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch {
-        return initialTestimonials;
-      }
-    }
-
-    return initialTestimonials;
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    rating: 5,
+    status: "Approved",
+    message: "",
+    image: null,
   });
 
-  const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("All Status");
-  const [ratingFilter, setRatingFilter] = useState("All Ratings");
-  const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
-
-  const [calendarType, setCalendarType] = useState(null);
-  const [calendarMonth, setCalendarMonth] = useState(new Date().getMonth());
-  const [calendarYear, setCalendarYear] = useState(new Date().getFullYear());
+  const [imagePreview, setImagePreview] = useState("");
+  const imageInputRef = useRef(null);
 
   const [selectedIds, setSelectedIds] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -267,77 +36,351 @@ const Testimonial = () => {
     message: "",
     rating: 5,
     status: "Approved",
+    image: null,
   });
+
+  const [editImagePreview, setEditImagePreview] = useState("");
+  const editImageInputRef = useRef(null);
 
   const ITEMS_PER_PAGE = 6;
 
-  /* =========================================================
-      SAVE DATA
-  ========================================================= */
-
-  useEffect(() => {
-    localStorage.setItem("TestimonialData", JSON.stringify(testimonials));
-  }, [testimonials]);
-
-  /* =========================================================
-      FORMAT DATE
-  ========================================================= */
-
-  const formatDate = (date) => {
-    if (!date) return "";
-
-    return new Date(`${date}T00:00:00`).toLocaleDateString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
+  const sweetAlert = (options) =>
+    Swal.fire({
+      ...options,
+      customClass: {
+        popup: "Testimonial__swalPopup",
+        confirmButton: "Testimonial__swalConfirm",
+        cancelButton: "Testimonial__swalCancel",
+      },
+      buttonsStyling: true,
     });
+
+  const getImageUrl = (image) => {
+    if (!image) return "";
+
+    const value = String(image).trim();
+
+    if (
+      value.startsWith("http://") ||
+      value.startsWith("https://") ||
+      value.startsWith("blob:") ||
+      value.startsWith("data:")
+    ) {
+      return value;
+    }
+
+    const baseUrl = String(IMG_URL).replace(/\/$/, "");
+
+    if (value.startsWith("/")) {
+      return `${baseUrl}${value}`;
+    }
+
+    return `${baseUrl}/${value.replace(/^\/+/, "")}`;
   };
 
-  /* =========================================================
-      FILTER DATA
-  ========================================================= */
+  const normalizeResponse = (response) => {
+    const payload = response?.data;
 
-  const filteredTestimonials = useMemo(() => {
-    return testimonials.filter((item) => {
-      const query = search.toLowerCase().trim();
+    if (Array.isArray(payload)) return payload;
+    if (Array.isArray(payload?.data)) return payload.data;
+    if (Array.isArray(payload?.testimonials)) return payload.testimonials;
+    if (Array.isArray(payload?.data?.data)) return payload.data.data;
 
-      const matchesSearch =
-        !query ||
-        item.name.toLowerCase().includes(query) ||
-        item.email.toLowerCase().includes(query) ||
-        item.message.toLowerCase().includes(query);
+    return [];
+  };
 
-      const matchesStatus =
-        statusFilter === "All Status" || item.status === statusFilter;
+  const fetchTestimonials = async () => {
+    try {
+      setLoading(true);
 
-      const matchesRating =
-        ratingFilter === "All Ratings" || item.rating === Number(ratingFilter);
+      const response = await API.get("/testimonials");
+      const rows = normalizeResponse(response);
 
-      const matchesFrom = !fromDate || item.date >= fromDate;
-      const matchesTo = !toDate || item.date <= toDate;
+      setTestimonials(rows);
+      setSelectedIds([]);
+    } catch (error) {
+      setTestimonials([]);
 
-      return (
-        matchesSearch &&
-        matchesStatus &&
-        matchesRating &&
-        matchesFrom &&
-        matchesTo
-      );
+      sweetAlert({
+        icon: "error",
+        title: "Unable to Load",
+        text:
+          error?.response?.data?.message ||
+          "Could not fetch testimonials from the server.",
+        confirmButtonColor: "#ff5722",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTestimonials();
+  }, []);
+
+  const Icon = ({ name, size = 20 }) => {
+    const props = {
+      width: size,
+      height: size,
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      strokeWidth: "1.8",
+      strokeLinecap: "round",
+      strokeLinejoin: "round",
+    };
+
+    switch (name) {
+      case "star":
+        return (
+          <svg {...props}>
+            <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z" />
+          </svg>
+        );
+      case "message":
+        return (
+          <svg {...props}>
+            <path d="M20 11.5a7.5 7.5 0 0 1-8 7.5 8.4 8.4 0 0 1-3.1-.6L4 20l1.4-3.5A7.1 7.1 0 0 1 4 11.5 7.5 7.5 0 0 1 12 4a7.5 7.5 0 0 1 8 7.5Z" />
+            <path d="M8 12h.01M12 12h.01M16 12h.01" />
+          </svg>
+        );
+      case "image":
+        return (
+          <svg {...props}>
+            <rect x="3" y="4" width="18" height="16" rx="2" />
+            <circle cx="8.5" cy="9" r="1.5" />
+            <path d="m21 15-4.5-4.5L7 20" />
+          </svg>
+        );
+      case "mail":
+        return (
+          <svg {...props}>
+            <rect x="3" y="5" width="18" height="14" rx="2" />
+            <path d="m3 7 9 6 9-6" />
+          </svg>
+        );
+      case "user":
+        return (
+          <svg {...props}>
+            <circle cx="12" cy="8" r="3.5" />
+            <path d="M5 20a7 7 0 0 1 14 0" />
+          </svg>
+        );
+      case "eye":
+        return (
+          <svg {...props}>
+            <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z" />
+            <circle cx="12" cy="12" r="2.5" />
+          </svg>
+        );
+      case "edit":
+        return (
+          <svg {...props}>
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z" />
+          </svg>
+        );
+      case "trash":
+        return (
+          <svg {...props}>
+            <path d="M4 7h16" />
+            <path d="M10 11v6M14 11v6" />
+            <path d="M6 7l1 14h10l1-14" />
+            <path d="M9 7V4h6v3" />
+          </svg>
+        );
+      case "close":
+        return (
+          <svg {...props}>
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
+        );
+      case "refresh":
+        return (
+          <svg {...props}>
+            <path d="M20 11a8 8 0 0 0-14.7-4L3 10" />
+            <path d="M3 5v5h5" />
+            <path d="M4 13a8 8 0 0 0 14.7 4L21 14" />
+            <path d="M21 19v-5h-5" />
+          </svg>
+        );
+      case "plus":
+        return (
+          <svg {...props}>
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+        );
+      case "arrowLeft":
+        return (
+          <svg {...props}>
+            <path d="m15 18-6-6 6-6" />
+          </svg>
+        );
+      case "arrowRight":
+        return (
+          <svg {...props}>
+            <path d="m9 18 6-6-6-6" />
+          </svg>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const RatingStars = ({ rating, interactive = false, onChange }) => (
+    <div
+      className={`Testimonial__stars ${
+        interactive ? "Testimonial__stars--interactive" : ""
+      }`}
+    >
+      {[1, 2, 3, 4, 5].map((star) => (
+        <button
+          key={star}
+          type="button"
+          disabled={!interactive}
+          onClick={() => interactive && onChange?.(star)}
+          className={
+            star <= Number(rating)
+              ? "Testimonial__star Testimonial__star--active"
+              : "Testimonial__star"
+          }
+        >
+          <Icon name="star" size={interactive ? 22 : 16} />
+        </button>
+      ))}
+    </div>
+  );
+
+  const handleFormChange = (field, value) => {
+    setForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const validateImage = (file) => {
+    if (!file?.type?.startsWith("image/")) {
+      sweetAlert({
+        icon: "warning",
+        title: "Invalid Image",
+        text: "Please select a valid image file.",
+        confirmButtonColor: "#ff5722",
+      });
+      return false;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      sweetAlert({
+        icon: "warning",
+        title: "Image Too Large",
+        text: "Please select an image smaller than 5MB.",
+        confirmButtonColor: "#ff5722",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files?.[0];
+    if (!file || !validateImage(file)) {
+      if (event.target) event.target.value = "";
+      return;
+    }
+
+    setForm((prev) => ({ ...prev, image: file }));
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+  const resetForm = () => {
+    setForm({
+      name: "",
+      email: "",
+      rating: 5,
+      status: "Approved",
+      message: "",
+      image: null,
     });
-  }, [testimonials, search, statusFilter, ratingFilter, fromDate, toDate]);
 
-  /* =========================================================
-      PAGINATION
-  ========================================================= */
+    setImagePreview("");
+
+    if (imageInputRef.current) {
+      imageInputRef.current.value = "";
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const name = form.name.trim();
+    const email = form.email.trim();
+    const message = form.message.trim();
+
+    if (!name || !email || !message) {
+      sweetAlert({
+        icon: "warning",
+        title: "Required Fields",
+        text: "Please fill all required fields.",
+        confirmButtonColor: "#ff5722",
+      });
+      return;
+    }
+
+    if (!form.image) {
+      sweetAlert({
+        icon: "warning",
+        title: "Image Required",
+        text: "Please upload a customer image.",
+        confirmButtonColor: "#ff5722",
+      });
+      return;
+    }
+
+    try {
+      setSubmitting(true);
+
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("rating", String(Number(form.rating)));
+      formData.append("status", form.status);
+      formData.append("message", message);
+      formData.append("image", form.image, form.image.name);
+
+      await axios.post(`${BASE_URL}/api/testimonials`, formData);
+
+      resetForm();
+      setCurrentPage(1);
+      await fetchTestimonials();
+
+      sweetAlert({
+        icon: "success",
+        title: "Testimonial Added",
+        text: "Customer testimonial has been saved successfully.",
+        confirmButtonColor: "#ff5722",
+        timer: 1700,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      sweetAlert({
+        icon: "error",
+        title: "Save Failed",
+        text:
+          error?.response?.data?.message ||
+          "Failed to save testimonial.",
+        confirmButtonColor: "#ff5722",
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const totalPages = Math.max(
     1,
-    Math.ceil(filteredTestimonials.length / ITEMS_PER_PAGE)
+    Math.ceil(testimonials.length / ITEMS_PER_PAGE)
   );
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
 
-  const currentTestimonials = filteredTestimonials.slice(
+  const currentTestimonials = testimonials.slice(
     startIndex,
     startIndex + ITEMS_PER_PAGE
   );
@@ -348,11 +391,7 @@ const Testimonial = () => {
     }
   }, [currentPage, totalPages]);
 
-  /* =========================================================
-      SELECT ALL
-  ========================================================= */
-
-  const currentIds = currentTestimonials.map((item) => item.id);
+  const currentIds = currentTestimonials.map((item) => item._id);
 
   const allSelected =
     currentIds.length > 0 &&
@@ -370,10 +409,6 @@ const Testimonial = () => {
     }
   };
 
-  /* =========================================================
-      SINGLE SELECT
-  ========================================================= */
-
   const handleSelect = (id) => {
     setSelectedIds((prev) =>
       prev.includes(id)
@@ -382,112 +417,205 @@ const Testimonial = () => {
     );
   };
 
-  /* =========================================================
-      RESET
-  ========================================================= */
+  const formatDate = (date) => {
+    if (!date) return "";
 
-  const handleReset = () => {
-    setSearch("");
-    setStatusFilter("All Status");
-    setRatingFilter("All Ratings");
-    setFromDate("");
-    setToDate("");
-    setCalendarType(null);
-    setCurrentPage(1);
+    const parsed = new Date(date);
+    if (Number.isNaN(parsed.getTime())) return "";
+
+    return parsed.toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
   };
 
-  /* =========================================================
-      REFRESH
-  ========================================================= */
+  const formatTime = (date) => {
+    if (!date) return "";
 
-  const handleRefresh = () => {
-    setSelectedIds([]);
-    setCurrentPage(1);
-    setCalendarType(null);
+    const parsed = new Date(date);
+    if (Number.isNaN(parsed.getTime())) return "";
+
+    return parsed.toLocaleTimeString("en-IN", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   };
-
-  /* =========================================================
-      EDIT
-  ========================================================= */
 
   const openEdit = (item) => {
     setEditTestimonial(item);
 
     setEditForm({
-      name: item.name,
-      email: item.email,
-      message: item.message,
-      rating: item.rating,
-      status: item.status,
+      name: item.name || "",
+      email: item.email || "",
+      message: item.message || "",
+      rating: Number(item.rating) || 5,
+      status: item.status || "Pending",
+      image: null,
     });
+
+    setEditImagePreview(getImageUrl(item.image));
   };
 
   const handleEditChange = (field, value) => {
-    setEditForm((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+    setEditForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  const saveEdit = () => {
+  const handleEditImage = (event) => {
+    const file = event.target.files?.[0];
+
+    if (!file || !validateImage(file)) {
+      if (event.target) event.target.value = "";
+      return;
+    }
+
+    setEditForm((prev) => ({ ...prev, image: file }));
+    setEditImagePreview(URL.createObjectURL(file));
+  };
+
+  const saveEdit = async () => {
     if (!editTestimonial) return;
 
-    setTestimonials((prev) =>
-      prev.map((item) =>
-        item.id === editTestimonial.id
-          ? {
-              ...item,
-              name: editForm.name,
-              email: editForm.email,
-              message: editForm.message,
-              rating: Number(editForm.rating),
-              status: editForm.status,
-            }
-          : item
-      )
-    );
+    const name = editForm.name.trim();
+    const email = editForm.email.trim();
+    const message = editForm.message.trim();
 
-    setEditTestimonial(null);
+    if (!name || !email || !message) {
+      sweetAlert({
+        icon: "warning",
+        title: "Required Fields",
+        text: "Please fill all required fields.",
+        confirmButtonColor: "#ff5722",
+      });
+      return;
+    }
+
+    try {
+      setUpdating(true);
+
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("message", message);
+      formData.append("rating", String(Number(editForm.rating)));
+      formData.append("status", editForm.status);
+
+      if (editForm.image instanceof File) {
+        formData.append(
+          "image",
+          editForm.image,
+          editForm.image.name
+        );
+      }
+
+      await axios.put(
+        `${BASE_URL}/api/testimonials/${editTestimonial._id}`,
+        formData
+      );
+
+      setEditTestimonial(null);
+      setEditImagePreview("");
+
+      if (editImageInputRef.current) {
+        editImageInputRef.current.value = "";
+      }
+
+      await fetchTestimonials();
+
+      sweetAlert({
+        icon: "success",
+        title: "Updated Successfully",
+        text: "Testimonial has been updated.",
+        confirmButtonColor: "#ff5722",
+        timer: 1600,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      sweetAlert({
+        icon: "error",
+        title: "Update Failed",
+        text:
+          error?.response?.data?.message ||
+          "Failed to update testimonial.",
+        confirmButtonColor: "#ff5722",
+      });
+    } finally {
+      setUpdating(false);
+    }
   };
 
-  /* =========================================================
-      DELETE SINGLE
-  ========================================================= */
-
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (!deleteTestimonial) return;
 
-    setTestimonials((prev) =>
-      prev.filter((item) => item.id !== deleteTestimonial.id)
-    );
+    try {
+      await API.delete(`/testimonials/${deleteTestimonial._id}`);
 
-    setSelectedIds((prev) =>
-      prev.filter((id) => id !== deleteTestimonial.id)
-    );
+      setDeleteTestimonial(null);
+      setSelectedIds((prev) =>
+        prev.filter((id) => id !== deleteTestimonial._id)
+      );
 
-    setDeleteTestimonial(null);
+      await fetchTestimonials();
+
+      sweetAlert({
+        icon: "success",
+        title: "Deleted",
+        text: "Testimonial deleted successfully.",
+        confirmButtonColor: "#ff5722",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      sweetAlert({
+        icon: "error",
+        title: "Delete Failed",
+        text:
+          error?.response?.data?.message ||
+          "Failed to delete testimonial.",
+        confirmButtonColor: "#ff5722",
+      });
+    }
   };
 
-  /* =========================================================
-      DELETE SELECTED
-  ========================================================= */
+  const confirmBulkDelete = async () => {
+    if (!selectedIds.length) {
+      setShowBulkDelete(false);
+      return;
+    }
 
-  const confirmBulkDelete = () => {
-    setTestimonials((prev) =>
-      prev.filter((item) => !selectedIds.includes(item.id))
-    );
+    try {
+      await API.delete("/testimonials/bulk", {
+        data: { ids: selectedIds },
+      });
 
-    setSelectedIds([]);
-    setShowBulkDelete(false);
+      setSelectedIds([]);
+      setShowBulkDelete(false);
+
+      await fetchTestimonials();
+
+      sweetAlert({
+        icon: "success",
+        title: "Deleted",
+        text: "Selected testimonials have been deleted.",
+        confirmButtonColor: "#ff5722",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      sweetAlert({
+        icon: "error",
+        title: "Delete Failed",
+        text:
+          error?.response?.data?.message ||
+          "Failed to delete selected testimonials.",
+        confirmButtonColor: "#ff5722",
+      });
+    }
   };
-
-  /* =========================================================
-      PAGINATION BUTTONS
-  ========================================================= */
 
   const getPages = () => {
     if (totalPages <= 6) {
-      return Array.from({ length: totalPages }, (_, index) => index + 1);
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
 
     if (currentPage <= 3) {
@@ -516,542 +644,182 @@ const Testimonial = () => {
     ];
   };
 
-  /* =========================================================
-      CALENDAR
-  ========================================================= */
-
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  const getCalendarDays = () => {
-    const firstDay = new Date(calendarYear, calendarMonth, 1).getDay();
-    const daysInMonth = new Date(
-      calendarYear,
-      calendarMonth + 1,
-      0
-    ).getDate();
-    const previousMonthDays = new Date(
-      calendarYear,
-      calendarMonth,
-      0
-    ).getDate();
-
-    const days = [];
-
-    for (let i = firstDay - 1; i >= 0; i--) {
-      days.push({
-        day: previousMonthDays - i,
-        outside: true,
-      });
-    }
-
-    for (let i = 1; i <= daysInMonth; i++) {
-      days.push({
-        day: i,
-        outside: false,
-      });
-    }
-
-    while (days.length < 42) {
-      days.push({
-        day: days.length - daysInMonth - firstDay + 1,
-        outside: true,
-      });
-    }
-
-    return days;
-  };
-
-  const changeMonth = (direction) => {
-    if (direction === "prev") {
-      if (calendarMonth === 0) {
-        setCalendarMonth(11);
-        setCalendarYear((prev) => prev - 1);
-      } else {
-        setCalendarMonth((prev) => prev - 1);
-      }
-    } else {
-      if (calendarMonth === 11) {
-        setCalendarMonth(0);
-        setCalendarYear((prev) => prev + 1);
-      } else {
-        setCalendarMonth((prev) => prev + 1);
-      }
-    }
-  };
-
-  const openCalendar = (type) => {
-    setCalendarType(calendarType === type ? null : type);
-
-    const selected = type === "from" ? fromDate : toDate;
-
-    if (selected) {
-      const date = new Date(`${selected}T00:00:00`);
-      setCalendarMonth(date.getMonth());
-      setCalendarYear(date.getFullYear());
-    }
-  };
-
-  const selectDate = (day, outside) => {
-    if (outside) return;
-
-    const month = String(calendarMonth + 1).padStart(2, "0");
-    const selectedDay = String(day).padStart(2, "0");
-    const selectedDate = `${calendarYear}-${month}-${selectedDay}`;
-
-    if (calendarType === "from") {
-      setFromDate(selectedDate);
-    }
-
-    if (calendarType === "to") {
-      setToDate(selectedDate);
-    }
-
-    setCalendarType(null);
+  const handleRefresh = async () => {
     setCurrentPage(1);
-  };
-
-  const isSelectedDate = (day) => {
-    const month = String(calendarMonth + 1).padStart(2, "0");
-    const selectedDay = String(day).padStart(2, "0");
-    const value = `${calendarYear}-${month}-${selectedDay}`;
-
-    return value === fromDate || value === toDate;
-  };
-
-  /* =========================================================
-      ICON SYSTEM
-  ========================================================= */
-
-  const Icon = ({ name, size = 20 }) => {
-    const props = {
-      width: size,
-      height: size,
-      viewBox: "0 0 24 24",
-      fill: "none",
-      stroke: "currentColor",
-      strokeWidth: "1.8",
-      strokeLinecap: "round",
-      strokeLinejoin: "round",
-    };
-
-    switch (name) {
-      case "star":
-        return (
-          <svg {...props}>
-            <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9L12 3Z" />
-          </svg>
-        );
-
-      case "message":
-        return (
-          <svg {...props}>
-            <path d="M20 11.5a7.5 7.5 0 0 1-8 7.5 8.4 8.4 0 0 1-3.1-.6L4 20l1.4-3.5A7.1 7.1 0 0 1 4 11.5 7.5 7.5 0 0 1 12 4a7.5 7.5 0 0 1 8 7.5Z" />
-            <path d="M8 12h.01M12 12h.01M16 12h.01" />
-          </svg>
-        );
-
-      case "clock":
-        return (
-          <svg {...props}>
-            <circle cx="12" cy="12" r="9" />
-            <path d="M12 7v5l3 2" />
-          </svg>
-        );
-
-      case "closeCircle":
-        return (
-          <svg {...props}>
-            <circle cx="12" cy="12" r="9" />
-            <path d="m9 9 6 6M15 9l-6 6" />
-          </svg>
-        );
-
-      case "search":
-        return (
-          <svg {...props}>
-            <circle cx="11" cy="11" r="7" />
-            <path d="m20 20-4-4" />
-          </svg>
-        );
-
-      case "calendar":
-        return (
-          <svg {...props}>
-            <rect x="3" y="4" width="18" height="17" rx="2" />
-            <path d="M8 2v4M16 2v4M3 9h18" />
-          </svg>
-        );
-
-      case "filter":
-        return (
-          <svg {...props}>
-            <path d="M4 5h16l-6 7v6l-4 2v-8z" />
-          </svg>
-        );
-
-      case "refresh":
-        return (
-          <svg {...props}>
-            <path d="M20 11a8 8 0 0 0-14.7-4L3 10" />
-            <path d="M3 5v5h5" />
-            <path d="M4 13a8 8 0 0 0 14.7 4L21 14" />
-            <path d="M21 19v-5h-5" />
-          </svg>
-        );
-
-      case "eye":
-        return (
-          <svg {...props}>
-            <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z" />
-            <circle cx="12" cy="12" r="2.5" />
-          </svg>
-        );
-
-      case "edit":
-        return (
-          <svg {...props}>
-            <path d="M12 20h9" />
-            <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z" />
-          </svg>
-        );
-
-      case "trash":
-        return (
-          <svg {...props}>
-            <path d="M4 7h16" />
-            <path d="M10 11v6M14 11v6" />
-            <path d="M6 7l1 14h10l1-14" />
-            <path d="M9 7V4h6v3" />
-          </svg>
-        );
-
-      case "home":
-        return (
-          <svg {...props}>
-            <path d="m3 10 9-7 9 7" />
-            <path d="M5 9v11h14V9" />
-            <path d="M9 20v-6h6v6" />
-          </svg>
-        );
-
-      case "arrowLeft":
-        return (
-          <svg {...props}>
-            <path d="m15 18-6-6 6-6" />
-          </svg>
-        );
-
-      case "arrowRight":
-        return (
-          <svg {...props}>
-            <path d="m9 18 6-6-6-6" />
-          </svg>
-        );
-
-      case "close":
-        return (
-          <svg {...props}>
-            <path d="M18 6 6 18M6 6l12 12" />
-          </svg>
-        );
-
-      default:
-        return null;
-    }
-  };
-
-  /* =========================================================
-      STAR COMPONENT
-  ========================================================= */
-
-  const RatingStars = ({ rating, interactive = false, onChange }) => {
-    return (
-      <div
-        className={`Testimonial__stars ${
-          interactive ? "Testimonial__stars--interactive" : ""
-        }`}
-      >
-        {[1, 2, 3, 4, 5].map((star) => (
-          <button
-            key={star}
-            type="button"
-            disabled={!interactive}
-            onClick={() => interactive && onChange && onChange(star)}
-            className={
-              star <= rating
-                ? "Testimonial__star Testimonial__star--active"
-                : "Testimonial__star"
-            }
-          >
-            <Icon name="star" size={interactive ? 22 : 17} />
-          </button>
-        ))}
-      </div>
-    );
+    setSelectedIds([]);
+    await fetchTestimonials();
   };
 
   return (
     <div className="Testimonial">
-      {/* =====================================================
-          HEADER
-      ===================================================== */}
-
-      <div className="Testimonial__header">
-        <div className="Testimonial__headerLeft">
-          <div className="Testimonial__headerIcon">
-            <Icon name="star" size={30} />
+      <div className="Testimonial__formCard">
+        <div className="Testimonial__formHeader">
+          <div className="Testimonial__formTitle">
+            <div className="Testimonial__formIcon">
+              <Icon name="plus" size={22} />
+            </div>
+            <div>
+              <h2>Add New Testimonial</h2>
+              <p>Add customer feedback to your testimonial list</p>
+            </div>
           </div>
 
-          <div>
-            <h1>Testimonials</h1>
-            <p>Manage and view all customer testimonials</p>
-          </div>
-        </div>
-
-        <div className="Testimonial__breadcrumb">
-          <span>
-            <Icon name="home" size={15} />
-            Dashboard
+          <span className="Testimonial__requiredText">
+            * Required fields
           </span>
-
-          <Icon name="arrowRight" size={14} />
-
-          <strong>Testimonials</strong>
         </div>
-      </div>
 
-      {/* =====================================================
-          FILTER SECTION
-      ===================================================== */}
-
-      <div className="Testimonial__filterCard">
-        <div className="Testimonial__filterField Testimonial__searchField">
-          <label>Search</label>
-
-          <div className="Testimonial__inputBox">
-            <Icon name="search" size={17} />
-
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setCurrentPage(1);
-              }}
-              placeholder="Search by name, email or message..."
-            />
+        <form className="Testimonial__form" onSubmit={handleSubmit}>
+          <div className="Testimonial__formField">
+            <label>
+              Customer Name <span>*</span>
+            </label>
+            <div className="Testimonial__formInput">
+              <Icon name="user" size={18} />
+              <input
+                type="text"
+                value={form.name}
+                onChange={(e) =>
+                  handleFormChange("name", e.target.value)
+                }
+                placeholder="Enter customer name"
+              />
+            </div>
           </div>
-        </div>
 
-        <div className="Testimonial__filterField">
-          <label>Status</label>
-
-          <select
-            value={statusFilter}
-            onChange={(e) => {
-              setStatusFilter(e.target.value);
-              setCurrentPage(1);
-            }}
-          >
-            <option>All Status</option>
-            <option>Approved</option>
-            <option>Pending</option>
-            <option>Rejected</option>
-          </select>
-        </div>
-
-        <div className="Testimonial__filterField">
-          <label>Rating</label>
-
-          <select
-            value={ratingFilter}
-            onChange={(e) => {
-              setRatingFilter(e.target.value);
-              setCurrentPage(1);
-            }}
-          >
-            <option>All Ratings</option>
-            <option value="5">5 Stars</option>
-            <option value="4">4 Stars</option>
-            <option value="3">3 Stars</option>
-            <option value="2">2 Stars</option>
-            <option value="1">1 Star</option>
-          </select>
-        </div>
-
-        {/* FROM DATE */}
-
-        <div className="Testimonial__filterField Testimonial__calendarField">
-          <label>From Date</label>
-
-          <button
-            type="button"
-            className="Testimonial__dateButton"
-            onClick={() => openCalendar("from")}
-          >
-            <span>{fromDate ? formatDate(fromDate) : "dd-mm-yyyy"}</span>
-
-            <Icon name="calendar" size={16} />
-          </button>
-
-          {calendarType === "from" && (
-            <div className="Testimonial__calendar">
-              <div className="Testimonial__calendarHeader">
-                <button
-                  type="button"
-                  onClick={() => changeMonth("prev")}
-                >
-                  <Icon name="arrowLeft" size={15} />
-                </button>
-
-                <strong>
-                  {monthNames[calendarMonth]} {calendarYear}
-                </strong>
-
-                <button
-                  type="button"
-                  onClick={() => changeMonth("next")}
-                >
-                  <Icon name="arrowRight" size={15} />
-                </button>
-              </div>
-
-              <div className="Testimonial__calendarWeek">
-                {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map(
-                  (day) => (
-                    <span key={day}>{day}</span>
-                  )
-                )}
-              </div>
-
-              <div className="Testimonial__calendarDays">
-                {getCalendarDays().map((item, index) => (
-                  <button
-                    key={index}
-                    type="button"
-                    disabled={item.outside}
-                    className={
-                      isSelectedDate(item.day)
-                        ? "Testimonial__calendarSelected"
-                        : ""
-                    }
-                    onClick={() =>
-                      selectDate(item.day, item.outside)
-                    }
-                  >
-                    {item.day}
-                  </button>
-                ))}
-              </div>
+          <div className="Testimonial__formField">
+            <label>
+              Email Address <span>*</span>
+            </label>
+            <div className="Testimonial__formInput">
+              <Icon name="mail" size={18} />
+              <input
+                type="email"
+                value={form.email}
+                onChange={(e) =>
+                  handleFormChange("email", e.target.value)
+                }
+                placeholder="Enter email address"
+              />
             </div>
-          )}
-        </div>
+          </div>
 
-        {/* TO DATE */}
-
-        <div className="Testimonial__filterField Testimonial__calendarField">
-          <label>To Date</label>
-
-          <button
-            type="button"
-            className="Testimonial__dateButton"
-            onClick={() => openCalendar("to")}
-          >
-            <span>{toDate ? formatDate(toDate) : "dd-mm-yyyy"}</span>
-
-            <Icon name="calendar" size={16} />
-          </button>
-
-          {calendarType === "to" && (
-            <div className="Testimonial__calendar">
-              <div className="Testimonial__calendarHeader">
-                <button
-                  type="button"
-                  onClick={() => changeMonth("prev")}
-                >
-                  <Icon name="arrowLeft" size={15} />
-                </button>
-
-                <strong>
-                  {monthNames[calendarMonth]} {calendarYear}
-                </strong>
-
-                <button
-                  type="button"
-                  onClick={() => changeMonth("next")}
-                >
-                  <Icon name="arrowRight" size={15} />
-                </button>
-              </div>
-
-              <div className="Testimonial__calendarWeek">
-                {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map(
-                  (day) => (
-                    <span key={day}>{day}</span>
-                  )
-                )}
-              </div>
-
-              <div className="Testimonial__calendarDays">
-                {getCalendarDays().map((item, index) => (
-                  <button
-                    key={index}
-                    type="button"
-                    disabled={item.outside}
-                    className={
-                      isSelectedDate(item.day)
-                        ? "Testimonial__calendarSelected"
-                        : ""
-                    }
-                    onClick={() =>
-                      selectDate(item.day, item.outside)
-                    }
-                  >
-                    {item.day}
-                  </button>
-                ))}
-              </div>
+          <div className="Testimonial__formField">
+            <label>
+              Rating <span>*</span>
+            </label>
+            <div className="Testimonial__ratingBox">
+              <RatingStars
+                rating={form.rating}
+                interactive
+                onChange={(value) =>
+                  handleFormChange("rating", value)
+                }
+              />
+              <span>{form.rating} / 5</span>
             </div>
-          )}
-        </div>
+          </div>
 
-        <div className="Testimonial__filterButtons">
-          <button
-            type="button"
-            className="Testimonial__filterButton"
-            onClick={() => setCurrentPage(1)}
-          >
-            <Icon name="filter" size={17} />
-            Filter
-          </button>
+          <div className="Testimonial__formField">
+            <label>
+              Status <span>*</span>
+            </label>
+            <select
+              value={form.status}
+              onChange={(e) =>
+                handleFormChange("status", e.target.value)
+              }
+            >
+              <option value="Approved">Approved</option>
+              <option value="Pending">Pending</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+          </div>
 
-          <button
-            type="button"
-            className="Testimonial__resetButton"
-            onClick={handleReset}
-          >
-            <Icon name="refresh" size={16} />
-            Reset
-          </button>
-        </div>
+          <div className="Testimonial__formField Testimonial__imageField">
+            <label>Customer Image <span>*</span></label>
+
+            <div className="Testimonial__uploadArea">
+              <input
+                ref={imageInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                hidden
+              />
+
+              {imagePreview ? (
+                <div className="Testimonial__imagePreview">
+                  <img src={imagePreview} alt="Preview" />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setImagePreview("");
+                      setForm((prev) => ({
+                        ...prev,
+                        image: null,
+                      }));
+                      if (imageInputRef.current) {
+                        imageInputRef.current.value = "";
+                      }
+                    }}
+                  >
+                    <Icon name="close" size={14} />
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  className="Testimonial__uploadButton"
+                  onClick={() => imageInputRef.current?.click()}
+                >
+                  <Icon name="image" size={22} />
+                  <span>Upload Image</span>
+                  <small>JPG, PNG, WEBP up to 5MB</small>
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="Testimonial__formField Testimonial__formField--full">
+            <label>
+              Testimonial Message <span>*</span>
+            </label>
+            <textarea
+              rows="5"
+              value={form.message}
+              onChange={(e) =>
+                handleFormChange("message", e.target.value)
+              }
+              placeholder="Write customer testimonial..."
+            />
+            <div className="Testimonial__characterCount">
+              {form.message.length} characters
+            </div>
+          </div>
+
+          <div className="Testimonial__formActions">
+            <button
+              type="button"
+              className="Testimonial__formReset"
+              onClick={resetForm}
+              disabled={submitting}
+            >
+              <Icon name="refresh" size={16} />
+              Reset
+            </button>
+
+            <button
+              type="submit"
+              className="Testimonial__formSubmit"
+              disabled={submitting}
+            >
+              <Icon name="plus" size={17} />
+              {submitting ? "Saving..." : "Add Testimonial"}
+            </button>
+          </div>
+        </form>
       </div>
-
-      {/* =====================================================
-          LIST
-      ===================================================== */}
 
       <div className="Testimonial__listCard">
         <div className="Testimonial__listHeader">
@@ -1059,35 +827,37 @@ const Testimonial = () => {
             <div className="Testimonial__listIcon">
               <Icon name="message" size={22} />
             </div>
-
-            <h2>Testimonials List</h2>
+            <div>
+              <h2>Testimonials List</h2>
+              <p>{testimonials.length} total testimonials</p>
+            </div>
           </div>
 
           <div className="Testimonial__listActions">
             <button
               type="button"
               className="Testimonial__deleteSelected"
-              disabled={selectedIds.length === 0}
+              disabled={!selectedIds.length || loading}
               onClick={() => setShowBulkDelete(true)}
             >
               <Icon name="trash" size={16} />
               Delete Selected
+              {selectedIds.length > 0 && (
+                <span>{selectedIds.length}</span>
+              )}
             </button>
 
             <button
               type="button"
               className="Testimonial__refreshButton"
               onClick={handleRefresh}
+              disabled={loading}
               title="Refresh"
             >
               <Icon name="refresh" size={17} />
             </button>
           </div>
         </div>
-
-        {/* =====================================================
-            TABLE
-        ===================================================== */}
 
         <div className="Testimonial__tableWrapper">
           <table className="Testimonial__table">
@@ -1100,10 +870,9 @@ const Testimonial = () => {
                       checked={allSelected}
                       onChange={handleSelectAll}
                     />
-                    <span></span>
+                    <span />
                   </label>
                 </th>
-
                 <th>#</th>
                 <th>Customer</th>
                 <th>Rating</th>
@@ -1115,25 +884,54 @@ const Testimonial = () => {
             </thead>
 
             <tbody>
-              {currentTestimonials.length > 0 ? (
+              {loading ? (
+                <tr>
+                  <td colSpan="8" className="Testimonial__empty">
+                    <div className="Testimonial__loading">
+                      Loading testimonials...
+                    </div>
+                  </td>
+                </tr>
+              ) : currentTestimonials.length ? (
                 currentTestimonials.map((item, index) => (
-                  <tr key={item.id}>
+                  <tr key={item._id}>
                     <td>
                       <label className="Testimonial__checkbox">
                         <input
                           type="checkbox"
-                          checked={selectedIds.includes(item.id)}
-                          onChange={() => handleSelect(item.id)}
+                          checked={selectedIds.includes(item._id)}
+                          onChange={() => handleSelect(item._id)}
                         />
-                        <span></span>
+                        <span />
                       </label>
                     </td>
 
-                    <td>{startIndex + index + 1}</td>
+                    <td>
+                      <span className="Testimonial__serial">
+                        {startIndex + index + 1}
+                      </span>
+                    </td>
 
                     <td>
                       <div className="Testimonial__customer">
-                        <img src={item.image} alt={item.name} />
+                        {item.image ? (
+                          <img
+                            src={getImageUrl(item.image)}
+                            alt={item.name}
+                            onError={(e) => {
+                              e.currentTarget.style.display = "none";
+                              e.currentTarget.nextElementSibling?.classList.add(
+                                "Testimonial__avatarFallback--show"
+                              );
+                            }}
+                          />
+                        ) : null}
+
+                        <div className="Testimonial__avatarFallback">
+                          {(item.name || "?")
+                            .charAt(0)
+                            .toUpperCase()}
+                        </div>
 
                         <div>
                           <strong>{item.name}</strong>
@@ -1154,16 +952,18 @@ const Testimonial = () => {
 
                     <td>
                       <div className="Testimonial__date">
-                        <span>{formatDate(item.date)}</span>
-                        <small>{item.time}</small>
+                        <span>{formatDate(item.createdAt)}</span>
+                        <small>{formatTime(item.createdAt)}</small>
                       </div>
                     </td>
 
                     <td>
                       <span
-                        className={`Testimonial__status Testimonial__status--${item.status.toLowerCase()}`}
+                        className={`Testimonial__status Testimonial__status--${String(
+                          item.status || "Pending"
+                        ).toLowerCase()}`}
                       >
-                        {item.status}
+                        {item.status || "Pending"}
                       </span>
                     </td>
 
@@ -1210,24 +1010,18 @@ const Testimonial = () => {
           </table>
         </div>
 
-        {/* =====================================================
-            PAGINATION
-        ===================================================== */}
-
         <div className="Testimonial__paginationWrapper">
           <div className="Testimonial__paginationInfo">
-            Showing{" "}
-            <strong>
-              {filteredTestimonials.length ? startIndex + 1 : 0}
-            </strong>{" "}
-            to{" "}
+            Showing <strong>{testimonials.length ? startIndex + 1 : 0}</strong>
+            {" "}to{" "}
             <strong>
               {Math.min(
                 startIndex + ITEMS_PER_PAGE,
-                filteredTestimonials.length
+                testimonials.length
               )}
-            </strong>{" "}
-            of <strong>{filteredTestimonials.length}</strong> entries
+            </strong>
+            {" "}of{" "}
+            <strong>{testimonials.length}</strong> entries
           </div>
 
           {totalPages > 1 && (
@@ -1236,7 +1030,7 @@ const Testimonial = () => {
                 type="button"
                 className="Testimonial__pageButton"
                 disabled={currentPage === 1}
-                onClick={() => setCurrentPage((page) => page - 1)}
+                onClick={() => setCurrentPage((p) => p - 1)}
               >
                 <Icon name="arrowLeft" size={16} />
               </button>
@@ -1269,7 +1063,7 @@ const Testimonial = () => {
                 type="button"
                 className="Testimonial__pageButton"
                 disabled={currentPage === totalPages}
-                onClick={() => setCurrentPage((page) => page + 1)}
+                onClick={() => setCurrentPage((p) => p + 1)}
               >
                 <Icon name="arrowRight" size={16} />
               </button>
@@ -1277,10 +1071,6 @@ const Testimonial = () => {
           )}
         </div>
       </div>
-
-      {/* =====================================================
-          VIEW MODAL
-      ===================================================== */}
 
       {viewTestimonial && (
         <div
@@ -1303,7 +1093,6 @@ const Testimonial = () => {
               <div className="Testimonial__modalIcon Testimonial__modalIcon--blue">
                 <Icon name="eye" size={22} />
               </div>
-
               <div>
                 <h3>Testimonial Details</h3>
                 <p>Customer feedback</p>
@@ -1311,10 +1100,12 @@ const Testimonial = () => {
             </div>
 
             <div className="Testimonial__profileBox">
-              <img
-                src={viewTestimonial.image}
-                alt={viewTestimonial.name}
-              />
+              {viewTestimonial.image ? (
+                <img
+                  src={getImageUrl(viewTestimonial.image)}
+                  alt={viewTestimonial.name}
+                />
+              ) : null}
 
               <div>
                 <strong>{viewTestimonial.name}</strong>
@@ -1326,22 +1117,30 @@ const Testimonial = () => {
             <div className="Testimonial__viewGrid">
               <div className="Testimonial__viewItem">
                 <span>Date</span>
-                <strong>{formatDate(viewTestimonial.date)}</strong>
-                <small>{viewTestimonial.time}</small>
+                <strong>
+                  {formatDate(viewTestimonial.createdAt)}
+                </strong>
+                <small>
+                  {formatTime(viewTestimonial.createdAt)}
+                </small>
               </div>
 
               <div className="Testimonial__viewItem">
                 <span>Status</span>
                 <span
-                  className={`Testimonial__status Testimonial__status--${viewTestimonial.status.toLowerCase()}`}
+                  className={`Testimonial__status Testimonial__status--${String(
+                    viewTestimonial.status || "Pending"
+                  ).toLowerCase()}`}
                 >
-                  {viewTestimonial.status}
+                  {viewTestimonial.status || "Pending"}
                 </span>
               </div>
 
               <div className="Testimonial__viewItem">
                 <span>Rating</span>
-                <strong>{viewTestimonial.rating} out of 5</strong>
+                <strong>
+                  {viewTestimonial.rating} out of 5
+                </strong>
               </div>
             </div>
 
@@ -1363,8 +1162,9 @@ const Testimonial = () => {
                 type="button"
                 className="Testimonial__saveButton"
                 onClick={() => {
+                  const item = viewTestimonial;
                   setViewTestimonial(null);
-                  openEdit(viewTestimonial);
+                  openEdit(item);
                 }}
               >
                 <Icon name="edit" size={15} />
@@ -1374,10 +1174,6 @@ const Testimonial = () => {
           </div>
         </div>
       )}
-
-      {/* =====================================================
-          EDIT MODAL
-      ===================================================== */}
 
       {editTestimonial && (
         <div
@@ -1400,7 +1196,6 @@ const Testimonial = () => {
               <div className="Testimonial__modalIcon Testimonial__modalIcon--green">
                 <Icon name="edit" size={22} />
               </div>
-
               <div>
                 <h3>Edit Testimonial</h3>
                 <p>Update customer testimonial</p>
@@ -1430,7 +1225,7 @@ const Testimonial = () => {
                 />
               </div>
 
-              <div className="Testimonial__editField Testimonial__editField--rating">
+              <div className="Testimonial__editField">
                 <label>Rating *</label>
                 <RatingStars
                   rating={editForm.rating}
@@ -1449,10 +1244,41 @@ const Testimonial = () => {
                     handleEditChange("status", e.target.value)
                   }
                 >
-                  <option>Approved</option>
-                  <option>Pending</option>
-                  <option>Rejected</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Rejected">Rejected</option>
                 </select>
+              </div>
+
+              <div className="Testimonial__editField Testimonial__editField--full">
+                <label>Customer Image</label>
+
+                <div className="Testimonial__editImageUpload">
+                  <input
+                    ref={editImageInputRef}
+                    type="file"
+                    accept="image/*"
+                    hidden
+                    onChange={handleEditImage}
+                  />
+
+                  {editImagePreview && (
+                    <img
+                      src={editImagePreview}
+                      alt="Preview"
+                    />
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      editImageInputRef.current?.click()
+                    }
+                  >
+                    <Icon name="image" size={16} />
+                    Change Image
+                  </button>
+                </div>
               </div>
 
               <div className="Testimonial__editField Testimonial__editField--full">
@@ -1472,6 +1298,7 @@ const Testimonial = () => {
                 type="button"
                 className="Testimonial__cancelButton"
                 onClick={() => setEditTestimonial(null)}
+                disabled={updating}
               >
                 Cancel
               </button>
@@ -1480,17 +1307,14 @@ const Testimonial = () => {
                 type="button"
                 className="Testimonial__saveButton"
                 onClick={saveEdit}
+                disabled={updating}
               >
-                Update
+                {updating ? "Updating..." : "Update"}
               </button>
             </div>
           </div>
         </div>
       )}
-
-      {/* =====================================================
-          DELETE MODAL
-      ===================================================== */}
 
       {deleteTestimonial && (
         <div
@@ -1516,8 +1340,9 @@ const Testimonial = () => {
             <h3>Delete Testimonial?</h3>
 
             <p>
-              Are you sure you want to permanently delete the testimonial
-              from <strong>{deleteTestimonial.name}</strong>?
+              Are you sure you want to permanently delete the
+              testimonial from{" "}
+              <strong>{deleteTestimonial.name}</strong>?
             </p>
 
             <div className="Testimonial__deleteActions">
@@ -1541,10 +1366,6 @@ const Testimonial = () => {
           </div>
         </div>
       )}
-
-      {/* =====================================================
-          BULK DELETE MODAL
-      ===================================================== */}
 
       {showBulkDelete && (
         <div
@@ -1570,9 +1391,8 @@ const Testimonial = () => {
             <h3>Delete Selected?</h3>
 
             <p>
-              You have selected{" "}
-              <strong>{selectedIds.length}</strong> testimonials. Are you
-              sure you want to delete them?
+              You have selected <strong>{selectedIds.length}</strong>{" "}
+              testimonials. Are you sure you want to delete them?
             </p>
 
             <div className="Testimonial__deleteActions">

@@ -462,6 +462,143 @@
   }
 }
 
+/* ============================================
+   TESTIMONIAL MAIN - API STATES
+============================================ */
+
+.TestimonialMain__state {
+  width: 100%;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 35px 20px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.TestimonialMain__state h3 {
+  margin: 0;
+  color: #202020;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.TestimonialMain__state p {
+  max-width: 480px;
+  margin: 0;
+  color: #777;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* Loading animation */
+
+.TestimonialMain__loader {
+  width: 38px;
+  height: 38px;
+  border: 3px solid #f1e4da;
+  border-top-color: #ff6900;
+  border-radius: 50%;
+  animation: testimonialMainSpin 0.8s linear infinite;
+}
+
+@keyframes testimonialMainSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Retry button */
+
+.TestimonialMain__retry {
+  padding: 11px 24px;
+  border: none;
+  border-radius: 7px;
+  background: #ff6900;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.TestimonialMain__retry:hover {
+  background: #e85c00;
+}
+
+/* ============================================
+   CUSTOMER RATING
+============================================ */
+
+.TestimonialMain__rating {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 7px;
+}
+
+.TestimonialMain__ratingStar {
+  color: #d4d4d4;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.TestimonialMain__ratingStar--active {
+  color: #ffad0d;
+}
+
+/* ============================================
+   CUSTOMER IMAGE FALLBACK
+============================================ */
+
+.TestimonialMain__imageFallback {
+  width: 100%;
+  height: 100%;
+  min-height: 100px;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    #ff8b42,
+    #ff5900
+  );
+  color: white;
+  font-size: clamp(36px, 5vw, 70px);
+  font-weight: 800;
+  border-radius: inherit;
+}
+
+/* ============================================
+   RESPONSIVE
+============================================ */
+
+@media (max-width: 768px) {
+  .TestimonialMain__state {
+    min-height: 200px;
+    padding: 30px 15px;
+  }
+
+  .TestimonialMain__state h3 {
+    font-size: 19px;
+  }
+
+  .TestimonialMain__state p {
+    font-size: 13px;
+  }
+
+  .TestimonialMain__ratingStar {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .TestimonialMain__loader {
+    animation-duration: 2s;
+  }
+}
 /* =========================================================
    MOBILE LARGE
 ========================================================= */

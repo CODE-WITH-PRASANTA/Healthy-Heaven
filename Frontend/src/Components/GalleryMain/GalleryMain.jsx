@@ -1,476 +1,968 @@
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
-import './GalleryMain.css';
+import React, {
+  useState,
+  useMemo,
+  useEffect,
+  useCallback,
+} from "react";
 
-// Reliable fallback food image
-const FALLBACK_IMAGE =
-  'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&q=85';
+import Swal from "sweetalert2";
 
-// Food dataset accurately matched to actual dish photos
-const ALL_FOOD_ITEMS = [
-  {
-    id: 1,
-    title: 'Cheese Burger',
-    category: 'Main Course',
-    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 2,
-    title: 'Chicken Wings',
-    category: 'Starters',
-    image: 'https://images.unsplash.com/photo-1527477396000-e27163b481c2?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 3,
-    title: 'Pasta Alfredo',
-    category: 'Main Course',
-    image: 'https://images.unsplash.com/photo-1645112411341-6c4fd023714a?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 4,
-    title: 'Butter Chicken',
-    category: 'Main Course',
-    image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 5,
-    title: 'Margherita Pizza',
-    category: 'Main Course',
-    image: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 6,
-    title: 'Grilled Chicken',
-    category: 'Main Course',
-    image: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 7,
-    title: 'Chicken Biryani',
-    category: 'Main Course',
-    image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 8,
-    title: 'Choco Lava Cake',
-    category: 'Desserts',
-    image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 9,
-    title: 'Greek Salad',
-    category: 'Starters',
-    image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 10,
-    title: 'Spring Rolls',
-    category: 'Starters',
-    image: 'https://images.unsplash.com/photo-1548869206-93b036288d7e?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 11,
-    title: 'Fresh Juices',
-    category: 'Beverages',
-    image: 'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 12,
-    title: 'Ice Cream Delight',
-    category: 'Desserts',
-    image: 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 13,
-    title: 'Crispy Garlic Bread',
-    category: 'Starters',
-    image: 'https://images.unsplash.com/photo-1619860860774-1e2e17343432?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 14,
-    title: 'Penne Arrabiata',
-    category: 'Main Course',
-    image: 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 15,
-    title: 'Tiramisu Cup',
-    category: 'Desserts',
-    image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 16,
-    title: 'Iced Mojito',
-    category: 'Beverages',
-    image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 17,
-    title: 'Caesar Salad',
-    category: 'Starters',
-    image: 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 18,
-    title: 'Crispy Fish Tacos',
-    category: 'Main Course',
-    image: 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 19,
-    title: 'Berry Smoothie',
-    category: 'Beverages',
-    image: 'https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 20,
-    title: 'Strawberry Cheesecake',
-    category: 'Desserts',
-    image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 21,
-    title: 'Chicken Tikka',
-    category: 'Starters',
-    image: 'https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 22,
-    title: 'BBQ Ribs Platter',
-    category: 'Main Course',
-    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 23,
-    title: 'Iced Caramel Latte',
-    category: 'Beverages',
-    image: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=1200&q=85',
-  },
-  {
-    id: 24,
-    title: 'Belgian Waffle Delight',
-    category: 'Desserts',
-    image: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=1200&q=85',
+import API, {
+  IMG_URL,
+} from "../../api/axios";
+
+import "./GalleryMain.css";
+
+// =========================================================
+// IMAGE URL
+// =========================================================
+
+const getImageUrl = (image) => {
+  if (!image) {
+    return "";
   }
-];
 
-const CATEGORIES = ['All', 'Starters', 'Main Course', 'Desserts', 'Beverages'];
+  const value = String(image).trim();
+
+  if (!value) {
+    return "";
+  }
+
+  // Already a complete URL
+  if (
+    value.startsWith("http://") ||
+    value.startsWith("https://") ||
+    value.startsWith("blob:") ||
+    value.startsWith("data:")
+  ) {
+    return value;
+  }
+
+  // Remove trailing slash from backend URL
+  const baseUrl = String(IMG_URL).replace(
+    /\/$/,
+    ""
+  );
+
+  // Backend path:
+  // /uploads/gallery/photo.webp
+  if (value.startsWith("/")) {
+    return `${baseUrl}${value}`;
+  }
+
+  // Backend path:
+  // uploads/gallery/photo.webp
+  return `${baseUrl}/${value.replace(
+    /^\/+/,
+    ""
+  )}`;
+};
+
+// =========================================================
+// NORMALIZE API RESPONSE
+// =========================================================
+
+const normalizeGalleryResponse = (
+  response
+) => {
+  const responseData =
+    response?.data;
+
+  let items = [];
+
+  // If API directly returns array
+  if (
+    Array.isArray(responseData)
+  ) {
+    items = responseData;
+  }
+
+  // Normal backend response:
+  // { success: true, data: [] }
+  else if (
+    Array.isArray(
+      responseData?.data
+    )
+  ) {
+    items =
+      responseData.data;
+  }
+
+  // Alternative:
+  // { gallery: [] }
+  else if (
+    Array.isArray(
+      responseData?.gallery
+    )
+  ) {
+    items =
+      responseData.gallery;
+  }
+
+  // Alternative nested response
+  else if (
+    Array.isArray(
+      responseData?.data?.data
+    )
+  ) {
+    items =
+      responseData.data.data;
+  }
+
+  return items
+    .filter(Boolean)
+    .map(
+      (item, index) => ({
+        ...item,
+
+        id:
+          item._id ||
+          item.id ||
+          `gallery-${index}`,
+
+        title:
+          item.title ||
+          "Gallery Image",
+
+        category:
+          item.category ||
+          "All",
+
+        image: getImageUrl(
+          item.image ||
+            item.imageUrl ||
+            item.url ||
+            ""
+        ),
+      })
+    )
+    .filter(
+      (item) =>
+        item.image
+    );
+};
+
+// =========================================================
+// COMPONENT
+// =========================================================
 
 const GalleryMain = () => {
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [activeModalIndex, setActiveModalIndex] = useState(null);
-  const [isMobile, setIsMobile] = useState(false);
+  // =======================================================
+  // STATES
+  // =======================================================
 
-  // Detect mobile width to dynamically toggle between 4 items (mobile) and 12 items (desktop)
+  const [
+    galleryItems,
+    setGalleryItems,
+  ] = useState([]);
+
+  const [
+    loading,
+    setLoading,
+  ] = useState(true);
+
+  const [
+    selectedCategory,
+    setSelectedCategory,
+  ] = useState("All");
+
+  const [
+    isMobile,
+    setIsMobile,
+  ] = useState(
+    window.innerWidth <= 520
+  );
+
+  const [
+    currentPage,
+    setCurrentPage,
+  ] = useState(1);
+
+  const [
+    activeModalIndex,
+    setActiveModalIndex,
+  ] = useState(null);
+
+  // =======================================================
+  // FETCH GALLERY
+  // =======================================================
+
+  const fetchGallery =
+    useCallback(
+      async () => {
+        try {
+          setLoading(true);
+
+          const response =
+            await API.get(
+              "/gallery"
+            );
+
+          const items =
+            normalizeGalleryResponse(
+              response
+            );
+
+          setGalleryItems(
+            items
+          );
+
+          setSelectedCategory(
+            (currentCategory) => {
+              if (
+                currentCategory ===
+                "All"
+              ) {
+                return "All";
+              }
+
+              const exists =
+                items.some(
+                  (item) =>
+                    item.category ===
+                    currentCategory
+                );
+
+              return exists
+                ? currentCategory
+                : "All";
+            }
+          );
+        } catch (error) {
+          setGalleryItems(
+            []
+          );
+
+          Swal.fire({
+            icon: "error",
+            title:
+              "Gallery Load Failed",
+            text:
+              error.response
+                ?.data?.message ||
+              "Unable to fetch gallery images.",
+            confirmButtonColor:
+              "#63b600",
+          });
+        } finally {
+          setLoading(false);
+        }
+      },
+      []
+    );
+
+  // =======================================================
+  // INITIAL API CALL
+  // =======================================================
+
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 520);
-    };
+    fetchGallery();
+  }, [fetchGallery]);
 
-    handleResize(); // Initial check
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  // =======================================================
+  // RESPONSIVE
+  // =======================================================
 
-  const itemsPerPage = isMobile ? 4 : 12;
-
-  // Filter items based on chosen category
-  const filteredItems = useMemo(() => {
-    if (selectedCategory === 'All') return ALL_FOOD_ITEMS;
-    return ALL_FOOD_ITEMS.filter((item) => item.category === selectedCategory);
-  }, [selectedCategory]);
-
-  const totalPages = Math.ceil(filteredItems.length / itemsPerPage) || 1;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = filteredItems.slice(startIndex, startIndex + itemsPerPage);
-
-  // Category switch resets page
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
-    setCurrentPage(1);
-  };
-
-  // Safe pagination switch with smooth scroll
-  const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages && page !== currentPage) {
-      setCurrentPage(page);
-      const galleryElem = document.querySelector('.gallery-main');
-      if (galleryElem) {
-        galleryElem.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }
-  };
-
-  // Dynamic pagination range with ellipsis (...) support
-  const paginationRange = useMemo(() => {
-    if (totalPages <= 5) {
-      return Array.from({ length: totalPages }, (_, i) => i + 1);
-    }
-
-    const pages = [];
-    if (currentPage <= 3) {
-      pages.push(1, 2, 3, 4, '...', totalPages);
-    } else if (currentPage >= totalPages - 2) {
-      pages.push(1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
-    } else {
-      pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
-    }
-    return pages;
-  }, [currentPage, totalPages]);
-
-  // Lightbox modal controls
-  const handleOpenModal = (item) => {
-    const idx = filteredItems.findIndex((x) => x.id === item.id);
-    setActiveModalIndex(idx);
-  };
-
-  const handleCloseModal = () => {
-    setActiveModalIndex(null);
-  };
-
-  const handlePrevImage = useCallback(() => {
-    if (activeModalIndex !== null && activeModalIndex > 0) {
-      setActiveModalIndex((prev) => prev - 1);
-    }
-  }, [activeModalIndex]);
-
-  const handleNextImage = useCallback(() => {
-    if (activeModalIndex !== null && activeModalIndex < filteredItems.length - 1) {
-      setActiveModalIndex((prev) => prev + 1);
-    }
-  }, [activeModalIndex, filteredItems.length]);
-
-  // Keyboard navigation & lock background scroll
   useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (activeModalIndex === null) return;
-      if (e.key === 'Escape') handleCloseModal();
-      if (e.key === 'ArrowLeft') handlePrevImage();
-      if (e.key === 'ArrowRight') handleNextImage();
-    };
+    const handleResize =
+      () => {
+        setIsMobile(
+          window.innerWidth <=
+            520
+        );
+      };
 
-    window.addEventListener('keydown', handleKeyDown);
-    if (activeModalIndex !== null) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    handleResize();
+
+    window.addEventListener(
+      "resize",
+      handleResize
+    );
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'unset';
+      window.removeEventListener(
+        "resize",
+        handleResize
+      );
     };
-  }, [activeModalIndex, handlePrevImage, handleNextImage]);
+  }, []);
 
-  const activeItem = activeModalIndex !== null ? filteredItems[activeModalIndex] : null;
+  // =======================================================
+  // ITEMS PER PAGE
+  // =======================================================
+
+  const itemsPerPage =
+    isMobile ? 4 : 12;
+
+  // =======================================================
+  // CATEGORIES FROM BACKEND
+  // =======================================================
+
+  const categories =
+    useMemo(() => {
+      const backendCategories =
+        [
+          ...new Set(
+            galleryItems
+              .map(
+                (item) =>
+                  item.category
+              )
+              .filter(
+                (category) =>
+                  category &&
+                  category !==
+                    "All"
+              )
+          ),
+        ];
+
+      return [
+        "All",
+        ...backendCategories,
+      ];
+    }, [
+      galleryItems,
+    ]);
+
+  // =======================================================
+  // FILTER
+  // =======================================================
+
+  const filteredItems =
+    useMemo(() => {
+      if (
+        selectedCategory ===
+        "All"
+      ) {
+        return galleryItems;
+      }
+
+      return galleryItems.filter(
+        (item) =>
+          item.category ===
+          selectedCategory
+      );
+    }, [
+      galleryItems,
+      selectedCategory,
+    ]);
+
+  // =======================================================
+  // PAGINATION
+  // =======================================================
+
+  const totalPages =
+    Math.max(
+      1,
+      Math.ceil(
+        filteredItems.length /
+          itemsPerPage
+      )
+    );
+
+  useEffect(() => {
+    if (
+      currentPage >
+      totalPages
+    ) {
+      setCurrentPage(
+        totalPages
+      );
+    }
+  }, [
+    currentPage,
+    totalPages,
+  ]);
+
+  const startIndex =
+    (currentPage - 1) *
+    itemsPerPage;
+
+  const currentItems =
+    filteredItems.slice(
+      startIndex,
+      startIndex +
+        itemsPerPage
+    );
+
+  // =======================================================
+  // CATEGORY CHANGE
+  // =======================================================
+
+  const handleCategoryChange =
+    (category) => {
+      setSelectedCategory(
+        category
+      );
+
+      setCurrentPage(1);
+
+      setActiveModalIndex(
+        null
+      );
+    };
+
+  // =======================================================
+  // PAGE CHANGE
+  // =======================================================
+
+  const goToPage = (
+    page
+  ) => {
+    if (
+      page < 1 ||
+      page > totalPages
+    ) {
+      return;
+    }
+
+    setCurrentPage(
+      page
+    );
+
+    setActiveModalIndex(
+      null
+    );
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  // =======================================================
+  // MODAL
+  // =======================================================
+
+  const openModal = (
+    index
+  ) => {
+    setActiveModalIndex(
+      index
+    );
+  };
+
+  const closeModal = () => {
+    setActiveModalIndex(
+      null
+    );
+  };
+
+  // =======================================================
+  // NEXT IMAGE
+  // =======================================================
+
+  const nextImage = () => {
+    if (
+      activeModalIndex ===
+      null ||
+      currentItems.length === 0
+    ) {
+      return;
+    }
+
+    setActiveModalIndex(
+      (currentIndex) =>
+        currentIndex ===
+        currentItems.length -
+          1
+          ? 0
+          : currentIndex + 1
+    );
+  };
+
+  // =======================================================
+  // PREVIOUS IMAGE
+  // =======================================================
+
+  const previousImage =
+    () => {
+      if (
+        activeModalIndex ===
+          null ||
+        currentItems.length ===
+          0
+      ) {
+        return;
+      }
+
+      setActiveModalIndex(
+        (currentIndex) =>
+          currentIndex ===
+          0
+            ? currentItems.length -
+              1
+            : currentIndex - 1
+      );
+    };
+
+  // =======================================================
+  // KEYBOARD
+  // =======================================================
+
+  useEffect(() => {
+    const handleKeyDown =
+      (event) => {
+        if (
+          activeModalIndex ===
+          null
+        ) {
+          return;
+        }
+
+        if (
+          event.key ===
+          "Escape"
+        ) {
+          closeModal();
+        }
+
+        if (
+          event.key ===
+          "ArrowRight"
+        ) {
+          nextImage();
+        }
+
+        if (
+          event.key ===
+          "ArrowLeft"
+        ) {
+          previousImage();
+        }
+      };
+
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
+
+    return () => {
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
+    };
+  }, [
+    activeModalIndex,
+    currentItems.length,
+  ]);
+
+  // =======================================================
+  // ACTIVE ITEM
+  // =======================================================
+
+  const activeItem =
+    activeModalIndex !==
+      null
+      ? currentItems[
+          activeModalIndex
+        ]
+      : null;
+
+  // =======================================================
+  // PAGE NUMBERS
+  // =======================================================
+
+  const pageNumbers =
+    useMemo(() => {
+      if (
+        totalPages <= 5
+      ) {
+        return Array.from(
+          {
+            length:
+              totalPages,
+          },
+          (_, index) =>
+            index + 1
+        );
+      }
+
+      if (
+        currentPage <= 3
+      ) {
+        return [
+          1,
+          2,
+          3,
+          4,
+          "...",
+          totalPages,
+        ];
+      }
+
+      if (
+        currentPage >=
+        totalPages - 2
+      ) {
+        return [
+          1,
+          "...",
+          totalPages - 3,
+          totalPages - 2,
+          totalPages - 1,
+          totalPages,
+        ];
+      }
+
+      return [
+        1,
+        "...",
+        currentPage - 1,
+        currentPage,
+        currentPage + 1,
+        "...",
+        totalPages,
+      ];
+    }, [
+      totalPages,
+      currentPage,
+    ]);
+
+  // =======================================================
+  // JSX
+  // =======================================================
 
   return (
     <section className="gallery-main">
-      {/* Header Area */}
-      <header className="gallery-main__header">
-        <span className="gallery-main__subtitle">OUR GALLERY</span>
-        <h1 className="gallery-main__title">Our Food Gallery</h1>
-        <div className="gallery-main__divider-icon" aria-hidden="true">
-          🍴
+
+      {/* ==================================================
+          HEADER
+      ================================================== */}
+
+      <div className="gallery-main__header">
+
+        <div>
+          <span className="gallery-main__eyebrow">
+            OUR GALLERY
+          </span>
+
+          <h1 className="gallery-main__title">
+            Explore Our Gallery
+          </h1>
+
+          <p className="gallery-main__subtitle">
+            Explore our latest
+            gallery moments.
+          </p>
         </div>
-        <p className="gallery-main__description">
-          A glimpse of our delicious dishes, prepared with love and fresh ingredients.
-        </p>
-      </header>
 
-      {/* Filter Tabs */}
-      <nav className="gallery-main__filter-nav" aria-label="Food Categories">
-        {CATEGORIES.map((cat) => (
-          <button
-            key={cat}
-            type="button"
-            className={`gallery-main__filter-btn ${
-              selectedCategory === cat ? 'gallery-main__filter-btn--active' : ''
-            }`}
-            onClick={() => handleCategoryChange(cat)}
-          >
-            {cat}
-          </button>
-        ))}
-      </nav>
-
-      {/* Grid: 4 per page on mobile; 12 on desktop */}
-      <div className="gallery-main__grid">
-        {currentItems.map((item) => (
-          <article
-            className="gallery-main__card"
-            key={item.id}
-            onClick={() => handleOpenModal(item)}
-            role="button"
-            tabIndex={0}
-            aria-label={`View photo of ${item.title}`}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                handleOpenModal(item);
-              }
-            }}
-          >
-            <div className="gallery-main__img-wrapper">
-              <img
-                src={item.image}
-                alt={item.title}
-                className="gallery-main__img"
-                loading="lazy"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = FALLBACK_IMAGE;
-                }}
-              />
-              <div className="gallery-main__card-overlay">
-                <span className="gallery-main__card-title">{item.title}</span>
-                <span className="gallery-main__zoom-btn" title={`View ${item.title}`}>
-                  <svg
-                    className="gallery-main__zoom-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="11" cy="11" r="8" />
-                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
-                  </svg>
-                </span>
-              </div>
-            </div>
-          </article>
-        ))}
       </div>
 
-      {/* Clean Mobile & Desktop Pagination */}
-      {totalPages > 1 && (
-        <footer className="gallery-main__pagination" aria-label="Gallery pagination">
-          <button
-            type="button"
-            className="gallery-main__page-btn gallery-main__page-btn--arrow"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            aria-label="Previous Page"
-          >
-            &#8592;
-          </button>
+      {/* ==================================================
+          CATEGORY FILTER
+      ================================================== */}
 
-          {paginationRange.map((page, index) => {
-            if (page === '...') {
-              return (
-                <span key={`ellipsis-${index}`} className="gallery-main__page-ellipsis">
-                  &hellip;
-                </span>
-              );
-            }
+      <div className="gallery-main__filters">
 
-            return (
-              <button
-                key={page}
-                type="button"
-                className={`gallery-main__page-btn ${
-                  currentPage === page ? 'gallery-main__page-btn--active' : ''
-                }`}
-                onClick={() => handlePageChange(page)}
-                aria-current={currentPage === page ? 'page' : undefined}
-              >
-                {page}
-              </button>
-            );
-          })}
-
-          <button
-            type="button"
-            className="gallery-main__page-btn gallery-main__page-btn--arrow"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            aria-label="Next Page"
-          >
-            &#8594;
-          </button>
-        </footer>
-      )}
-
-      {/* Lightbox Modal */}
-      {activeItem && (
-        <div
-          className="gallery-main__modal-backdrop"
-          role="dialog"
-          aria-modal="true"
-          onClick={handleCloseModal}
-        >
-          <div
-            className="gallery-main__modal-container"
-            onClick={(e) => e.stopPropagation()}
-          >
+        {categories.map(
+          (category) => (
             <button
-              className="gallery-main__modal-close-icon-btn"
+              key={
+                category
+              }
               type="button"
-              onClick={handleCloseModal}
-              title="Close modal (Esc)"
-              aria-label="Close modal"
+              className={`gallery-main__filter ${
+                selectedCategory ===
+                category
+                  ? "gallery-main__filter--active"
+                  : ""
+              }`}
+              onClick={() =>
+                handleCategoryChange(
+                  category
+                )
+              }
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
+              {
+                category
+              }
+            </button>
+          )
+        )}
+
+      </div>
+
+      {/* ==================================================
+          GRID
+      ================================================== */}
+
+      <div className="gallery-main__grid">
+
+        {loading ? (
+          <div className="gallery-main__loading">
+            Loading gallery
+            images...
+          </div>
+        ) : currentItems.length ===
+          0 ? (
+          <div className="gallery-main__loading">
+            No gallery images
+            found.
+          </div>
+        ) : (
+          currentItems.map(
+            (item, index) => (
+              <article
+                key={
+                  item.id
+                }
+                className="gallery-main__card"
+                onClick={() =>
+                  openModal(
+                    index
+                  )
+                }
+              >
+
+                {/* IMAGE */}
+
+                <div className="gallery-main__image-wrapper">
+
+                  <img
+                    src={
+                      item.image
+                    }
+                    alt={
+                      item.title
+                    }
+                    className="gallery-main__image"
+                    loading="lazy"
+                    onError={(
+                      event
+                    ) => {
+                      event.currentTarget.style.display =
+                        "none";
+
+                      event.currentTarget.parentElement.classList.add(
+                        "gallery-main__image-error"
+                      );
+                    }}
+                  />
+
+                </div>
+
+                {/* CONTENT */}
+
+                <div className="gallery-main__content">
+
+                  <span className="gallery-main__category">
+                    {
+                      item.category ||
+                      "Gallery"
+                    }
+                  </span>
+
+                  <h3>
+                    {
+                      item.title
+                    }
+                  </h3>
+
+                </div>
+
+              </article>
+            )
+          )
+        )}
+
+      </div>
+
+      {/* ==================================================
+          PAGINATION
+      ================================================== */}
+
+      {!loading &&
+        totalPages > 1 && (
+          <div className="gallery-main__pagination">
+
+            <button
+              type="button"
+              className="gallery-main__page-arrow"
+              disabled={
+                currentPage ===
+                1
+              }
+              onClick={() =>
+                goToPage(
+                  currentPage -
+                    1
+                )
+              }
+            >
+              ←
             </button>
 
-            {activeModalIndex > 0 && (
-              <button
-                type="button"
-                className="gallery-main__modal-nav-btn gallery-main__modal-nav-btn--prev"
-                onClick={handlePrevImage}
-                aria-label="Previous dish"
-              >
-                &#10094;
-              </button>
-            )}
+            <div className="gallery-main__page-numbers">
 
-            {activeModalIndex < filteredItems.length - 1 && (
-              <button
-                type="button"
-                className="gallery-main__modal-nav-btn gallery-main__modal-nav-btn--next"
-                onClick={handleNextImage}
-                aria-label="Next dish"
-              >
-                &#10095;
-              </button>
-            )}
+              {pageNumbers.map(
+                (
+                  page,
+                  index
+                ) =>
+                  page ===
+                  "..." ? (
+                    <span
+                      key={`dots-${index}`}
+                      className="gallery-main__dots"
+                    >
+                      ...
+                    </span>
+                  ) : (
+                    <button
+                      type="button"
+                      key={
+                        page
+                      }
+                      className={`gallery-main__page ${
+                        currentPage ===
+                        page
+                          ? "gallery-main__page--active"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        goToPage(
+                          page
+                        )
+                      }
+                    >
+                      {
+                        page
+                      }
+                    </button>
+                  )
+              )}
 
-            <div className="gallery-main__modal-image-box">
+            </div>
+
+            <button
+              type="button"
+              className="gallery-main__page-arrow"
+              disabled={
+                currentPage ===
+                totalPages
+              }
+              onClick={() =>
+                goToPage(
+                  currentPage +
+                    1
+                )
+              }
+            >
+              →
+            </button>
+
+          </div>
+        )}
+
+      {/* ==================================================
+          IMAGE MODAL
+      ================================================== */}
+
+      {activeItem && (
+        <div
+          className="gallery-main__modal"
+          onClick={
+            closeModal
+          }
+        >
+
+          <button
+            type="button"
+            className="gallery-main__modal-close"
+            onClick={
+              closeModal
+            }
+            aria-label="Close"
+          >
+            ×
+          </button>
+
+          <button
+            type="button"
+            className="gallery-main__modal-prev"
+            onClick={(
+              event
+            ) => {
+              event.stopPropagation();
+              previousImage();
+            }}
+            aria-label="Previous image"
+          >
+            ‹
+          </button>
+
+          <div
+            className="gallery-main__modal-content"
+            onClick={(
+              event
+            ) =>
+              event.stopPropagation()
+            }
+          >
+
+            <div className="gallery-main__modal-image-wrapper">
+
               <img
-                src={activeItem.image}
-                alt={activeItem.title}
-                className="gallery-main__modal-img"
-                onError={(e) => {
-                  e.currentTarget.onerror = null;
-                  e.currentTarget.src = FALLBACK_IMAGE;
+                src={
+                  activeItem.image
+                }
+                alt={
+                  activeItem.title
+                }
+                className="gallery-main__modal-image"
+                onError={(
+                  event
+                ) => {
+                  event.currentTarget.style.display =
+                    "none";
+
+                  event.currentTarget.parentElement.classList.add(
+                    "gallery-main__image-error"
+                  );
                 }}
               />
+
             </div>
 
-            <div className="gallery-main__modal-footer">
-              <div className="gallery-main__modal-meta">
-                <span className="gallery-main__modal-badge">{activeItem.category}</span>
-                <h2 className="gallery-main__modal-title">{activeItem.title}</h2>
-              </div>
+            <div className="gallery-main__modal-info">
 
-              <div className="gallery-main__modal-actions">
-                <button
-                  type="button"
-                  className="gallery-main__modal-cancel-btn"
-                  onClick={handleCloseModal}
-                >
-                  Close
-                </button>
-              </div>
+              <span className="gallery-main__modal-badge">
+                {
+                  activeItem.category ||
+                  "Gallery"
+                }
+              </span>
+
+              <h2>
+                {
+                  activeItem.title
+                }
+              </h2>
+
             </div>
+
           </div>
+
+          <button
+            type="button"
+            className="gallery-main__modal-next"
+            onClick={(
+              event
+            ) => {
+              event.stopPropagation();
+              nextImage();
+            }}
+            aria-label="Next image"
+          >
+            ›
+          </button>
+
         </div>
       )}
+
     </section>
   );
 };
