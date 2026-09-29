@@ -16,9 +16,9 @@ import Faq from "./Pages/Faq/Faq";
 import Contact from "./Pages/Contact/Contact";
 
 // Action Route Components
-import AddToCart from "./Components/AddToCart/AddToCart";
 import Account from "./Components/Account/Account";
 import FloatingForm from "./Components/FloatingForm/FloatingForm";
+import CartDetails from "./Components/CartDetails/CartDetails";
 
 // Automatically scrolls the window to the top on every route change
 const ScrollToTop = () => {
@@ -53,7 +53,7 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
 
         {/* Action Routes */}
-        <Route path="/cart" element={<AddToCart />} />
+        <Route path="/cart" element={<CartDetails/>} />
         <Route path="/account" element={<Account />} />
 
 
