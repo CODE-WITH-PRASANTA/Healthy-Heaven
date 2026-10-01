@@ -7,39 +7,39 @@ import faqImageDefault from "../../assets/faq-image.png";
 const DEFAULT_FAQ_DATA = [
   {
     id: "faq-1",
-    question: "What are your hours of operation?",
+    question: "What food staples and grain products does Foodigo manufacture?",
     answer:
-      "Our restaurant is open Monday through Sunday from 11:00 AM to 11:00 PM. For special holidays, private events, or seasonal festival hours, please check our live announcements or call our front desk directly.",
+      "Foodigo specializes in pure, traditionally processed kitchen staples including roasted chana Sattu (high protein), stone-ground premium Besan (gram flour), authentic tapioca Sabudana (sago pearls), and a select variety of pulses and flours packed fresh under strict hygienic supervision.",
   },
   {
     id: "faq-2",
-    question: "Do you offer takeout or home delivery?",
+    question: "Are your products 100% natural and free of chemical adulteration?",
     answer:
-      "Yes! You can order directly via our online ordering platform or through major delivery partners. We ensure tamper-proof insulated packaging so your meal arrives fresh, hot, and delicious.",
+      "Yes, absolutely. We source high-grade grains directly from vetted farming hubs. Our Besan and Sattu are free from artificial food colors, starch fillers, or chemical preservatives, ensuring authentic taste, natural aroma, and superior nutrition.",
   },
   {
     id: "faq-3",
-    question: "Do you have vegetarian, vegan, or gluten-free options?",
+    question: "Do you supply wholesale, bulk orders, and commercial businesses?",
     answer:
-      "Absolutely. A significant part of our kitchen is dedicated to plant-based and allergen-conscious cooking. Clearly marked symbols indicate Vegan, Vegetarian, and Gluten-free options on our menu.",
+      "Yes, we supply bulk quantities to wholesalers, sweet manufacturers (halwais), supermarkets, and restaurants across North Bengal, Sikkim, Bihar, and Northeastern regions. Bulk gunny bags and customized packaging formats (5 kg, 25 kg, 50 kg) are available upon request.",
   },
   {
     id: "faq-4",
-    question: "Can I make a reservation in advance? How do I book?",
+    question: "What retail consumer packaging sizes are available?",
     answer:
-      "Yes, table reservations are strongly recommended on weekends and evenings. You can easily book online through our Reservation page or call us directly. Parties larger than 8 guests are requested to call at least 24 hours ahead.",
+      "Our standard consumer packs for household consumption come in tamper-proof, moisture-barrier pouches of 200g, 500g, and 1kg sizes to retain freshness and natural aroma over extended shelf lives.",
   },
   {
     id: "faq-5",
-    question: "Is your restaurant kid-friendly and family-oriented?",
+    question: "How can I apply for distributorship or dealership in my area?",
     answer:
-      "Very much so! We offer customized kid-friendly portions, comfortable high-chairs, and coloring sets to ensure little diners have a wonderful time alongside parents.",
+      "We are actively expanding our distributor network. Interested dealers and stockists can reach out to our proprietor, Sandeep Kumar, at +91 90072 52221 or email gsmarketing507@gmail.com with their location and business profile for distributorship terms.",
   },
   {
     id: "faq-6",
-    question: "Do you host private events, birthdays, or catering?",
+    question: "Where is Foodigo located, and do you arrange dispatch logistics?",
     answer:
-      "Yes, we have dedicated private dining rooms suitable for corporate lunches, intimate weddings, and birthday parties. We also cater external events with customizable gourmet food packages.",
+      "Our factory and marketing office is based at Patiramjote, Matigara, Siliguri (Darjeeling district, West Bengal). We coordinate with reliable freight and transport partners for prompt and safe dispatches to your destination.",
   },
 ];
 
@@ -58,7 +58,7 @@ const FaqMain = () => {
       return;
     }
 
-    console.log("Newsletter Subscribed Email:", email);
+    console.log("Wholesale Catalog Subscribed Email:", email);
     setIsSubscribed(true);
     setEmail("");
 
@@ -75,13 +75,12 @@ const FaqMain = () => {
       <div className="FaqMain__container">
         {/* Section Header */}
         <header className="FaqMain__heading">
-          <span className="FaqMain__eyebrow">NEED ASSISTANCE?</span>
+          <span className="FaqMain__eyebrow">FOODIGO HELPDESK</span>
           <h2 className="FaqMain__title">
             Frequently Asked <span>Questions</span>
           </h2>
           <p className="FaqMain__subtitle">
-            Find answers to some of the most common questions about our dishes,
-            seating, dietary options, and catering services.
+            Everything you need to know about our Besan, Sattu, Sabudana, retail packaging, and bulk dealership policies.
           </p>
         </header>
 
@@ -149,9 +148,9 @@ const FaqMain = () => {
       </div>
 
       {/* =========================================
-          NEWSLETTER BANNER SECTION
+          NEWSLETTER / CATALOG BANNER SECTION
       ========================================= */}
-      <section className="FaqMain__newsletter" aria-label="Newsletter Subscription">
+      <section className="FaqMain__newsletter" aria-label="Product Catalog Subscription">
         <div className="FaqMain__newsletterContainer">
           {/* Visual Floating Image Box */}
           <div className="FaqMain__newsletterImageBox">
@@ -159,12 +158,11 @@ const FaqMain = () => {
             <img
               src={faqImageDefault}
               onError={(e) => {
-                // Fallback image if local asset is not available
                 e.target.onerror = null;
                 e.target.src =
-                  "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=700&q=80";
+                  "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=700&q=80";
               }}
-              alt="Delicious seasonal meal bowl"
+              alt="Foodigo Pure Staples and Flours"
               className="FaqMain__newsletterImage"
               loading="lazy"
             />
@@ -172,11 +170,10 @@ const FaqMain = () => {
 
           {/* Newsletter Content & Form */}
           <div className="FaqMain__newsletterContent">
-            <span className="FaqMain__newsletterLabel">STAY CONNECTED</span>
-            <h2 className="FaqMain__newsletterTitle">Join Our Food Club</h2>
+            <span className="FaqMain__newsletterLabel">STAY UPDATED</span>
+            <h2 className="FaqMain__newsletterTitle">Receive Bulk Price Lists & Offers</h2>
             <p className="FaqMain__newsletterText">
-              Subscribe to get secret chef recipes, 15% discount on your first table booking,
-              and exclusive priority passes to our weekend specials.
+              Subscribe with your email to receive our monthly mandi-rate updates, wholesale discount circulars, and new batch launch alerts directly from Foodigo.
             </p>
 
             {/* Newsletter Form */}
@@ -197,29 +194,29 @@ const FaqMain = () => {
                 </svg>
                 <input
                   type="email"
-                  placeholder="Enter your email address"
+                  placeholder="Enter your business email"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                   className="FaqMain__newsletterInput"
-                  aria-label="Email address for newsletter"
+                  aria-label="Email address for price updates"
                   required
                 />
               </div>
 
               <button type="submit" className="FaqMain__newsletterButton">
-                <span>Subscribe</span>
+                <span>Get Updates</span>
               </button>
             </form>
 
             {/* Success Feedback Alert */}
             {isSubscribed && (
               <div className="FaqMain__newsletterSuccessMsg" role="status">
-                🎉 Thank you! Check your inbox for your 15% voucher.
+                ✓ Thank you! The latest product catalog & rate card will be sent to your email.
               </div>
             )}
 
             <p className="FaqMain__newsletterNote">
-              🔒 We respect your privacy. No spam, unsubscribe anytime.
+              🔒 We value your business privacy. No spam, unsubscribe anytime.
             </p>
           </div>
         </div>

@@ -232,7 +232,7 @@
 }
 
 /* ============================================================ */
-/* LUXURY CARD STYLING                                          */
+/* CARD STYLING                                                 */
 /* ============================================================ */
 .menu-card {
   height: 100%;
@@ -321,7 +321,6 @@
   color: var(--to-gold);
 }
 
-/* Card Body */
 .menu-card__body {
   padding: 1.15rem 1.25rem 1.25rem;
   display: flex;
@@ -360,7 +359,6 @@
   border-top: 1px solid rgba(27, 83, 48, 0.08);
 }
 
-/* Indian Rupee Price Typography */
 .menu-card__price-wrap {
   display: flex;
   align-items: baseline;
@@ -382,7 +380,6 @@
   color: var(--to-green-dark);
 }
 
-/* Add Button */
 .menu-card__add {
   display: inline-flex;
   align-items: center;
@@ -409,44 +406,149 @@
 }
 
 /* ============================================================ */
-/* PAGINATION CONTROLS                                          */
+/* LUXURY UNIFIED PAGINATION DOCK                               */
 /* ============================================================ */
-.menu-pagination {
+.luxury-pagination {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 3.5rem;
+  position: relative;
+  z-index: 5;
+}
+
+.luxury-pagination__dock {
+  display: inline-flex;
+  align-items: center;
   gap: 0.5rem;
-  margin-top: 2rem;
-}
-
-.mobile-pagination {
-  display: none;
-}
-
-.menu-pagination__dot {
-  width: 9px;
-  height: 9px;
-  padding: 0;
+  background: #ffffff;
+  padding: 0.45rem 0.6rem;
   border-radius: 999px;
-  border: none;
-  background: rgba(27, 83, 48, 0.18);
+  border: 1px solid rgba(27, 83, 48, 0.12);
+  box-shadow: 0 10px 30px -8px rgba(9, 33, 19, 0.08),
+              0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.luxury-pagination__nav {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(27, 83, 48, 0.1);
+  background: #fbfdfb;
+  color: var(--to-green-dark);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.menu-pagination__dot.is-active {
-  background: var(--to-green-base);
-  width: 28px;
-  box-shadow: 0 2px 10px rgba(27, 83, 48, 0.3);
+.luxury-pagination__nav svg {
+  width: 18px;
+  height: 18px;
 }
 
+.luxury-pagination__nav:hover:not(:disabled) {
+  background: var(--to-green-dark);
+  color: #ffffff;
+  border-color: var(--to-green-dark);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(9, 33, 19, 0.18);
+}
 
+.luxury-pagination__nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  background: transparent;
+  border-color: transparent;
+}
+
+.luxury-pagination__list {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0 0.25rem;
+}
+
+.luxury-pagination__item {
+  min-width: 42px;
+  height: 42px;
+  padding: 0 0.8rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--to-text-muted);
+  font-family: var(--to-sans);
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.luxury-pagination__item:hover:not(.is-active) {
+  background: rgba(27, 83, 48, 0.06);
+  color: var(--to-green-dark);
+}
+
+.luxury-pagination__item.is-active {
+  background: var(--to-green-dark);
+  color: #ffffff;
+  border-color: var(--to-green-dark);
+  box-shadow: 0 4px 14px rgba(9, 33, 19, 0.25);
+}
+
+.luxury-pagination__item.is-active span {
+  position: relative;
+}
+
+.luxury-pagination__item.is-active span::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--to-gold);
+}
+
+/* Toast */
+.menu-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+  background: var(--to-green-dark);
+  color: #ffffff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(253, 184, 19, 0.3);
+  animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.menu-toast__check {
+  color: var(--to-gold);
+  font-weight: 800;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
 
 /* ============================================================ */
-/* RESPONSIVE DESIGN (ALL DEVICES)                              */
+/* RESPONSIVE DESIGN                                            */
 /* ============================================================ */
-
-/* Laptops & Desktops under 1120px */
 @media (max-width: 1120px) {
   .menu-showcase__grid {
     grid-template-columns: repeat(3, 1fr);
@@ -454,7 +556,6 @@
   }
 }
 
-/* Tablets (Portrait & Small Screens) */
 @media (max-width: 780px) {
   .menu-showcase__grid {
     grid-template-columns: repeat(2, 1fr);
@@ -462,7 +563,6 @@
   }
 }
 
-/* Smartphones & Small Tablets (Touch 1-by-1 Flow) */
 @media (max-width: 620px) {
   .menu-showcase {
     padding-top: 1.5rem;
@@ -491,12 +591,23 @@
     animation: mobileSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .desktop-pagination {
-    display: none;
+  .luxury-pagination {
+    margin-top: 2rem;
   }
 
-  .mobile-pagination {
-    display: flex;
+  .luxury-pagination__dock {
+    padding: 0.35rem 0.5rem;
+  }
+
+  .luxury-pagination__nav {
+    width: 36px;
+    height: 36px;
+  }
+
+  .luxury-pagination__item {
+    min-width: 36px;
+    height: 36px;
+    font-size: 0.84rem;
   }
 
   .menu-switchbar {
@@ -514,7 +625,6 @@
   to { opacity: 1; transform: translateX(0) scale(1); }
 }
 
-/* Accessibility */
 @media (prefers-reduced-motion: reduce) {
   .menu-showcase__cell,
   .mobile-card-wrapper,
@@ -523,7 +633,9 @@
   }
   .menu-card,
   .menu-card__media img,
-  .menu-card__add {
+  .menu-card__add,
+  .luxury-pagination__nav,
+  .luxury-pagination__item {
     transition: none !important;
   }
 }

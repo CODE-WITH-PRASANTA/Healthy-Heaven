@@ -118,14 +118,6 @@ const PlusIcon = () => (
   </svg>
 );
 
-const CartIcon = () => (
-  <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="9" cy="20" r="1.5" />
-    <circle cx="17" cy="20" r="1.5" />
-    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-  </svg>
-);
-
 function MenuCard({ item, onAdd }) {
   return (
     <article className="menu-card">
@@ -191,6 +183,17 @@ const Menu = () => {
   const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
   const paginatedItems = filteredItems.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
 
+  const scrollToGridTop = () => {
+    if (showcaseRef.current) {
+      showcaseRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const handlePageChange = (pageIndex) => {
+    setCurrentPage(pageIndex);
+    scrollToGridTop();
+  };
+
   const handleSwitch = (key) => {
     setActiveCategory(key);
     setCurrentPage(0);
@@ -230,10 +233,9 @@ const Menu = () => {
 
   return (
     <div className="menu-page">
-      {/* Ambient background bloom */}
-      <div className="menu-page__bg-glow" aria-hidden="true"></div>
+      <div className="menu-page__bg-glow" aria-hidden="true" />
 
-      {/* Modern Switch Bar */}
+      {/* Switch Bar */}
       <nav className="menu-switchbar" aria-label="Menu categories">
         <div className="menu-switchbar__track">
           {CATEGORIES.map((cat) => (
@@ -299,38 +301,56 @@ const Menu = () => {
           })}
         </div>
 
-        {/* Desktop Pagination */}
+        {/* Unified Luxury Pagination */}
         {totalPages > 1 && (
-          <div className="menu-pagination desktop-pagination">
-            {Array.from({ length: totalPages }).map((_, idx) => (
+          <nav className="luxury-pagination" aria-label="Menu pagination">
+            <div className="luxury-pagination__dock">
+              {/* Prev Button */}
               <button
-                key={idx}
                 type="button"
-                className={`menu-pagination__dot ${idx === currentPage ? 'is-active' : ''}`}
-                onClick={() => setCurrentPage(idx)}
-                aria-label={`Go to page ${idx + 1}`}
-              />
-            ))}
-          </div>
-        )}
+                className="luxury-pagination__nav"
+                onClick={() => handlePageChange(Math.max(currentPage - 1, 0))}
+                disabled={currentPage === 0}
+                aria-label="Previous page"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+              </button>
 
-        {/* Mobile Pagination */}
-        {filteredItems.length > 1 && (
-          <div className="menu-pagination mobile-pagination">
-            {filteredItems.map((_, idx) => (
+              {/* Page Number Chips */}
+              <div className="luxury-pagination__list">
+                {Array.from({ length: totalPages }).map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    className={`luxury-pagination__item ${idx === currentPage ? 'is-active' : ''}`}
+                    onClick={() => handlePageChange(idx)}
+                    aria-label={`Page ${idx + 1}`}
+                    aria-current={idx === currentPage ? 'page' : undefined}
+                  >
+                    <span>{idx + 1}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* Next Button */}
               <button
-                key={idx}
                 type="button"
-                className={`menu-pagination__dot ${idx === mobileIndex ? 'is-active' : ''}`}
-                onClick={() => setMobileIndex(idx)}
-                aria-label={`Go to item ${idx + 1}`}
-              />
-            ))}
-          </div>
+                className="luxury-pagination__nav"
+                onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages - 1))}
+                disabled={currentPage === totalPages - 1}
+                aria-label="Next page"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
+          </nav>
         )}
       </section>
 
-      
       {/* Status Toast */}
       {toast && (
         <div className="menu-toast" role="status">

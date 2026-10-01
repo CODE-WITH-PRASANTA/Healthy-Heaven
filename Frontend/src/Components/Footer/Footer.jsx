@@ -4,7 +4,7 @@ import "./Footer.css";
 // ============================================================
 // ASSETS
 // ============================================================
-import FooterLogo from "../../assets/main-logo.png";
+import FooterLogo from "../../assets/main-logo.webp";
 import FooterAlmond from "../../assets/footeralmond.png";
 import FooterTomato from "../../assets/footertamato.png";
 
@@ -230,41 +230,51 @@ const Footer = () => {
 
             <h3 className="FooterTitle">CONTACT</h3>
 
+            {/* Address */}
             <a
-              href="https://www.google.com/maps"
+              href="https://www.google.com/maps/search/?api=1&query=Patiramjote+Matigara+Siliguri+Darjeeling+West+Bengal+India"
               target="_blank"
               rel="noopener noreferrer"
               className="FooterContactItem"
+              aria-label="Find us on Google Maps"
             >
               <span className="FooterContactIcon">
                 <FooterLocationIcon />
               </span>
               <span className="FooterContactText">
-                1247/Plot No. 39, 15th Phase,
+                Patiramjote Matigara Siliguri,
                 <br />
-                Colony, Kkatpally, Hyderabad
+                Darjeeling, West Bengal, India
               </span>
             </a>
 
-            <div className="FooterContactItem">
+            {/* Phone */}
+            <a
+              href="tel:+919007252221"
+              className="FooterContactItem"
+              aria-label="Call +91 90072 52221"
+            >
               <span className="FooterContactIcon">
                 <FooterPhoneIcon />
               </span>
-              <div className="FooterContactText FooterPhoneText">
-                <a href="tel:+919876543210">+91 987-654-3210</a>
-                <a href="tel:+911234567890">+91 123-456-7890</a>
-              </div>
-            </div>
+              <span className="FooterContactText FooterPhoneText">
+                +91 90072 52221
+              </span>
+            </a>
 
-            <div className="FooterContactItem">
+            {/* Email */}
+            <a
+              href="mailto:gsmarketing507@gmail.com"
+              className="FooterContactItem"
+              aria-label="Send email to gsmarketing507@gmail.com"
+            >
               <span className="FooterContactIcon">
                 <FooterMailIcon />
               </span>
-              <div className="FooterContactText FooterEmailText">
-                <a href="mailto:info@example.com">info@example.com</a>
-                <a href="mailto:info@example.com">info@example.com</a>
-              </div>
-            </div>
+              <span className="FooterContactText FooterEmailText">
+                gsmarketing507@gmail.com
+              </span>
+            </a>
           </div>
 
           {/* COLUMN 2: OUR LINKS */}

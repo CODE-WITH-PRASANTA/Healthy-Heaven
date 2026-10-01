@@ -1,553 +1,901 @@
-/* =========================================
-   Overlay
-========================================= */
+/* =========================================================
+   HEALTHY HEAVEN
+   COMPACT PREMIUM FLOATING FORM
+========================================================= */
 
-.FloatingForm-overlay {
+:root {
+  --hf-green: #24843a;
+  --hf-green-dark: #155c28;
+  --hf-green-light: #eaf6ec;
+  --hf-orange: #f47721;
+  --hf-text: #1e2b22;
+  --hf-muted: #7d877f;
+  --hf-border: #dce6de;
+  --hf-white: #ffffff;
+}
+
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.hf-overlay {
   position: fixed;
   inset: 0;
+
+  width: 100%;
+  height: 100%;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+
+  padding: 12px;
+
   box-sizing: border-box;
 
-  background: rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(8, 18, 10, 0.70);
+
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
 
   z-index: 999999;
 
+  overflow: hidden;
+
   opacity: 1;
+
   transition:
-    opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity 0.3s ease;
 }
 
-.FloatingForm-overlay--closing {
+
+.hf-overlay--closing {
   opacity: 0;
+
   pointer-events: none;
 }
 
 
-/* =========================================
-   Main Card
-========================================= */
+/* =========================================================
+   CARD
+========================================================= */
 
-.FloatingForm {
+.hf-card {
   position: relative;
 
-  width: 100%;
-  max-width: 440px;
-  max-height: 92vh;
+  width: min(100%, 430px);
 
-  overflow-y: auto;
-  overflow-x: hidden;
+  /*
+   * IMPORTANT:
+   * No scroll.
+   */
+  height: auto;
 
-  padding: 32px 26px 22px;
+  max-height: calc(100vh - 24px);
+
+  overflow: hidden;
+
+  padding: 24px 28px 18px;
+
   box-sizing: border-box;
 
-  background: #ffffff;
-  border-radius: 28px;
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #ffffff 78%,
+      #f5faf6 100%
+    );
+
+  border-radius: 27px;
 
   box-shadow:
-    0 25px 50px -12px rgba(0, 0, 0, 0.35);
+    0 28px 65px rgba(0, 0, 0, 0.28),
+    0 10px 25px rgba(27, 80, 35, 0.13);
 
   font-family:
+    Inter,
     -apple-system,
     BlinkMacSystemFont,
     "Segoe UI",
     Roboto,
-    Helvetica,
     Arial,
     sans-serif;
 
   animation:
-    FloatingFormFadeIn
-    0.32s
+    hfCardIn
+    0.38s
     cubic-bezier(0.16, 1, 0.3, 1)
     forwards;
 
   transition:
-    transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
-.FloatingForm--closing {
-  transform: scale(0.92) translateY(14px);
+
+.hf-card--closing {
   opacity: 0;
+
+  transform:
+    translateY(12px)
+    scale(0.96);
 }
 
-.FloatingForm::-webkit-scrollbar {
-  width: 4px;
-}
 
-.FloatingForm::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.FloatingForm::-webkit-scrollbar-thumb {
-  background: #d4d4d4;
-  border-radius: 10px;
-}
-
-@keyframes FloatingFormFadeIn {
+@keyframes hfCardIn {
   from {
     opacity: 0;
-    transform: translateY(18px) scale(0.95);
+
+    transform:
+      translateY(18px)
+      scale(0.96);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+
+    transform:
+      translateY(0)
+      scale(1);
   }
 }
 
 
-/* =========================================
-   Decorative Green Background
-========================================= */
+/* =========================================================
+   TOP GREEN SHAPE
+========================================================= */
 
-.FloatingForm__curved-bg {
+.hf-top-shape {
   position: absolute;
 
-  top: -85px;
-  right: -50px;
+  top: -105px;
+  right: -82px;
 
-  width: 250px;
-  height: 250px;
+  width: 265px;
+  height: 265px;
 
-  background: #399c2b;
+  background:
+    linear-gradient(
+      145deg,
+      #60bd62,
+      #27923a 58%,
+      #176a2b
+    );
 
   border-radius:
-    46% 54% 38% 62% /
-    48% 40% 60% 52%;
+    48% 52% 65% 35% /
+    45% 40% 60% 55%;
 
-  z-index: 1;
+  z-index: 0;
+
   pointer-events: none;
 }
 
 
-/* =========================================
-   Dish Image
-========================================= */
+/* =========================================================
+   SMALL DECORATIVE ORBS
+========================================================= */
 
-.FloatingForm__image-wrapper {
+.hf-small-orb {
   position: absolute;
 
-  top: 36px;
-  right: -36px;
-
-  width: 195px;
-  height: 195px;
-
   border-radius: 50%;
-  overflow: hidden;
 
-  background: #ffffff;
+  z-index: 3;
 
-  border: 4px solid #ffffff;
-
-  box-shadow:
-    0 8px 22px rgba(0, 0, 0, 0.2);
-
-  z-index: 2;
   pointer-events: none;
 }
 
-.FloatingForm__dish-img {
-  width: 100%;
-  height: 100%;
 
-  object-fit: cover;
-  display: block;
+.hf-small-orb-green {
+  top: 126px;
+  right: 246px;
+
+  width: 10px;
+  height: 10px;
+
+  background: #67b966;
+
+  box-shadow:
+    0 0 0 6px rgba(103, 185, 102, 0.13);
 }
 
 
-/* =========================================
-   Close Button
-========================================= */
+.hf-small-orb-orange {
+  top: 177px;
+  right: 214px;
 
-.FloatingForm__close-btn {
+  width: 7px;
+  height: 7px;
+
+  background: var(--hf-orange);
+}
+
+
+/* =========================================================
+   LEAVES
+========================================================= */
+
+.hf-leaf {
+  position: absolute;
+
+  z-index: 4;
+
+  pointer-events: none;
+
+  user-select: none;
+}
+
+
+.hf-leaf-one {
+  top: 50px;
+  right: 222px;
+
+  font-size: 21px;
+
+  transform: rotate(-18deg);
+}
+
+
+.hf-leaf-two {
+  top: 202px;
+  right: 212px;
+
+  font-size: 17px;
+
+  transform: rotate(38deg);
+}
+
+
+/* =========================================================
+   CLOSE
+========================================================= */
+
+.hf-close {
   position: absolute;
 
   top: 14px;
   right: 14px;
 
-  width: 34px;
-  height: 34px;
+  width: 35px;
+  height: 35px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border: none;
+  border: 1px solid rgba(30, 80, 38, 0.08);
+
   border-radius: 50%;
 
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.96);
 
   box-shadow:
-    0 3px 10px rgba(0, 0, 0, 0.15);
+    0 5px 15px rgba(0, 0, 0, 0.13);
 
   cursor: pointer;
 
-  z-index: 20;
+  z-index: 30;
 
   transition:
-    transform 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.FloatingForm__close-btn:hover:not(:disabled) {
-  transform: rotate(90deg) scale(1.05);
-  background: #f1f1f1;
-
-  box-shadow:
-    0 5px 14px rgba(0, 0, 0, 0.18);
-}
-
-.FloatingForm__close-btn:disabled {
-  cursor: not-allowed;
-  opacity: 0.55;
+    transform 0.22s ease,
+    background 0.22s ease;
 }
 
 
-/* =========================================
-   Decorative Leaves / Tomatoes
-========================================= */
-
-.FloatingForm__leaf,
-.FloatingForm__tomato {
+.hf-close span {
   position: absolute;
 
-  pointer-events: none;
-  user-select: none;
+  width: 14px;
+  height: 2px;
 
-  z-index: 3;
+  background: #354039;
+
+  border-radius: 10px;
 }
 
-.FloatingForm__leaf--top {
-  top: 24px;
-  right: 165px;
 
-  font-size: 18px;
-
-  transform: rotate(-15deg);
-}
-
-.FloatingForm__leaf--mid {
-  top: 162px;
-  right: 155px;
-
-  font-size: 15px;
-
+.hf-close span:first-child {
   transform: rotate(45deg);
 }
 
-.FloatingForm__leaf--bottom-right {
-  right: 14px;
-  bottom: 8px;
 
-  font-size: 26px;
-
-  transform: rotate(20deg);
-}
-
-.FloatingForm__leaf--bottom-left {
-  left: 45px;
-  bottom: 8px;
-
-  font-size: 20px;
-
-  transform: rotate(-35deg);
-}
-
-.FloatingForm__tomato--mid {
-  top: 88px;
-  right: 175px;
-
-  font-size: 15px;
-}
-
-.FloatingForm__tomato--bottom {
-  left: 12px;
-  bottom: 14px;
-
-  font-size: 24px;
+.hf-close span:last-child {
+  transform: rotate(-45deg);
 }
 
 
-/* =========================================
-   Header
-========================================= */
+.hf-close:hover:not(:disabled) {
+  transform: rotate(90deg);
 
-.FloatingForm__header {
-  position: relative;
-
-  z-index: 4;
-
-  max-width: 58%;
-
-  margin-bottom: 20px;
+  background: #f2f8f3;
 }
 
-.FloatingForm__logo-circle {
-  width: 76px;
-  height: 76px;
 
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.hf-close:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   FOOD IMAGE
+========================================================= */
+
+.hf-food-area {
+  position: absolute;
+
+  top: 47px;
+  right: -21px;
+
+  width: 153px;
+  height: 153px;
+
+  z-index: 5;
+
+  pointer-events: none;
+}
+
+
+.hf-food-circle {
+  width: 100%;
+  height: 100%;
+
+  padding: 6px;
 
   box-sizing: border-box;
 
-  padding: 4px;
-  margin-bottom: 10px;
-
-  border: 3px solid #2da630;
   border-radius: 50%;
 
-  background: #ffffff;
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #e5f2e7
+    );
 
   box-shadow:
-    0 4px 10px rgba(0, 128, 0, 0.12);
-
-  text-align: center;
+    0 13px 28px rgba(0, 0, 0, 0.17);
 }
 
-.FloatingForm__logo-icon {
-  font-size: 15px;
-  line-height: 1;
-}
 
-.FloatingForm__logo-text {
-  line-height: 1.1;
+.hf-food-image {
+  width: 100%;
+  height: 100%;
 
-  font-size: 10px;
-
-  color: #176527;
-
-  font-weight: 800;
-}
-
-.FloatingForm__logo-text span {
   display: block;
 
-  font-size: 9px;
+  object-fit: cover;
 
-  color: #e56214;
-}
+  border-radius: 50%;
 
-.FloatingForm__logo-circle small {
-  font-size: 5px;
+  border: 4px solid #ffffff;
 
-  color: #2da630;
-
-  font-weight: 700;
-}
-
-.FloatingForm__title {
-  margin: 0 0 4px;
-
-  color: #198028;
-
-  font-size: 24px;
-  font-weight: 800;
-
-  line-height: 1.15;
-  letter-spacing: -0.5px;
-}
-
-.FloatingForm__subtitle {
-  margin: 0;
-
-  color: #666666;
-
-  font-size: 12.5px;
-  line-height: 1.35;
-}
-
-.FloatingForm__green-swoosh {
-  width: 40px;
-  height: 3px;
-
-  margin-top: 8px;
-
-  background: #2da630;
-
-  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 
-/* =========================================
-   Form
-========================================= */
+/* =========================================================
+   FRESH BADGE
+========================================================= */
 
-.FloatingForm__form {
-  position: relative;
+.hf-fresh-badge {
+  position: absolute;
 
-  z-index: 4;
-
-  display: flex;
-  flex-direction: column;
-
-  gap: 12px;
-}
-
-.FloatingForm__input-group {
-  position: relative;
+  left: -26px;
+  bottom: 4px;
 
   display: flex;
   align-items: center;
+
+  gap: 7px;
+
+  padding: 6px 11px 6px 6px;
+
+  background: #ffffff;
+
+  border: 1px solid #edf1ed;
+
+  border-radius: 40px;
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.13);
 }
 
-.FloatingForm__input-icon {
-  position: absolute;
 
-  left: 14px;
+.hf-fresh-icon {
+  width: 27px;
+  height: 27px;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--hf-green-light);
+
+  font-size: 13px;
+}
+
+
+.hf-fresh-text strong,
+.hf-fresh-text span {
+  display: block;
+}
+
+
+.hf-fresh-text strong {
+  color: var(--hf-green-dark);
+
+  font-size: 9px;
+
+  line-height: 1.1;
+}
+
+
+.hf-fresh-text span {
+  margin-top: 2px;
+
+  color: #7c857e;
+
+  font-size: 7px;
+
+  line-height: 1.1;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.hf-header {
+  position: relative;
+
+  z-index: 8;
+
+  padding-right: 145px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HEALTHY HEAVEN LOGO
+========================================================= */
+
+.hf-brand {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  margin-bottom: 13px;
+}
+
+
+.hf-brand-logo {
+  width: 47px;
+  height: 47px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      145deg,
+      #299641,
+      #176b2b
+    );
+
+  border-radius:
+    13px 13px 13px 4px;
+
+  box-shadow:
+    0 7px 17px rgba(36, 132, 58, 0.23);
+
+  transform: rotate(-3deg);
+}
+
+
+.hf-brand-logo-inner {
+  width: 35px;
+  height: 35px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.48);
+
+  border-radius:
+    10px 10px 10px 3px;
+
+  transform: rotate(3deg);
+}
+
+
+.hf-brand-logo-inner svg {
+  display: block;
+}
+
+
+.hf-brand-name {
+  line-height: 1;
+}
+
+
+.hf-brand-name strong {
+  display: block;
+
+  color: #174f25;
+
+  font-size: 14px;
+  font-weight: 900;
+
+  letter-spacing: 2.1px;
+}
+
+
+.hf-brand-name span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: var(--hf-orange);
+
+  font-size: 9px;
+  font-weight: 900;
+
+  letter-spacing: 3.4px;
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.hf-title {
+  max-width: 225px;
+}
+
+
+.hf-eyebrow {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--hf-orange);
+
+  font-size: 7.5px;
+  font-weight: 900;
+
+  letter-spacing: 1.6px;
+
+  white-space: nowrap;
+}
+
+
+.hf-title h2 {
+  margin: 0;
+
+  color: var(--hf-text);
+
+  font-size: 28px;
+  font-weight: 900;
+
+  line-height: 1.05;
+
+  letter-spacing: -1px;
+}
+
+
+.hf-title h2 span {
+  color: var(--hf-orange);
+}
+
+
+.hf-title p {
+  margin: 6px 0 0;
+
+  color: #78827a;
+
+  font-size: 10.5px;
+
+  line-height: 1.45;
+}
+
+
+.hf-title-decoration {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  margin-top: 8px;
+}
+
+
+.hf-title-decoration span {
+  width: 22px;
+  height: 3px;
+
+  border-radius: 10px;
+
+  background: var(--hf-green);
+}
+
+
+.hf-title-decoration span:last-child {
+  width: 17px;
+
+  background: var(--hf-orange);
+}
+
+
+.hf-title-decoration i {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: var(--hf-orange);
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.hf-form {
+  position: relative;
+
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+
+  margin-top: 17px;
+}
+
+
+/* =========================================================
+   FIELD
+========================================================= */
+
+.hf-field {
+  width: 100%;
+}
+
+
+.hf-field label {
+  display: block;
+
+  margin: 0 0 4px 4px;
+
+  color: #3c4940;
+
+  font-size: 9.5px;
+  font-weight: 750;
+}
+
+
+.hf-field label em {
+  color: #e84b3a;
+
+  font-style: normal;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.hf-input {
+  position: relative;
+
+  width: 100%;
+}
+
+
+.hf-input svg {
+  position: absolute;
+
+  left: 13px;
+  top: 50%;
+
+  width: 17px;
+  height: 17px;
+
+  color: #849187;
+
+  transform: translateY(-50%);
 
   pointer-events: none;
 
   z-index: 2;
 }
 
-.FloatingForm__input {
+
+.hf-input input {
   width: 100%;
-  height: 46px;
+  height: 41px;
 
   padding:
-    0 32px 0 44px;
+    0 13px 0 40px;
 
   box-sizing: border-box;
 
-  border:
-    1.5px solid #dbe6dc;
+  border: 1px solid var(--hf-border);
 
-  border-radius: 9999px;
+  border-radius: 11px;
 
   outline: none;
 
-  background-color: #f3f7f3;
+  background:
+    linear-gradient(
+      180deg,
+      #fbfdfb,
+      #f5f9f5
+    );
 
-  color: #222222;
+  color: #26332a;
 
-  font-size: 13.5px;
+  font-family: inherit;
+
+  font-size: 11px;
 
   transition:
     border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    background-color 0.2s ease;
+    background 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.FloatingForm__input::placeholder {
-  color: #8c8c8c;
 
-  font-size: 13px;
+.hf-input input::placeholder {
+  color: #a0aaa2;
+
+  font-size: 10.5px;
 }
 
-.FloatingForm__input:focus {
-  border-color: #2da630;
 
-  background-color: #ffffff;
+.hf-input input:hover:not(:disabled) {
+  border-color: #c7d7ca;
+}
+
+
+.hf-input input:focus {
+  border-color: #4ca259;
+
+  background: #ffffff;
 
   box-shadow:
-    0 0 0 3.5px rgba(45, 166, 48, 0.16);
+    0 0 0 3px rgba(48, 145, 62, 0.09);
 }
 
-.FloatingForm__input:disabled {
-  opacity: 0.65;
+
+.hf-input:focus-within svg {
+  color: var(--hf-green);
+}
+
+
+.hf-input input:disabled {
+  opacity: 0.6;
 
   cursor: not-allowed;
 }
 
-.FloatingForm__required {
-  position: absolute;
 
-  right: 16px;
+/* =========================================================
+   SUBMIT
+========================================================= */
 
-  color: #eb4436;
+.hf-submit {
+  position: relative;
 
-  font-size: 15px;
-  font-weight: 700;
-
-  pointer-events: none;
-}
-
-
-/* =========================================
-   Submit Button
-========================================= */
-
-.FloatingForm__submit-btn {
   width: 100%;
-  height: 48px;
-
-  margin-top: 4px;
+  height: 45px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  gap: 8px;
+  gap: 10px;
+
+  margin-top: 4px;
 
   border: none;
-  border-radius: 9999px;
+
+  border-radius: 11px;
 
   background:
     linear-gradient(
-      90deg,
-      #ff7a00 0%,
-      #ff4b00 100%
+      100deg,
+      #27883a 0%,
+      #359a42 58%,
+      #f47721 100%
     );
 
   color: #ffffff;
 
-  font-size: 15px;
-  font-weight: 700;
+  font-family: inherit;
+
+  font-size: 12px;
+  font-weight: 850;
 
   cursor: pointer;
 
   box-shadow:
-    0 7px 18px rgba(255, 87, 0, 0.35);
+    0 9px 20px rgba(38, 130, 56, 0.22);
 
   transition:
-    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.35s ease,
-    opacity 0.2s ease;
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    opacity 0.22s ease;
 }
 
-.FloatingForm__submit-btn:hover:not(:disabled) {
+
+.hf-submit:hover:not(:disabled) {
   transform: translateY(-1.5px);
 
   box-shadow:
-    0 9px 22px rgba(255, 87, 0, 0.45);
+    0 12px 24px rgba(38, 130, 56, 0.27);
 }
 
-.FloatingForm__submit-btn:active:not(:disabled) {
+
+.hf-submit:active:not(:disabled) {
   transform: translateY(0);
 }
 
-.FloatingForm__submit-btn:disabled {
-  cursor: not-allowed;
-  opacity: 0.85;
-}
 
-.FloatingForm__submit-btn--loading {
+.hf-submit:disabled {
+  opacity: 0.75;
+
   cursor: wait;
 }
 
 
-/* =========================================
-   Spinner
-========================================= */
+/* =========================================================
+   ARROW
+========================================================= */
 
-.FloatingForm__spinner {
-  width: 16px;
-  height: 16px;
+.hf-arrow {
+  width: 26px;
+  height: 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.18);
+}
+
+
+.hf-arrow svg {
+  width: 15px;
+  height: 15px;
+}
+
+
+/* =========================================================
+   SPINNER
+========================================================= */
+
+.hf-spinner {
+  width: 14px;
+  height: 14px;
 
   border:
     2px solid rgba(255, 255, 255, 0.35);
@@ -557,263 +905,594 @@
   border-radius: 50%;
 
   animation:
-    FloatingFormSpin 0.7s linear infinite;
+    hfSpinner 0.7s linear infinite;
 }
 
-@keyframes FloatingFormSpin {
+
+@keyframes hfSpinner {
   to {
     transform: rotate(360deg);
   }
 }
 
 
-/* =========================================
-   Security Line
-========================================= */
+/* =========================================================
+   SECURITY
+========================================================= */
 
-.FloatingForm__security {
+.hf-security {
   display: flex;
   align-items: center;
   justify-content: center;
 
   gap: 6px;
 
-  margin-top: 4px;
+  margin-top: 1px;
 
-  color: #646464;
+  color: #7d877f;
 
-  font-size: 11.5px;
+  font-size: 8.5px;
   font-weight: 500;
 
   text-align: center;
 }
 
 
-/* =========================================
-   Mobile - 480px
-========================================= */
+.hf-security-icon {
+  width: 21px;
+  height: 21px;
 
-@media (max-width: 480px) {
-  .FloatingForm-overlay {
-    padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #eaf6ec;
+
+  color: var(--hf-green);
+}
+
+
+.hf-security-icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+
+.hf-security i {
+  width: 4px;
+  height: 4px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #58a85e;
+}
+
+
+/* =========================================================
+   BOTTOM DOTS
+========================================================= */
+
+.hf-bottom-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 4px;
+
+  margin-top: 8px;
+}
+
+
+.hf-bottom-dots span,
+.hf-bottom-dots b {
+  display: block;
+
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: #d5e3d7;
+}
+
+
+.hf-bottom-dots b {
+  width: 23px;
+
+  background: var(--hf-green);
+
+  border-radius: 10px;
+}
+
+
+.hf-bottom-dots span:last-child {
+  background: var(--hf-orange);
+}
+
+
+/* =========================================================
+   SWEET ALERT
+========================================================= */
+
+.swal2-container {
+  z-index: 10000000 !important;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 500px) {
+  .hf-overlay {
+    padding: 10px;
   }
 
-  .FloatingForm {
-    max-width: 100%;
+  .hf-card {
+    width: min(100%, 405px);
 
     padding:
-      24px 18px 18px;
+      21px 22px 15px;
 
-    border-radius: 22px;
+    border-radius: 24px;
   }
 
-  .FloatingForm__curved-bg {
-    width: 180px;
-    height: 180px;
-
-    top: -75px;
-    right: -45px;
+  .hf-header {
+    padding-right: 128px;
   }
 
-  .FloatingForm__image-wrapper {
-    width: 135px;
-    height: 135px;
+  .hf-food-area {
+    width: 132px;
+    height: 132px;
 
-    top: 32px;
-    right: -25px;
+    top: 43px;
+    right: -18px;
   }
 
-  .FloatingForm__close-btn {
-    top: 10px;
-    right: 10px;
+  .hf-fresh-badge {
+    left: -24px;
 
-    width: 32px;
-    height: 32px;
+    padding: 5px 9px 5px 5px;
   }
 
-  .FloatingForm__leaf--top {
-    right: 120px;
+  .hf-fresh-icon {
+    width: 24px;
+    height: 24px;
 
-    font-size: 14px;
+    font-size: 12px;
   }
 
-  .FloatingForm__tomato--mid {
-    right: 120px;
-    top: 80px;
+  .hf-brand-logo {
+    width: 44px;
+    height: 44px;
+  }
 
+  .hf-brand-logo-inner {
+    width: 33px;
+    height: 33px;
+  }
+
+  .hf-brand-name strong {
     font-size: 13px;
   }
 
-  .FloatingForm__leaf--mid {
-    right: 110px;
-    top: 130px;
+  .hf-brand-name span {
+    font-size: 8px;
   }
 
-  .FloatingForm__header {
-    max-width: 65%;
-
-    margin-bottom: 16px;
+  .hf-title h2 {
+    font-size: 25px;
   }
 
-  .FloatingForm__logo-circle {
-    width: 66px;
-    height: 66px;
+  .hf-title p {
+    font-size: 10px;
   }
 
-  .FloatingForm__title {
-    font-size: 20px;
+  .hf-form {
+    margin-top: 15px;
+
+    gap: 7px;
   }
 
-  .FloatingForm__subtitle {
-    font-size: 11.5px;
+  .hf-input input {
+    height: 40px;
   }
 
-  .FloatingForm__input {
-    height: 44px;
-
-    padding-left: 40px;
-
-    font-size: 13px;
-  }
-
-  .FloatingForm__input-icon {
-    left: 12px;
-  }
-
-  .FloatingForm__required {
-    right: 14px;
-  }
-
-  .FloatingForm__submit-btn {
-    height: 44px;
-
-    font-size: 14px;
+  .hf-submit {
+    height: 43px;
   }
 }
 
 
-/* =========================================
-   Very Small Devices
-========================================= */
+/* =========================================================
+   MOBILE
+========================================================= */
 
-@media (max-width: 360px) {
-  .FloatingForm-overlay {
-    padding: 8px;
+@media (max-width: 390px) {
+  .hf-overlay {
+    padding: 7px;
   }
 
-  .FloatingForm {
+  .hf-card {
+    width: 100%;
+
     padding:
-      20px 14px 16px;
+      18px 17px 13px;
+
+    border-radius: 21px;
+  }
+
+  .hf-top-shape {
+    width: 215px;
+    height: 215px;
+
+    top: -88px;
+    right: -67px;
+  }
+
+  .hf-food-area {
+    width: 108px;
+    height: 108px;
+
+    top: 38px;
+    right: -12px;
+  }
+
+  .hf-fresh-badge {
+    display: none;
+  }
+
+  .hf-header {
+    padding-right: 98px;
+  }
+
+  .hf-brand {
+    gap: 7px;
+
+    margin-bottom: 11px;
+  }
+
+  .hf-brand-logo {
+    width: 40px;
+    height: 40px;
+
+    border-radius:
+      11px 11px 11px 3px;
+  }
+
+  .hf-brand-logo-inner {
+    width: 30px;
+    height: 30px;
+
+    border-radius:
+      8px 8px 8px 3px;
+  }
+
+  .hf-brand-logo-inner svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .hf-brand-name strong {
+    font-size: 11.5px;
+
+    letter-spacing: 1.6px;
+  }
+
+  .hf-brand-name span {
+    margin-top: 3px;
+
+    font-size: 7px;
+
+    letter-spacing: 2.4px;
+  }
+
+  .hf-title {
+    max-width: 205px;
+  }
+
+  .hf-eyebrow {
+    font-size: 6.5px;
+
+    letter-spacing: 1.1px;
+  }
+
+  .hf-title h2 {
+    font-size: 22px;
+  }
+
+  .hf-title p {
+    margin-top: 5px;
+
+    font-size: 9px;
+
+    line-height: 1.35;
+  }
+
+  .hf-title-decoration {
+    margin-top: 6px;
+  }
+
+  .hf-form {
+    gap: 6px;
+
+    margin-top: 12px;
+  }
+
+  .hf-field label {
+    margin-bottom: 3px;
+
+    font-size: 8.5px;
+  }
+
+  .hf-input input {
+    height: 37px;
+
+    padding-left: 37px;
+
+    font-size: 10px;
+
+    border-radius: 9px;
+  }
+
+  .hf-input input::placeholder {
+    font-size: 9.5px;
+  }
+
+  .hf-input svg {
+    left: 11px;
+
+    width: 15px;
+    height: 15px;
+  }
+
+  .hf-submit {
+    height: 40px;
+
+    margin-top: 3px;
+
+    border-radius: 9px;
+
+    font-size: 10.5px;
+  }
+
+  .hf-arrow {
+    width: 23px;
+    height: 23px;
+  }
+
+  .hf-arrow svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .hf-security {
+    font-size: 7.5px;
+  }
+
+  .hf-security-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .hf-security-icon svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .hf-bottom-dots {
+    margin-top: 5px;
+  }
+
+  .hf-close {
+    top: 10px;
+    right: 10px;
+
+    width: 31px;
+    height: 31px;
+  }
+
+  .hf-close span {
+    width: 12px;
+  }
+
+  .hf-leaf-one {
+    right: 135px;
+    top: 41px;
+
+    font-size: 15px;
+  }
+
+  .hf-leaf-two {
+    right: 120px;
+    top: 144px;
+
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL SCREEN
+========================================================= */
+
+@media (max-width: 350px) {
+  .hf-card {
+    padding:
+      15px 14px 10px;
+  }
+
+  .hf-food-area {
+    width: 92px;
+    height: 92px;
+
+    top: 34px;
+    right: -10px;
+  }
+
+  .hf-header {
+    padding-right: 84px;
+  }
+
+  .hf-brand-logo {
+    width: 36px;
+    height: 36px;
+  }
+
+  .hf-brand-logo-inner {
+    width: 27px;
+    height: 27px;
+  }
+
+  .hf-brand-logo-inner svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .hf-brand-name strong {
+    font-size: 10px;
+  }
+
+  .hf-brand-name span {
+    font-size: 6.5px;
+  }
+
+  .hf-title h2 {
+    font-size: 20px;
+  }
+
+  .hf-title p {
+    font-size: 8px;
+  }
+
+  .hf-form {
+    margin-top: 9px;
+
+    gap: 5px;
+  }
+
+  .hf-input input {
+    height: 35px;
+  }
+
+  .hf-submit {
+    height: 38px;
+  }
+
+  .hf-security {
+    font-size: 7px;
+  }
+
+  .hf-bottom-dots {
+    display: none;
+  }
+}
+
+
+/* =========================================================
+   SHORT HEIGHT DEVICES
+   NO SCROLL
+========================================================= */
+
+@media (max-height: 650px) {
+  .hf-overlay {
+    padding: 5px;
+  }
+
+  .hf-card {
+    padding:
+      14px 20px 10px;
 
     border-radius: 20px;
   }
 
-  .FloatingForm__image-wrapper {
-    width: 112px;
-    height: 112px;
+  .hf-food-area {
+    width: 100px;
+    height: 100px;
 
     top: 30px;
-    right: -22px;
   }
 
-  .FloatingForm__curved-bg {
-    width: 155px;
-    height: 155px;
-
-    top: -65px;
-    right: -40px;
+  .hf-header {
+    padding-right: 105px;
   }
 
-  .FloatingForm__header {
-    max-width: 70%;
+  .hf-brand {
+    margin-bottom: 7px;
   }
 
-  .FloatingForm__title {
-    font-size: 18px;
+  .hf-brand-logo {
+    width: 38px;
+    height: 38px;
   }
 
-  .FloatingForm__subtitle {
-    font-size: 10.5px;
+  .hf-brand-logo-inner {
+    width: 29px;
+    height: 29px;
   }
 
-  .FloatingForm__logo-circle {
-    width: 60px;
-    height: 60px;
+  .hf-title h2 {
+    font-size: 21px;
   }
 
-  .FloatingForm__form {
-    gap: 10px;
+  .hf-title p {
+    margin-top: 3px;
+
+    font-size: 8.5px;
   }
 
-  .FloatingForm__input {
-    height: 42px;
+  .hf-form {
+    gap: 5px;
 
-    padding-left: 38px;
-
-    font-size: 12px;
-  }
-/* SweetAlert2 Layer */
-.swal2-container {
-  z-index: 9999999 !important;
-}
-
-.swal2-popup {
-  z-index: 10000000 !important;
-}
-  .FloatingForm__input::placeholder {
-    font-size: 12px;
+    margin-top: 8px;
   }
 
-  .FloatingForm__submit-btn {
-    height: 42px;
+  .hf-field label {
+    margin-bottom: 2px;
 
-    font-size: 13px;
+    font-size: 8px;
   }
 
-  .FloatingForm__security {
-    font-size: 10px;
-  }
-}
-
-
-/* =========================================
-   Small Screen Height
-========================================= */
-
-@media (max-height: 620px) {
-  .FloatingForm {
-    padding: 16px 14px;
+  .hf-input input {
+    height: 35px;
   }
 
-  .FloatingForm__logo-circle {
+  .hf-submit {
+    height: 38px;
+  }
+
+  .hf-security {
+    font-size: 7px;
+  }
+
+  .hf-bottom-dots {
     display: none;
   }
-
-  .FloatingForm__curved-bg,
-  .FloatingForm__image-wrapper {
-    display: none;
-  }
-
-  .FloatingForm__header {
-    max-width: 100%;
-  }
 }
 
 
-/* =========================================
-   Reduced Motion
-========================================= */
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .FloatingForm,
-  .FloatingForm-overlay,
-  .FloatingForm__submit-btn,
-  .FloatingForm__close-btn {
-    animation: none;
-    transition: none;
+  .hf-card,
+  .hf-overlay,
+  .hf-close,
+  .hf-submit,
+  .hf-input input {
+    animation: none !important;
+
+    transition: none !important;
   }
 
-  .FloatingForm__spinner {
+  .hf-spinner {
     animation-duration: 1.5s;
   }
 }

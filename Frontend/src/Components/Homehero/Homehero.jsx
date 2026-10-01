@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
-import { FaStar } from 'react-icons/fa'
-import burgerImg from "../../assets/Roll.png"
+import { FaAward, FaLeaf } from 'react-icons/fa'
+import productImg from "../../assets/HeroBesan.png" // Replace with your pack/product image (e.g. Besan/Sattu pack)
 import "./Homehero.css"
 
 const Homehero = () => {
@@ -18,6 +18,13 @@ const Homehero = () => {
 
   const handleMouseLeave = () => setTilt({ x: 0, y: 0 })
 
+  const handleScrollTo = (id) => {
+    const el = document.getElementById(id)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
   return (
     <section className="homehero">
       <div className="homehero__bg-shape" />
@@ -25,26 +32,33 @@ const Homehero = () => {
       <div className="homehero__container">
         <div className="homehero__content">
           <span className="homehero__badge">
-            <FaStar className="homehero__badge-star" /> Rated #1 Burger House
+            <FaLeaf className="homehero__badge-star" /> 100% Pure & Traditional Farm Essentials
           </span>
 
           <h1 className="homehero__title">
-            The Number <span className="homehero__title-highlight">#1</span> Choice
+            The Purest Choice <span className="homehero__title-highlight">For</span>
             <br />
-            Your Hunger Solution
+            Healthy Everyday Nutrition
           </h1>
 
           <p className="homehero__desc">
-            Handcrafted, flame-grilled burgers stacked with fresh veggies and
-            melted cheese — made fresh, served fast, every single time.
+            Wholesome protein-rich Sattu, premium stone-ground Besan, and pristine Tapioca Sabudana. Unadulterated, traditionally processed, and packed fresh for your family's health.
           </p>
 
           <div className="homehero__actions">
-            <button type="button" className="homehero__btn homehero__btn--primary">
-              Book a Table
+            <button 
+              type="button" 
+              className="homehero__btn homehero__btn--primary"
+              onClick={() => handleScrollTo('products')}
+            >
+              Explore Products
             </button>
-            <button type="button" className="homehero__btn homehero__btn--outline">
-              View More
+            <button 
+              type="button" 
+              className="homehero__btn homehero__btn--outline"
+              onClick={() => handleScrollTo('contact')}
+            >
+              Inquire Wholesale
             </button>
           </div>
         </div>
@@ -61,8 +75,8 @@ const Homehero = () => {
 
           <div className="homehero__burger-float">
             <img
-              src={burgerImg}
-              alt="Premium flame grilled burger"
+              src={productImg}
+              alt="Premium Quality Besan, Sattu and Sabudana Staples"
               className="homehero__burger"
               style={{
                 transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`

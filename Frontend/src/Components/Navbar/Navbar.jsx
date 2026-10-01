@@ -6,7 +6,7 @@ import "./Navbar.css";
 import Account from "../Account/Account";
 
 // Logo
-import mainLogo from "../../assets/main-logo.png";
+import mainLogo from "../../assets/main-logo.webp";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
