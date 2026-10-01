@@ -1,363 +1,1734 @@
-import React, { useState, useRef, useEffect } from 'react';
-import './Menu.css';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
-/* ---------------------------------------------------------------- */
-/* Icon set — hand-drawn line icons, one per category               */
-/* ---------------------------------------------------------------- */
+import {
+  useNavigate,
+} from "react-router-dom";
+
+import {
+  LoaderCircle,
+  RefreshCw,
+  Search,
+  ShoppingCart,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+
+import API, {
+  IMG_URL,
+} from "../../api/axios";
+
+import "./Menu.css";
+
+// =====================================================
+// CART ID
+// =====================================================
+
+const CART_STORAGE_KEY =
+  "healthy_heaven_cart_id";
+
+const getCartId = () => {
+  let cartId =
+    localStorage.getItem(
+      CART_STORAGE_KEY
+    );
+
+  if (!cartId) {
+    cartId =
+      `cart_${Date.now()}_${Math.random()
+        .toString(36)
+        .substring(2, 10)}`;
+
+    localStorage.setItem(
+      CART_STORAGE_KEY,
+      cartId
+    );
+  }
+
+  return cartId;
+};
+
+// =====================================================
+// FALLBACK IMAGE
+// =====================================================
+
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=900&q=80";
+
+// =====================================================
+// IMAGE URL
+// =====================================================
+
+const getImageUrl = (image) => {
+  if (!image) {
+    return FALLBACK_IMAGE;
+  }
+
+  if (
+    typeof image !== "string"
+  ) {
+    return FALLBACK_IMAGE;
+  }
+
+  const cleanValue =
+    image.trim();
+
+  if (!cleanValue) {
+    return FALLBACK_IMAGE;
+  }
+
+  // Full URL
+  if (
+    cleanValue.startsWith(
+      "http://"
+    ) ||
+    cleanValue.startsWith(
+      "https://"
+    ) ||
+    cleanValue.startsWith(
+      "blob:"
+    ) ||
+    cleanValue.startsWith(
+      "data:"
+    )
+  ) {
+    return cleanValue;
+  }
+
+  const cleanImage =
+    cleanValue.replace(
+      /^\/+/,
+      ""
+    );
+
+  // Already contains uploads/
+  if (
+    cleanImage.startsWith(
+      "uploads/"
+    )
+  ) {
+    return `${IMG_URL}/${cleanImage}`;
+  }
+
+  // Backend stores menu images here
+  return `${IMG_URL}/uploads/menu/${cleanImage}`;
+};
+
+// =====================================================
+// CATEGORY ICONS (TAILORED FOR FOODIGO STAPLES)
+// =====================================================
+
 const Icons = {
   all: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <circle cx="12" cy="12" r="3.2" />
-      <path d="M12 3v3.4M12 17.6V21M21 12h-3.4M6.4 12H3M18.36 5.64l-2.4 2.4M8.04 15.96l-2.4 2.4M18.36 18.36l-2.4-2.4M8.04 8.04l-2.4-2.4" />
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+    >
+      <circle
+        cx="12"
+        cy="12"
+        r="3.2"
+      />
+      <path
+        d="
+          M12 3v3.4
+          M12 17.6V21
+          M21 12h-3.4
+          M6.4 12H3
+          M18.36 5.64l-2.4 2.4
+          M8.04 15.96l-2.4 2.4
+          M18.36 18.36l-2.4-2.4
+          M8.04 8.04l-2.4-2.4
+        "
+      />
     </svg>
   ),
-  coldDrink: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <path d="M7 3h10l-1.1 15.2a2 2 0 0 1-2 1.8h-3.8a2 2 0 0 1-2-1.8L7 3Z" />
-      <path d="M6.3 7.5h11.4" />
-      <path d="M14.5 3 17 1.2M9.5 3 10.6 1.3" />
+
+  besan: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {/* Sack / Flour bag */}
+      <path d="M6 8h12l2 12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2L6 8Z" />
+      <path d="M8 8a4 4 0 0 1 8 0" />
+      <path d="M12 13v4" />
+      <path d="M10 15h4" />
     </svg>
   ),
-  pizza: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <path d="M12 3 21.5 20.5a25 25 0 0 1-19 0L12 3Z" />
-      <path d="M12 3v17.6" />
-      <circle cx="11.2" cy="10.5" r="0.9" fill="currentColor" stroke="none" />
-      <circle cx="14.6" cy="14.2" r="0.9" fill="currentColor" stroke="none" />
-      <circle cx="9.6" cy="15.6" r="0.9" fill="currentColor" stroke="none" />
+
+  sattu: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {/* Mortar / Bowl of Ground Roasted Gram */}
+      <path d="M4 11h16a8 8 0 0 1-16 0Z" />
+      <path d="M9 11l5-7" />
+      <circle cx="15" cy="4" r="1.5" />
+      <path d="M8 19h8" />
     </svg>
   ),
-  salad: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <path d="M3.2 12.5a8.8 8.8 0 0 1 17.6 0Z" />
-      <path d="M3.2 12.5h17.6M12 3.5c1.6 1.6 1.6 4 0 5.6M8 5.3c1.1 1.9.8 3.9-.7 5" />
+
+  sabudana: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {/* Tapioca / Sago Pearls */}
+      <circle cx="8" cy="9" r="2.5" />
+      <circle cx="16" cy="9" r="2.5" />
+      <circle cx="12" cy="15" r="2.8" />
+      <circle cx="7" cy="17" r="1.8" />
+      <circle cx="17" cy="17" r="1.8" />
     </svg>
   ),
-  sweets: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <path d="M6 10.5h12l-1.3 8.2a2 2 0 0 1-2 1.7H9.3a2 2 0 0 1-2-1.7L6 10.5Z" />
-      <path d="M6.5 10.5a5.5 5.5 0 0 1 11 0" />
-      <path d="M12 3.2c1 .6 1 1.7 0 2.3-1 .6-1 1.7 0 2.3" />
+
+  pulses: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {/* Grain / Dal Sprout */}
+      <path d="M12 21V11" />
+      <path d="M12 11c-4 0-7-3-7-7 4 0 7 3 7 7Z" />
+      <path d="M12 15c4-1 6-4 6-8-4 0-6 4-6 8Z" />
     </svg>
   ),
-  spicy: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <path d="M4.5 9.5c-1.4 2.8-.6 6.4 2 8.4 2.8 2.1 6.6 1.5 8.6-1.5 1.6-2.4 1.4-5.6-.5-7.7" />
-      <path d="M14.6 8.7C17 6.6 18.3 4 17.4 2.8c-1-1.3-3.7.1-5.6 2.4-1.1 1.3-1.7 2.7-1.7 3.8" />
+
+  spices: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {/* Spice / Purity Flame / Pepper */}
+      <path d="M8.5 14.5A2.5 2.5 0 0 0 11 17c4 0 7-3 7-7a7 7 0 0 0-7-7c0 4-3 7-7 7a2.5 2.5 0 0 0 4.5 4.5Z" />
     </svg>
   ),
-  burger: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-      <path d="M3.5 9.8C3.5 6 7.3 3.5 12 3.5s8.5 2.5 8.5 6.3" />
-      <path d="M3 10.5h18M3 13.6h18M4 16.7h16l-.9 2.2a2 2 0 0 1-1.9 1.3H6.8a2 2 0 0 1-1.9-1.3L4 16.7Z" />
+
+  wholesale: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {/* Package / Bulk Box */}
+      <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3Z" />
+      <path d="M12 12l8-4.5" />
+      <path d="M12 12v9" />
+      <path d="M12 12L4 7.5" />
+    </svg>
+  ),
+
+  other: (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+    >
+      <circle cx="8" cy="8" r="2" />
+      <circle cx="16" cy="8" r="2" />
+      <circle cx="12" cy="16" r="2.5" />
+      <path d="M3 21h18" />
     </svg>
   ),
 };
 
-const CATEGORIES = [
-  { key: 'all', label: 'All Specials', icon: Icons.all },
-  { key: 'burger', label: 'Burgers', icon: Icons.burger },
-  { key: 'pizza', label: 'Wood-Fired Pizza', icon: Icons.pizza },
-  { key: 'salad', label: 'Garden Bowls', icon: Icons.salad },
-  { key: 'cold-drink', label: 'Beverages', icon: Icons.coldDrink },
-  { key: 'sweets', label: 'Artisan Sweets', icon: Icons.sweets },
-  { key: 'spicy', label: 'Spicy Grill', icon: Icons.spicy },
-];
+// =====================================================
+// CATEGORY ICON DETECTOR
+// =====================================================
 
-const MENU_ITEMS = [
-  { id: 'm1', name: 'Charred Truffle Burger', category: 'burger', price: 299, rating: 4.8, top: true,
-    desc: 'Smoked organic patty, aged sharp cheddar, pickled shallots, house truffle emulsion.',
-    img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop' },
-  { id: 'm2', name: 'Herb Buttermilk Burger', category: 'burger', price: 259, rating: 4.6, top: false,
-    desc: 'Crispy herb chicken breast, dressed baby arugula, quick-pickled heirloom tomato.',
-    img: 'https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=800&auto=format&fit=crop' },
-  { id: 'm3', name: 'Pineapple Ember Pizza', category: 'pizza', price: 449, rating: 4.7, top: true,
-    desc: 'Wood-fired sourdough crust, charred sweet pineapple, red onion, and fresh coriander.',
-    img: 'https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?q=80&w=800&auto=format&fit=crop' },
-  { id: 'm4', name: 'Classic Margherita Rustica', category: 'pizza', price: 379, rating: 4.9, top: false,
-    desc: 'San Marzano tomato base, pulled buffalo mozzarella, fragrant torn basil leaves.',
-    img: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?q=80&w=800&auto=format&fit=crop' },
-  { id: 'm5', name: 'Citrus Harvest Salad', category: 'salad', price: 249, rating: 4.5, top: false,
-    desc: 'Blood orange fillets, shaved fennel, toasted Iranian pistachios, honey vinaigrette.',
-    img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800&auto=format&fit=crop' },
-  { id: 'm6', name: 'Chilled Ginger Greens Bowl', category: 'salad', price: 279, rating: 4.6, top: true,
-    desc: 'Seared Asian greens, heritage tomatoes, toasted sesame, bright citrus drizzle.',
-    img: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=800&auto=format&fit=crop' },
-  { id: 'm7', name: 'Peach & Basil Cooler', category: 'cold-drink', price: 179, rating: 4.4, top: false,
-    desc: 'Hand-muddled stone peach, bruised holy basil, mineral soda, and fresh kaffir lime.',
-    img: 'https://images.unsplash.com/photo-1497534446932-c925b458314e?q=80&w=800&auto=format&fit=crop' },
-  { id: 'm8', name: 'Cold Brew Citrus Fizz', category: 'cold-drink', price: 199, rating: 4.7, top: true,
-    desc: '18-hour slow-steeped Arabica cold brew layered over fresh Meyer lemonade.',
-    img: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?q=80&w=800&auto=format&fit=crop' },
-  { id: 'm9', name: 'Molten Belgian Chocolate', category: 'sweets', price: 229, rating: 4.9, top: true,
-    desc: 'Warm bittersweet lava centre served with Madagascar vanilla bean gelato.',
-    img: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=800&auto=format&fit=crop' },
-  { id: 'm10', name: 'Golden Maple Pancake Stack', category: 'sweets', price: 269, rating: 4.6, top: false,
-    desc: 'Caramelized banana, roasted walnuts, pure grade-A maple syrup pour.',
-    img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?q=80&w=800&auto=format&fit=crop' },
-  { id: 'm11', name: 'Szechuan Chili Wontons', category: 'spicy', price: 289, rating: 4.8, top: true,
-    desc: 'Hand-folded parcels bathed in artisanal chili crisp oil and vintage black vinegar.',
-    img: 'https://images.unsplash.com/photo-1496116218417-1a781b1c416c?q=80&w=800&auto=format&fit=crop' },
-  { id: 'm12', name: 'Smoky Firecracker Wings', category: 'spicy', price: 329, rating: 4.7, top: false,
-    desc: 'Double-crisped wings tossed in Naga ghost pepper honey glaze, served with lime crema.',
-    img: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?q=80&w=800&auto=format&fit=crop' },
-];
+const getCategoryIcon = (
+  category
+) => {
+  const value =
+    String(category || "")
+      .toLowerCase()
+      .trim();
 
-const fallbackImg = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80';
+  if (
+    value.includes("besan") ||
+    value.includes("gram flour") ||
+    value.includes("flour") ||
+    value.includes("atta") ||
+    value.includes("maida") ||
+    value.includes("suji")
+  ) {
+    return Icons.besan;
+  }
+
+  if (
+    value.includes("sattu") ||
+    value.includes("roasted") ||
+    value.includes("chana sattu")
+  ) {
+    return Icons.sattu;
+  }
+
+  if (
+    value.includes("sabudana") ||
+    value.includes("sago") ||
+    value.includes("tapioca")
+  ) {
+    return Icons.sabudana;
+  }
+
+  if (
+    value.includes("dal") ||
+    value.includes("pulse") ||
+    value.includes("grain") ||
+    value.includes("chana") ||
+    value.includes("moong")
+  ) {
+    return Icons.pulses;
+  }
+
+  if (
+    value.includes("spice") ||
+    value.includes("masala") ||
+    value.includes("turmeric") ||
+    value.includes("chili")
+  ) {
+    return Icons.spices;
+  }
+
+  if (
+    value.includes("bulk") ||
+    value.includes("wholesale") ||
+    value.includes("sack") ||
+    value.includes("combo")
+  ) {
+    return Icons.wholesale;
+  }
+
+  return Icons.other;
+};
+
+// =====================================================
+// CATEGORY FORMATTER
+// =====================================================
+
+const formatCategory = (
+  category
+) => {
+  if (!category) {
+    return "Farm Staples";
+  }
+
+  return String(category)
+    .replace(
+      /[-_]+/g,
+      " "
+    )
+    .replace(
+      /\s+/g,
+      " "
+    )
+    .trim()
+    .replace(
+      /\b\w/g,
+      (letter) =>
+        letter.toUpperCase()
+    );
+};
+
+// =====================================================
+// NORMALIZE MENU RESPONSE
+// =====================================================
+
+const getMenuArray = (
+  responseData
+) => {
+  if (
+    Array.isArray(
+      responseData
+    )
+  ) {
+    return responseData;
+  }
+
+  if (
+    Array.isArray(
+      responseData?.data
+    )
+  ) {
+    return responseData.data;
+  }
+
+  if (
+    Array.isArray(
+      responseData?.items
+    )
+  ) {
+    return responseData.items;
+  }
+
+  if (
+    Array.isArray(
+      responseData?.menus
+    )
+  ) {
+    return responseData.menus;
+  }
+
+  if (
+    Array.isArray(
+      responseData?.results
+    )
+  ) {
+    return responseData.results;
+  }
+
+  return [];
+};
+
+// =====================================================
+// NORMALIZE PRODUCT
+// =====================================================
+
+const normalizeProduct = (
+  item,
+  index
+) => {
+  const id =
+    item?._id ||
+    item?.id ||
+    item?.productId ||
+    `menu-${index}`;
+
+  const name =
+    item?.name ||
+    item?.productName ||
+    item?.title ||
+    "Foodigo Product";
+
+  const description =
+    item?.description ||
+    item?.desc ||
+    item?.details ||
+    "";
+
+  const category =
+    item?.category ||
+    item?.categoryName ||
+    item?.foodCategory ||
+    item?.type ||
+    "Farm Staples";
+
+  const price = Number(
+    item?.price ??
+      item?.sellingPrice ??
+      item?.salePrice ??
+      item?.amount ??
+      0
+  );
+
+  const rating = Number(
+    item?.rating ??
+      item?.averageRating ??
+      0
+  );
+
+  const image =
+    item?.image ||
+    item?.imageUrl ||
+    item?.photo ||
+    item?.thumbnail ||
+    item?.menuImage ||
+    "";
+
+  const featured = Boolean(
+    item?.top ||
+      item?.featured ||
+      item?.isFeatured ||
+      item?.popular ||
+      item?.isPopular
+  );
+
+  return {
+    ...item,
+
+    _id: id,
+
+    name: String(name).trim(),
+
+    description:
+      String(
+        description
+      ).trim(),
+
+    category:
+      String(category).trim(),
+
+    price:
+      Number.isFinite(price)
+        ? price
+        : 0,
+
+    rating:
+      Number.isFinite(rating)
+        ? rating
+        : 0,
+
+    image,
+
+    top: featured,
+  };
+};
+
+// =====================================================
+// STAR
+// =====================================================
 
 const Star = () => (
-  <svg viewBox="0 0 24 24" className="menu-card__star-icon" fill="currentColor">
+  <svg
+    viewBox="0 0 24 24"
+    className="menu-card__star-icon"
+    fill="currentColor"
+  >
     <path d="M12 2.5l2.9 6.1 6.6.7-4.9 4.6 1.3 6.6L12 17l-5.9 3.5 1.3-6.6-4.9-4.6 6.6-.7L12 2.5Z" />
   </svg>
 );
 
+// =====================================================
+// PLUS
+// =====================================================
+
 const PlusIcon = () => (
-  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
-    <line x1="12" y1="5" x2="12" y2="19" />
-    <line x1="5" y1="12" x2="19" y2="12" />
+  <svg
+    viewBox="0 0 24 24"
+    width="15"
+    height="15"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.4"
+    strokeLinecap="round"
+  >
+    <line
+      x1="12"
+      y1="5"
+      x2="12"
+      y2="19"
+    />
+
+    <line
+      x1="5"
+      y1="12"
+      x2="19"
+      y2="12"
+    />
   </svg>
 );
 
-function MenuCard({ item, onAdd }) {
+// =====================================================
+// MENU CARD
+// =====================================================
+
+function MenuCard({
+  item,
+  onAdd,
+  adding,
+}) {
+  const imageUrl =
+    getImageUrl(
+      item.image
+    );
+
   return (
     <article className="menu-card">
+
+      {/* ================================================
+          IMAGE
+      ================================================ */}
+
       <div className="menu-card__media">
-        {item.top && <span className="menu-card__badge">Chef's Choice</span>}
-        <div className="menu-card__rating">
-          <Star />
-          <span>{item.rating}</span>
-        </div>
-        <img 
-          src={item.img} 
-          alt={item.name} 
-          loading="lazy" 
-          onError={(e) => {
-            e.currentTarget.onerror = null;
-            e.currentTarget.src = fallbackImg;
+
+        {item.top && (
+          <span className="menu-card__badge">
+            Premium Pure
+          </span>
+        )}
+
+        {item.rating > 0 && (
+          <div className="menu-card__rating">
+            <Star />
+
+            <span>
+              {item.rating.toFixed(
+                1
+              )}
+            </span>
+          </div>
+        )}
+
+        <img
+          src={imageUrl}
+          alt={
+            item.name ||
+            "Foodigo Product"
+          }
+          loading="lazy"
+          onError={(event) => {
+            event.currentTarget.onerror =
+              null;
+
+            event.currentTarget.src =
+              FALLBACK_IMAGE;
           }}
         />
+
         <div className="menu-card__overlay" />
       </div>
 
+      {/* ================================================
+          BODY
+      ================================================ */}
+
       <div className="menu-card__body">
-        <h3 className="menu-card__name">{item.name}</h3>
-        <p className="menu-card__desc">{item.desc}</p>
-        
+
+        <div className="menu-card__category">
+          {formatCategory(
+            item.category
+          )}
+        </div>
+
+        <h3 className="menu-card__name">
+          {item.name}
+        </h3>
+
+        <p className="menu-card__desc">
+          {item.description ||
+            "100% natural, hygienic stone-ground agro product packed fresh for everyday nutrition."}
+        </p>
+
+        {/* ==============================================
+            FOOTER
+        ============================================== */}
+
         <div className="menu-card__footer">
+
           <div className="menu-card__price-wrap">
-            <span className="menu-card__currency">₹</span>
-            <span className="menu-card__price">{item.price}</span>
+
+            <span className="menu-card__currency">
+              ₹
+            </span>
+
+            <span className="menu-card__price">
+              {Number(
+                item.price || 0
+              ).toLocaleString(
+                "en-IN"
+              )}
+            </span>
+
           </div>
 
-          <button 
-            type="button" 
-            className="menu-card__add" 
-            onClick={() => onAdd(item)} 
-            aria-label={`Add ${item.name} to order`}
+          {/* ============================================
+              ADD BUTTON
+          ============================================ */}
+
+          <button
+            type="button"
+            className="menu-card__add"
+            disabled={adding}
+            onClick={() =>
+              onAdd(item)
+            }
+            aria-label={`Add ${item.name} to cart`}
           >
-            <span>Add</span>
-            <PlusIcon />
+            {adding ? (
+              <>
+                <LoaderCircle
+                  size={15}
+                  className="menu-card__loading"
+                />
+
+                <span>
+                  Adding...
+                </span>
+              </>
+            ) : (
+              <>
+                <span>
+                  Add
+                </span>
+
+                <PlusIcon />
+              </>
+            )}
           </button>
+
         </div>
       </div>
     </article>
   );
 }
 
+// =====================================================
+// MAIN MENU
+// =====================================================
+
 const Menu = () => {
-  const [activeCategory, setActiveCategory] = useState('all');
-  const [currentPage, setCurrentPage] = useState(0);
-  const [mobileIndex, setMobileIndex] = useState(0);
-  const [cart, setCart] = useState({ count: 0, total: 0 });
-  const [toast, setToast] = useState(null);
+  const navigate =
+    useNavigate();
 
-  const showcaseRef = useRef(null);
-  const toastTimer = useRef(null);
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
+  // ===================================================
+  // STATE
+  // ===================================================
 
-  const filteredItems =
-    activeCategory === 'all' ? MENU_ITEMS : MENU_ITEMS.filter((i) => i.category === activeCategory);
+  const [
+    menuItems,
+    setMenuItems,
+  ] = useState([]);
 
-  const itemsPerPage = 8;
-  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
-  const paginatedItems = filteredItems.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+  const [
+    activeCategory,
+    setActiveCategory,
+  ] = useState("all");
 
-  const scrollToGridTop = () => {
-    if (showcaseRef.current) {
-      showcaseRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
+  const [
+    currentPage,
+    setCurrentPage,
+  ] = useState(0);
 
-  const handlePageChange = (pageIndex) => {
-    setCurrentPage(pageIndex);
-    scrollToGridTop();
-  };
+  const [
+    loading,
+    setLoading,
+  ] = useState(true);
 
-  const handleSwitch = (key) => {
-    setActiveCategory(key);
-    setCurrentPage(0);
-    setMobileIndex(0);
-  };
+  const [
+    error,
+    setError,
+  ] = useState("");
 
-  const handleAdd = (item) => {
-    setCart((c) => ({ count: c.count + 1, total: c.total + item.price }));
-    setToast(`Added ${item.name} to order`);
-  };
+  const [
+    searchTerm,
+    setSearchTerm,
+  ] = useState("");
 
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
+  const [
+    addingProductId,
+    setAddingProductId,
+  ] = useState(null);
 
-  const handleTouchMove = (e) => {
-    touchEndX.current = e.touches[0].clientX;
-  };
+  const [
+    toast,
+    setToast,
+  ] = useState(null);
 
-  const handleTouchEnd = () => {
-    const diff = touchStartX.current - touchEndX.current;
-    if (Math.abs(diff) > 40) {
-      if (diff > 0 && mobileIndex < filteredItems.length - 1) {
-        setMobileIndex((prev) => prev + 1);
-      } else if (diff < 0 && mobileIndex > 0) {
-        setMobileIndex((prev) => prev - 1);
-      }
-    }
-  };
+  const toastTimer =
+    useRef(null);
+
+  // ===================================================
+  // FETCH MENU FROM BACKEND
+  // ===================================================
+
+  const fetchMenu =
+    useCallback(
+      async () => {
+        try {
+          setLoading(true);
+          setError("");
+
+          console.log(
+            "FETCHING FOODIGO PRODUCTS..."
+          );
+
+          const response =
+            await API.get(
+              "/menu",
+              {
+                params: {
+                  page: 1,
+                  limit: 1000,
+                },
+              }
+            );
+
+          console.log(
+            "MENU API RESPONSE:",
+            response.data
+          );
+
+          const rawItems =
+            getMenuArray(
+              response.data
+            );
+
+          const normalizedItems =
+            rawItems
+              .map(
+                normalizeProduct
+              )
+              .filter(
+                (item) =>
+                  item._id &&
+                  item.name
+              );
+
+          console.log(
+            "FOODIGO PRODUCTS:",
+            normalizedItems
+          );
+
+          setMenuItems(
+            normalizedItems
+          );
+
+        } catch (err) {
+          console.error(
+            "MENU FETCH ERROR:",
+            err
+          );
+
+          console.error(
+            "STATUS:",
+            err?.response?.status
+          );
+
+          console.error(
+            "BACKEND:",
+            err?.response?.data
+          );
+
+          setMenuItems([]);
+
+          setError(
+            err?.response?.data
+              ?.message ||
+              err?.message ||
+              "Failed to load products."
+          );
+        } finally {
+          setLoading(false);
+        }
+      },
+      []
+    );
+
+  // ===================================================
+  // INITIAL FETCH
+  // ===================================================
 
   useEffect(() => {
-    if (!toast) return;
-    clearTimeout(toastTimer.current);
-    toastTimer.current = setTimeout(() => setToast(null), 2000);
-    return () => clearTimeout(toastTimer.current);
+    fetchMenu();
+  }, [fetchMenu]);
+
+  // ===================================================
+  // DYNAMIC CATEGORIES
+  // ===================================================
+
+  const categories =
+    useMemo(() => {
+      const categoryMap =
+        new Map();
+
+      menuItems.forEach(
+        (item) => {
+          if (
+            !item?.category
+          ) {
+            return;
+          }
+
+          const original =
+            String(
+              item.category
+            ).trim();
+
+          const key =
+            original
+              .toLowerCase()
+              .replace(
+                /\s+/g,
+                " "
+              );
+
+          if (
+            !categoryMap.has(
+              key
+            )
+          ) {
+            categoryMap.set(
+              key,
+              original
+            );
+          }
+        }
+      );
+
+      return [
+        {
+          key: "all",
+          label: "All Products",
+          icon: Icons.all,
+        },
+
+        ...Array.from(
+          categoryMap.entries()
+        )
+          .sort((a, b) =>
+            a[1].localeCompare(
+              b[1]
+            )
+          )
+          .map(
+            ([key, value]) => ({
+              key,
+              label:
+                formatCategory(
+                  value
+                ),
+              icon:
+                getCategoryIcon(
+                  value
+                ),
+            })
+          ),
+      ];
+    }, [menuItems]);
+
+  // ===================================================
+  // FILTER PRODUCTS
+  // ===================================================
+
+  const filteredItems =
+    useMemo(() => {
+      const search =
+        searchTerm
+          .trim()
+          .toLowerCase();
+
+      return menuItems.filter(
+        (item) => {
+          const category =
+            String(
+              item.category ||
+                ""
+            )
+              .toLowerCase()
+              .replace(
+                /\s+/g,
+                " "
+              )
+              .trim();
+
+          const categoryMatch =
+            activeCategory ===
+              "all" ||
+            category ===
+              activeCategory;
+
+          if (
+            !categoryMatch
+          ) {
+            return false;
+          }
+
+          if (!search) {
+            return true;
+          }
+
+          const searchable =
+            [
+              item.name,
+              item.category,
+              item.description,
+            ]
+              .filter(Boolean)
+              .join(" ")
+              .toLowerCase();
+
+          return searchable.includes(
+            search
+          );
+        }
+      );
+    }, [
+      menuItems,
+      activeCategory,
+      searchTerm,
+    ]);
+
+  // ===================================================
+  // PAGINATION
+  // ===================================================
+
+  const itemsPerPage = 8;
+
+  const totalPages =
+    Math.max(
+      Math.ceil(
+        filteredItems.length /
+          itemsPerPage
+      ),
+      1
+    );
+
+  const paginatedItems =
+    useMemo(() => {
+      const start =
+        currentPage *
+        itemsPerPage;
+
+      return filteredItems.slice(
+        start,
+        start +
+          itemsPerPage
+      );
+    }, [
+      filteredItems,
+      currentPage,
+    ]);
+
+  // ===================================================
+  // RESET PAGE WHEN FILTER CHANGES
+  // ===================================================
+
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [
+    activeCategory,
+    searchTerm,
+  ]);
+
+  // ===================================================
+  // CATEGORY CHANGE
+  // ===================================================
+
+  const handleSwitch = (
+    key
+  ) => {
+    setActiveCategory(key);
+
+    setCurrentPage(0);
+  };
+
+  // ===================================================
+  // SEARCH
+  // ===================================================
+
+  const handleSearch = (
+    event
+  ) => {
+    setSearchTerm(
+      event.target.value
+    );
+  };
+
+  // ===================================================
+  // ADD TO CART
+  // ===================================================
+
+  const handleAdd =
+    useCallback(
+      async (item) => {
+        try {
+          if (!item) {
+            alert(
+              "Product information is missing."
+            );
+
+            return;
+          }
+
+          if (!item._id) {
+            alert(
+              "Product ID is missing."
+            );
+
+            return;
+          }
+
+          if (
+            addingProductId
+          ) {
+            return;
+          }
+
+          setAddingProductId(
+            item._id
+          );
+
+          const cartId =
+            getCartId();
+
+          const productName =
+            String(
+              item.name ||
+                "Product"
+            ).trim();
+
+          const productPrice =
+            Number(
+              item.price || 0
+            );
+
+          const productImage =
+            item.image || "";
+
+          const productCategory =
+            item.category ||
+            "";
+
+          const productDescription =
+            item.description ||
+            "";
+
+          const cartPayload = {
+            cartId,
+
+            productId:
+              item._id,
+
+            productName,
+
+            name:
+              productName,
+
+            price:
+              productPrice,
+
+            image:
+              productImage,
+
+            category:
+              productCategory,
+
+            description:
+              productDescription,
+
+            quantity: 1,
+          };
+
+          console.log(
+            "ADD TO CART PAYLOAD:",
+            cartPayload
+          );
+
+          const response =
+            await API.post(
+              "/cart",
+              cartPayload
+            );
+
+          console.log(
+            "ADD TO CART RESPONSE:",
+            response.data
+          );
+
+          setToast(
+            `Added ${productName} to your cart`
+          );
+
+          navigate("/cart");
+
+        } catch (err) {
+          console.error(
+            "ADD TO CART ERROR:",
+            err
+          );
+
+          console.error(
+            "STATUS:",
+            err?.response?.status
+          );
+
+          console.error(
+            "BACKEND MESSAGE:",
+            err?.response?.data
+          );
+
+          alert(
+            err?.response?.data
+              ?.message ||
+              "Failed to add product to cart."
+          );
+        } finally {
+          setAddingProductId(
+            null
+          );
+        }
+      },
+      [
+        navigate,
+        addingProductId,
+      ]
+    );
+
+  // ===================================================
+  // TOAST
+  // ===================================================
+
+  useEffect(() => {
+    if (!toast) {
+      return;
+    }
+
+    clearTimeout(
+      toastTimer.current
+    );
+
+    toastTimer.current =
+      setTimeout(() => {
+        setToast(null);
+      }, 2200);
+
+    return () => {
+      clearTimeout(
+        toastTimer.current
+      );
+    };
   }, [toast]);
+
+  // ===================================================
+  // PAGE CHANGE
+  // ===================================================
+
+  const handlePageChange =
+    (page) => {
+      if (
+        page < 0 ||
+        page >= totalPages
+      ) {
+        return;
+      }
+
+      setCurrentPage(page);
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    };
+
+  // ===================================================
+  // LOADING
+  // ===================================================
+
+  if (loading) {
+    return (
+      <div className="menu-page">
+
+        <div
+          className="menu-page__bg-glow"
+          aria-hidden="true"
+        />
+
+        <div className="menu-loading">
+          <LoaderCircle
+            size={42}
+            className="menu-loading__icon"
+          />
+
+          <h3>
+            Loading Foodigo Products
+          </h3>
+
+          <p>
+            Fetching our freshest batch of Besan, Sattu & Sabudana...
+          </p>
+        </div>
+
+      </div>
+    );
+  }
+
+  // ===================================================
+  // JSX
+  // ===================================================
 
   return (
     <div className="menu-page">
-      <div className="menu-page__bg-glow" aria-hidden="true" />
 
-      {/* Switch Bar */}
-      <nav className="menu-switchbar" aria-label="Menu categories">
+      {/* =================================================
+          BACKGROUND
+      ================================================ */}
+
+      <div
+        className="menu-page__bg-glow"
+        aria-hidden="true"
+      />
+
+      {/* =================================================
+          CATEGORY BAR
+      ================================================ */}
+
+      <nav
+        className="menu-switchbar"
+        aria-label="Product categories"
+      >
         <div className="menu-switchbar__track">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.key}
-              type="button"
-              className={`menu-switchbar__item ${activeCategory === cat.key ? 'is-active' : ''}`}
-              onClick={() => handleSwitch(cat.key)}
-            >
-              <span className="menu-switchbar__icon">{cat.icon}</span>
-              <span className="menu-switchbar__label">{cat.label}</span>
-            </button>
-          ))}
+
+          {categories.map(
+            (category) => {
+              const isActive =
+                activeCategory ===
+                category.key;
+
+              const categoryCount =
+                category.key ===
+                "all"
+                  ? menuItems.length
+                  : menuItems.filter(
+                      (item) => {
+                        const itemCategory =
+                          String(
+                            item.category ||
+                              ""
+                          )
+                            .toLowerCase()
+                            .replace(
+                              /\s+/g,
+                              " "
+                            )
+                            .trim();
+
+                        return (
+                          itemCategory ===
+                          category.key
+                        );
+                      }
+                    ).length;
+
+              return (
+                <button
+                  key={
+                    category.key
+                  }
+                  type="button"
+                  className={`menu-switchbar__item ${
+                    isActive
+                      ? "is-active"
+                      : ""
+                  }`}
+                  onClick={() =>
+                    handleSwitch(
+                      category.key
+                    )
+                  }
+                >
+
+                  <span className="menu-switchbar__icon">
+                    {
+                      category.icon
+                    }
+                  </span>
+
+                  <span className="menu-switchbar__label">
+                    {
+                      category.label
+                    }
+                  </span>
+
+                  <span className="menu-switchbar__count">
+                    {
+                      categoryCount
+                    }
+                  </span>
+
+                </button>
+              );
+            }
+          )}
+
         </div>
       </nav>
 
-      {/* Main Menu Showcase */}
-      <section className="menu-showcase" id="menu" ref={showcaseRef}>
+      {/* =================================================
+          SHOWCASE
+      ================================================ */}
+
+      <section
+        className="menu-showcase"
+        id="menu"
+      >
+
+        {/* =================================================
+            HEADER
+        ================================================ */}
+
         <header className="menu-showcase__head">
+
           <div className="menu-showcase__pill">
+
             <span className="menu-showcase__dot" />
-            <span>Handpicked & Seasonal</span>
+
+            <span>
+              100% Pure & Traditional
+            </span>
+
           </div>
+
           <h2 className="menu-showcase__title">
-            From Our <em>Artisanal Menu</em>
+            Our Pure Agro{" "}
+            <em>
+              Essentials & Staples
+            </em>
           </h2>
+
           <p className="menu-showcase__sub">
-            Thoughtfully crafted dishes using organic ingredients sourced directly from local farmsteads.
+            Finest stone-ground Besan, nutrient-rich roasted Sattu, pristine pearl Sabudana, and premium pulses sourced and milled with care in Siliguri.
           </p>
+
         </header>
 
-        {/* Desktop & Tablet Grid View */}
-        <div 
-          className="menu-showcase__grid desktop-view" 
-          key={activeCategory + '-' + currentPage}
-        >
-          {paginatedItems.map((item, i) => (
-            <div className="menu-showcase__cell" style={{ animationDelay: `${i * 45}ms` }} key={item.id}>
-              <MenuCard item={item} onAdd={handleAdd} />
+        {/* =================================================
+            SEARCH
+        ================================================ */}
+
+        <div className="menu-search">
+
+          <Search
+            size={18}
+          />
+
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={
+              handleSearch
+            }
+            placeholder="Search Besan, Sattu, Sabudana, Pulses..."
+          />
+
+          {searchTerm && (
+            <button
+              type="button"
+              className="menu-search__clear"
+              onClick={() =>
+                setSearchTerm("")
+              }
+            >
+              ×
+            </button>
+          )}
+
+        </div>
+
+        {/* =================================================
+            ERROR
+        ================================================ */}
+
+        {error && (
+          <div className="menu-showcase__error">
+
+            <RefreshCw
+              size={24}
+            />
+
+            <div>
+              <h3>
+                Unable to load products
+              </h3>
+
+              <p>
+                {error}
+              </p>
             </div>
-          ))}
-          {filteredItems.length === 0 && (
+
+            <button
+              type="button"
+              onClick={
+                fetchMenu
+              }
+            >
+              Try Again
+            </button>
+
+          </div>
+        )}
+
+        {/* =================================================
+            EMPTY
+        ================================================ */}
+
+        {!error &&
+          filteredItems.length ===
+            0 && (
             <div className="menu-showcase__empty">
-              <p>Nothing plated in this section today. Check back tomorrow!</p>
+
+              <Search
+                size={36}
+              />
+
+              <h3>
+                No products found
+              </h3>
+
+              <p>
+                There are no staples matching your selection or search query right now.
+              </p>
+
+              {(searchTerm ||
+                activeCategory !==
+                  "all") && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchTerm(
+                      ""
+                    );
+
+                    setActiveCategory(
+                      "all"
+                    );
+
+                    setCurrentPage(
+                      0
+                    );
+                  }}
+                >
+                  Show All Products
+                </button>
+              )}
+
             </div>
           )}
-        </div>
 
-        {/* Mobile Swipe View (1 by 1) */}
-        <div 
-          className="menu-showcase__grid mobile-view"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          {filteredItems.map((item, i) => {
-            if (i !== mobileIndex) return null;
-            return (
-              <div className="menu-showcase__cell mobile-card-wrapper" key={item.id}>
-                <MenuCard item={item} onAdd={handleAdd} />
-              </div>
-            );
-          })}
-        </div>
+        {/* =================================================
+            DESKTOP GRID
+        ================================================ */}
 
-        {/* Unified Luxury Pagination */}
-        {totalPages > 1 && (
-          <nav className="luxury-pagination" aria-label="Menu pagination">
-            <div className="luxury-pagination__dock">
-              {/* Prev Button */}
+        {!error &&
+          paginatedItems.length >
+            0 && (
+            <div
+              className="menu-showcase__grid desktop-view"
+              key={`${activeCategory}-${currentPage}-${searchTerm}`}
+            >
+
+              {paginatedItems.map(
+                (
+                  item,
+                  index
+                ) => (
+                  <div
+                    className="menu-showcase__cell"
+                    style={{
+                      animationDelay: `${
+                        index *
+                        45
+                      }ms`,
+                    }}
+                    key={
+                      item._id
+                    }
+                  >
+
+                    <MenuCard
+                      item={item}
+                      onAdd={
+                        handleAdd
+                      }
+                      adding={
+                        addingProductId ===
+                        item._id
+                      }
+                    />
+
+                  </div>
+                )
+              )}
+
+            </div>
+          )}
+
+        {/* =================================================
+            PAGINATION
+        ================================================ */}
+
+        {!error &&
+          totalPages > 1 && (
+            <div className="menu-pagination">
+
               <button
                 type="button"
-                className="luxury-pagination__nav"
-                onClick={() => handlePageChange(Math.max(currentPage - 1, 0))}
-                disabled={currentPage === 0}
+                disabled={
+                  currentPage ===
+                  0
+                }
+                onClick={() =>
+                  handlePageChange(
+                    currentPage -
+                      1
+                  )
+                }
                 aria-label="Previous page"
               >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="15 18 9 12 15 6" />
-                </svg>
+                <ChevronLeft
+                  size={18}
+                />
+
+                <span>
+                  Previous
+                </span>
               </button>
 
-              {/* Page Number Chips */}
-              <div className="luxury-pagination__list">
-                {Array.from({ length: totalPages }).map((_, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    className={`luxury-pagination__item ${idx === currentPage ? 'is-active' : ''}`}
-                    onClick={() => handlePageChange(idx)}
-                    aria-label={`Page ${idx + 1}`}
-                    aria-current={idx === currentPage ? 'page' : undefined}
-                  >
-                    <span>{idx + 1}</span>
-                  </button>
-                ))}
+              <div className="menu-pagination__pages">
+
+                {Array.from(
+                  {
+                    length:
+                      totalPages,
+                  },
+                  (
+                    _,
+                    index
+                  ) =>
+                    index
+                ).map(
+                  (page) => (
+                    <button
+                      type="button"
+                      key={page}
+                      className={
+                        currentPage ===
+                        page
+                          ? "is-active"
+                          : ""
+                      }
+                      onClick={() =>
+                        handlePageChange(
+                          page
+                        )
+                      }
+                    >
+                      {page + 1}
+                    </button>
+                  )
+                )}
+
               </div>
 
-              {/* Next Button */}
               <button
                 type="button"
-                className="luxury-pagination__nav"
-                onClick={() => handlePageChange(Math.min(currentPage + 1, totalPages - 1))}
-                disabled={currentPage === totalPages - 1}
+                disabled={
+                  currentPage >=
+                  totalPages - 1
+                }
+                onClick={() =>
+                  handlePageChange(
+                    currentPage +
+                      1
+                  )
+                }
                 aria-label="Next page"
               >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
+                <span>
+                  Next
+                </span>
+
+                <ChevronRight
+                  size={18}
+                />
               </button>
+
             </div>
-          </nav>
-        )}
+          )}
+
+        {/* =================================================
+            COUNT
+        ================================================ */}
+
+        {!error &&
+          filteredItems.length >
+            0 && (
+            <div className="menu-count">
+
+              Showing{" "}
+
+              <strong>
+                {Math.min(
+                  paginatedItems.length,
+                  itemsPerPage
+                )}
+              </strong>
+
+              {" "}of{" "}
+
+              <strong>
+                {
+                  filteredItems.length
+                }
+              </strong>
+
+              {" "}products
+
+              {activeCategory !==
+                "all" && (
+                <>
+                  {" "}in{" "}
+
+                  <strong>
+                    {
+                      categories.find(
+                        (
+                          item
+                        ) =>
+                          item.key ===
+                          activeCategory
+                      )?.label
+                    }
+                  </strong>
+                </>
+              )}
+
+            </div>
+          )}
+
       </section>
 
-      {/* Status Toast */}
+      {/* =================================================
+          TOAST
+      ================================================ */}
+
       {toast && (
-        <div className="menu-toast" role="status">
-          <span className="menu-toast__check">✓</span>
-          <span>{toast}</span>
+        <div
+          className="menu-toast"
+          role="status"
+        >
+          <span className="menu-toast__check">
+            ✓
+          </span>
+
+          <span>
+            {toast}
+          </span>
         </div>
       )}
+
     </div>
   );
 };

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./AboutUsVideo.css";
 
-// Your restaurant image (includes graceful fallback)
-import restaurantImageDefault from "../../assets/AboutUsVideo.jpg";
+// Production unit/agro-processing thumbnail (includes graceful fallback)
+import productionImageDefault from "../../assets/AboutUsVideo.jpg";
 
-// YouTube Video ID
+// YouTube Video ID (Replace with your actual factory/brand film ID when ready)
 const YOUTUBE_VIDEO_ID = "Lfl_YqWv_3o";
 
 const AboutUsVideo = () => {
@@ -36,14 +36,12 @@ const AboutUsVideo = () => {
       <div className="AboutUsVideo__container">
         {/* Section Heading */}
         <header className="AboutUsVideo__heading">
-          <span className="AboutUsVideo__eyebrow">EXPERIENCE OUR ATMOSPHERE</span>
+          <span className="AboutUsVideo__eyebrow">INSIDE FOODIGO</span>
           <h2 className="AboutUsVideo__title">
-            We Invite You to Visit <span>Our Restaurant</span>
+            See How We Craft <span>Pure Essentials</span>
           </h2>
           <p className="AboutUsVideo__description">
-            Step into a world where culinary passion meets warm hospitality. From
-            our wood-fired aromas to carefully crafted candlelight seating, immerse
-            yourself in a dining journey designed to linger in memory.
+            Take a closer look at our Siliguri facility. From carefully selecting premium golden chickpeas for stone-ground Besan to roasting chana for high-protein Sattu and sorting crystal-clean Sabudana, discover the uncompromised hygiene behind every Foodigo pack.
           </p>
         </header>
 
@@ -53,7 +51,7 @@ const AboutUsVideo = () => {
           onClick={openVideo}
           role="button"
           tabIndex={0}
-          aria-label="Click to watch restaurant video"
+          aria-label="Click to watch Foodigo manufacturing story"
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
@@ -62,13 +60,13 @@ const AboutUsVideo = () => {
           }}
         >
           <img
-            src={restaurantImageDefault}
+            src={productionImageDefault}
             onError={(e) => {
               e.target.onerror = null;
               e.target.src =
-                "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=85";
+                "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=1400&q=85";
             }}
-            alt="Warm and elegant restaurant interior"
+            alt="Foodigo grain processing and packaging facility"
             className="AboutUsVideo__bannerImg"
             loading="lazy"
           />
@@ -101,7 +99,7 @@ const AboutUsVideo = () => {
                 </svg>
               </span>
             </button>
-            <span className="AboutUsVideo__watchText">Watch Story</span>
+            <span className="AboutUsVideo__watchText">Watch Production Tour</span>
           </div>
         </div>
       </div>
@@ -113,7 +111,7 @@ const AboutUsVideo = () => {
           onClick={closeVideo}
           role="dialog"
           aria-modal="true"
-          aria-label="Restaurant Tour Video"
+          aria-label="Foodigo Brand Story Video"
         >
           <div
             className="AboutUsVideo__modalContent"
@@ -145,7 +143,7 @@ const AboutUsVideo = () => {
             <div className="AboutUsVideo__videoFrame">
               <iframe
                 src={`https://www.youtube-nocookie.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`}
-                title="Restaurant Video"
+                title="Foodigo Manufacturing Story Video"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen

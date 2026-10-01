@@ -4,10 +4,10 @@ import "./AboutUsWhatWeDo.css";
 const SERVICES_DATA = [
   {
     id: 1,
-    title: "Fresh Products",
+    title: "Stone-Ground Besan",
     description:
-      "Locally harvested daily from organic regional farms to bring pure seasonal flavors straight to your plate.",
-    badge: "100% Organic",
+      "Finely milled from selected pure chana dal using cold stone-grinding methods to lock in aroma, natural color, and essential nutrients.",
+    badge: "100% Pure Gram",
     icon: (
       <svg
         viewBox="0 0 48 48"
@@ -18,23 +18,21 @@ const SERVICES_DATA = [
         strokeLinejoin="round"
         aria-hidden="true"
       >
-        {/* Basket */}
-        <path d="M8 24h32l-3 16H11L8 24z" />
-        <path d="M14 24C14 16 18 10 24 10s10 6 10 14" />
-        {/* Fresh Harvest Leaves */}
-        <path d="M19 19c-3-3-4-8-2-12 5 0 9 3 10 7" />
-        <path d="M29 19c3-3 4-8 2-12-5 0-9 3-10 7" />
-        <line x1="16" y1="30" x2="32" y2="30" />
-        <line x1="18" y1="35" x2="30" y2="35" />
+        {/* Grain / Pulses Sack */}
+        <path d="M12 16h24l4 24a3 3 0 0 1-3 3H11a3 3 0 0 1-3-3l4-24z" />
+        <path d="M16 16c0-4 3.5-7 8-7s8 3 8 7" />
+        <path d="M12 21h24" />
+        {/* Wheat grain kernel icon inside */}
+        <path d="M24 26v10M21 29c2 1 3 0 3 0s1 1 3 0M21 33c2 1 3 0 3 0s1 1 3 0" />
       </svg>
     ),
   },
   {
     id: 2,
-    title: "Skilled Chefs",
+    title: "Roasted Protein Sattu",
     description:
-      "Passionate culinary artisans crafting contemporary gastronomy rooted in classic heritage techniques.",
-    badge: "Master Craft",
+      "Traditional sand-roasted Bengal gram pulverized to perfection. A powerhouse of natural dietary fiber and plant protein with zero additives.",
+    badge: "Superfood Staple",
     icon: (
       <svg
         viewBox="0 0 48 48"
@@ -45,22 +43,21 @@ const SERVICES_DATA = [
         strokeLinejoin="round"
         aria-hidden="true"
       >
-        {/* Chef Hat */}
-        <path d="M14 24v-4a7 7 0 0 1 10-6 6.5 6.5 0 0 1 10 6v4" />
-        <path d="M12 24h24v4H12z" />
-        <path d="M15 28v12h18V28" />
-        <circle cx="21" cy="33" r="1" fill="currentColor" />
-        <circle cx="27" cy="33" r="1" fill="currentColor" />
-        <circle cx="24" cy="37" r="1" fill="currentColor" />
+        {/* Mortar & Pestle / Traditional Grinding */}
+        <path d="M10 24h28c0 9-6 16-14 16S10 33 10 24z" />
+        <line x1="8" y1="24" x2="40" y2="24" />
+        <path d="M28 8l-6 12" />
+        <circle cx="29" cy="8" r="3" />
+        <path d="M18 32c3 3 9 3 12 0" />
       </svg>
     ),
   },
   {
     id: 3,
-    title: "Best Bar",
+    title: "Pearl Sabudana (Tapioca)",
     description:
-      "Bespoke mixology featuring small-batch artisanal spirits, botanical infusions, and vintage cellar wines.",
-    badge: "Craft Cocktails",
+      "Pristine, non-sticky, evenly sized tapioca pearls rigorously cleaned and sorted for fasting foods, khichdi, and delicious snacks.",
+    badge: "Premium Sorting",
     icon: (
       <svg
         viewBox="0 0 48 48"
@@ -71,23 +68,23 @@ const SERVICES_DATA = [
         strokeLinejoin="round"
         aria-hidden="true"
       >
-        {/* Cocktail Glass */}
-        <path d="M10 14h28L24 28v12" />
-        <line x1="16" y1="40" x2="32" y2="40" />
-        {/* Lime Garnish */}
-        <circle cx="34" cy="11" r="5" />
-        <path d="M34 6a5 5 0 0 0-5 5" />
-        {/* Drink level line */}
-        <line x1="14" y1="18" x2="34" y2="18" strokeDasharray="1 1" />
+        {/* Clean sorted pearl beads */}
+        <circle cx="16" cy="18" r="4.5" />
+        <circle cx="32" cy="18" r="4.5" />
+        <circle cx="24" cy="28" r="5" />
+        <circle cx="15" cy="36" r="3.5" />
+        <circle cx="33" cy="36" r="3.5" />
+        {/* Purity sparkle */}
+        <path d="M24 10v4M22 12h4" />
       </svg>
     ),
   },
   {
     id: 4,
-    title: "Vegan Cuisine",
+    title: "Wholesale & Custom Packaging",
     description:
-      "Nutrient-rich, delicious plant-forward creations celebrated for exquisite taste, color, and texture.",
-    badge: "Plant-Based",
+      "Reliable bulk dispatches in 5kg, 25kg, and 50kg bags for sweet makers and dealers, alongside moisture-proof consumer retail pouches.",
+    badge: "B2B & Retail",
     icon: (
       <svg
         viewBox="0 0 48 48"
@@ -98,13 +95,14 @@ const SERVICES_DATA = [
         strokeLinejoin="round"
         aria-hidden="true"
       >
-        {/* Sprout & Leaf */}
-        <path d="M24 40V22" />
-        <path d="M24 22c-8 0-14-6-14-14 8 0 14 6 14 14z" />
-        <path d="M24 28c7-1 12-7 12-14-7 0-12 7-12 14z" />
-        {/* Serving Plate Rim */}
-        <path d="M10 40h28" />
-        <path d="M14 40c1.5 3 4.5 4 10 4s8.5-1 10-4" />
+        {/* Distribution & Shipping Package */}
+        <path d="M10 16l14-7 14 7-14 7-14-7z" />
+        <path d="M10 16v16l14 8 14-8V16" />
+        <line x1="24" y1="23" x2="24" y2="40" />
+        <path d="M17 12.5l14 7" />
+        {/* Verified Shield Badge */}
+        <circle cx="35" cy="33" r="5" fill="none" />
+        <path d="M33 33l1.5 1.5 3-3" />
       </svg>
     ),
   },
@@ -116,18 +114,17 @@ const AboutUsWhatWeDo = () => {
       <div className="AboutUsWhatWeDo__container">
         {/* Section Heading */}
         <header className="AboutUsWhatWeDo__heading">
-          <span className="AboutUsWhatWeDo__eyebrow">OUR COMMITMENT</span>
-          <h2 className="AboutUsWhatWeDo__title">What We Do</h2>
+          <span className="AboutUsWhatWeDo__eyebrow">OUR CORE SPECIALTIES</span>
+          <h2 className="AboutUsWhatWeDo__title">What Foodigo Does</h2>
           <div className="AboutUsWhatWeDo__decorLine" aria-hidden="true">
             <span className="AboutUsWhatWeDo__decorDot" />
           </div>
           <p className="AboutUsWhatWeDo__subtitle">
-            Every culinary experience we craft is rooted in sustainability,
-            artisan technique, and genuine hospitality.
+            Processed with utmost hygiene at Matigara, Siliguri, our staples bring pure taste, unadulterated goodness, and unmatched consistency to every home and enterprise.
           </p>
         </header>
 
-        {/* Services Grid */}
+        {/* Services / Capabilities Grid */}
         <div className="AboutUsWhatWeDo__grid">
           {SERVICES_DATA.map((service) => (
             <article className="AboutUsWhatWeDo__card" key={service.id}>
