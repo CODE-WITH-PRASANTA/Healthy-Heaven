@@ -1,18 +1,17 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 
 import {
   ArrowLeft,
   ArrowRight,
+  BadgeCheck,
   LoaderCircle,
+  Leaf,
+  Phone,
+  ShieldCheck,
   ShoppingCart,
+  Wheat,
 } from "lucide-react";
 
 import API, { IMG_URL } from "../../api/axios";
@@ -24,86 +23,84 @@ import "./TotalOrder.css";
 // ============================================================
 
 const AUTO_PLAY_TIME = 4500;
-
 const ORDER_REFRESH_TIME = 30000;
+const TRADE_PHONE = "9007252221";
+const CART_STORAGE_KEY = "healthy_heaven_cart_id";
 
 const FALLBACK_IMAGE =
-  "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1000&q=85";
+  "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=1000&q=85";
 
+const TRUST_POINTS = [
+  { icon: Leaf, label: "100% Pure & Natural" },
+  { icon: Wheat, label: "Stone-Ground Fresh" },
+  { icon: ShieldCheck, label: "Hygienically Packed" },
+  { icon: BadgeCheck, label: "Direct From Mill" },
+];
+
+// ============================================================
+// HOW MANY CARDS ARE VISIBLE (by screen width)
+// ============================================================
+
+const getPerView = () => {
+  if (typeof window === "undefined") return 4;
+
+  const width = window.innerWidth;
+
+  if (width >= 1100) return 4;
+  if (width >= 769) return 3;
+  if (width >= 561) return 2;
+
+  return 1;
+};
 
 // ============================================================
 // CART ID
 // ============================================================
 
 const getCartId = () => {
-  let cartId = localStorage.getItem(
-    "healthy_heaven_cart_id"
-  );
+  let cartId = localStorage.getItem(CART_STORAGE_KEY);
 
   if (!cartId) {
-    cartId =
-      `cart_${Date.now()}_` +
-      Math.random()
-        .toString(36)
-        .substring(2, 10);
+    cartId = `cart_${Date.now()}_${Math.random().toString(36).substring(2, 10)}`;
 
-    localStorage.setItem(
-      "healthy_heaven_cart_id",
-      cartId
-    );
+    localStorage.setItem(CART_STORAGE_KEY, cartId);
   }
 
   return cartId;
 };
-
 
 // ============================================================
 // IMAGE URL
 // ============================================================
 
 const getImageUrl = (image) => {
-  if (!image) {
-    return FALLBACK_IMAGE;
-  }
+  if (!image) return FALLBACK_IMAGE;
 
   if (
     typeof image === "string" &&
-    (
-      image.startsWith("http://") ||
+    (image.startsWith("http://") ||
       image.startsWith("https://") ||
-      image.startsWith("blob:")
-    )
+      image.startsWith("blob:"))
   ) {
     return image;
   }
 
-  const cleanImage = String(image)
-    .replace(/^\/+/, "");
+  const cleanImage = String(image).replace(/^\/+/, "");
 
-  if (
-    cleanImage.startsWith("uploads/")
-  ) {
+  if (cleanImage.startsWith("uploads/")) {
     return `${IMG_URL}/${cleanImage}`;
   }
 
   return `${IMG_URL}/uploads/menu/${cleanImage}`;
 };
 
-
 // ============================================================
-// PRODUCT ID
+// FIELD HELPERS
 // ============================================================
 
 const getProductId = (item) => {
-  if (!item) {
-    return null;
-  }
-
-  if (
-    typeof item === "string"
-  ) {
-    return item;
-  }
+  if (!item) return null;
+  if (typeof item === "string") return item;
 
   return (
     item._id ||
@@ -116,220 +113,90 @@ const getProductId = (item) => {
   );
 };
 
-
-// ============================================================
-// PRODUCT NAME
-// ============================================================
-
-const getItemName = (item) => {
-  if (!item) {
-    return "";
-  }
-
-  return (
-    item.name ||
-    item.productName ||
-    item.menuItemName ||
-    item.title ||
-    item.product?.name ||
-    item.menuItem?.name ||
-    ""
-  );
-};
-
-
-// ============================================================
-// PRODUCT PRICE
-// ============================================================
+const getItemName = (item) =>
+  item?.name ||
+  item?.productName ||
+  item?.menuItemName ||
+  item?.title ||
+  item?.product?.name ||
+  item?.menuItem?.name ||
+  "";
 
 const getItemPrice = (item) => {
-  if (!item) {
-    return 0;
-  }
-
   const price =
-    item.price ??
-    item.productPrice ??
-    item.menuItemPrice ??
-    item.product?.price ??
-    item.menuItem?.price ??
+    item?.price ??
+    item?.productPrice ??
+    item?.menuItemPrice ??
+    item?.product?.price ??
+    item?.menuItem?.price ??
     0;
 
-  const parsed =
-    Number(price);
+  const parsed = Number(price);
 
-  return Number.isFinite(parsed)
-    ? parsed
-    : 0;
+  return Number.isFinite(parsed) ? parsed : 0;
 };
 
+const getItemImage = (item) =>
+  item?.image ||
+  item?.imageUrl ||
+  item?.photo ||
+  item?.thumbnail ||
+  item?.productImage ||
+  item?.menuItemImage ||
+  item?.product?.image ||
+  item?.product?.imageUrl ||
+  item?.menuItem?.image ||
+  item?.menuItem?.imageUrl ||
+  "";
 
-// ============================================================
-// PRODUCT IMAGE
-// ============================================================
+const getItemCategory = (item) =>
+  item?.category ||
+  item?.categoryName ||
+  item?.productCategory ||
+  item?.menuItemCategory ||
+  item?.product?.category ||
+  item?.menuItem?.category ||
+  "";
 
-const getItemImage = (item) => {
-  if (!item) {
-    return "";
-  }
-
-  return (
-    item.image ||
-    item.imageUrl ||
-    item.photo ||
-    item.thumbnail ||
-    item.productImage ||
-    item.menuItemImage ||
-    item.product?.image ||
-    item.product?.imageUrl ||
-    item.menuItem?.image ||
-    item.menuItem?.imageUrl ||
-    ""
-  );
-};
-
-
-// ============================================================
-// PRODUCT CATEGORY
-// ============================================================
-
-const getItemCategory = (item) => {
-  if (!item) {
-    return "";
-  }
-
-  return (
-    item.category ||
-    item.categoryName ||
-    item.productCategory ||
-    item.menuItemCategory ||
-    item.product?.category ||
-    item.menuItem?.category ||
-    ""
-  );
-};
-
-
-// ============================================================
-// PRODUCT DESCRIPTION
-// ============================================================
-
-const getItemDescription = (item) => {
-  if (!item) {
-    return "";
-  }
-
-  return (
-    item.description ||
-    item.productDescription ||
-    item.menuItemDescription ||
-    item.product?.description ||
-    item.menuItem?.description ||
-    ""
-  );
-};
-
-
-// ============================================================
-// QUANTITY
-// ============================================================
+const getItemDescription = (item) =>
+  item?.description ||
+  item?.productDescription ||
+  item?.menuItemDescription ||
+  item?.product?.description ||
+  item?.menuItem?.description ||
+  "";
 
 const getItemQuantity = (item) => {
-  if (!item) {
-    return 1;
-  }
+  const quantity = item?.quantity ?? item?.qty ?? item?.count ?? 1;
+  const parsed = Number(quantity);
 
-  const quantity =
-    item.quantity ??
-    item.qty ??
-    item.count ??
-    1;
-
-  const parsed =
-    Number(quantity);
-
-  if (
-    !Number.isFinite(parsed) ||
-    parsed <= 0
-  ) {
-    return 1;
-  }
+  if (!Number.isFinite(parsed) || parsed <= 0) return 1;
 
   return parsed;
 };
-
 
 // ============================================================
 // NORMALIZE ORDERS RESPONSE
 // ============================================================
 
-const normalizeOrdersResponse = (
-  responseData
-) => {
-  if (!responseData) {
-    return [];
-  }
-
-  if (
-    Array.isArray(responseData)
-  ) {
-    return responseData;
-  }
-
-  if (
-    Array.isArray(
-      responseData.data
-    )
-  ) {
-    return responseData.data;
-  }
-
-  if (
-    Array.isArray(
-      responseData.orders
-    )
-  ) {
-    return responseData.orders;
-  }
-
-  if (
-    responseData.data &&
-    Array.isArray(
-      responseData.data.orders
-    )
-  ) {
-    return responseData.data.orders;
-  }
-
-  if (
-    Array.isArray(
-      responseData.result
-    )
-  ) {
-    return responseData.result;
-  }
-
-  if (
-    responseData.result &&
-    Array.isArray(
-      responseData.result.orders
-    )
-  ) {
-    return responseData.result.orders;
-  }
+const normalizeOrdersResponse = (responseData) => {
+  if (!responseData) return [];
+  if (Array.isArray(responseData)) return responseData;
+  if (Array.isArray(responseData.data)) return responseData.data;
+  if (Array.isArray(responseData.orders)) return responseData.orders;
+  if (Array.isArray(responseData.data?.orders)) return responseData.data.orders;
+  if (Array.isArray(responseData.result)) return responseData.result;
+  if (Array.isArray(responseData.result?.orders)) return responseData.result.orders;
 
   return [];
 };
 
-
 // ============================================================
-// GET ORDER ITEMS
+// ORDER ITEMS
 // ============================================================
 
 const getOrderItems = (order) => {
-  if (!order) {
-    return [];
-  }
+  if (!order) return [];
 
   const arrays = [
     order.items,
@@ -341,1709 +208,690 @@ const getOrderItems = (order) => {
     order.details,
   ];
 
-  for (
-    const value of arrays
-  ) {
-    if (
-      Array.isArray(value)
-    ) {
-      return value;
-    }
+  for (const value of arrays) {
+    if (Array.isArray(value)) return value;
   }
 
-  // Single product/order item
-  if (
-    order.product ||
-    order.menuItem ||
-    order.productId ||
-    order.menuItemId
-  ) {
+  if (order.product || order.menuItem || order.productId || order.menuItemId) {
     return [order];
   }
 
   return [];
 };
 
+const getOrderProductId = (orderItem) => {
+  if (!orderItem) return null;
 
-// ============================================================
-// EXTRACT PRODUCT ID FROM ORDER ITEM
-// ============================================================
+  if (orderItem.productId) return getProductId(orderItem.productId);
+  if (orderItem.menuItemId) return getProductId(orderItem.menuItemId);
+  if (orderItem.product) return getProductId(orderItem.product);
+  if (orderItem.menuItem) return getProductId(orderItem.menuItem);
+  if (orderItem.item) return getProductId(orderItem.item);
 
-const getOrderProductId = (
-  orderItem
-) => {
-  if (!orderItem) {
-    return null;
-  }
-
-  // Direct productId
-  if (
-    orderItem.productId
-  ) {
-    return getProductId(
-      orderItem.productId
-    );
-  }
-
-  // Direct menuItemId
-  if (
-    orderItem.menuItemId
-  ) {
-    return getProductId(
-      orderItem.menuItemId
-    );
-  }
-
-  // Nested product
-  if (
-    orderItem.product
-  ) {
-    return getProductId(
-      orderItem.product
-    );
-  }
-
-  // Nested menu item
-  if (
-    orderItem.menuItem
-  ) {
-    return getProductId(
-      orderItem.menuItem
-    );
-  }
-
-  // item object
-  if (
-    orderItem.item
-  ) {
-    return getProductId(
-      orderItem.item
-    );
-  }
-
-  // Finally direct _id
-  return getProductId(
-    orderItem
-  );
+  return getProductId(orderItem);
 };
 
-
 // ============================================================
-// AGGREGATE MOST SOLD PRODUCTS
-// ============================================================
-
-const aggregateMostSoldProducts = (
-  orders
-) => {
-  if (
-    !Array.isArray(orders)
-  ) {
-    return [];
-  }
-
-  const productMap =
-    new Map();
-
-  orders.forEach(
-    (order) => {
-      const items =
-        getOrderItems(order);
-
-      items.forEach(
-        (orderItem) => {
-          if (!orderItem) {
-            return;
-          }
-
-          const productId =
-            getOrderProductId(
-              orderItem
-            );
-
-          if (!productId) {
-            return;
-          }
-
-          const quantity =
-            getItemQuantity(
-              orderItem
-            );
-
-          const key =
-            String(productId);
-
-          const existing =
-            productMap.get(key);
-
-          if (existing) {
-            existing.soldQuantity +=
-              quantity;
-
-            existing.orderCount +=
-              1;
-
-            return;
-          }
-
-          productMap.set(
-            key,
-            {
-              productId:
-                productId,
-
-              soldQuantity:
-                quantity,
-
-              orderCount:
-                1,
-            }
-          );
-        }
-      );
-    }
-  );
-
-  return Array.from(
-    productMap.values()
-  )
-    .sort(
-      (a, b) =>
-        b.soldQuantity -
-        a.soldQuantity
-    )
-    .slice(0, 4);
-};
-
-
-// ============================================================
-// MERGE SOLD PRODUCTS WITH MENU PRODUCTS
+// MOST SOLD PRODUCTS
 // ============================================================
 
-const mergeProducts = (
-  soldProducts,
-  menuItems
-) => {
-  const menuMap =
-    new Map();
+const aggregateMostSoldProducts = (orders) => {
+  if (!Array.isArray(orders)) return [];
 
-  menuItems.forEach(
-    (item) => {
-      const id =
-        getProductId(item);
+  const productMap = new Map();
 
-      if (!id) {
+  orders.forEach((order) => {
+    getOrderItems(order).forEach((orderItem) => {
+      if (!orderItem) return;
+
+      const productId = getOrderProductId(orderItem);
+
+      if (!productId) return;
+
+      const quantity = getItemQuantity(orderItem);
+      const key = String(productId);
+      const existing = productMap.get(key);
+
+      if (existing) {
+        existing.soldQuantity += quantity;
+        existing.orderCount += 1;
         return;
       }
 
-      menuMap.set(
-        String(id),
-        item
-      );
-    }
-  );
+      productMap.set(key, {
+        productId,
+        soldQuantity: quantity,
+        orderCount: 1,
+      });
+    });
+  });
+
+  return Array.from(productMap.values())
+    .sort((a, b) => b.soldQuantity - a.soldQuantity)
+    .slice(0, 8);
+};
+
+// ============================================================
+// MERGE WITH MENU
+// ============================================================
+
+const decorateProduct = (menuProduct, soldQuantity = 0, orderCount = 0) => ({
+  ...menuProduct,
+  _id: getProductId(menuProduct),
+  soldQuantity,
+  orderCount,
+  name: getItemName(menuProduct),
+  price: getItemPrice(menuProduct),
+  image: getItemImage(menuProduct),
+  category: getItemCategory(menuProduct),
+  description: getItemDescription(menuProduct),
+});
+
+const mergeProducts = (soldProducts, menuItems) => {
+  const menuMap = new Map();
+
+  menuItems.forEach((item) => {
+    const id = getProductId(item);
+
+    if (id) menuMap.set(String(id), item);
+  });
 
   return soldProducts
-    .map(
-      (soldProduct) => {
-        const id =
-          String(
-            soldProduct.productId
-          );
+    .map((sold) => {
+      const menuProduct = menuMap.get(String(sold.productId));
 
-        const menuProduct =
-          menuMap.get(id);
+      if (!menuProduct) return null;
 
-        if (!menuProduct) {
-          return null;
-        }
-
-        return {
-          ...menuProduct,
-
-          _id:
-            getProductId(
-              menuProduct
-            ),
-
-          soldQuantity:
-            soldProduct.soldQuantity,
-
-          orderCount:
-            soldProduct.orderCount,
-
-          name:
-            getItemName(
-              menuProduct
-            ),
-
-          price:
-            getItemPrice(
-              menuProduct
-            ),
-
-          image:
-            getItemImage(
-              menuProduct
-            ),
-
-          category:
-            getItemCategory(
-              menuProduct
-            ),
-
-          description:
-            getItemDescription(
-              menuProduct
-            ),
-        };
-      }
-    )
+      return decorateProduct(menuProduct, sold.soldQuantity, sold.orderCount);
+    })
     .filter(Boolean);
 };
 
+// ============================================================
+// SMALL SHARED PIECES
+// ============================================================
+
+function Ambient() {
+  return (
+    <div className="total-order__ambient" aria-hidden="true">
+      <span className="total-order__ambient-bloom total-order__ambient-bloom--one" />
+      <span className="total-order__ambient-bloom total-order__ambient-bloom--two" />
+      <span className="total-order__ambient-bloom total-order__ambient-bloom--three" />
+    </div>
+  );
+}
+
+function SectionHeader() {
+  return (
+    <div className="total-order__intro">
+      <div className="total-order__eyebrow">
+        <span className="total-order__eyebrow-dot" />
+        Customer Favourites
+      </div>
+
+      <h2 className="total-order__heading">
+        Most Loved <em>Foodigo Staples</em>
+      </h2>
+
+      <p className="total-order__sub">
+        Pure Besan, Sattu, Dal, Rice Flour and more. These are the staples our
+        customers order again and again, freshly milled and hygienically packed
+        in Siliguri.
+      </p>
+
+      <ul className="total-order__trust">
+        {TRUST_POINTS.map(({ icon: Icon, label }) => (
+          <li key={label}>
+            <Icon size={15} />
+            <span>{label}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 // ============================================================
 // COMPONENT
 // ============================================================
 
 const TotalOrder = () => {
-  const navigate =
-    useNavigate();
+  const navigate = useNavigate();
 
-  // ==========================================================
-  // STATE
-  // ==========================================================
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [addingCartId, setAddingCartId] = useState(null);
+  const [perView, setPerView] = useState(getPerView);
+  const [showingFallback, setShowingFallback] = useState(false);
 
-  const [
-    products,
-    setProducts,
-  ] = useState([]);
+  const touchStartX = useRef(null);
+  const touchEndX = useRef(null);
+  const mountedRef = useRef(true);
 
-  const [
-    loading,
-    setLoading,
-  ] = useState(true);
-
-  const [
-    error,
-    setError,
-  ] = useState("");
-
-  const [
-    currentIndex,
-    setCurrentIndex,
-  ] = useState(0);
-
-  const [
-    isPaused,
-    setIsPaused,
-  ] = useState(false);
-
-  const [
-    addingCartId,
-    setAddingCartId,
-  ] = useState(null);
-
-
-  // ==========================================================
-  // REFS
-  // ==========================================================
-
-  const touchStartX =
-    useRef(null);
-
-  const touchEndX =
-    useRef(null);
-
-  const mountedRef =
-    useRef(true);
-
-
-  // ==========================================================
-  // FETCH EVERYTHING
-  // ==========================================================
-
-  const fetchMostSoldProducts =
-    useCallback(
-      async () => {
-        try {
-          setError("");
-
-          // ==================================================
-          // FETCH ORDERS + MENU
-          // ==================================================
-
-          const [
-            ordersResponse,
-            menuResponse,
-          ] = await Promise.all([
-            API.get("/orders"),
-
-            API.get("/menu", {
-              params: {
-                page: 1,
-                limit: 1000,
-              },
-            }),
-          ]);
-
-
-          // ==================================================
-          // DEBUG ORDERS
-          // ==================================================
-
-          console.log(
-            "================================"
-          );
-
-          console.log(
-            "TOTAL ORDER - ORDERS RESPONSE:",
-            ordersResponse.data
-          );
-
-          console.log(
-            "================================"
-          );
-
-
-          // ==================================================
-          // DEBUG MENU
-          // ==================================================
-
-          console.log(
-            "TOTAL ORDER - MENU RESPONSE:",
-            menuResponse.data
-          );
-
-
-          // ==================================================
-          // NORMALIZE ORDERS
-          // ==================================================
-
-          const orders =
-            normalizeOrdersResponse(
-              ordersResponse.data
-            );
-
-
-          // ==================================================
-          // NORMALIZE MENU
-          // ==================================================
-
-          let menuItems = [];
-
-          if (
-            Array.isArray(
-              menuResponse.data
-            )
-          ) {
-            menuItems =
-              menuResponse.data;
-          } else if (
-            Array.isArray(
-              menuResponse.data?.data
-            )
-          ) {
-            menuItems =
-              menuResponse.data.data;
-          } else if (
-            Array.isArray(
-              menuResponse.data?.menu
-            )
-          ) {
-            menuItems =
-              menuResponse.data.menu;
-          } else if (
-            Array.isArray(
-              menuResponse.data?.items
-            )
-          ) {
-            menuItems =
-              menuResponse.data.items;
-          }
-
-
-          console.log(
-            "TOTAL ORDER - TOTAL ORDERS:",
-            orders.length
-          );
-
-          console.log(
-            "TOTAL ORDER - TOTAL MENU ITEMS:",
-            menuItems.length
-          );
-
-
-          // ==================================================
-          // CALCULATE MOST SOLD
-          // ==================================================
-
-          const soldProducts =
-            aggregateMostSoldProducts(
-              orders
-            );
-
-
-          console.log(
-            "TOTAL ORDER - SOLD PRODUCT IDS:",
-            soldProducts
-          );
-
-
-          // ==================================================
-          // MERGE WITH ACTUAL MENU
-          // ==================================================
-
-          const mostSoldProducts =
-            mergeProducts(
-              soldProducts,
-              menuItems
-            );
-
-
-          console.log(
-            "================================"
-          );
-
-          console.log(
-            "TOTAL ORDER - MOST SOLD PRODUCTS:",
-            mostSoldProducts
-          );
-
-          console.log(
-            "================================"
-          );
-
-
-          // ==================================================
-          // SET PRODUCTS
-          // ==================================================
-
-          if (
-            mountedRef.current
-          ) {
-            setProducts(
-              mostSoldProducts
-            );
-
-            setCurrentIndex(
-              (previous) => {
-                if (
-                  mostSoldProducts.length ===
-                  0
-                ) {
-                  return 0;
-                }
-
-                return Math.min(
-                  previous,
-                  mostSoldProducts.length -
-                    1
-                );
-              }
-            );
-          }
-
-        } catch (err) {
-          console.error(
-            "================================"
-          );
-
-          console.error(
-            "TOTAL ORDER - FETCH ERROR"
-          );
-
-          console.error(
-            "================================"
-          );
-
-          console.error(
-            err
-          );
-
-          console.error(
-            "STATUS:",
-            err?.response?.status
-          );
-
-          console.error(
-            "BACKEND RESPONSE:",
-            err?.response?.data
-          );
-
-          if (
-            mountedRef.current
-          ) {
-            setError(
-              err?.response?.data
-                ?.message ||
-              "Unable to fetch products."
-            );
-          }
-        } finally {
-          if (
-            mountedRef.current
-          ) {
-            setLoading(false);
-          }
-        }
-      },
-      []
-    );
-
-
-  // ==========================================================
-  // INITIAL LOAD
-  // ==========================================================
+  // ----------------------------------------------------------
+  // RESPONSIVE CARDS PER VIEW
+  // ----------------------------------------------------------
 
   useEffect(() => {
-    mountedRef.current =
-      true;
+    const handleResize = () => setPerView(getPerView());
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Last index we can slide to without showing empty space
+  const maxIndex = Math.max(products.length - perView, 0);
+
+  useEffect(() => {
+    setCurrentIndex((previous) => Math.min(previous, maxIndex));
+  }, [maxIndex]);
+
+  // ----------------------------------------------------------
+  // FETCH ORDERS + MENU
+  // ----------------------------------------------------------
+
+  const fetchMostSoldProducts = useCallback(async () => {
+    try {
+      setError("");
+
+      const [ordersResponse, menuResponse] = await Promise.all([
+        API.get("/orders"),
+        API.get("/menu", { params: { page: 1, limit: 1000 } }),
+      ]);
+
+      const orders = normalizeOrdersResponse(ordersResponse.data);
+
+      let menuItems = [];
+
+      if (Array.isArray(menuResponse.data)) {
+        menuItems = menuResponse.data;
+      } else if (Array.isArray(menuResponse.data?.data)) {
+        menuItems = menuResponse.data.data;
+      } else if (Array.isArray(menuResponse.data?.menu)) {
+        menuItems = menuResponse.data.menu;
+      } else if (Array.isArray(menuResponse.data?.items)) {
+        menuItems = menuResponse.data.items;
+      }
+
+      const soldProducts = aggregateMostSoldProducts(orders);
+
+      let finalProducts = mergeProducts(soldProducts, menuItems);
+      let usedFallback = false;
+
+      // No orders yet: show featured products instead of an empty section
+      if (finalProducts.length === 0 && menuItems.length > 0) {
+        finalProducts = menuItems
+          .slice(0, 8)
+          .map((item) => decorateProduct(item))
+          .filter((item) => item._id && item.name);
+
+        usedFallback = true;
+      }
+
+      if (mountedRef.current) {
+        setProducts(finalProducts);
+        setShowingFallback(usedFallback);
+      }
+    } catch (err) {
+      console.error("TOTAL ORDER FETCH ERROR:", err);
+      console.error("STATUS:", err?.response?.status);
+      console.error("BACKEND RESPONSE:", err?.response?.data);
+
+      if (mountedRef.current) {
+        setError(err?.response?.data?.message || "Unable to fetch products.");
+      }
+    } finally {
+      if (mountedRef.current) {
+        setLoading(false);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    mountedRef.current = true;
 
     fetchMostSoldProducts();
 
     return () => {
-      mountedRef.current =
-        false;
+      mountedRef.current = false;
     };
-  }, [
-    fetchMostSoldProducts,
-  ]);
-
-
-  // ==========================================================
-  // AUTO REFRESH
-  // ==========================================================
+  }, [fetchMostSoldProducts]);
 
   useEffect(() => {
-    const interval =
-      setInterval(
-        () => {
-          fetchMostSoldProducts();
-        },
-        ORDER_REFRESH_TIME
-      );
+    const interval = setInterval(fetchMostSoldProducts, ORDER_REFRESH_TIME);
 
-    return () => {
-      clearInterval(
-        interval
-      );
-    };
-  }, [
-    fetchMostSoldProducts,
-  ]);
+    return () => clearInterval(interval);
+  }, [fetchMostSoldProducts]);
 
-
-  // ==========================================================
-  // AUTO PLAY
-  // ==========================================================
+  // ----------------------------------------------------------
+  // AUTO PLAY (only when there is something to slide)
+  // ----------------------------------------------------------
 
   useEffect(() => {
-    if (
-      isPaused ||
-      products.length <= 1
-    ) {
-      return;
-    }
+    if (isPaused || maxIndex <= 0) return undefined;
 
-    const interval =
-      setInterval(
-        () => {
-          setCurrentIndex(
-            (previous) =>
-              (previous + 1) %
-              products.length
-          );
-        },
-        AUTO_PLAY_TIME
-      );
+    const interval = setInterval(() => {
+      setCurrentIndex((previous) => (previous >= maxIndex ? 0 : previous + 1));
+    }, AUTO_PLAY_TIME);
 
-    return () => {
-      clearInterval(
-        interval
-      );
-    };
-  }, [
-    isPaused,
-    products.length,
-  ]);
+    return () => clearInterval(interval);
+  }, [isPaused, maxIndex]);
 
+  // ----------------------------------------------------------
+  // NAVIGATION
+  // ----------------------------------------------------------
 
-  // ==========================================================
-  // PREVIOUS
-  // ==========================================================
+  const handlePrevious = () => {
+    if (maxIndex <= 0) return;
 
-  const handlePrevious =
-    () => {
-      if (
-        !products.length
-      ) {
-        return;
-      }
+    setCurrentIndex((previous) => (previous <= 0 ? maxIndex : previous - 1));
+  };
 
-      setCurrentIndex(
-        (previous) =>
-          previous === 0
-            ? products.length -
-              1
-            : previous - 1
-      );
-    };
+  const handleNext = () => {
+    if (maxIndex <= 0) return;
 
+    setCurrentIndex((previous) => (previous >= maxIndex ? 0 : previous + 1));
+  };
 
-  // ==========================================================
-  // NEXT
-  // ==========================================================
-
-  const handleNext =
-    () => {
-      if (
-        !products.length
-      ) {
-        return;
-      }
-
-      setCurrentIndex(
-        (previous) =>
-          (previous + 1) %
-          products.length
-      );
-    };
-
-
-  // ==========================================================
-  // DOT
-  // ==========================================================
-
-  const handleDotClick =
-    (index) => {
-      setCurrentIndex(
-        index
-      );
-    };
-
-
-  // ==========================================================
+  // ----------------------------------------------------------
   // TOUCH
-  // ==========================================================
+  // ----------------------------------------------------------
 
-  const handleTouchStart =
-    (event) => {
-      touchStartX.current =
-        event.touches[0]
-          .clientX;
+  const handleTouchStart = (event) => {
+    touchStartX.current = event.touches[0].clientX;
+    touchEndX.current = null;
 
-      touchEndX.current =
-        null;
+    setIsPaused(true);
+  };
 
-      setIsPaused(true);
-    };
+  const handleTouchMove = (event) => {
+    touchEndX.current = event.touches[0].clientX;
+  };
 
+  const handleTouchEnd = () => {
+    if (touchStartX.current !== null && touchEndX.current !== null) {
+      const distance = touchStartX.current - touchEndX.current;
 
-  const handleTouchMove =
-    (event) => {
-      touchEndX.current =
-        event.touches[0]
-          .clientX;
-    };
-
-
-  const handleTouchEnd =
-    () => {
-      if (
-        touchStartX.current ===
-          null ||
-        touchEndX.current ===
-          null
-      ) {
-        setIsPaused(false);
-        return;
-      }
-
-      const distance =
-        touchStartX.current -
-        touchEndX.current;
-
-      if (
-        Math.abs(distance) >=
-        50
-      ) {
-        if (
-          distance > 0
-        ) {
+      if (Math.abs(distance) >= 50) {
+        if (distance > 0) {
           handleNext();
         } else {
           handlePrevious();
         }
       }
+    }
 
-      touchStartX.current =
-        null;
+    touchStartX.current = null;
+    touchEndX.current = null;
 
-      touchEndX.current =
-        null;
+    setIsPaused(false);
+  };
 
-      setIsPaused(false);
-    };
-
-
-  // ==========================================================
+  // ----------------------------------------------------------
   // ADD TO CART
-  // ==========================================================
-
-  const handleAddToCart =
-    async (product) => {
-      try {
-        if (!product) {
-          alert(
-            "Product information is missing."
-          );
-
-          return;
-        }
-
-        // ====================================================
-        // IMPORTANT:
-        // This MUST be the actual menu MongoDB _id
-        // ====================================================
-
-        const productId =
-          product._id ||
-          product.productId;
-
-        if (!productId) {
-          console.error(
-            "PRODUCT ID MISSING:",
-            product
-          );
-
-          alert(
-            "Product ID is missing."
-          );
-
-          return;
-        }
-
-        setAddingCartId(
-          String(productId)
-        );
-
-
-        // ====================================================
-        // CART ID
-        // ====================================================
-
-        const cartId =
-          getCartId();
-
-
-        // ====================================================
-        // PRODUCT DATA
-        // ====================================================
-
-        const productName =
-          getItemName(
-            product
-          );
-
-        const productPrice =
-          getItemPrice(
-            product
-          );
-
-        const productImage =
-          getItemImage(
-            product
-          );
-
-        const productCategory =
-          getItemCategory(
-            product
-          );
-
-        const productDescription =
-          getItemDescription(
-            product
-          );
-
-
-        // ====================================================
-        // IMPORTANT CART PAYLOAD
-        //
-        // Your backend error says:
-        //
-        // "productId is required"
-        //
-        // Therefore use productId.
-        // ====================================================
-
-        const cartPayload = {
-          cartId:
-
-            cartId,
-
-          productId:
-
-            productId,
-
-          productName:
-
-            productName,
-
-          name:
-
-            productName,
-
-          price:
-
-            productPrice,
-
-          image:
-
-            productImage,
-
-          category:
-
-            productCategory,
-
-          description:
-
-            productDescription,
-
-          quantity:
-
-            1,
-        };
-
-
-        // ====================================================
-        // DEBUG
-        // ====================================================
-
-        console.log(
-          "================================="
-        );
-
-        console.log(
-          "TOTAL ORDER - ADD TO CART"
-        );
-
-        console.log(
-          "================================="
-        );
-
-        console.log(
-          "CART ID:",
-          cartId
-        );
-
-        console.log(
-          "PRODUCT ID:",
-          productId
-        );
-
-        console.log(
-          "PRODUCT NAME:",
-          productName
-        );
-
-        console.log(
-          "PRODUCT PRICE:",
-          productPrice
-        );
-
-        console.log(
-          "PRODUCT IMAGE:",
-          productImage
-        );
-
-        console.log(
-          "PRODUCT CATEGORY:",
-          productCategory
-        );
-
-        console.log(
-          "FULL CART PAYLOAD:",
-          cartPayload
-        );
-
-        console.log(
-          "================================="
-        );
-
-
-        // ====================================================
-        // POST CART
-        // ====================================================
-
-        const response =
-          await API.post(
-            "/cart",
-            cartPayload
-          );
-
-
-        // ====================================================
-        // SUCCESS
-        // ====================================================
-
-        console.log(
-          "================================="
-        );
-
-        console.log(
-          "TOTAL ORDER - CART SUCCESS"
-        );
-
-        console.log(
-          "================================="
-        );
-
-        console.log(
-          "CART RESPONSE:",
-          response.data
-        );
-
-
-        // ====================================================
-        // NAVIGATE
-        // ====================================================
-
-        navigate(
-          "/cart"
-        );
-
-      } catch (err) {
-        console.error(
-          "================================="
-        );
-
-        console.error(
-          "TOTAL ORDER - ADD TO CART ERROR"
-        );
-
-        console.error(
-          "================================="
-        );
-
-        console.error(
-          "ERROR:",
-          err
-        );
-
-        console.error(
-          "STATUS:",
-          err?.response?.status
-        );
-
-        console.error(
-          "BACKEND RESPONSE:",
-          err?.response?.data
-        );
-
-        console.error(
-          "BACKEND MESSAGE:",
-          err?.response?.data
-            ?.message
-        );
-
-        console.error(
-          "BACKEND ERROR:",
-          err?.response?.data
-            ?.error
-        );
-
-        const message =
-          err?.response?.data
-            ?.message ||
-          err?.response?.data
-            ?.error ||
-          "Failed to add product to cart.";
-
-        alert(message);
-
-      } finally {
-        setAddingCartId(
-          null
-        );
+  // ----------------------------------------------------------
+
+  const handleAddToCart = async (product) => {
+    try {
+      if (!product) {
+        alert("Product information is missing.");
+        return;
       }
-    };
 
+      const productId = product._id || product.productId;
 
-  // ==========================================================
-  // DISPLAY PRODUCTS
-  // ==========================================================
+      if (!productId) {
+        console.error("PRODUCT ID MISSING:", product);
+        alert("Product ID is missing.");
+        return;
+      }
 
-  const displayProducts =
-    useMemo(
-      () => products,
-      [products]
-    );
+      setAddingCartId(String(productId));
 
+      const productName = getItemName(product);
 
-  // ==========================================================
+      const cartPayload = {
+        cartId: getCartId(),
+        productId,
+        productName,
+        name: productName,
+        price: getItemPrice(product),
+        image: getItemImage(product),
+        category: getItemCategory(product),
+        description: getItemDescription(product),
+        quantity: 1,
+      };
+
+      await API.post("/cart", cartPayload);
+
+      navigate("/cart");
+    } catch (err) {
+      console.error("TOTAL ORDER ADD TO CART ERROR:", err);
+      console.error("STATUS:", err?.response?.status);
+      console.error("BACKEND RESPONSE:", err?.response?.data);
+
+      alert(
+        err?.response?.data?.message ||
+          err?.response?.data?.error ||
+          "Failed to add product to cart."
+      );
+    } finally {
+      setAddingCartId(null);
+    }
+  };
+
+  const displayProducts = useMemo(() => products, [products]);
+
+  // ----------------------------------------------------------
   // LOADING
-  // ==========================================================
+  // ----------------------------------------------------------
 
   if (loading) {
     return (
-      <section
-        className="total-order"
-        aria-label="Popular products"
-      >
-        <div className="total-order__ambient">
-          <span className="total-order__ambient-bloom total-order__ambient-bloom--one" />
-
-          <span className="total-order__ambient-bloom total-order__ambient-bloom--two" />
-
-          <span className="total-order__ambient-bloom total-order__ambient-bloom--three" />
-        </div>
+      <section className="total-order" aria-label="Popular products">
+        <Ambient />
 
         <div className="total-order__inner">
-
-          <div className="total-order__intro">
-
-            <div className="total-order__eyebrow">
-              <span className="total-order__eyebrow-dot" />
-
-              Gourmet Kitchen Pass
-            </div>
-
-            <h2 className="total-order__heading">
-              On The Pass{" "}
-              <em>
-                Right Now
-              </em>
-            </h2>
-
-            <p className="total-order__sub">
-              Wholesome ingredients,
-              masterful culinary
-              craft — plated fresh
-              for your table.
-            </p>
-
-          </div>
+          <SectionHeader />
 
           <div className="total-order__state">
+            <LoaderCircle size={36} className="total-order__state-spinner" />
 
-            <LoaderCircle
-              size={36}
-              className="total-order__state-spinner"
-            />
-
-            <span>
-              Finding today's
-              favourites...
-            </span>
-
+            <span>Loading our customer favourites...</span>
           </div>
-
         </div>
       </section>
     );
   }
 
-
-  // ==========================================================
+  // ----------------------------------------------------------
   // ERROR
-  // ==========================================================
+  // ----------------------------------------------------------
 
-  if (
-    error &&
-    displayProducts.length ===
-      0
-  ) {
+  if (error && displayProducts.length === 0) {
     return (
-      <section
-        className="total-order"
-        aria-label="Popular products"
-      >
-
-        <div className="total-order__ambient">
-          <span className="total-order__ambient-bloom total-order__ambient-bloom--one" />
-          <span className="total-order__ambient-bloom total-order__ambient-bloom--two" />
-          <span className="total-order__ambient-bloom total-order__ambient-bloom--three" />
-        </div>
+      <section className="total-order" aria-label="Popular products">
+        <Ambient />
 
         <div className="total-order__inner">
-
-          <div className="total-order__intro">
-
-            <div className="total-order__eyebrow">
-              <span className="total-order__eyebrow-dot" />
-
-              Gourmet Kitchen Pass
-            </div>
-
-            <h2 className="total-order__heading">
-              On The Pass{" "}
-              <em>
-                Right Now
-              </em>
-            </h2>
-
-            <p className="total-order__sub">
-              Wholesome ingredients,
-              masterful culinary
-              craft — plated fresh
-              for your table.
-            </p>
-
-          </div>
+          <SectionHeader />
 
           <div className="total-order__state total-order__state--error">
+            <div className="total-order__state-icon">!</div>
 
-            <div className="total-order__state-icon">
-              !
-            </div>
+            <h3>Products unavailable</h3>
 
-            <h3>
-              Products unavailable
-            </h3>
-
-            <p>
-              {error}
-            </p>
+            <p>{error}</p>
 
             <button
               type="button"
               className="total-order__retry"
               onClick={() => {
                 setLoading(true);
-
                 fetchMostSoldProducts();
               }}
             >
               Try Again
             </button>
-
           </div>
-
         </div>
       </section>
     );
   }
 
-
-  // ==========================================================
+  // ----------------------------------------------------------
   // EMPTY
-  // ==========================================================
+  // ----------------------------------------------------------
 
-  if (
-    displayProducts.length ===
-    0
-  ) {
+  if (displayProducts.length === 0) {
     return (
-      <section
-        className="total-order"
-        aria-label="Popular products"
-      >
-
-        <div className="total-order__ambient">
-          <span className="total-order__ambient-bloom total-order__ambient-bloom--one" />
-          <span className="total-order__ambient-bloom total-order__ambient-bloom--two" />
-          <span className="total-order__ambient-bloom total-order__ambient-bloom--three" />
-        </div>
+      <section className="total-order" aria-label="Popular products">
+        <Ambient />
 
         <div className="total-order__inner">
-
-          <div className="total-order__intro">
-
-            <div className="total-order__eyebrow">
-              <span className="total-order__eyebrow-dot" />
-
-              Gourmet Kitchen Pass
-            </div>
-
-            <h2 className="total-order__heading">
-              On The Pass{" "}
-              <em>
-                Right Now
-              </em>
-            </h2>
-
-            <p className="total-order__sub">
-              Wholesome ingredients,
-              masterful culinary
-              craft — plated fresh
-              for your table.
-            </p>
-
-          </div>
+          <SectionHeader />
 
           <div className="total-order__state">
-
             <div className="total-order__state-icon">
-              🍽️
+              <Wheat size={26} />
             </div>
 
-            <h3>
-              No popular products yet
-            </h3>
+            <h3>Fresh stock coming soon</h3>
 
             <p>
-              Once customers start
-              ordering, the most
-              popular products will
-              appear here.
+              Our best-selling Besan, Sattu, Dal and Rice Flour will appear here
+              once customers start ordering.
             </p>
-
           </div>
-
         </div>
       </section>
     );
   }
 
-
-  // ==========================================================
+  // ----------------------------------------------------------
   // MAIN
-  // ==========================================================
+  // ----------------------------------------------------------
+
+  const pageCount = maxIndex + 1;
 
   return (
     <section
       className="total-order"
       aria-label="Most ordered products"
-      onMouseEnter={() =>
-        setIsPaused(true)
-      }
-      onMouseLeave={() =>
-        setIsPaused(false)
-      }
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
     >
-
-      {/* ======================================================
-          BACKGROUND
-      ====================================================== */}
-
-      <div className="total-order__ambient">
-
-        <span className="total-order__ambient-bloom total-order__ambient-bloom--one" />
-
-        <span className="total-order__ambient-bloom total-order__ambient-bloom--two" />
-
-        <span className="total-order__ambient-bloom total-order__ambient-bloom--three" />
-
-      </div>
-
-
-      {/* ======================================================
-          INNER
-      ====================================================== */}
+      <Ambient />
 
       <div className="total-order__inner">
+        <SectionHeader />
 
-        {/* ====================================================
-            HEADER
-        ==================================================== */}
-
-        <div className="total-order__intro">
-
-          <div className="total-order__eyebrow">
-
-            <span className="total-order__eyebrow-dot" />
-
-            Gourmet Kitchen Pass
-
-          </div>
-
-          <h2 className="total-order__heading">
-
-            On The Pass{" "}
-
-            <em>
-              Right Now
-            </em>
-
-          </h2>
-
-          <p className="total-order__sub">
-
-            Wholesome ingredients,
-            masterful culinary
-            craft — plated fresh
-            for your table.
-
-          </p>
-
-        </div>
-
-
-        {/* ====================================================
-            CAROUSEL
-        ==================================================== */}
+        {/* CAROUSEL */}
 
         <div
           className="total-order__viewport"
-          onTouchStart={
-            handleTouchStart
-          }
-          onTouchMove={
-            handleTouchMove
-          }
-          onTouchEnd={
-            handleTouchEnd
-          }
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
-
           <div
             className="total-order__track"
             style={{
-              transform:
-                `translateX(-${
-                  currentIndex * 100
-                }%)`,
+              "--per-view": perView,
+              transform: `translateX(-${currentIndex * (100 / perView)}%)`,
             }}
           >
+            {displayProducts.map((product, index) => {
+              const productId = product._id;
+              const productName = getItemName(product);
+              const productPrice = getItemPrice(product);
+              const productImage = getImageUrl(getItemImage(product));
+              const productCategory = getItemCategory(product);
+              const productDescription = getItemDescription(product);
+              const soldQuantity = Number(product.soldQuantity) || 0;
+              const orderCount = Number(product.orderCount) || 0;
+              const isAdding = addingCartId === String(productId);
 
-            {displayProducts.map(
-              (
-                product,
-                index
-              ) => {
+              const isBestSeller = !showingFallback && index === 0 && soldQuantity > 0;
 
-                const productId =
-                  product._id;
+              return (
+                <article
+                  key={String(productId || index)}
+                  className="total-order__slide"
+                >
+                  <div className="total-order__card">
+                    {/* IMAGE */}
 
-                const productName =
-                  getItemName(
-                    product
-                  );
+                    <div className="total-order__image-wrap">
+                      <img
+                        className="total-order__image"
+                        src={productImage}
+                        alt={productName || "Foodigo product"}
+                        loading={index === 0 ? "eager" : "lazy"}
+                        onError={(event) => {
+                          if (event.currentTarget.src !== FALLBACK_IMAGE) {
+                            event.currentTarget.src = FALLBACK_IMAGE;
+                          }
+                        }}
+                      />
 
-                const productPrice =
-                  getItemPrice(
-                    product
-                  );
+                      <span className="total-order__scrim" aria-hidden="true" />
 
-                const productImage =
-                  getImageUrl(
-                    getItemImage(
-                      product
-                    )
-                  );
+                      <span
+                        className={`total-order__badge ${
+                          isBestSeller ? "is-best" : ""
+                        }`}
+                      >
+                        {showingFallback
+                          ? "Featured"
+                          : isBestSeller
+                          ? "#1 Best Seller"
+                          : `Top ${index + 1}`}
+                      </span>
 
-                const productCategory =
-                  getItemCategory(
-                    product
-                  );
-
-                const productDescription =
-                  getItemDescription(
-                    product
-                  );
-
-                const soldQuantity =
-                  Number(
-                    product.soldQuantity
-                  ) || 0;
-
-                const orderCount =
-                  Number(
-                    product.orderCount
-                  ) || 0;
-
-                const isAdding =
-                  addingCartId ===
-                  String(
-                    productId
-                  );
-
-                return (
-                  <article
-                    key={
-                      String(
-                        productId ||
-                        index
-                      )
-                    }
-                    className="total-order__slide"
-                  >
-
-                    <div className="total-order__card">
-
-                      <div className="total-order__color-curtain" />
-
-                      <div className="total-order__card-inner">
-
-                        {/* IMAGE */}
-
-                        <div className="total-order__image-wrap">
-
-                          <img
-                            className="total-order__image"
-                            src={
-                              productImage
-                            }
-                            alt={
-                              productName ||
-                              "Product"
-                            }
-                            loading={
-                              index ===
-                              0
-                                ? "eager"
-                                : "lazy"
-                            }
-                            onError={(
-                              event
-                            ) => {
-
-                              if (
-                                event
-                                  .currentTarget
-                                  .src !==
-                                FALLBACK_IMAGE
-                              ) {
-                                event
-                                  .currentTarget
-                                  .src =
-                                  FALLBACK_IMAGE;
-                              }
-
-                            }}
-                          />
-
-                          {index ===
-                            0 && (
-                            <span className="total-order__badge">
-                              MOST ORDERED
-                            </span>
-                          )}
-
-                          {soldQuantity >
-                            0 && (
-                            <span className="total-order__sold">
-                              {soldQuantity} sold
-                            </span>
-                          )}
-
-                        </div>
-
-
-                        {/* CONTENT */}
-
-                        <div className="total-order__content">
-
-                          <div className="total-order__category">
-                            {productCategory ||
-                              "Healthy Heaven Special"}
-                          </div>
-
-                          <h3 className="total-order__title">
-                            {productName ||
-                              "Popular Product"}
-                          </h3>
-
-                          <p className="total-order__description">
-                            {productDescription ||
-                              "Freshly prepared with quality ingredients."}
-                          </p>
-
-
-                          {/* META */}
-
-                          <div className="total-order__meta">
-
-                            <div className="total-order__price">
-                              ₹
-                              {productPrice.toLocaleString(
-                                "en-IN"
-                              )}
-                            </div>
-
-                            {orderCount >
-                              0 && (
-                              <div className="total-order__orders">
-                                Ordered by{" "}
-                                {orderCount}{" "}
-                                customer
-                                {orderCount !==
-                                1
-                                  ? "s"
-                                  : ""}
-                              </div>
-                            )}
-
-                          </div>
-
-
-                          {/* ADD TO CART */}
-
-                          <button
-                            type="button"
-                            className="total-order__cart-btn"
-                            disabled={
-                              isAdding
-                            }
-                            onClick={() =>
-                              handleAddToCart(
-                                product
-                              )
-                            }
-                            aria-label={
-                              `Add ${
-                                productName ||
-                                "product"
-                              } to cart`
-                            }
-                          >
-
-                            {isAdding ? (
-                              <>
-                                <LoaderCircle
-                                  size={
-                                    18
-                                  }
-                                  className="total-order__cart-spinner"
-                                />
-
-                                Adding...
-                              </>
-                            ) : (
-                              <>
-                                <ShoppingCart
-                                  size={
-                                    18
-                                  }
-                                />
-
-                                Add To Cart
-                              </>
-                            )}
-
-                          </button>
-
-                        </div>
-
-                      </div>
-
+                      {soldQuantity > 0 && (
+                        <span className="total-order__sold">
+                          {soldQuantity} packs sold
+                        </span>
+                      )}
                     </div>
 
-                  </article>
-                );
-              }
-            )}
+                    {/* CONTENT */}
 
+                    <div className="total-order__content">
+                      <div className="total-order__category">
+                        {productCategory || "Foodigo Pure Staple"}
+                      </div>
+
+                      <h3 className="total-order__title">
+                        {productName || "Foodigo Product"}
+                      </h3>
+
+                      <p className="total-order__description">
+                        {productDescription ||
+                          "Pure, hygienically packed staple from Foodigo, milled fresh for authentic everyday taste."}
+                      </p>
+
+                      <ul className="total-order__tags">
+                        <li>
+                          <Leaf size={12} />
+                          100% Pure
+                        </li>
+
+                        <li>
+                          <ShieldCheck size={12} />
+                          Hygienic Pack
+                        </li>
+                      </ul>
+
+                      <div className="total-order__meta">
+                        <div className="total-order__price">
+                          ₹{productPrice.toLocaleString("en-IN")}
+                        </div>
+
+                        {orderCount > 0 && (
+                          <div className="total-order__orders">
+                            Ordered by {orderCount} customer
+                            {orderCount !== 1 ? "s" : ""}
+                          </div>
+                        )}
+                      </div>
+
+                      <button
+                        type="button"
+                        className="total-order__cart-btn"
+                        disabled={isAdding}
+                        onClick={() => handleAddToCart(product)}
+                        aria-label={`Add ${productName || "product"} to cart`}
+                      >
+                        {isAdding ? (
+                          <>
+                            <LoaderCircle
+                              size={18}
+                              className="total-order__cart-spinner"
+                            />
+                            Adding...
+                          </>
+                        ) : (
+                          <>
+                            <ShoppingCart size={18} />
+                            Add To Cart
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
           </div>
-
         </div>
 
+        {/* CONTROLS (only when there is more than one page) */}
 
-        {/* ====================================================
-            CONTROLS
-        ==================================================== */}
-
-        {displayProducts.length >
-          1 && (
+        {pageCount > 1 && (
           <div className="total-order__controls">
-
             <button
               type="button"
-              className="total-order__nav total-order__nav--prev"
-              onClick={
-                handlePrevious
-              }
-              aria-label="Previous product"
+              className="total-order__nav"
+              onClick={handlePrevious}
+              aria-label="Previous products"
             >
-              <ArrowLeft
-                size={19}
-              />
+              <ArrowLeft size={19} />
             </button>
-
 
             <div className="total-order__dots">
-
-              {displayProducts.map(
-                (
-                  product,
-                  index
-                ) => (
-                  <button
-                    key={
-                      String(
-                        product._id ||
-                        index
-                      )
-                    }
-                    type="button"
-                    className={
-                      `total-order__dot ${
-                        currentIndex ===
-                        index
-                          ? "total-order__dot--active"
-                          : ""
-                      }`
-                    }
-                    onClick={() =>
-                      handleDotClick(
-                        index
-                      )
-                    }
-                    aria-label={
-                      `Go to product ${
-                        index + 1
-                      }`
-                    }
-                  />
-                )
-              )}
-
+              {Array.from({ length: pageCount }, (_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  className={`total-order__dot ${
+                    currentIndex === index ? "total-order__dot--active" : ""
+                  }`}
+                  onClick={() => setCurrentIndex(index)}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
             </div>
-
 
             <button
               type="button"
-              className="total-order__nav total-order__nav--next"
-              onClick={
-                handleNext
-              }
-              aria-label="Next product"
+              className="total-order__nav"
+              onClick={handleNext}
+              aria-label="Next products"
             >
-              <ArrowRight
-                size={19}
-              />
+              <ArrowRight size={19} />
             </button>
-
           </div>
         )}
 
-
-        {/* ====================================================
-            FOOTER
-        ==================================================== */}
+        {/* FOOTER */}
 
         <div className="total-order__footer">
-
           <div className="total-order__footer-status">
-
             <span className="total-order__live-dot" />
 
             <span>
-              Live from customer orders
+              {showingFallback
+                ? "Featured from our range"
+                : "Updated live from customer orders"}
             </span>
-
           </div>
 
-          <div className="total-order__footer-count">
-
-            Showing{" "}
-            {displayProducts.length}{" "}
-            most ordered{" "}
-            {displayProducts.length ===
-            1
-              ? "dish"
-              : "dishes"}
-
-          </div>
-
+          <a className="total-order__trade" href={`tel:${TRADE_PHONE}`}>
+            <Phone size={15} />
+            <span>
+              Bulk &amp; trade enquiry: <strong>{TRADE_PHONE}</strong>
+            </span>
+          </a>
         </div>
-
       </div>
-
     </section>
   );
 };
-
 
 export default TotalOrder;

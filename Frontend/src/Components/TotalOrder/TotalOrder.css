@@ -1,9 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
 
-
 /* =========================================================
-   TOTAL ORDER
-   PREMIUM GREEN + GOLD FOOD SECTION
+   TOTAL ORDER: FOODIGO CUSTOMER FAVOURITES
+   Premium green + gold product carousel
 ========================================================= */
 
 .total-order {
@@ -11,90 +10,42 @@
   --to-forest-dark: #0f2e1c;
   --to-forest-base: #1b4b2c;
   --to-forest-light: #286d42;
-
   --to-green: #38b465;
-  --to-green-light: #6bd88e;
-
   --to-gold: #fdb813;
   --to-gold-bright: #ffd466;
   --to-gold-glow: rgba(253, 184, 19, 0.42);
-
-  --to-white: #ffffff;
   --to-text: #0b1a11;
-  --to-muted: #617267;
-
-  --to-border: rgba(15, 46, 28, 0.1);
-
+  --to-muted: #5d7064;
   --to-serif: "Fraunces", Georgia, serif;
-
-  --to-sans:
-    "Plus Jakarta Sans",
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  --to-sans: "Plus Jakarta Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
   position: relative;
-
   width: 100%;
   min-height: 500px;
-
-  padding:
-    clamp(3rem, 6vw, 5.5rem)
-    clamp(1rem, 4vw, 3.5rem);
-
+  padding: clamp(3rem, 6vw, 5.5rem) clamp(1rem, 4vw, 3.5rem);
   box-sizing: border-box;
-
   overflow: hidden;
   isolation: isolate;
-
-  color: var(--to-white);
-
+  color: #ffffff;
   font-family: var(--to-sans);
-
   background:
-    radial-gradient(
-      circle at 8% 0%,
-      rgba(56, 180, 101, 0.28),
-      transparent 40%
-    ),
-    radial-gradient(
-      circle at 95% 100%,
-      rgba(253, 184, 19, 0.18),
-      transparent 38%
-    ),
-    linear-gradient(
-      140deg,
-      #092113 0%,
-      #133821 48%,
-      #0b2516 100%
-    );
+    radial-gradient(circle at 8% 0%, rgba(56, 180, 101, 0.28), transparent 40%),
+    radial-gradient(circle at 95% 100%, rgba(253, 184, 19, 0.18), transparent 38%),
+    linear-gradient(140deg, #092113 0%, #133821 48%, #0b2516 100%);
 }
 
-
-/* =========================================================
-   BACKGROUND LIGHT
-========================================================= */
+.total-order *,
+.total-order *::before,
+.total-order *::after { box-sizing: border-box; }
 
 .total-order::before {
   content: "";
-
   position: absolute;
   inset: 0;
-
   z-index: -2;
-
   pointer-events: none;
-
-  background:
-    radial-gradient(
-      900px circle at 50% -15%,
-      rgba(255, 255, 255, 0.075),
-      transparent 68%
-    );
+  background: radial-gradient(900px circle at 50% -15%, rgba(255, 255, 255, 0.075), transparent 68%);
 }
-
 
 /* =========================================================
    AMBIENT BACKGROUND
@@ -103,411 +54,176 @@
 .total-order__ambient {
   position: absolute;
   inset: 0;
-
   z-index: -1;
-
   overflow: hidden;
-
   pointer-events: none;
 }
-
 
 .total-order__ambient-bloom {
   position: absolute;
-
   border-radius: 50%;
-
   filter: blur(75px);
-
   opacity: 0.45;
-
-  pointer-events: none;
 }
-
 
 .total-order__ambient-bloom--one {
-  width: 35vw;
-  height: 35vw;
-
-  min-width: 240px;
-  min-height: 240px;
-
-  top: -14%;
-  left: -10%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(56, 180, 101, 0.5),
-      transparent 70%
-    );
-
-  animation:
-    total-order-bloom-one 14s
-    ease-in-out infinite alternate;
+  width: 35vw; height: 35vw; min-width: 240px; min-height: 240px;
+  top: -14%; left: -10%;
+  background: radial-gradient(circle, rgba(56, 180, 101, 0.5), transparent 70%);
+  animation: total-order-bloom-one 14s ease-in-out infinite alternate;
 }
-
 
 .total-order__ambient-bloom--two {
-  width: 32vw;
-  height: 32vw;
-
-  min-width: 230px;
-  min-height: 230px;
-
-  right: -8%;
-  bottom: -12%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(253, 184, 19, 0.3),
-      transparent 70%
-    );
-
-  animation:
-    total-order-bloom-two 18s
-    ease-in-out infinite alternate-reverse;
+  width: 32vw; height: 32vw; min-width: 230px; min-height: 230px;
+  right: -8%; bottom: -12%;
+  background: radial-gradient(circle, rgba(253, 184, 19, 0.3), transparent 70%);
+  animation: total-order-bloom-two 18s ease-in-out infinite alternate-reverse;
 }
-
 
 .total-order__ambient-bloom--three {
-  width: 24vw;
-  height: 24vw;
-
-  min-width: 180px;
-  min-height: 180px;
-
-  top: 28%;
-  left: 42%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(40, 109, 66, 0.42),
-      transparent 70%
-    );
-
-  animation:
-    total-order-bloom-three 16s
-    ease-in-out infinite alternate;
+  width: 24vw; height: 24vw; min-width: 180px; min-height: 180px;
+  top: 28%; left: 42%;
+  background: radial-gradient(circle, rgba(40, 109, 66, 0.42), transparent 70%);
+  animation: total-order-bloom-three 16s ease-in-out infinite alternate;
 }
 
+@keyframes total-order-bloom-one { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(30px, 25px) scale(1.12); } }
+@keyframes total-order-bloom-two { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(-25px, -20px) scale(1.1); } }
+@keyframes total-order-bloom-three { 0% { transform: translate(0, 0); } 100% { transform: translate(-20px, 25px); } }
 
 /* =========================================================
-   OPTIONAL AMBIENT LEAVES
-========================================================= */
-
-.total-order__ambient-leaf {
-  position: absolute;
-
-  width: 90px;
-  height: 42px;
-
-  border-radius:
-    100% 0 100% 0;
-
-  opacity: 0.07;
-
-  transform: rotate(-25deg);
-
-  background: #ffffff;
-
-  filter: blur(1px);
-}
-
-
-.total-order__ambient-leaf--one {
-  top: 18%;
-  left: 4%;
-}
-
-
-.total-order__ambient-leaf--two {
-  right: 5%;
-  top: 30%;
-
-  transform:
-    rotate(150deg)
-    scale(0.75);
-}
-
-
-.total-order__ambient-leaf--three {
-  left: 20%;
-  bottom: 8%;
-
-  transform:
-    rotate(50deg)
-    scale(0.6);
-}
-
-
-/* =========================================================
-   BLOOM ANIMATIONS
-========================================================= */
-
-@keyframes total-order-bloom-one {
-  0% {
-    transform:
-      translate(0, 0)
-      scale(1);
-  }
-
-  100% {
-    transform:
-      translate(30px, 25px)
-      scale(1.12);
-  }
-}
-
-
-@keyframes total-order-bloom-two {
-  0% {
-    transform:
-      translate(0, 0)
-      scale(1);
-  }
-
-  100% {
-    transform:
-      translate(-25px, -20px)
-      scale(1.1);
-  }
-}
-
-
-@keyframes total-order-bloom-three {
-  0% {
-    transform:
-      translate(0, 0);
-  }
-
-  100% {
-    transform:
-      translate(-20px, 25px);
-  }
-}
-
-
-/* =========================================================
-   INNER CONTAINER
+   INNER + HEADER
 ========================================================= */
 
 .total-order__inner {
   position: relative;
-
   z-index: 2;
-
   width: 100%;
-
   max-width: 1400px;
-
   margin: 0 auto;
 }
-
-
-/* =========================================================
-   HEADER
-========================================================= */
 
 .total-order__intro {
-  max-width: 760px;
-
-  margin: 0 auto;
-
+  max-width: 780px;
+  margin: 0 auto clamp(2rem, 4vw, 3rem);
   text-align: center;
-
-  margin-bottom:
-    clamp(2rem, 4vw, 3.25rem);
 }
-
 
 .total-order__eyebrow {
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
-
   gap: 0.5rem;
-
   margin-bottom: 0.9rem;
-
-  padding:
-    0.42rem 0.95rem;
-
-  border:
-    1px solid
-    rgba(253, 184, 19, 0.35);
-
+  padding: 0.42rem 0.95rem;
+  border: 1px solid rgba(253, 184, 19, 0.35);
   border-radius: 999px;
-
-  color:
-    var(--to-gold-bright);
-
-  background:
-    rgba(253, 184, 19, 0.11);
-
+  color: var(--to-gold-bright);
+  background: rgba(253, 184, 19, 0.11);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-
   font-size: 0.72rem;
-
   font-weight: 800;
-
   letter-spacing: 0.1em;
-
   text-transform: uppercase;
 }
-
 
 .total-order__eyebrow-dot {
   width: 7px;
   height: 7px;
-
   flex: 0 0 7px;
-
   border-radius: 50%;
-
-  background:
-    var(--to-gold);
-
-  box-shadow:
-    0 0 0 4px
-      rgba(253, 184, 19, 0.1),
-    0 0 14px
-      var(--to-gold);
-
-  animation:
-    total-order-pulse 2s
-    ease-in-out infinite;
+  background: var(--to-gold);
+  box-shadow: 0 0 0 4px rgba(253, 184, 19, 0.1), 0 0 14px var(--to-gold);
+  animation: total-order-pulse 2s ease-in-out infinite;
 }
-
 
 @keyframes total-order-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  50% {
-    transform: scale(1.35);
-    opacity: 0.55;
-  }
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.55; }
 }
-
 
 .total-order__heading {
   margin: 0;
-
   color: #ffffff;
-
-  font-family:
-    var(--to-serif);
-
-  font-size:
-    clamp(2.15rem, 5vw, 3.6rem);
-
+  font-family: var(--to-serif);
+  font-size: clamp(2.1rem, 5vw, 3.6rem);
   font-weight: 700;
-
-  line-height: 1.05;
-
+  line-height: 1.08;
   letter-spacing: -0.035em;
 }
 
-
 .total-order__heading em {
-  color:
-    var(--to-gold-bright);
-
+  color: var(--to-gold-bright);
   font-style: italic;
-
   font-weight: 600;
 }
 
-
 .total-order__sub {
-  max-width: 650px;
-
-  margin:
-    1rem auto 0;
-
-  color:
-    rgba(255, 255, 255, 0.76);
-
-  font-size:
-    clamp(0.88rem, 1.4vw, 1.02rem);
-
+  max-width: 660px;
+  margin: 1rem auto 0;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: clamp(0.88rem, 1.4vw, 1.02rem);
   line-height: 1.65;
-
-  font-weight: 400;
 }
 
+/* TRUST POINTS */
+
+.total-order__trust {
+  list-style: none;
+  margin: 1.4rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem;
+}
+
+.total-order__trust li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.total-order__trust svg { color: var(--to-gold-bright); flex-shrink: 0; }
 
 /* =========================================================
-   VIEWPORT
+   VIEWPORT + TRACK
+   Cards per screen are set from JS (--per-view)
 ========================================================= */
 
 .total-order__viewport {
   position: relative;
-
   width: 100%;
-
   overflow: hidden;
-
   touch-action: pan-y;
-
-  padding:
-    0.75rem 0.1rem 1.75rem;
-
-  box-sizing: border-box;
+  padding: 0.9rem 0 1.9rem;
 }
 
-
-/* =========================================================
-   TRACK
-   4 CARDS DESKTOP
-========================================================= */
-
 .total-order__track {
-  --total-order-slide-width: 25%;
-
+  --per-view: 4;
   display: flex;
-
   width: 100%;
-
-  transition:
-    transform 0.7s
-    cubic-bezier(
-      0.22,
-      1,
-      0.36,
-      1
-    );
-
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
-
-/* =========================================================
-   SLIDE
-   DESKTOP = 4 CARDS
-========================================================= */
-
 .total-order__slide {
-  flex: 0 0 25%;
-
-  width: 25%;
-
+  flex: 0 0 calc(100% / var(--per-view));
+  width: calc(100% / var(--per-view));
   min-width: 0;
-
-  padding:
-    0 0.5rem;
-
-  box-sizing: border-box;
+  padding: 0 0.6rem;
+  display: flex;
 }
-
 
 /* =========================================================
    CARD
@@ -515,1735 +231,501 @@
 
 .total-order__card {
   position: relative;
-
   width: 100%;
-
   min-width: 0;
-
-  height: 100%;
-
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-
-  border:
-    2px solid
-    transparent;
-
-  border-radius:
-    26px;
-
-  background:
-    #ffffff;
-
-  box-shadow:
-    0 20px 45px
-      rgba(0, 0, 0, 0.25);
-
-  transition:
-    transform 0.55s
-      cubic-bezier(
-        0.22,
-        1,
-        0.36,
-        1
-      ),
-    box-shadow 0.55s
-      cubic-bezier(
-        0.22,
-        1,
-        0.36,
-        1
-      ),
-    border-color 0.4s ease;
-
-  isolation: isolate;
+  border: 2px solid transparent;
+  border-radius: 26px;
+  background: #ffffff;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.55s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease;
 }
-
 
 .total-order__card:hover {
-  transform:
-    translateY(-8px);
-
-  border-color:
-    rgba(253, 184, 19, 0.75);
-
-  box-shadow:
-    0 30px 65px
-      rgba(0, 0, 0, 0.38),
-    0 0 30px
-      rgba(253, 184, 19, 0.16);
+  transform: translateY(-8px);
+  border-color: rgba(253, 184, 19, 0.8);
+  box-shadow: 0 30px 65px rgba(0, 0, 0, 0.38), 0 0 30px rgba(253, 184, 19, 0.16);
 }
 
-
-/* =========================================================
-   GREEN CURTAIN
-========================================================= */
-
-.total-order__color-curtain {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 1;
-
-  pointer-events: none;
-
-  background:
-    linear-gradient(
-      180deg,
-      #123a21 0%,
-      #0e2b19 52%,
-      #081d10 100%
-    );
-
-  transform:
-    translateY(-100%);
-
-  transition:
-    transform 0.65s
-      cubic-bezier(
-        0.22,
-        1,
-        0.36,
-        1
-      );
-}
-
-
-.total-order__card:hover
-  .total-order__color-curtain {
-  transform:
-    translateY(0);
-}
-
-
-/* =========================================================
-   CARD INNER
-========================================================= */
-
-.total-order__card-inner {
-  position: relative;
-
-  z-index: 2;
-
-  display: flex;
-
-  flex-direction: column;
-
-  min-height: 455px;
-
-  height: 100%;
-
-  background: transparent;
-}
-
-
-/* =========================================================
-   IMAGE AREA
-========================================================= */
+/* IMAGE */
 
 .total-order__image-wrap {
   position: relative;
-
-  height: 215px;
-
-  padding: 1rem;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
+  width: 100%;
+  aspect-ratio: 4 / 3.2;
   overflow: hidden;
-
-  background:
-    linear-gradient(
-      135deg,
-      #e5f0e8 0%,
-      #d6e8db 55%,
-      #cce0d2 100%
-    );
-
-  transition:
-    background 0.5s ease;
+  background: linear-gradient(135deg, #e5f0e8 0%, #cce0d2 100%);
 }
-
-
-.total-order__card:hover
-  .total-order__image-wrap {
-  background:
-    rgba(255, 255, 255, 0.055);
-}
-
-
-/* =========================================================
-   IMAGE
-========================================================= */
 
 .total-order__image {
-  position: relative;
-
-  z-index: 2;
-
   display: block;
-
-  width: 165px;
-
-  height: 165px;
-
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-
-  border:
-    6px solid
-    rgba(255, 255, 255, 0.95);
-
-  border-radius: 50%;
-
-  background:
-    #edf4ef;
-
-  box-shadow:
-    0 20px 35px
-      rgba(0, 0, 0, 0.22);
-
-  transition:
-    transform 0.65s
-      cubic-bezier(
-        0.22,
-        1,
-        0.36,
-        1
-      ),
-    box-shadow 0.55s ease;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.total-order__card:hover .total-order__image { transform: scale(1.08); }
 
-.total-order__card:hover
-  .total-order__image {
-  transform:
-    scale(1.07)
-    rotate(3deg);
-
-  box-shadow:
-    0 22px 40px
-      rgba(0, 0, 0, 0.5),
-    0 0 0 3px
-      var(--to-gold),
-    0 0 24px
-      rgba(253, 184, 19, 0.3);
+.total-order__scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(7, 25, 15, 0.28) 0%, transparent 38%, rgba(7, 25, 15, 0.38) 100%);
 }
-
-
-/* =========================================================
-   BADGE
-========================================================= */
 
 .total-order__badge {
   position: absolute;
-
   top: 14px;
-
   left: 14px;
-
-  z-index: 5;
-
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 0.35rem;
-
-  max-width:
-    calc(100% - 28px);
-
-  padding:
-    0.38rem 0.65rem;
-
-  border:
-    1px solid
-    rgba(15, 46, 28, 0.13);
-
+  z-index: 3;
+  max-width: calc(100% - 28px);
+  padding: 0.38rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 999px;
-
-  color:
-    var(--to-forest-dark);
-
-  background:
-    rgba(255, 255, 255, 0.65);
-
-  backdrop-filter:
-    blur(10px);
-
-  -webkit-backdrop-filter:
-    blur(10px);
-
-  font-size:
-    0.58rem;
-
+  color: var(--to-forest-dark);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 0.6rem;
   font-weight: 800;
-
-  letter-spacing:
-    0.055em;
-
-  text-transform:
-    uppercase;
-
-  transition:
-    all 0.4s ease;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
-
-.total-order__card:hover
-  .total-order__badge {
-  color:
-    var(--to-gold-bright);
-
-  border-color:
-    rgba(253, 184, 19, 0.45);
-
-  background:
-    rgba(253, 184, 19, 0.13);
+.total-order__badge.is-best {
+  color: #3a2800;
+  border-color: rgba(253, 184, 19, 0.9);
+  background: linear-gradient(135deg, #ffe08a 0%, #fdb813 100%);
+  box-shadow: 0 6px 18px rgba(253, 184, 19, 0.4);
 }
-
-
-/* =========================================================
-   SOLD COUNT
-========================================================= */
 
 .total-order__sold {
   position: absolute;
-
   right: 14px;
-
   bottom: 14px;
-
-  z-index: 5;
-
-  padding:
-    0.38rem 0.65rem;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.5);
-
-  border-radius:
-    999px;
-
-  color:
-    var(--to-forest-dark);
-
-  background:
-    rgba(255, 255, 255, 0.85);
-
-  backdrop-filter:
-    blur(10px);
-
-  -webkit-backdrop-filter:
-    blur(10px);
-
-  font-size:
-    0.62rem;
-
-  font-weight:
-    800;
-
-  transition:
-    all 0.4s ease;
+  z-index: 3;
+  padding: 0.38rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  color: #ffffff;
+  background: rgba(7, 25, 15, 0.62);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-size: 0.62rem;
+  font-weight: 800;
 }
 
-
-.total-order__card:hover
-  .total-order__sold {
-  color:
-    var(--to-gold-bright);
-
-  border-color:
-    rgba(253, 184, 19, 0.45);
-
-  background:
-    rgba(15, 46, 28, 0.55);
-}
-
-
-/* =========================================================
-   CONTENT
-========================================================= */
+/* CONTENT */
 
 .total-order__content {
-  position: relative;
-
   display: flex;
-
   flex-direction: column;
-
   flex: 1;
-
-  padding:
-    1.25rem
-    1.15rem
-    1.25rem;
-
-  color:
-    var(--to-text);
-
+  padding: 1.2rem 1.15rem 1.25rem;
+  color: var(--to-text);
   text-align: left;
-
-  transition:
-    color 0.45s ease;
 }
-
-
-/* =========================================================
-   CATEGORY
-========================================================= */
 
 .total-order__category {
-  display: flex;
-
-  align-items: center;
-
-  gap: 0.4rem;
-
-  margin-bottom:
-    0.4rem;
-
-  color:
-    var(--to-forest-light);
-
-  font-size:
-    0.62rem;
-
-  font-weight:
-    800;
-
-  letter-spacing:
-    0.075em;
-
-  text-transform:
-    uppercase;
-
-  white-space:
-    nowrap;
-
-  overflow:
-    hidden;
-
-  text-overflow:
-    ellipsis;
-
-  transition:
-    color 0.4s ease;
+  margin-bottom: 0.4rem;
+  color: var(--to-forest-light);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
-
-.total-order__card:hover
-  .total-order__category {
-  color:
-    var(--to-gold-bright);
-}
-
-
-/* =========================================================
-   TITLE
-========================================================= */
 
 .total-order__title {
-  margin:
-    0 0 0.5rem;
-
-  color:
-    var(--to-text);
-
-  font-family:
-    var(--to-serif);
-
-  font-size:
-    clamp(
-      1.1rem,
-      1.5vw,
-      1.4rem
-    );
-
-  line-height:
-    1.15;
-
-  font-weight:
-    700;
-
-  letter-spacing:
-    -0.02em;
-
-  display:
-    -webkit-box;
-
-  overflow:
-    hidden;
-
-  -webkit-line-clamp:
-    2;
-
-  -webkit-box-orient:
-    vertical;
-
-  transition:
-    color 0.4s ease;
+  margin: 0 0 0.5rem;
+  color: var(--to-text);
+  font-family: var(--to-serif);
+  font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow-wrap: anywhere;
 }
-
-
-.total-order__card:hover
-  .total-order__title {
-  color:
-    #ffffff;
-}
-
-
-/* =========================================================
-   DESCRIPTION
-========================================================= */
 
 .total-order__description {
-  display:
-    -webkit-box;
-
-  margin:
-    0 0 0.9rem;
-
-  overflow:
-    hidden;
-
-  color:
-    var(--to-muted);
-
-  font-size:
-    0.72rem;
-
-  line-height:
-    1.5;
-
-  font-weight:
-    500;
-
-  -webkit-line-clamp:
-    2;
-
-  -webkit-box-orient:
-    vertical;
-
-  transition:
-    color 0.4s ease;
+  display: -webkit-box;
+  margin: 0 0 0.85rem;
+  overflow: hidden;
+  color: var(--to-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.55;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
-
-.total-order__card:hover
-  .total-order__description {
-  color:
-    rgba(255, 255, 255, 0.78);
+.total-order__tags {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
 }
 
-
-/* =========================================================
-   META
-========================================================= */
+.total-order__tags li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.28rem 0.6rem;
+  border-radius: 999px;
+  background: #eef6ec;
+  color: var(--to-forest-light);
+  font-size: 0.62rem;
+  font-weight: 800;
+}
 
 .total-order__meta {
   display: flex;
-
   align-items: flex-end;
-
-  justify-content:
-    space-between;
-
+  justify-content: space-between;
   gap: 0.75rem;
-
-  margin-top:
-    auto;
-
-  margin-bottom:
-    0.85rem;
+  margin-top: auto;
+  margin-bottom: 0.9rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(15, 46, 28, 0.09);
 }
-
-
-/* =========================================================
-   PRICE
-========================================================= */
 
 .total-order__price {
-  color:
-    var(--to-forest-dark);
-
-  font-size:
-    1.25rem;
-
-  font-weight:
-    800;
-
-  line-height:
-    1;
-
-  letter-spacing:
-    -0.025em;
-
-  white-space:
-    nowrap;
-
-  transition:
-    color 0.4s ease;
+  color: var(--to-forest-dark);
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
 }
-
-
-.total-order__card:hover
-  .total-order__price {
-  color:
-    #ffffff;
-}
-
-
-/* =========================================================
-   ORDER COUNT
-========================================================= */
 
 .total-order__orders {
-  display: flex;
-
-  flex-direction: column;
-
-  align-items:
-    flex-end;
-
-  gap:
-    0.12rem;
-
-  color:
-    var(--to-muted);
-
-  font-size:
-    0.58rem;
-
-  font-weight:
-    600;
-
-  text-align:
-    right;
-
-  transition:
-    color 0.4s ease;
+  color: var(--to-muted);
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-align: right;
+  line-height: 1.3;
 }
 
-
-.total-order__orders strong {
-  color:
-    var(--to-forest-dark);
-
-  font-size:
-    0.8rem;
-
-  font-weight:
-    800;
-
-  transition:
-    color 0.4s ease;
-}
-
-
-.total-order__card:hover
-  .total-order__orders {
-  color:
-    rgba(255, 255, 255, 0.65);
-}
-
-
-.total-order__card:hover
-  .total-order__orders strong {
-  color:
-    var(--to-gold-bright);
-}
-
-
-/* =========================================================
-   CART BUTTON
-========================================================= */
+/* CART BUTTON */
 
 .total-order__cart-btn {
-  appearance:
-    none;
-
-  width:
-    100%;
-
-  min-height:
-    44px;
-
-  display:
-    inline-flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  gap:
-    0.45rem;
-
-  padding:
-    0.68rem
-    0.8rem;
-
-  border:
-    none;
-
-  border-radius:
-    999px;
-
-  color:
-    #ffffff;
-
-  background:
-    var(--to-forest-dark);
-
-  font-family:
-    var(--to-sans);
-
-  font-size:
-    0.7rem;
-
-  font-weight:
-    800;
-
-  letter-spacing:
-    0.01em;
-
-  cursor:
-    pointer;
-
-  box-shadow:
-    0 8px 20px
-      rgba(15, 46, 28, 0.22);
-
-  transition:
-    all 0.4s
-      cubic-bezier(
-        0.22,
-        1,
-        0.36,
-        1
-      );
+  appearance: none;
+  width: 100%;
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 0.9rem;
+  border: none;
+  border-radius: 999px;
+  color: #ffffff;
+  background: var(--to-forest-dark);
+  font-family: var(--to-sans);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(15, 46, 28, 0.22);
+  transition: background 0.35s ease, color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
 }
 
-
+.total-order__card:hover .total-order__cart-btn:not(:disabled),
 .total-order__cart-btn:hover:not(:disabled) {
-  transform:
-    translateY(-2px);
-
-  background:
-    var(--to-gold);
-
-  color:
-    #081d10;
-
-  box-shadow:
-    0 12px 26px
-      var(--to-gold-glow);
+  background: var(--to-gold);
+  color: #081d10;
+  box-shadow: 0 12px 26px var(--to-gold-glow);
 }
 
+.total-order__cart-btn:active:not(:disabled) { transform: scale(0.97); }
+.total-order__cart-btn:disabled { cursor: not-allowed; opacity: 0.7; }
 
-.total-order__card:hover
-  .total-order__cart-btn:not(:disabled) {
-  background:
-    var(--to-gold);
+.total-order__cart-spinner,
+.total-order__state-spinner { animation: total-order-spin 0.9s linear infinite; }
 
-  color:
-    #081d10;
-}
-
-
-.total-order__cart-btn:disabled {
-  cursor:
-    not-allowed;
-
-  opacity:
-    0.7;
-}
-
-
-/* =========================================================
-   CART SPINNER
-========================================================= */
-
-.total-order__cart-spinner {
-  animation:
-    total-order-spin
-    0.9s
-    linear
-    infinite;
-}
-
-
-@keyframes total-order-spin {
-  to {
-    transform:
-      rotate(360deg);
-  }
-}
-
+@keyframes total-order-spin { to { transform: rotate(360deg); } }
 
 /* =========================================================
    CONTROLS
 ========================================================= */
 
 .total-order__controls {
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  gap:
-    1.25rem;
-
-  margin-top:
-    0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
 }
-
 
 .total-order__nav {
-  width:
-    46px;
-
-  height:
-    46px;
-
-  padding:
-    0;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  flex:
-    0 0 auto;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.23);
-
-  border-radius:
-    50%;
-
-  color:
-    #ffffff;
-
-  background:
-    rgba(255, 255, 255, 0.08);
-
-  backdrop-filter:
-    blur(12px);
-
-  -webkit-backdrop-filter:
-    blur(12px);
-
-  cursor:
-    pointer;
-
-  transition:
-    all 0.35s
-      cubic-bezier(
-        0.16,
-        1,
-        0.3,
-        1
-      );
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.23);
+  border-radius: 50%;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 
 .total-order__nav:hover {
-  transform:
-    scale(1.08);
-
-  border-color:
-    var(--to-gold);
-
-  color:
-    #081d10;
-
-  background:
-    var(--to-gold);
-
-  box-shadow:
-    0 0 20px
-      var(--to-gold-glow);
+  transform: scale(1.08);
+  border-color: var(--to-gold);
+  color: #081d10;
+  background: var(--to-gold);
+  box-shadow: 0 0 20px var(--to-gold-glow);
 }
-
-
-/* =========================================================
-   DOTS
-========================================================= */
 
 .total-order__dots {
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  gap:
-    0.45rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
 }
-
 
 .total-order__dot {
-  width:
-    8px;
-
-  height:
-    8px;
-
-  padding:
-    0;
-
-  border:
-    none;
-
-  border-radius:
-    999px;
-
-  background:
-    rgba(255, 255, 255, 0.3);
-
-  cursor:
-    pointer;
-
-  transition:
-    width 0.35s ease,
-    background 0.35s ease,
-    box-shadow 0.35s ease;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: width 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
 }
-
 
 .total-order__dot--active {
-  width:
-    30px;
-
-  background:
-    var(--to-gold);
-
-  box-shadow:
-    0 0 12px
-      var(--to-gold-glow);
+  width: 30px;
+  background: var(--to-gold);
+  box-shadow: 0 0 12px var(--to-gold-glow);
 }
-
 
 /* =========================================================
    FOOTER
 ========================================================= */
 
 .total-order__footer {
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    space-between;
-
-  gap:
-    1rem;
-
-  margin-top:
-    1.5rem;
-
-  padding:
-    0.85rem 1rem;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.09);
-
-  border-radius:
-    14px;
-
-  background:
-    rgba(255, 255, 255, 0.045);
-
-  backdrop-filter:
-    blur(12px);
-
-  -webkit-backdrop-filter:
-    blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin-top: 1.75rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.045);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-
-.total-order__footer-status,
-.total-order__footer-count {
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  gap:
-    0.45rem;
-
-  color:
-    rgba(255, 255, 255, 0.65);
-
-  font-size:
-    0.7rem;
-
-  font-weight:
-    600;
+.total-order__footer-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.72rem;
+  font-weight: 600;
 }
-
-
-.total-order__footer-count {
-  color:
-    rgba(255, 255, 255, 0.82);
-}
-
 
 .total-order__live-dot {
-  width:
-    7px;
-
-  height:
-    7px;
-
-  flex:
-    0 0 7px;
-
-  border-radius:
-    50%;
-
-  background:
-    var(--to-green);
-
-  box-shadow:
-    0 0 10px
-      var(--to-green);
-
-  animation:
-    total-order-pulse
-    2s
-    ease-in-out
-    infinite;
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 50%;
+  background: var(--to-green);
+  box-shadow: 0 0 10px var(--to-green);
+  animation: total-order-pulse 2s ease-in-out infinite;
 }
 
+.total-order__trade {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  color: #081d10;
+  background: var(--to-gold-bright);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.total-order__trade strong { font-weight: 800; }
+
+.total-order__trade:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px var(--to-gold-glow);
+}
 
 /* =========================================================
-   LOADING / EMPTY / ERROR STATE
+   LOADING / EMPTY / ERROR
 ========================================================= */
 
 .total-order__state {
-  min-height:
-    300px;
-
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  gap:
-    0.75rem;
-
-  padding:
-    2rem;
-
-  text-align:
-    center;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.1);
-
-  border-radius:
-    24px;
-
-  background:
-    rgba(255, 255, 255, 0.045);
-
-  backdrop-filter:
-    blur(14px);
-
-  -webkit-backdrop-filter:
-    blur(14px);
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.045);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
-
-.total-order__state svg {
-  color:
-    var(--to-gold);
-}
-
-
-.total-order__state-spinner {
-  animation:
-    total-order-spin
-    0.9s
-    linear
-    infinite;
-}
-
+.total-order__state > svg { color: var(--to-gold); }
 
 .total-order__state p {
-  margin:
-    0;
-
-  max-width:
-    500px;
-
-  color:
-    rgba(255, 255, 255, 0.7);
-
-  font-size:
-    0.88rem;
-
-  line-height:
-    1.6;
+  margin: 0;
+  max-width: 500px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.88rem;
+  line-height: 1.6;
 }
-
 
 .total-order__state h3 {
-  margin:
-    0;
-
-  color:
-    #ffffff;
-
-  font-family:
-    var(--to-serif);
-
-  font-size:
-    1.5rem;
+  margin: 0;
+  color: #ffffff;
+  font-family: var(--to-serif);
+  font-size: 1.5rem;
 }
-
 
 .total-order__state-icon {
-  width:
-    52px;
-
-  height:
-    52px;
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    center;
-
-  border-radius:
-    50%;
-
-  color:
-    var(--to-gold);
-
-  background:
-    rgba(253, 184, 19, 0.1);
-
-  font-size:
-    1.4rem;
-
-  font-weight:
-    800;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--to-gold);
+  background: rgba(253, 184, 19, 0.1);
+  font-size: 1.4rem;
+  font-weight: 800;
 }
 
-
-.total-order__state--error {
-  border-color:
-    rgba(255, 80, 80, 0.2);
-}
-
-
-/* =========================================================
-   RETRY BUTTON
-========================================================= */
+.total-order__state--error { border-color: rgba(255, 80, 80, 0.22); }
 
 .total-order__retry {
-  margin-top:
-    0.35rem;
-
-  min-height:
-    44px;
-
-  padding:
-    0.7rem 1.25rem;
-
-  border:
-    1px solid
-    rgba(253, 184, 19, 0.5);
-
-  border-radius:
-    999px;
-
-  color:
-    #081d10;
-
-  background:
-    var(--to-gold);
-
-  font-family:
-    var(--to-sans);
-
-  font-size:
-    0.78rem;
-
-  font-weight:
-    800;
-
-  cursor:
-    pointer;
-
-  transition:
-    all 0.3s ease;
+  margin-top: 0.35rem;
+  min-height: 44px;
+  padding: 0.7rem 1.25rem;
+  border: 1px solid rgba(253, 184, 19, 0.5);
+  border-radius: 999px;
+  color: #081d10;
+  background: var(--to-gold);
+  font-family: var(--to-sans);
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
-
 
 .total-order__retry:hover {
-  transform:
-    translateY(-2px);
-
-  background:
-    var(--to-gold-bright);
-
-  box-shadow:
-    0 10px 24px
-      var(--to-gold-glow);
+  transform: translateY(-2px);
+  background: var(--to-gold-bright);
+  box-shadow: 0 10px 24px var(--to-gold-glow);
 }
 
-
 /* =========================================================
-   FOCUS ACCESSIBILITY
+   FOCUS
 ========================================================= */
 
-.total-order button:focus-visible {
-  outline:
-    3px solid
-    rgba(253, 184, 19, 0.55);
-
-  outline-offset:
-    3px;
+.total-order button:focus-visible,
+.total-order a:focus-visible {
+  outline: 3px solid rgba(253, 184, 19, 0.6);
+  outline-offset: 3px;
 }
 
-
 /* =========================================================
-   LARGE DESKTOP
-   4 CARDS
+   RESPONSIVE
+   (cards per screen: 4 / 3 / 2 / 1 handled in JS)
 ========================================================= */
 
-@media (min-width: 1200px) {
-
-  .total-order__track {
-    --total-order-slide-width:
-      25%;
-  }
-
-  .total-order__slide {
-    flex:
-      0 0 25%;
-
-    width:
-      25%;
-
-    padding:
-      0 0.6rem;
-  }
-
-  .total-order__image-wrap {
-    height:
-      225px;
-  }
-
-  .total-order__image {
-    width:
-      175px;
-
-    height:
-      175px;
-  }
-
-  .total-order__card-inner {
-    min-height:
-      470px;
-  }
-
+@media (max-width: 1100px) {
+  .total-order { padding: 3.5rem 1.5rem; }
+  .total-order__slide { padding: 0 0.45rem; }
 }
 
-
-/* =========================================================
-   DESKTOP
-   4 CARDS
-========================================================= */
-
-@media (min-width: 1101px) and (max-width: 1199px) {
-
-  .total-order__track {
-    --total-order-slide-width:
-      25%;
-  }
-
-  .total-order__slide {
-    flex:
-      0 0 25%;
-
-    width:
-      25%;
-
-    padding:
-      0 0.45rem;
-  }
-
-  .total-order__image-wrap {
-    height:
-      210px;
-  }
-
-  .total-order__image {
-    width:
-      155px;
-
-    height:
-      155px;
-  }
-
-  .total-order__card-inner {
-    min-height:
-      450px;
-  }
-
+@media (max-width: 768px) {
+  .total-order { padding: 3rem 1rem; }
+  .total-order__intro { margin-bottom: 2rem; }
+  .total-order__slide { padding: 0 0.4rem; }
+  .total-order__card { border-radius: 22px; }
+  .total-order__footer { flex-direction: column; align-items: flex-start; }
 }
-
-
-/* =========================================================
-   TABLET / SMALL DESKTOP
-   3 CARDS
-========================================================= */
-
-@media (min-width: 769px) and (max-width: 1100px) {
-
-  .total-order {
-    padding:
-      3.5rem
-      1.5rem;
-  }
-
-  .total-order__track {
-    --total-order-slide-width:
-      33.333333%;
-  }
-
-  .total-order__slide {
-    flex:
-      0 0 33.333333%;
-
-    width:
-      33.333333%;
-
-    padding:
-      0 0.45rem;
-  }
-
-  .total-order__card-inner {
-    min-height:
-      440px;
-  }
-
-  .total-order__image-wrap {
-    height:
-      205px;
-  }
-
-  .total-order__image {
-    width:
-      150px;
-
-    height:
-      150px;
-  }
-
-  .total-order__content {
-    padding:
-      1.2rem
-      1rem
-      1.2rem;
-  }
-
-}
-
-
-/* =========================================================
-   TABLET
-   2 CARDS
-========================================================= */
-
-@media (min-width: 561px) and (max-width: 768px) {
-
-  .total-order {
-    padding:
-      3rem
-      1rem;
-  }
-
-  .total-order__heading {
-    font-size:
-      clamp(
-        2rem,
-        8vw,
-        2.8rem
-      );
-  }
-
-  .total-order__intro {
-    margin-bottom:
-      2rem;
-  }
-
-  .total-order__track {
-    --total-order-slide-width:
-      50%;
-  }
-
-  .total-order__slide {
-    flex:
-      0 0 50%;
-
-    width:
-      50%;
-
-    padding:
-      0 0.4rem;
-  }
-
-  .total-order__viewport {
-    padding:
-      0.5rem 0
-      1.25rem;
-  }
-
-  .total-order__card {
-    border-radius:
-      22px;
-  }
-
-  .total-order__image-wrap {
-    height:
-      205px;
-  }
-
-  .total-order__image {
-    width:
-      150px;
-
-    height:
-      150px;
-  }
-
-  .total-order__card-inner {
-    min-height:
-      420px;
-  }
-
-  .total-order__content {
-    padding:
-      1.15rem
-      1rem
-      1.15rem;
-  }
-
-  .total-order__footer {
-    flex-direction:
-      column;
-
-    align-items:
-      flex-start;
-  }
-
-}
-
-
-/* =========================================================
-   MOBILE
-   1 CARD
-========================================================= */
 
 @media (max-width: 560px) {
+  .total-order { padding: 2.5rem 0.75rem; }
 
-  .total-order {
-    padding:
-      2.5rem
-      0.75rem;
-  }
+  .total-order__eyebrow { font-size: 0.63rem; padding: 0.38rem 0.8rem; }
+  .total-order__heading { font-size: 2rem; line-height: 1.1; }
+  .total-order__sub { font-size: 0.83rem; line-height: 1.6; }
 
-  .total-order__eyebrow {
-    font-size:
-      0.63rem;
+  .total-order__trust { gap: 0.4rem; margin-top: 1.1rem; }
+  .total-order__trust li { font-size: 0.66rem; padding: 0.4rem 0.7rem; }
 
-    padding:
-      0.38rem
-      0.8rem;
-  }
+  .total-order__slide { padding: 0 0.25rem; }
+  .total-order__viewport { padding: 0.6rem 0 1.4rem; }
 
-  .total-order__heading {
-    font-size:
-      2rem;
+  .total-order__image-wrap { aspect-ratio: 4 / 3; }
+  .total-order__badge { top: 12px; left: 12px; font-size: 0.58rem; padding: 0.34rem 0.65rem; }
+  .total-order__sold { right: 12px; bottom: 12px; font-size: 0.6rem; padding: 0.34rem 0.62rem; }
 
-    line-height:
-      1.08;
-  }
+  .total-order__content { padding: 1.1rem 1rem 1.15rem; }
+  .total-order__title { font-size: 1.25rem; }
+  .total-order__description { font-size: 0.78rem; }
+  .total-order__price { font-size: 1.35rem; }
+  .total-order__cart-btn { min-height: 46px; font-size: 0.76rem; }
 
-  .total-order__sub {
-    font-size:
-      0.82rem;
+  .total-order__controls { gap: 0.85rem; }
+  .total-order__nav { width: 42px; height: 42px; }
 
-    line-height:
-      1.55;
-  }
-
-  .total-order__track {
-    --total-order-slide-width:
-      100%;
-  }
-
-  .total-order__slide {
-    flex:
-      0 0 100%;
-
-    width:
-      100%;
-
-    padding:
-      0 0.25rem;
-  }
-
-  .total-order__viewport {
-    padding:
-      0.5rem 0
-      1.25rem;
-  }
-
-  .total-order__card {
-    border-radius:
-      22px;
-  }
-
-  .total-order__image-wrap {
-    height:
-      205px;
-  }
-
-  .total-order__image {
-    width:
-      150px;
-
-    height:
-      150px;
-  }
-
-  .total-order__badge {
-    top:
-      12px;
-
-    left:
-      12px;
-
-    font-size:
-      0.56rem;
-
-    padding:
-      0.34rem
-      0.58rem;
-  }
-
-  .total-order__sold {
-    right:
-      12px;
-
-    bottom:
-      12px;
-
-    font-size:
-      0.6rem;
-
-    padding:
-      0.34rem
-      0.58rem;
-  }
-
-  .total-order__card-inner {
-    min-height:
-      410px;
-  }
-
-  .total-order__content {
-    padding:
-      1.15rem
-      1rem
-      1.1rem;
-  }
-
-  .total-order__title {
-    font-size:
-      1.25rem;
-  }
-
-  .total-order__description {
-    font-size:
-      0.75rem;
-
-    line-height:
-      1.5;
-  }
-
-  .total-order__price {
-    font-size:
-      1.3rem;
-  }
-
-  .total-order__cart-btn {
-    min-height:
-      44px;
-
-    font-size:
-      0.73rem;
-  }
-
-  .total-order__controls {
-    gap:
-      0.85rem;
-  }
-
-  .total-order__nav {
-    width:
-      42px;
-
-    height:
-      42px;
-  }
-
-  .total-order__footer {
-    padding:
-      0.75rem;
-
-    margin-top:
-      1rem;
-  }
-
-  .total-order__footer-status,
-  .total-order__footer-count {
-    font-size:
-      0.63rem;
-  }
-
+  .total-order__footer { padding: 0.8rem; margin-top: 1.25rem; }
+  .total-order__footer-status { font-size: 0.66rem; }
+  .total-order__trade { width: 100%; justify-content: center; font-size: 0.7rem; }
 }
-
-
-/* =========================================================
-   EXTRA SMALL MOBILE
-========================================================= */
 
 @media (max-width: 380px) {
-
-  .total-order {
-    padding:
-      2rem
-      0.6rem;
-  }
-
-  .total-order__heading {
-    font-size:
-      1.75rem;
-  }
-
-  .total-order__image-wrap {
-    height:
-      190px;
-  }
-
-  .total-order__image {
-    width:
-      138px;
-
-    height:
-      138px;
-  }
-
-  .total-order__card-inner {
-    min-height:
-      395px;
-  }
-
-  .total-order__content {
-    padding:
-      1rem
-      0.9rem;
-  }
-
-  .total-order__category {
-    font-size:
-      0.61rem;
-  }
-
-  .total-order__title {
-    font-size:
-      1.15rem;
-  }
-
-  .total-order__price {
-    font-size:
-      1.2rem;
-  }
-
-  .total-order__cart-btn {
-    min-height:
-      42px;
-
-    padding:
-      0.65rem
-      0.8rem;
-  }
-
+  .total-order { padding: 2rem 0.6rem; }
+  .total-order__heading { font-size: 1.75rem; }
+  .total-order__content { padding: 1rem 0.9rem; }
+  .total-order__title { font-size: 1.15rem; }
+  .total-order__price { font-size: 1.2rem; }
+  .total-order__trade { font-size: 0.66rem; }
 }
 
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
 @media (prefers-reduced-motion: reduce) {
-
   .total-order *,
   .total-order::before {
-    animation-duration:
-      0.01ms !important;
-
-    animation-iteration-count:
-      1 !important;
-
-    transition-duration:
-      0.01ms !important;
-
-    scroll-behavior:
-      auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-
 }

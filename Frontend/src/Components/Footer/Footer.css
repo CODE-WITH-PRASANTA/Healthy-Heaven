@@ -6,18 +6,18 @@
   --FooterGreenLight: #a9e858;
   --FooterGreenGlow: rgba(136, 201, 58, 0.35);
 
-  --FooterBgDark: #1a1a1a;
-  --FooterBgMid: #222222;
+  --FooterBgDark: #141414;
+  --FooterBgMid: #1c1c1c;
 
   --FooterWhite: #ffffff;
-  --FooterTextPrimary: #dedede;
-  --FooterTextMuted: #a3a3a3;
+  --FooterTextPrimary: #d6d6d6;
+  --FooterTextMuted: #919191;
   --FooterBorder: rgba(255, 255, 255, 0.08);
 
   position: relative;
   width: 100%;
   background:
-    radial-gradient(circle at 12% 28%, rgba(136, 201, 58, 0.06), transparent 36%),
+    radial-gradient(circle at 12% 28%, rgba(136, 201, 58, 0.05), transparent 36%),
     linear-gradient(180deg, var(--FooterBgMid) 0%, var(--FooterBgDark) 100%);
   color: var(--FooterWhite);
   overflow: hidden;
@@ -26,14 +26,13 @@
   letter-spacing: -0.1px;
 }
 
-/* Subtle accent line on top */
 .FooterMain::before {
   content: "";
   position: absolute;
   top: 0;
   left: 6%;
   width: 88%;
-  height: 4.5px;
+  height: 3px;
   background: linear-gradient(90deg, transparent, var(--FooterGreen), transparent);
   opacity: 0.6;
   pointer-events: none;
@@ -54,23 +53,18 @@
 ============================================================ */
 .FooterTop {
   display: grid;
-  grid-template-columns: 1.35fr 0.95fr 1.1fr 0.95fr;
-  column-gap: 52px;
-  row-gap: 36px;
+  grid-template-columns: 1.35fr 0.95fr 1.15fr 0.95fr;
+  column-gap: 48px;
+  row-gap: 32px;
   align-items: start;
-  padding-top: 20px;
-  padding-bottom: 20px; /* Balanced height to remove empty voids */
+  padding-top: 48px;
+  padding-bottom: 36px;
 }
 
 .FooterColumn {
   position: relative;
   min-width: 0;
   z-index: 5;
-}
-
-/* Offsets nav headers to align horizontally with the Contact title */
-.FooterNavColumn {
-  padding-top: 86px; /* Matches Logo wrapper height + margins */
 }
 
 .FooterContactColumn {
@@ -83,8 +77,8 @@
 .FooterLogoWrapper {
   display: flex;
   align-items: center;
-  height: 60px;
-  margin-bottom: 26px;
+  height: 52px;
+  margin-bottom: 24px;
 }
 
 .FooterLogoLink {
@@ -96,47 +90,46 @@
 .FooterLogo {
   display: block;
   width: auto;
-  max-width: 175px;
-  max-height: 72px;
+  max-width: 165px;
+  max-height: 62px;
   object-fit: contain;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
 }
 
 .FooterLogoLink:hover .FooterLogo {
   transform: translateY(-2px) scale(1.03);
-  filter: drop-shadow(0 8px 20px var(--FooterGreenGlow));
+  filter: drop-shadow(0 6px 16px var(--FooterGreenGlow));
 }
 
 /* ============================================================
-   TITLES (PROMINENT & PREMIUM)
+   TITLES
 ============================================================ */
 .FooterTitle {
   position: relative;
-  margin: 0 0 28px 0;
+  margin: 0 0 24px 0;
   color: var(--FooterWhite);
-  font-size: 22px; /* Increased font size */
+  font-size: 19px;
   font-weight: 700;
-  letter-spacing: 0.6px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
   line-height: 1.25;
 }
 
-/* Green underline indicator */
 .FooterTitle::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -10px;
-  width: 36px;
+  bottom: -8px;
+  width: 32px;
   height: 2.5px;
   border-radius: 4px;
   background: var(--FooterGreen);
   box-shadow: 0 2px 8px var(--FooterGreenGlow);
-  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: width 0.3s ease;
 }
 
 .FooterColumn:hover .FooterTitle::after {
-  width: 58px;
+  width: 50px;
 }
 
 /* ============================================================
@@ -145,13 +138,13 @@
 .FooterContactItem {
   display: flex;
   align-items: flex-start;
-  gap: 15px;
-  margin-bottom: 18px;
+  gap: 14px;
+  margin-bottom: 16px;
   color: var(--FooterTextPrimary);
   text-decoration: none;
-  font-size: 15.5px; /* Clean, bold & legible */
+  font-size: 14.5px;
   font-weight: 400;
-  line-height: 1.6;
+  line-height: 1.55;
   transition: color 0.25s ease, transform 0.25s ease;
 }
 
@@ -161,7 +154,7 @@
 }
 
 .FooterContactIcon {
-  flex: 0 0 26px;
+  flex: 0 0 24px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -172,38 +165,20 @@
 
 .FooterContactItem:hover .FooterContactIcon {
   color: var(--FooterGreenLight);
-  transform: scale(1.12);
+  transform: scale(1.1);
 }
 
 .FooterContactText {
   min-width: 0;
 }
 
-.FooterContactText a {
-  display: block;
-  color: inherit;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.FooterContactText a:hover {
-  color: var(--FooterGreenLight);
-}
-
-.FooterPhoneText,
-.FooterEmailText {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
 /* ============================================================
-   LINK LIST (BALANCED & PROMINENT)
+   LINK LIST
 ============================================================ */
 .FooterLinkList {
   display: flex;
   flex-direction: column;
-  gap: 16px; /* Increased vertical space fills empty height seamlessly */
+  gap: 13px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -220,15 +195,15 @@
   width: fit-content;
   color: var(--FooterTextPrimary);
   text-decoration: none;
-  font-size: 15.5px; /* Increased font size */
+  font-size: 14.5px;
   font-weight: 400;
   line-height: 1.45;
-  transition: color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: color 0.25s ease, transform 0.25s ease;
 }
 
 .FooterLink:hover {
   color: var(--FooterWhite);
-  transform: translateX(6px);
+  transform: translateX(5px);
 }
 
 .FooterLinkArrow {
@@ -240,11 +215,11 @@
   opacity: 0;
   margin-right: 0;
   color: var(--FooterGreen);
-  transition: width 0.25s ease, opacity 0.25s ease, margin-right 0.25s ease;
+  transition: width 0.2s ease, opacity 0.2s ease, margin-right 0.2s ease;
 }
 
 .FooterLink:hover .FooterLinkArrow {
-  width: 16px;
+  width: 14px;
   margin-right: 6px;
   opacity: 1;
 }
@@ -258,14 +233,14 @@
 }
 
 /* ============================================================
-   DECORATIVE ASSETS (TOMATO & ALMOND)
+   DECORATIVE ASSETS
 ============================================================ */
 .FooterAlmondDecoration {
   position: absolute;
   top: 24px;
   right: 24px;
-  width: 125px;
-  opacity: 0.22;
+  width: 120px;
+  opacity: 0.18;
   pointer-events: none;
   z-index: 1;
   animation: FooterAlmondFloat 9s ease-in-out infinite;
@@ -275,7 +250,7 @@
   display: block;
   width: 100%;
   height: auto;
-  filter: grayscale(100%) brightness(3.85);
+  filter: grayscale(100%) brightness(3.5);
 }
 
 @keyframes FooterAlmondFloat {
@@ -287,8 +262,8 @@
   position: absolute;
   left: -8px;
   bottom: 8px;
-  width: 130px;
-  opacity: 0.88;
+  width: 120px;
+  opacity: 0.85;
   pointer-events: none;
   z-index: 1;
   animation: FooterTomatoFloat 6s ease-in-out infinite;
@@ -302,7 +277,7 @@
 
 @keyframes FooterTomatoFloat {
   0%, 100% { transform: translate3d(0, 0, 0) rotate(-3deg); }
-  50% { transform: translate3d(12px, -6px, 0) rotate(2deg); }
+  50% { transform: translate3d(10px, -6px, 0) rotate(2deg); }
 }
 
 /* ============================================================
@@ -313,8 +288,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  padding: 24px 0 28px 0;
+  gap: 20px;
+  padding: 22px 0 24px 0;
   border-top: 1px solid var(--FooterBorder);
   z-index: 8;
 }
@@ -323,7 +298,7 @@
 .FooterCreated {
   margin: 0;
   color: var(--FooterTextMuted);
-  font-size: 14px; /* Crisp legible font */
+  font-size: 13.5px;
   font-weight: 400;
   line-height: 1.5;
 }
@@ -331,68 +306,31 @@
 .FooterCreated {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding-right: 76px; /* Offset for scroll-to-top button */
+  gap: 7px;
 }
 
 .FooterHeart {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
+  color: #ff4d4f;
   animation: FooterHeartBeat 2.4s ease-in-out infinite;
 }
 
 @keyframes FooterHeartBeat {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.22); }
+  50% { transform: scale(1.2); }
 }
 
 .FooterBrand {
   color: var(--FooterGreen);
   text-decoration: none;
   font-weight: 700;
-  letter-spacing: 0.5px;
-  transition: color 0.25s ease, text-shadow 0.25s ease;
+  transition: color 0.25s ease;
 }
 
 .FooterBrand:hover {
   color: var(--FooterGreenLight);
-  text-shadow: 0 0 14px var(--FooterGreenGlow);
-}
-
-/* ============================================================
-   SCROLL TOP BUTTON
-============================================================ */
-.FooterScrollTop {
-  position: absolute;
-  right: 32px;
-  bottom: 20px;
-  width: 52px;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1.8px solid var(--FooterGreen);
-  border-radius: 50%;
-  background: rgba(28, 28, 28, 0.94);
-  color: var(--FooterGreen);
-  cursor: pointer;
-  z-index: 30;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.FooterScrollTop:hover {
-  background: var(--FooterGreen);
-  color: #121212;
-  transform: translateY(-5px);
-  box-shadow: 0 10px 24px var(--FooterGreenGlow);
-}
-
-.FooterScrollTop:active {
-  transform: translateY(-2px) scale(0.96);
 }
 
 /* ============================================================
@@ -401,59 +339,40 @@
 @media (max-width: 1024px) {
   .FooterTop {
     grid-template-columns: repeat(2, 1fr);
-    column-gap: 40px;
-    row-gap: 44px;
-    padding-top: 48px;
-  }
-
-  .FooterNavColumn {
-    padding-top: 0;
+    column-gap: 36px;
+    row-gap: 40px;
+    padding-top: 40px;
   }
 }
 
 @media (max-width: 640px) {
   .FooterContainer {
-    width: calc(100% - 36px);
+    width: calc(100% - 32px);
   }
 
   .FooterTop {
     grid-template-columns: 1fr;
-    gap: 34px;
-    padding-top: 40px;
-    padding-bottom: 28px;
-  }
-
-  .FooterNavColumn {
-    padding-top: 0;
+    gap: 30px;
+    padding-top: 36px;
+    padding-bottom: 24px;
   }
 
   .FooterTitle {
-    font-size: 20px;
-    margin-bottom: 22px;
+    font-size: 18px;
+    margin-bottom: 18px;
   }
 
   .FooterContactItem,
   .FooterLink {
-    font-size: 14.5px;
+    font-size: 14px;
   }
 
   .FooterBottom {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 12px;
-    padding-bottom: 26px;
-  }
-
-  .FooterCreated {
-    padding-right: 0;
-  }
-
-  .FooterScrollTop {
-    right: 16px;
-    bottom: 14px;
-    width: 46px;
-    height: 46px;
+    gap: 10px;
+    padding-bottom: 22px;
   }
 }
 
@@ -461,8 +380,7 @@
    ACCESSIBILITY & REDUCED MOTION
 ============================================================ */
 .FooterLink:focus-visible,
-.FooterBrand:focus-visible,
-.FooterScrollTop:focus-visible {
+.FooterBrand:focus-visible {
   outline: 2px solid var(--FooterGreen);
   outline-offset: 3px;
 }

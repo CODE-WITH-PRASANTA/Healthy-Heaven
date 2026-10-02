@@ -8,65 +8,177 @@ import {
 
 import "./App.css";
 
-// Layout
+// =====================================================
+// LAYOUT
+// =====================================================
+
 import MainLayout from "./Layout/MainLayout/MainLayout";
 
-// Pages
+// =====================================================
+// PAGES / COMPONENTS
+// =====================================================
+
 import DashBoard from "./Pages/DashBoard/DashBoard";
 import Gallery from "./Components/Gallery/Gallery";
 import ContactLead from "./Components/ContactLead/ContactLead";
 import Order from "./Components/Order/Order";
 import Testimonial from "./Components/Testimonial/Testimonial";
 import Menu from "./Components/Menu/Menu";
+import Login from "./Components/Login/Login";
+import Enquires from "./Components/Enquires/Enquires";
 
+// =====================================================
+// PROTECTED ROUTE
+// =====================================================
+
+const ProtectedRoute = ({ children }) => {
+  const isAuthenticated =
+    sessionStorage.getItem("isAdminAuthenticated") === "true";
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+};
+
+// =====================================================
+// APP
+// =====================================================
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* Main Layout */}
-        <Route element={<MainLayout />}>
+        {/* =================================================
+            LOGIN PAGE
 
-          {/* Root */}
+            IMPORTANT:
+            Login is OUTSIDE MainLayout.
+
+            Therefore:
+            - No Sidebar
+            - No Topbar
+            - No Admin Layout
+            - Full screen Login page
+        ================================================= */}
+
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        {/* =================================================
+            PROTECTED ADMIN AREA
+
+            MainLayout contains:
+            - Sidebar
+            - Topbar
+            - Outlet
+        ================================================= */}
+
+        <Route
+          element={
+            <ProtectedRoute>
+              <MainLayout />
+            </ProtectedRoute>
+          }
+        >
+
+          {/* =================================================
+              ROOT
+          ================================================= */}
+
           <Route
             path="/"
-            element={<Navigate to="/dashboard" replace />}
+            element={
+              <Navigate
+                to="/dashboard"
+                replace
+              />
+            }
           />
 
-          {/* Dashboard */}
+          {/* =================================================
+              DASHBOARD
+          ================================================= */}
+
           <Route
             path="/dashboard"
-            element={<DashBoard/>}
+            element={<DashBoard />}
           />
+
+          {/* =================================================
+              GALLERY
+          ================================================= */}
 
           <Route
             path="/gallery"
-            element={<Gallery/>}
+            element={<Gallery />}
           />
+
+          {/* =================================================
+              CONTACT LEADS
+          ================================================= */}
+
           <Route
             path="/contact-lead"
-            element={<ContactLead/>}
+            element={<ContactLead />}
           />
+
+          {/* =================================================
+              ORDERS
+          ================================================= */}
+
           <Route
             path="/order"
-            element={<Order/>}
+            element={<Order />}
           />
+
+          {/* =================================================
+              TESTIMONIALS
+          ================================================= */}
+
           <Route
             path="/testimonial"
-            element={<Testimonial/>}
+            element={<Testimonial />}
           />
 
-          <Route path="/menu" element={<Menu />} />
+          {/* =================================================
+              Enquires
+          ================================================= */}
 
-          {/* Blog Create Route */}
-          
+          <Route
+            path="/enquire"
+            element={<Enquires/>}
+          />
+
+          {/* =================================================
+              MENU
+          ================================================= */}
+
+          <Route
+            path="/menu"
+            element={<Menu />}
+          />
+
         </Route>
 
-        {/* Fallback */}
+        {/* =================================================
+            FALLBACK
+
+            Unknown URL -> Login
+        ================================================= */}
+
         <Route
           path="*"
-          element={<Navigate to="/dashboard" replace />}
+          element={
+            <Navigate
+              to="/login"
+              replace
+            />
+          }
         />
 
       </Routes>

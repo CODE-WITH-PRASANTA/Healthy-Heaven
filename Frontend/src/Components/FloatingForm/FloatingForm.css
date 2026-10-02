@@ -1,17 +1,21 @@
 /* =========================================================
-   HEALTHY HEAVEN
-   COMPACT PREMIUM FLOATING FORM
+   FOODIGO
+   PREMIUM FLOATING CONTACT FORM
+   REFERENCE: 2ND IMAGE
 ========================================================= */
 
 :root {
-  --hf-green: #24843a;
-  --hf-green-dark: #155c28;
-  --hf-green-light: #eaf6ec;
-  --hf-orange: #f47721;
-  --hf-text: #1e2b22;
-  --hf-muted: #7d877f;
-  --hf-border: #dce6de;
-  --hf-white: #ffffff;
+  --foodigo-red: #e30613;
+  --foodigo-red-dark: #c9000d;
+  --foodigo-red-light: #ff2633;
+
+  --foodigo-black: #101010;
+  --foodigo-text: #1a1a1a;
+
+  --foodigo-gray: #6d7478;
+  --foodigo-border: #dce1e4;
+
+  --foodigo-white: #ffffff;
 }
 
 
@@ -19,25 +23,31 @@
    OVERLAY
 ========================================================= */
 
-.hf-overlay {
+.foodigo-overlay {
   position: fixed;
+
   inset: 0;
 
   width: 100%;
   height: 100%;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 12px;
+  padding: 15px;
 
   box-sizing: border-box;
 
-  background: rgba(8, 18, 10, 0.70);
+  display: flex;
 
-  backdrop-filter: blur(7px);
-  -webkit-backdrop-filter: blur(7px);
+  align-items: center;
+  justify-content: center;
+
+  background:
+    rgba(9, 12, 13, 0.73);
+
+  backdrop-filter:
+    blur(7px);
+
+  -webkit-backdrop-filter:
+    blur(7px);
 
   z-index: 999999;
 
@@ -49,8 +59,7 @@
     opacity 0.3s ease;
 }
 
-
-.hf-overlay--closing {
+.foodigo-overlay-closing {
   opacity: 0;
 
   pointer-events: none;
@@ -58,25 +67,19 @@
 
 
 /* =========================================================
-   CARD
+   MAIN CARD
 ========================================================= */
 
-.hf-card {
+.foodigo-card {
   position: relative;
 
-  width: min(100%, 430px);
+  width: min(100%, 455px);
 
-  /*
-   * IMPORTANT:
-   * No scroll.
-   */
-  height: auto;
+  min-height: 575px;
 
-  max-height: calc(100vh - 24px);
+  max-height: calc(100vh - 30px);
 
   overflow: hidden;
-
-  padding: 24px 28px 18px;
 
   box-sizing: border-box;
 
@@ -84,15 +87,18 @@
     linear-gradient(
       145deg,
       #ffffff 0%,
-      #ffffff 78%,
-      #f5faf6 100%
+      #ffffff 76%,
+      #fafafa 100%
     );
 
   border-radius: 27px;
 
   box-shadow:
-    0 28px 65px rgba(0, 0, 0, 0.28),
-    0 10px 25px rgba(27, 80, 35, 0.13);
+    0 32px 75px
+      rgba(0, 0, 0, 0.34),
+
+    0 12px 28px
+      rgba(0, 0, 0, 0.14);
 
   font-family:
     Inter,
@@ -104,9 +110,14 @@
     sans-serif;
 
   animation:
-    hfCardIn
-    0.38s
-    cubic-bezier(0.16, 1, 0.3, 1)
+    foodigoCardIn
+    0.4s
+    cubic-bezier(
+      0.16,
+      1,
+      0.3,
+      1
+    )
     forwards;
 
   transition:
@@ -114,23 +125,21 @@
     opacity 0.3s ease;
 }
 
-
-.hf-card--closing {
+.foodigo-card-closing {
   opacity: 0;
 
   transform:
-    translateY(12px)
+    translateY(14px)
     scale(0.96);
 }
 
-
-@keyframes hfCardIn {
+@keyframes foodigoCardIn {
   from {
     opacity: 0;
 
     transform:
-      translateY(18px)
-      scale(0.96);
+      translateY(22px)
+      scale(0.95);
   }
 
   to {
@@ -144,180 +153,156 @@
 
 
 /* =========================================================
-   TOP GREEN SHAPE
+   TOP RED SHAPE
 ========================================================= */
 
-.hf-top-shape {
+.foodigo-top-red {
   position: absolute;
 
-  top: -105px;
-  right: -82px;
+  top: -122px;
+  right: -88px;
 
-  width: 265px;
-  height: 265px;
+  width: 315px;
+  height: 315px;
 
   background:
     linear-gradient(
       145deg,
-      #60bd62,
-      #27923a 58%,
-      #176a2b
+      #ff202b 0%,
+      #f10b17 48%,
+      #d9000c 100%
     );
 
   border-radius:
-    48% 52% 65% 35% /
-    45% 40% 60% 55%;
+    48% 52% 48% 52% /
+    48% 45% 55% 52%;
 
-  z-index: 0;
+  z-index: 1;
 
   pointer-events: none;
 }
 
 
 /* =========================================================
-   SMALL DECORATIVE ORBS
+   RED CURVE EXTENSION
 ========================================================= */
 
-.hf-small-orb {
+.foodigo-top-red::after {
+  content: "";
+
   position: absolute;
 
+  right: -15px;
+  bottom: -92px;
+
+  width: 220px;
+  height: 180px;
+
+  background:
+    #ed0815;
+
+  border-radius:
+    0 0 0 100%;
+
+  transform:
+    rotate(-14deg);
+
+  box-shadow:
+    -8px -8px 25px
+      rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================================
+   RED HIGHLIGHT
+========================================================= */
+
+.foodigo-top-red-highlight {
+  position: absolute;
+
+  top: -45px;
+  right: 58px;
+
+  width: 95px;
+  height: 230px;
+
+  border-left:
+    2px solid
+    rgba(255, 255, 255, 0.14);
+
   border-radius: 50%;
+
+  transform:
+    rotate(17deg);
+
+  filter:
+    blur(1px);
 
   z-index: 3;
 
   pointer-events: none;
 }
 
+.foodigo-top-red-highlight::after {
+  content: "";
 
-.hf-small-orb-green {
-  top: 126px;
-  right: 246px;
+  position: absolute;
 
-  width: 10px;
-  height: 10px;
+  top: 0;
+  left: 26px;
 
-  background: #67b966;
+  width: 42px;
+  height: 180px;
 
-  box-shadow:
-    0 0 0 6px rgba(103, 185, 102, 0.13);
-}
+  border-left:
+    1px solid
+    rgba(255, 255, 255, 0.12);
 
-
-.hf-small-orb-orange {
-  top: 177px;
-  right: 214px;
-
-  width: 7px;
-  height: 7px;
-
-  background: var(--hf-orange);
+  border-radius: 50%;
 }
 
 
 /* =========================================================
-   LEAVES
+   FOOD IMAGE AREA
 ========================================================= */
 
-.hf-leaf {
+.foodigo-food-wrapper {
   position: absolute;
 
-  z-index: 4;
+  top: 31px;
+  right: -5px;
+
+  width: 215px;
+  height: 215px;
+
+  z-index: 12;
 
   pointer-events: none;
-
-  user-select: none;
-}
-
-
-.hf-leaf-one {
-  top: 50px;
-  right: 222px;
-
-  font-size: 21px;
-
-  transform: rotate(-18deg);
-}
-
-
-.hf-leaf-two {
-  top: 202px;
-  right: 212px;
-
-  font-size: 17px;
-
-  transform: rotate(38deg);
 }
 
 
 /* =========================================================
-   CLOSE
+   IMAGE GLOW
 ========================================================= */
 
-.hf-close {
+.foodigo-food-glow {
   position: absolute;
 
-  top: 14px;
-  right: 14px;
-
-  width: 35px;
-  height: 35px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border: 1px solid rgba(30, 80, 38, 0.08);
+  inset: 22px;
 
   border-radius: 50%;
 
-  background: rgba(255, 255, 255, 0.96);
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.28),
+      rgba(255, 255, 255, 0)
+    );
 
-  box-shadow:
-    0 5px 15px rgba(0, 0, 0, 0.13);
+  filter:
+    blur(10px);
 
-  cursor: pointer;
-
-  z-index: 30;
-
-  transition:
-    transform 0.22s ease,
-    background 0.22s ease;
-}
-
-
-.hf-close span {
-  position: absolute;
-
-  width: 14px;
-  height: 2px;
-
-  background: #354039;
-
-  border-radius: 10px;
-}
-
-
-.hf-close span:first-child {
-  transform: rotate(45deg);
-}
-
-
-.hf-close span:last-child {
-  transform: rotate(-45deg);
-}
-
-
-.hf-close:hover:not(:disabled) {
-  transform: rotate(90deg);
-
-  background: #f2f8f3;
-}
-
-
-.hf-close:disabled {
-  opacity: 0.5;
-
-  cursor: not-allowed;
+  z-index: 0;
 }
 
 
@@ -325,328 +310,365 @@
    FOOD IMAGE
 ========================================================= */
 
-.hf-food-area {
-  position: absolute;
+.foodigo-food-image {
+  position: relative;
 
-  top: 47px;
-  right: -21px;
-
-  width: 153px;
-  height: 153px;
-
-  z-index: 5;
-
-  pointer-events: none;
-}
-
-
-.hf-food-circle {
   width: 100%;
   height: 100%;
 
-  padding: 6px;
+  display: block;
 
-  box-sizing: border-box;
+  object-fit: contain;
+
+  z-index: 2;
+
+  filter:
+    drop-shadow(
+      0 15px 15px
+      rgba(0, 0, 0, 0.27)
+    );
+}
+
+
+/* =========================================================
+   FOOD DECORATIVE LEAVES
+========================================================= */
+
+.foodigo-food-leaf {
+  position: absolute;
+
+  z-index: 5;
+
+  font-size: 22px;
+
+  filter:
+    drop-shadow(
+      0 4px 5px
+      rgba(0, 0, 0, 0.18)
+    );
+}
+
+.foodigo-food-leaf-1 {
+  left: 7px;
+  bottom: 13px;
+
+  transform:
+    rotate(-24deg);
+}
+
+.foodigo-food-leaf-2 {
+  right: 3px;
+  bottom: -2px;
+
+  transform:
+    rotate(27deg);
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.foodigo-close {
+  position: absolute;
+
+  top: 12px;
+  right: 13px;
+
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: none;
 
   border-radius: 50%;
 
   background:
-    linear-gradient(
-      145deg,
-      #ffffff,
-      #e5f2e7
-    );
+    rgba(255, 255, 255, 0.97);
 
   box-shadow:
-    0 13px 28px rgba(0, 0, 0, 0.17);
+    0 5px 17px
+      rgba(0, 0, 0, 0.18);
+
+  cursor: pointer;
+
+  z-index: 40;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
+.foodigo-close span {
+  position: absolute;
 
-.hf-food-image {
-  width: 100%;
-  height: 100%;
+  width: 15px;
+  height: 2.4px;
 
-  display: block;
+  background:
+    #555;
 
-  object-fit: cover;
+  border-radius: 10px;
+}
 
-  border-radius: 50%;
+.foodigo-close span:first-child {
+  transform:
+    rotate(45deg);
+}
 
-  border: 4px solid #ffffff;
+.foodigo-close span:last-child {
+  transform:
+    rotate(-45deg);
+}
 
-  box-sizing: border-box;
+.foodigo-close:hover:not(:disabled) {
+  transform:
+    rotate(90deg)
+    scale(1.05);
+
+  box-shadow:
+    0 8px 22px
+      rgba(0, 0, 0, 0.23);
+}
+
+.foodigo-close:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
 }
 
 
 /* =========================================================
-   FRESH BADGE
+   CONTENT
 ========================================================= */
 
-.hf-fresh-badge {
-  position: absolute;
+.foodigo-content {
+  position: relative;
 
-  left: -26px;
-  bottom: 4px;
+  z-index: 20;
 
-  display: flex;
-  align-items: center;
-
-  gap: 7px;
-
-  padding: 6px 11px 6px 6px;
-
-  background: #ffffff;
-
-  border: 1px solid #edf1ed;
-
-  border-radius: 40px;
-
-  box-shadow:
-    0 8px 20px rgba(0, 0, 0, 0.13);
+  padding:
+    31px
+    24px
+    17px;
 }
 
 
-.hf-fresh-icon {
-  width: 27px;
-  height: 27px;
+/* =========================================================
+   FOODIGO LOGO
+========================================================= */
+
+.foodigo-brand {
+  position: relative;
+
+  width: 190px;
+
+  margin-bottom: 9px;
+}
+
+.foodigo-brand-oval {
+  position: relative;
+
+  width: 184px;
+  height: 58px;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
-  border-radius: 50%;
+  background:
+    #ffffff;
 
-  background: var(--hf-green-light);
+  border:
+    2px solid
+    var(--foodigo-red);
 
-  font-size: 13px;
-}
+  border-radius:
+    50%;
 
-
-.hf-fresh-text strong,
-.hf-fresh-text span {
-  display: block;
-}
-
-
-.hf-fresh-text strong {
-  color: var(--hf-green-dark);
-
-  font-size: 9px;
-
-  line-height: 1.1;
-}
-
-
-.hf-fresh-text span {
-  margin-top: 2px;
-
-  color: #7c857e;
-
-  font-size: 7px;
-
-  line-height: 1.1;
-}
-
-
-/* =========================================================
-   HEADER
-========================================================= */
-
-.hf-header {
-  position: relative;
-
-  z-index: 8;
-
-  padding-right: 145px;
+  transform:
+    rotate(-1deg);
 
   box-sizing: border-box;
 }
 
+.foodigo-brand-oval::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 5px;
+
+  border:
+    1px solid
+    rgba(227, 6, 19, 0.42);
+
+  border-radius:
+    50%;
+}
+
+.foodigo-brand-text {
+  position: relative;
+
+  color:
+    var(--foodigo-red);
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 38px;
+
+  font-weight: 900;
+
+  font-style: italic;
+
+  line-height: 1;
+
+  letter-spacing:
+    -2.7px;
+
+  text-shadow:
+    1px 1px 0
+    #b8000b;
+
+  z-index: 2;
+}
+
+.foodigo-brand-fresh {
+  position: absolute;
+
+  left: 67px;
+  bottom: -6px;
+
+  padding:
+    2px
+    8px;
+
+  color:
+    #222;
+
+  background:
+    #ffffff;
+
+  border:
+    1px solid
+    #252525;
+
+  border-radius:
+    12px;
+
+  font-size: 8px;
+
+  line-height: 1.1;
+
+  font-weight: 900;
+
+  letter-spacing:
+    0.5px;
+
+  transform:
+    rotate(-3deg);
+
+  z-index: 4;
+}
+
 
 /* =========================================================
-   HEALTHY HEAVEN LOGO
+   HEADING
 ========================================================= */
 
-.hf-brand {
+.foodigo-heading {
+  position: relative;
+
+  width: 245px;
+
+  max-width: 100%;
+}
+
+.foodigo-eyebrow {
   display: flex;
+
   align-items: center;
 
   gap: 9px;
 
-  margin-bottom: 13px;
+  margin-bottom: 3px;
 }
 
-
-.hf-brand-logo {
-  width: 47px;
-  height: 47px;
+.foodigo-eyebrow-line {
+  width: 25px;
+  height: 3px;
 
   flex-shrink: 0;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   background:
-    linear-gradient(
-      145deg,
-      #299641,
-      #176b2b
-    );
+    var(--foodigo-red);
 
   border-radius:
-    13px 13px 13px 4px;
-
-  box-shadow:
-    0 7px 17px rgba(36, 132, 58, 0.23);
-
-  transform: rotate(-3deg);
+    10px;
 }
 
+.foodigo-eyebrow span:last-child {
+  color:
+    #717171;
 
-.hf-brand-logo-inner {
-  width: 35px;
-  height: 35px;
+  font-size: 7px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  border:
-    1px solid rgba(255, 255, 255, 0.48);
-
-  border-radius:
-    10px 10px 10px 3px;
-
-  transform: rotate(3deg);
-}
-
-
-.hf-brand-logo-inner svg {
-  display: block;
-}
-
-
-.hf-brand-name {
   line-height: 1;
+
+  font-weight: 800;
+
+  letter-spacing:
+    2px;
+
+  white-space:
+    nowrap;
 }
 
-
-.hf-brand-name strong {
-  display: block;
-
-  color: #174f25;
-
-  font-size: 14px;
-  font-weight: 900;
-
-  letter-spacing: 2.1px;
-}
-
-
-.hf-brand-name span {
-  display: block;
-
-  margin-top: 4px;
-
-  color: var(--hf-orange);
-
-  font-size: 9px;
-  font-weight: 900;
-
-  letter-spacing: 3.4px;
-}
-
-
-/* =========================================================
-   TITLE
-========================================================= */
-
-.hf-title {
-  max-width: 225px;
-}
-
-
-.hf-eyebrow {
-  display: block;
-
-  margin-bottom: 5px;
-
-  color: var(--hf-orange);
-
-  font-size: 7.5px;
-  font-weight: 900;
-
-  letter-spacing: 1.6px;
-
-  white-space: nowrap;
-}
-
-
-.hf-title h2 {
+.foodigo-heading h2 {
   margin: 0;
 
-  color: var(--hf-text);
+  color:
+    #111111;
 
-  font-size: 28px;
+  font-size: 39px;
+
+  line-height: 0.98;
+
   font-weight: 900;
 
-  line-height: 1.05;
-
-  letter-spacing: -1px;
+  letter-spacing:
+    -1.8px;
 }
 
+.foodigo-heading h2 span {
+  color:
+    var(--foodigo-red);
 
-.hf-title h2 span {
-  color: var(--hf-orange);
+  font-weight:
+    900;
 }
 
+.foodigo-heading p {
+  margin:
+    5px 0 0;
 
-.hf-title p {
-  margin: 6px 0 0;
+  color:
+    #62676a;
 
-  color: #78827a;
+  font-size: 10px;
 
-  font-size: 10.5px;
+  line-height: 1.35;
 
-  line-height: 1.45;
-}
-
-
-.hf-title-decoration {
-  display: flex;
-  align-items: center;
-
-  gap: 4px;
-
-  margin-top: 8px;
-}
-
-
-.hf-title-decoration span {
-  width: 22px;
-  height: 3px;
-
-  border-radius: 10px;
-
-  background: var(--hf-green);
-}
-
-
-.hf-title-decoration span:last-child {
-  width: 17px;
-
-  background: var(--hf-orange);
-}
-
-
-.hf-title-decoration i {
-  width: 5px;
-  height: 5px;
-
-  border-radius: 50%;
-
-  background: var(--hf-orange);
+  font-weight:
+    500;
 }
 
 
@@ -654,17 +676,18 @@
    FORM
 ========================================================= */
 
-.hf-form {
+.foodigo-form {
   position: relative;
 
-  z-index: 10;
+  z-index: 25;
 
   display: flex;
+
   flex-direction: column;
 
   gap: 8px;
 
-  margin-top: 17px;
+  margin-top: 15px;
 }
 
 
@@ -672,27 +695,35 @@
    FIELD
 ========================================================= */
 
-.hf-field {
+.foodigo-field {
   width: 100%;
 }
 
-
-.hf-field label {
+.foodigo-field label {
   display: block;
 
-  margin: 0 0 4px 4px;
+  margin:
+    0 0
+    4px
+    2px;
 
-  color: #3c4940;
+  color:
+    #252525;
 
-  font-size: 9.5px;
-  font-weight: 750;
+  font-size: 10px;
+
+  line-height: 1.1;
+
+  font-weight:
+    800;
 }
 
+.foodigo-field label em {
+  color:
+    var(--foodigo-red);
 
-.hf-field label em {
-  color: #e84b3a;
-
-  font-style: normal;
+  font-style:
+    normal;
 }
 
 
@@ -700,14 +731,13 @@
    INPUT
 ========================================================= */
 
-.hf-input {
+.foodigo-input {
   position: relative;
 
   width: 100%;
 }
 
-
-.hf-input svg {
+.foodigo-input svg {
   position: absolute;
 
   left: 13px;
@@ -716,174 +746,229 @@
   width: 17px;
   height: 17px;
 
-  color: #849187;
+  color:
+    #727c82;
 
-  transform: translateY(-50%);
+  transform:
+    translateY(-50%);
 
-  pointer-events: none;
+  pointer-events:
+    none;
 
   z-index: 2;
+
+  transition:
+    color 0.2s ease;
 }
 
-
-.hf-input input {
+.foodigo-input input {
   width: 100%;
-  height: 41px;
+
+  height: 42px;
 
   padding:
-    0 13px 0 40px;
+    0
+    13px
+    0
+    40px;
 
-  box-sizing: border-box;
+  box-sizing:
+    border-box;
 
-  border: 1px solid var(--hf-border);
+  border:
+    1px solid
+    var(--foodigo-border);
 
-  border-radius: 11px;
+  border-radius:
+    11px;
 
-  outline: none;
+  outline:
+    none;
 
   background:
     linear-gradient(
       180deg,
-      #fbfdfb,
-      #f5f9f5
+      #ffffff,
+      #f7f8f8
     );
 
-  color: #26332a;
+  color:
+    #222;
 
-  font-family: inherit;
+  font-family:
+    inherit;
 
-  font-size: 11px;
+  font-size:
+    11px;
+
+  font-weight:
+    500;
 
   transition:
     border-color 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
+.foodigo-input input::placeholder {
+  color:
+    #9ca4a8;
 
-.hf-input input::placeholder {
-  color: #a0aaa2;
-
-  font-size: 10.5px;
+  font-size:
+    10.5px;
 }
 
-
-.hf-input input:hover:not(:disabled) {
-  border-color: #c7d7ca;
+.foodigo-input input:hover:not(:disabled) {
+  border-color:
+    #c8cdd0;
 }
 
+.foodigo-input input:focus {
+  border-color:
+    #ed1a25;
 
-.hf-input input:focus {
-  border-color: #4ca259;
-
-  background: #ffffff;
+  background:
+    #ffffff;
 
   box-shadow:
-    0 0 0 3px rgba(48, 145, 62, 0.09);
+    0 0 0 3px
+      rgba(227, 6, 19, 0.07);
 }
 
-
-.hf-input:focus-within svg {
-  color: var(--hf-green);
+.foodigo-input:focus-within svg {
+  color:
+    var(--foodigo-red);
 }
 
+.foodigo-input input:disabled {
+  opacity:
+    0.6;
 
-.hf-input input:disabled {
-  opacity: 0.6;
-
-  cursor: not-allowed;
+  cursor:
+    not-allowed;
 }
 
 
 /* =========================================================
-   SUBMIT
+   SUBMIT BUTTON
 ========================================================= */
 
-.hf-submit {
+.foodigo-submit {
   position: relative;
 
   width: 100%;
-  height: 45px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  gap: 10px;
+  height: 46px;
 
   margin-top: 4px;
 
-  border: none;
+  display: flex;
 
-  border-radius: 11px;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  border:
+    none;
+
+  border-radius:
+    11px;
 
   background:
     linear-gradient(
       100deg,
-      #27883a 0%,
-      #359a42 58%,
-      #f47721 100%
+      #d8000d 0%,
+      #ed0715 48%,
+      #ff1721 100%
     );
 
-  color: #ffffff;
+  color:
+    #ffffff;
 
-  font-family: inherit;
+  font-family:
+    inherit;
 
-  font-size: 12px;
-  font-weight: 850;
+  font-size:
+    13px;
 
-  cursor: pointer;
+  font-weight:
+    900;
+
+  cursor:
+    pointer;
 
   box-shadow:
-    0 9px 20px rgba(38, 130, 56, 0.22);
+    0 12px 24px
+      rgba(227, 6, 19, 0.24);
 
   transition:
     transform 0.22s ease,
     box-shadow 0.22s ease,
-    opacity 0.22s ease;
+    background 0.22s ease;
 }
 
-
-.hf-submit:hover:not(:disabled) {
-  transform: translateY(-1.5px);
+.foodigo-submit:hover:not(:disabled) {
+  transform:
+    translateY(-1.5px);
 
   box-shadow:
-    0 12px 24px rgba(38, 130, 56, 0.27);
+    0 15px 30px
+      rgba(227, 6, 19, 0.31);
+
+  background:
+    linear-gradient(
+      100deg,
+      #c9000c,
+      #e30613,
+      #ff1822
+    );
 }
 
-
-.hf-submit:active:not(:disabled) {
-  transform: translateY(0);
+.foodigo-submit:active:not(:disabled) {
+  transform:
+    translateY(0);
 }
 
+.foodigo-submit:disabled {
+  opacity:
+    0.75;
 
-.hf-submit:disabled {
-  opacity: 0.75;
-
-  cursor: wait;
+  cursor:
+    wait;
 }
 
 
 /* =========================================================
-   ARROW
+   BUTTON ARROW
 ========================================================= */
 
-.hf-arrow {
-  width: 26px;
-  height: 26px;
+.foodigo-arrow {
+  width: 28px;
+  height: 28px;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
 
-  border-radius: 50%;
+  border-radius:
+    50%;
 
   background:
-    rgba(255, 255, 255, 0.18);
+    rgba(255, 255, 255, 0.20);
+
+  transition:
+    transform 0.2s ease;
 }
 
+.foodigo-submit:hover
+.foodigo-arrow {
+  transform:
+    translateX(3px);
+}
 
-.hf-arrow svg {
+.foodigo-arrow svg {
   width: 15px;
   height: 15px;
 }
@@ -893,25 +978,31 @@
    SPINNER
 ========================================================= */
 
-.hf-spinner {
-  width: 14px;
-  height: 14px;
+.foodigo-spinner {
+  width: 15px;
+  height: 15px;
 
   border:
-    2px solid rgba(255, 255, 255, 0.35);
+    2px solid
+    rgba(255, 255, 255, 0.35);
 
-  border-top-color: #ffffff;
+  border-top-color:
+    #ffffff;
 
-  border-radius: 50%;
+  border-radius:
+    50%;
 
   animation:
-    hfSpinner 0.7s linear infinite;
+    foodigoSpinner
+    0.7s
+    linear
+    infinite;
 }
 
-
-@keyframes hfSpinner {
+@keyframes foodigoSpinner {
   to {
-    transform: rotate(360deg);
+    transform:
+      rotate(360deg);
   }
 }
 
@@ -920,8 +1011,9 @@
    SECURITY
 ========================================================= */
 
-.hf-security {
+.foodigo-security {
   display: flex;
+
   align-items: center;
   justify-content: center;
 
@@ -929,90 +1021,123 @@
 
   margin-top: 1px;
 
-  color: #7d877f;
+  color:
+    #85898b;
 
-  font-size: 8.5px;
-  font-weight: 500;
+  font-size:
+    7.8px;
 
-  text-align: center;
+  line-height:
+    1;
+
+  font-weight:
+    500;
+
+  text-align:
+    center;
 }
 
+.foodigo-security svg {
+  width: 14px;
+  height: 14px;
 
-.hf-security-icon {
-  width: 21px;
-  height: 21px;
+  color:
+    var(--foodigo-red);
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  flex-shrink: 0;
-
-  border-radius: 50%;
-
-  background: #eaf6ec;
-
-  color: var(--hf-green);
-}
-
-
-.hf-security-icon svg {
-  width: 12px;
-  height: 12px;
-}
-
-
-.hf-security i {
-  width: 4px;
-  height: 4px;
-
-  flex-shrink: 0;
-
-  border-radius: 50%;
-
-  background: #58a85e;
+  flex-shrink:
+    0;
 }
 
 
 /* =========================================================
-   BOTTOM DOTS
+   BOTTOM LEAVES
 ========================================================= */
 
-.hf-bottom-dots {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.foodigo-bottom-leaves {
+  position: absolute;
 
-  gap: 4px;
+  left: -9px;
+  bottom: -7px;
 
-  margin-top: 8px;
+  width: 95px;
+  height: 60px;
+
+  z-index: 30;
+
+  pointer-events:
+    none;
+}
+
+.foodigo-bottom-leaves span {
+  position: absolute;
+
+  font-size:
+    32px;
+
+  filter:
+    drop-shadow(
+      0 4px 5px
+      rgba(0, 0, 0, 0.15)
+    );
+}
+
+.foodigo-bottom-leaves span:nth-child(1) {
+  left: 3px;
+  bottom: 0;
+
+  transform:
+    rotate(15deg);
+}
+
+.foodigo-bottom-leaves span:nth-child(2) {
+  left: 32px;
+  bottom: -8px;
+
+  font-size:
+    27px;
+
+  transform:
+    rotate(-12deg);
+}
+
+.foodigo-bottom-leaves span:nth-child(3) {
+  left: 55px;
+  bottom: -12px;
+
+  font-size:
+    23px;
+
+  transform:
+    rotate(24deg);
 }
 
 
-.hf-bottom-dots span,
-.hf-bottom-dots b {
-  display: block;
+/* =========================================================
+   RIGHT SIDE LEAF
+========================================================= */
 
-  width: 5px;
-  height: 5px;
+.foodigo-side-leaf {
+  position: absolute;
 
-  border-radius: 50%;
+  right: -7px;
+  top: 348px;
 
-  background: #d5e3d7;
-}
+  z-index: 30;
 
+  font-size:
+    28px;
 
-.hf-bottom-dots b {
-  width: 23px;
+  transform:
+    rotate(20deg);
 
-  background: var(--hf-green);
+  filter:
+    drop-shadow(
+      0 4px 5px
+      rgba(0, 0, 0, 0.14)
+    );
 
-  border-radius: 10px;
-}
-
-
-.hf-bottom-dots span:last-child {
-  background: var(--hf-orange);
+  pointer-events:
+    none;
 }
 
 
@@ -1021,7 +1146,8 @@
 ========================================================= */
 
 .swal2-container {
-  z-index: 10000000 !important;
+  z-index:
+    10000000 !important;
 }
 
 
@@ -1030,82 +1156,69 @@
 ========================================================= */
 
 @media (max-width: 500px) {
-  .hf-overlay {
-    padding: 10px;
-  }
-
-  .hf-card {
-    width: min(100%, 405px);
-
+  .foodigo-overlay {
     padding:
-      21px 22px 15px;
-
-    border-radius: 24px;
+      10px;
   }
 
-  .hf-header {
-    padding-right: 128px;
+  .foodigo-card {
+    width:
+      min(100%, 425px);
+
+    min-height:
+      550px;
+
+    border-radius:
+      24px;
   }
 
-  .hf-food-area {
-    width: 132px;
-    height: 132px;
-
-    top: 43px;
-    right: -18px;
+  .foodigo-content {
+    padding:
+      26px
+      20px
+      15px;
   }
 
-  .hf-fresh-badge {
-    left: -24px;
+  .foodigo-food-wrapper {
+    width:
+      190px;
 
-    padding: 5px 9px 5px 5px;
+    height:
+      190px;
+
+    top:
+      34px;
+
+    right:
+      -4px;
   }
 
-  .hf-fresh-icon {
-    width: 24px;
-    height: 24px;
-
-    font-size: 12px;
+  .foodigo-heading h2 {
+    font-size:
+      36px;
   }
 
-  .hf-brand-logo {
-    width: 44px;
-    height: 44px;
+  .foodigo-heading p {
+    font-size:
+      9.5px;
   }
 
-  .hf-brand-logo-inner {
-    width: 33px;
-    height: 33px;
+  .foodigo-form {
+    margin-top:
+      13px;
+
+    gap:
+      7px;
   }
 
-  .hf-brand-name strong {
-    font-size: 13px;
+  .foodigo-input input {
+    height:
+      40px;
   }
 
-  .hf-brand-name span {
-    font-size: 8px;
-  }
-
-  .hf-title h2 {
-    font-size: 25px;
-  }
-
-  .hf-title p {
-    font-size: 10px;
-  }
-
-  .hf-form {
-    margin-top: 15px;
-
-    gap: 7px;
-  }
-
-  .hf-input input {
-    height: 40px;
-  }
-
-  .hf-submit {
-    height: 43px;
+  .foodigo-submit {
+    height:
+      44px;
   }
 }
 
@@ -1115,364 +1228,433 @@
 ========================================================= */
 
 @media (max-width: 390px) {
-  .hf-overlay {
-    padding: 7px;
+  .foodigo-overlay {
+    padding:
+      7px;
   }
 
-  .hf-card {
-    width: 100%;
+  .foodigo-card {
+    width:
+      100%;
+
+    min-height:
+      0;
+
+    border-radius:
+      21px;
+  }
+
+  .foodigo-top-red {
+    top:
+      -100px;
+
+    right:
+      -72px;
+
+    width:
+      250px;
+
+    height:
+      250px;
+  }
+
+  .foodigo-top-red::after {
+    width:
+      180px;
+
+    height:
+      140px;
+
+    bottom:
+      -72px;
+  }
+
+  .foodigo-food-wrapper {
+    width:
+      150px;
+
+    height:
+      150px;
+
+    top:
+      34px;
+
+    right:
+      -2px;
+  }
+
+  .foodigo-close {
+    top:
+      9px;
+
+    right:
+      9px;
+
+    width:
+      34px;
+
+    height:
+      34px;
+  }
+
+  .foodigo-close span {
+    width:
+      13px;
+  }
+
+  .foodigo-content {
+    padding:
+      21px
+      16px
+      13px;
+  }
+
+  .foodigo-brand {
+    width:
+      145px;
+
+    margin-bottom:
+      8px;
+  }
+
+  .foodigo-brand-oval {
+    width:
+      142px;
+
+    height:
+      47px;
+  }
+
+  .foodigo-brand-text {
+    font-size:
+      30px;
+
+    letter-spacing:
+      -2px;
+  }
+
+  .foodigo-brand-fresh {
+    left:
+      49px;
+
+    bottom:
+      -5px;
+
+    font-size:
+      7px;
 
     padding:
-      18px 17px 13px;
-
-    border-radius: 21px;
+      2px 6px;
   }
 
-  .hf-top-shape {
-    width: 215px;
-    height: 215px;
-
-    top: -88px;
-    right: -67px;
+  .foodigo-heading {
+    width:
+      205px;
   }
 
-  .hf-food-area {
-    width: 108px;
-    height: 108px;
-
-    top: 38px;
-    right: -12px;
+  .foodigo-eyebrow {
+    gap:
+      6px;
   }
 
-  .hf-fresh-badge {
-    display: none;
+  .foodigo-eyebrow-line {
+    width:
+      21px;
+
+    height:
+      2px;
   }
 
-  .hf-header {
-    padding-right: 98px;
+  .foodigo-eyebrow span:last-child {
+    font-size:
+      5.6px;
+
+    letter-spacing:
+      1.25px;
   }
 
-  .hf-brand {
-    gap: 7px;
+  .foodigo-heading h2 {
+    font-size:
+      30px;
 
-    margin-bottom: 11px;
+    letter-spacing:
+      -1.2px;
   }
 
-  .hf-brand-logo {
-    width: 40px;
-    height: 40px;
+  .foodigo-heading p {
+    margin-top:
+      4px;
+
+    font-size:
+      8.7px;
+  }
+
+  .foodigo-form {
+    margin-top:
+      11px;
+
+    gap:
+      6px;
+  }
+
+  .foodigo-field label {
+    font-size:
+      8.5px;
+
+    margin-bottom:
+      3px;
+  }
+
+  .foodigo-input input {
+    height:
+      37px;
+
+    padding-left:
+      36px;
+
+    font-size:
+      10px;
 
     border-radius:
-      11px 11px 11px 3px;
+      9px;
   }
 
-  .hf-brand-logo-inner {
-    width: 30px;
-    height: 30px;
+  .foodigo-input input::placeholder {
+    font-size:
+      9px;
+  }
+
+  .foodigo-input svg {
+    left:
+      11px;
+
+    width:
+      15px;
+
+    height:
+      15px;
+  }
+
+  .foodigo-submit {
+    height:
+      40px;
+
+    margin-top:
+      3px;
 
     border-radius:
-      8px 8px 8px 3px;
+      9px;
+
+    font-size:
+      10.5px;
   }
 
-  .hf-brand-logo-inner svg {
-    width: 22px;
-    height: 22px;
+  .foodigo-arrow {
+    width:
+      23px;
+
+    height:
+      23px;
   }
 
-  .hf-brand-name strong {
-    font-size: 11.5px;
+  .foodigo-arrow svg {
+    width:
+      13px;
 
-    letter-spacing: 1.6px;
+    height:
+      13px;
   }
 
-  .hf-brand-name span {
-    margin-top: 3px;
-
-    font-size: 7px;
-
-    letter-spacing: 2.4px;
+  .foodigo-security {
+    font-size:
+      7px;
   }
 
-  .hf-title {
-    max-width: 205px;
+  .foodigo-security svg {
+    width:
+      12px;
+
+    height:
+      12px;
   }
 
-  .hf-eyebrow {
-    font-size: 6.5px;
+  .foodigo-side-leaf {
+    top:
+      315px;
 
-    letter-spacing: 1.1px;
+    font-size:
+      23px;
   }
 
-  .hf-title h2 {
-    font-size: 22px;
-  }
+  .foodigo-bottom-leaves {
+    transform:
+      scale(0.8);
 
-  .hf-title p {
-    margin-top: 5px;
-
-    font-size: 9px;
-
-    line-height: 1.35;
-  }
-
-  .hf-title-decoration {
-    margin-top: 6px;
-  }
-
-  .hf-form {
-    gap: 6px;
-
-    margin-top: 12px;
-  }
-
-  .hf-field label {
-    margin-bottom: 3px;
-
-    font-size: 8.5px;
-  }
-
-  .hf-input input {
-    height: 37px;
-
-    padding-left: 37px;
-
-    font-size: 10px;
-
-    border-radius: 9px;
-  }
-
-  .hf-input input::placeholder {
-    font-size: 9.5px;
-  }
-
-  .hf-input svg {
-    left: 11px;
-
-    width: 15px;
-    height: 15px;
-  }
-
-  .hf-submit {
-    height: 40px;
-
-    margin-top: 3px;
-
-    border-radius: 9px;
-
-    font-size: 10.5px;
-  }
-
-  .hf-arrow {
-    width: 23px;
-    height: 23px;
-  }
-
-  .hf-arrow svg {
-    width: 13px;
-    height: 13px;
-  }
-
-  .hf-security {
-    font-size: 7.5px;
-  }
-
-  .hf-security-icon {
-    width: 18px;
-    height: 18px;
-  }
-
-  .hf-security-icon svg {
-    width: 10px;
-    height: 10px;
-  }
-
-  .hf-bottom-dots {
-    margin-top: 5px;
-  }
-
-  .hf-close {
-    top: 10px;
-    right: 10px;
-
-    width: 31px;
-    height: 31px;
-  }
-
-  .hf-close span {
-    width: 12px;
-  }
-
-  .hf-leaf-one {
-    right: 135px;
-    top: 41px;
-
-    font-size: 15px;
-  }
-
-  .hf-leaf-two {
-    right: 120px;
-    top: 144px;
-
-    font-size: 13px;
+    transform-origin:
+      bottom left;
   }
 }
 
 
 /* =========================================================
-   VERY SMALL SCREEN
+   VERY SMALL DEVICES
 ========================================================= */
 
 @media (max-width: 350px) {
-  .hf-card {
+  .foodigo-content {
     padding:
-      15px 14px 10px;
+      17px
+      14px
+      10px;
   }
 
-  .hf-food-area {
-    width: 92px;
-    height: 92px;
+  .foodigo-food-wrapper {
+    width:
+      125px;
 
-    top: 34px;
-    right: -10px;
+    height:
+      125px;
+
+    top:
+      34px;
   }
 
-  .hf-header {
-    padding-right: 84px;
+  .foodigo-brand-oval {
+    width:
+      132px;
+
+    height:
+      43px;
   }
 
-  .hf-brand-logo {
-    width: 36px;
-    height: 36px;
+  .foodigo-brand-text {
+    font-size:
+      27px;
   }
 
-  .hf-brand-logo-inner {
-    width: 27px;
-    height: 27px;
+  .foodigo-heading h2 {
+    font-size:
+      27px;
   }
 
-  .hf-brand-logo-inner svg {
-    width: 19px;
-    height: 19px;
+  .foodigo-heading p {
+    font-size:
+      8px;
   }
 
-  .hf-brand-name strong {
-    font-size: 10px;
+  .foodigo-form {
+    margin-top:
+      8px;
+
+    gap:
+      5px;
   }
 
-  .hf-brand-name span {
-    font-size: 6.5px;
+  .foodigo-input input {
+    height:
+      35px;
   }
 
-  .hf-title h2 {
-    font-size: 20px;
+  .foodigo-submit {
+    height:
+      38px;
   }
 
-  .hf-title p {
-    font-size: 8px;
+  .foodigo-security {
+    font-size:
+      6.5px;
   }
 
-  .hf-form {
-    margin-top: 9px;
-
-    gap: 5px;
-  }
-
-  .hf-input input {
-    height: 35px;
-  }
-
-  .hf-submit {
-    height: 38px;
-  }
-
-  .hf-security {
-    font-size: 7px;
-  }
-
-  .hf-bottom-dots {
-    display: none;
+  .foodigo-bottom-leaves {
+    display:
+      none;
   }
 }
 
 
 /* =========================================================
-   SHORT HEIGHT DEVICES
-   NO SCROLL
+   SHORT HEIGHT
 ========================================================= */
 
 @media (max-height: 650px) {
-  .hf-overlay {
-    padding: 5px;
-  }
-
-  .hf-card {
+  .foodigo-overlay {
     padding:
-      14px 20px 10px;
-
-    border-radius: 20px;
+      5px;
   }
 
-  .hf-food-area {
-    width: 100px;
-    height: 100px;
+  .foodigo-card {
+    min-height:
+      0;
 
-    top: 30px;
+    border-radius:
+      20px;
   }
 
-  .hf-header {
-    padding-right: 105px;
+  .foodigo-content {
+    padding:
+      15px
+      19px
+      10px;
   }
 
-  .hf-brand {
-    margin-bottom: 7px;
+  .foodigo-food-wrapper {
+    width:
+      130px;
+
+    height:
+      130px;
+
+    top:
+      27px;
   }
 
-  .hf-brand-logo {
-    width: 38px;
-    height: 38px;
+  .foodigo-brand {
+    margin-bottom:
+      5px;
   }
 
-  .hf-brand-logo-inner {
-    width: 29px;
-    height: 29px;
+  .foodigo-heading h2 {
+    font-size:
+      29px;
   }
 
-  .hf-title h2 {
-    font-size: 21px;
+  .foodigo-heading p {
+    margin-top:
+      3px;
+
+    font-size:
+      8px;
   }
 
-  .hf-title p {
-    margin-top: 3px;
+  .foodigo-form {
+    gap:
+      5px;
 
-    font-size: 8.5px;
+    margin-top:
+      7px;
   }
 
-  .hf-form {
-    gap: 5px;
+  .foodigo-field label {
+    margin-bottom:
+      2px;
 
-    margin-top: 8px;
+    font-size:
+      8px;
   }
 
-  .hf-field label {
-    margin-bottom: 2px;
-
-    font-size: 8px;
+  .foodigo-input input {
+    height:
+      34px;
   }
 
-  .hf-input input {
-    height: 35px;
+  .foodigo-submit {
+    height:
+      37px;
   }
 
-  .hf-submit {
-    height: 38px;
-  }
-
-  .hf-security {
-    font-size: 7px;
-  }
-
-  .hf-bottom-dots {
-    display: none;
+  .foodigo-security {
+    font-size:
+      6.7px;
   }
 }
 
@@ -1482,17 +1664,16 @@
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .hf-card,
-  .hf-overlay,
-  .hf-close,
-  .hf-submit,
-  .hf-input input {
-    animation: none !important;
+  .foodigo-card,
+  .foodigo-overlay,
+  .foodigo-close,
+  .foodigo-submit,
+  .foodigo-input input,
+  .foodigo-spinner {
+    animation:
+      none !important;
 
-    transition: none !important;
-  }
-
-  .hf-spinner {
-    animation-duration: 1.5s;
+    transition:
+      none !important;
   }
 }

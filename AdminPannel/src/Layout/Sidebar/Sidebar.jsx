@@ -11,9 +11,11 @@ import {
   Settings,
   LogOut,
   X,
+  MailBadgeIcon,
+  MailBadge,
 } from "lucide-react";
 
-import logo from "../../assets/HealthyLogo.webp";
+import logo from "../../assets/main-logo.webp";
 import "./Sidebar.css";
 
 // Navigation Items configuration
@@ -31,11 +33,7 @@ export const NAV_ITEMS = [
     path: "/order",
     isMatch: (currentPath) => currentPath.startsWith("/orders") || currentPath.startsWith("/order"),
   },
-  {
-    label: "Contact Leads",
-    icon: Inbox,
-    path: "/contact-lead",
-  },
+  
   {
     label: "Menu",
     icon: FileText,
@@ -51,6 +49,16 @@ export const NAV_ITEMS = [
     label: "Testimonials",
     icon: Star,
     path: "/testimonial",
+  },
+  {
+    label: "Enquires",
+    icon: MailBadge,
+    path: "/enquire",
+  },
+  {
+    label: "Contact Leads",
+    icon: Inbox,
+    path: "/contact-lead",
   },
  
   {
@@ -71,7 +79,7 @@ const Sidebar = ({
   onMobileClose = () => {},
   onProfileClick = () => {},
   onLogout = () => {},
-  brandName = "Healthy Haven",
+  brandName = "Foodigo",
   brandTagline = "ADMIN PANEL",
   user = {
     name: "Admin",
@@ -209,26 +217,7 @@ const Sidebar = ({
         </nav>
 
         {/* Footer Area */}
-        <div className="HealthySidebar-footer">
-          <button
-            type="button"
-            className="HealthySidebar-logout-btn"
-            onClick={onLogout}
-            title={isCollapsed ? "Log Out" : undefined}
-          >
-            <span className="HealthySidebar-icon-box">
-              <LogOut size={20} strokeWidth={2.2} />
-            </span>
-            <span className="HealthySidebar-link-title">Log Out</span>
-          </button>
-
-          {!isCollapsed && (
-            <div className="HealthySidebar-footer-meta">
-              <span className="HealthySidebar-brand-copy">Healthy Haven Platform</span>
-              <span className="HealthySidebar-version-pill">{version}</span>
-            </div>
-          )}
-        </div>
+     
       </aside>
     </>
   );

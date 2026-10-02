@@ -16,9 +16,12 @@ import Faq from "./Pages/Faq/Faq";
 import Contact from "./Pages/Contact/Contact";
 
 // Action Route Components
-import Account from "./Components/Account/Account";
+// import Account from "./Components/Account/Account";
 import FloatingForm from "./Components/FloatingForm/FloatingForm";
 import CartDetails from "./Components/CartDetails/CartDetails";
+import FloatingIcons from "./Components/FloatingIcons/FloatingIcons";
+import FloatingSupport from "./Components/FloatingSupport/FloatingSupport";
+import FloatingEnquire from "./Components/FloatingEnquire/FloatingEnquire";
 
 // Automatically scrolls the window to the top on every route change
 const ScrollToTop = () => {
@@ -54,14 +57,23 @@ const App = () => {
 
         {/* Action Routes */}
         <Route path="/cart" element={<CartDetails/>} />
-        <Route path="/account" element={<Account />} />
+        {/* <Route path="/account" element={<Account />} /> */}
 
 
 
 
-      </Routes>
-       <FloatingForm/>
-      <Footer />
+        </Routes>
+        <FloatingForm/>
+        <Footer />
+
+       <FloatingIcons/>
+
+       <FloatingEnquire
+        triggerOnLoad={false}
+       />
+
+       <FloatingSupport/>
+
     </BrowserRouter>
   );
 };

@@ -35,38 +35,42 @@ const ORDER_STATUS_DATA = [
 const TOP_PRODUCTS = [
   {
     id: 1,
-    name: 'Chicken Tikka Roll',
+    name: "Sattu",
     orders: 120,
     price: 9600,
-    img: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=120&auto=format&fit=crop&q=80',
+    img: "https://www.shutterstock.com/image-photo/sattu-flour-bowl-well-known-1860012235",
   },
+
   {
     id: 2,
-    name: 'Veg Burger',
+    name: "Sooji",
     orders: 95,
     price: 7600,
-    img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=120&auto=format&fit=crop&q=80',
+    img: "https://image.cdn.shpy.in/394829/Wheat-Semolina-1-01-1725503032851.jpeg?format=webp",
   },
+
   {
     id: 3,
-    name: 'Paneer Wrap',
+    name: "Rice Flour",
     orders: 78,
     price: 6240,
-    img: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=120&auto=format&fit=crop&q=80',
+    img: "https://5.imimg.com/data5/SELLER/Default/2025/6/518167694/TS/MH/ZS/181743242/1kg-rice-flour-powder-500x500.jpg",
   },
+
   {
     id: 4,
-    name: 'French Fries',
+    name: "Sabudana",
     orders: 65,
     price: 4550,
-    img: 'https://images.unsplash.com/photo-1576107232684-1279f3908594?w=120&auto=format&fit=crop&q=80',
+    img: "https://bharatmasala.net/cdn/shop/files/Sabudana-01.png?v=1746140888&width=1445",
   },
+
   {
     id: 5,
-    name: 'Cold Coffee',
+    name: "Chana Besan",
     orders: 60,
     price: 3900,
-    img: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=120&auto=format&fit=crop&q=80',
+    img: "https://africamarket.us/cdn/shop/files/237.png?v=1759006285&width=1024",
   },
 ];
 
