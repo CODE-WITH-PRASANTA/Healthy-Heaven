@@ -21,7 +21,6 @@ import FloatingForm from "./Components/FloatingForm/FloatingForm";
 import CartDetails from "./Components/CartDetails/CartDetails";
 import FloatingIcons from "./Components/FloatingIcons/FloatingIcons";
 import FloatingSupport from "./Components/FloatingSupport/FloatingSupport";
-import FloatingEnquire from "./Components/FloatingEnquire/FloatingEnquire";
 
 // Automatically scrolls the window to the top on every route change
 const ScrollToTop = () => {
@@ -68,9 +67,7 @@ const App = () => {
 
        <FloatingIcons/>
 
-       <FloatingEnquire
-        triggerOnLoad={false}
-       />
+      
 
        <FloatingSupport/>
 

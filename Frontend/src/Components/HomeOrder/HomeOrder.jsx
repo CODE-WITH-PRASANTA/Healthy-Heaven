@@ -14,10 +14,10 @@ import "./HomeOrder.css";
 // PRODUCT IMAGE IMPORTS
 // =====================================================
 
-import heroBesan from "../../assets/HeroBesan.png";
+import heroBesan from "../../assets/wheat-dalia.jpeg";
 import mainLogo from "../../assets/rice-flour.jpeg";
-import rollImage from "../../assets/sooji.jpeg";
-import saladaImage from "../../assets/sattu.jpeg";
+import rollImage from "../../assets/chana.jpeg";
+import saladaImage from "../../assets/maida.jpeg";
 
 // =====================================================
 // STATIC DATA
